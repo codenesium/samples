@@ -94,7 +94,10 @@ export class VideoSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class VideoSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8349d91a95ed6ebee86bfef4f8e8c413</Hash>
+    <Hash>e7a07c5a05484044bc3394e997ecf312</Hash>
 </Codenesium>*/

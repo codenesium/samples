@@ -149,7 +149,7 @@ class PetCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="clientId">Client</label>
+            <label htmlFor="clientId">Client (required)</label>
             <br />
             {getFieldDecorator('clientId', {
               rules: [{ required: true, message: 'Required' }],
@@ -157,7 +157,7 @@ class PetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -168,7 +168,7 @@ class PetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="weight">Weight</label>
+            <label htmlFor="weight">Weight (required)</label>
             <br />
             {getFieldDecorator('weight', {
               rules: [{ required: true, message: 'Required' }],
@@ -199,5 +199,5 @@ export const WrappedPetCreateComponent = Form.create({ name: 'Pet Create' })(
 
 
 /*<Codenesium>
-    <Hash>dbe2361f7a23a2cb40e2fc4cfe652035</Hash>
+    <Hash>656d93d117a395c4e6d3a3c9c5d1cd4a</Hash>
 </Codenesium>*/

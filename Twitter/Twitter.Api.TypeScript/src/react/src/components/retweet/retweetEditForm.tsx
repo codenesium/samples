@@ -194,7 +194,7 @@ class RetweetEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (optional)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [],
@@ -202,7 +202,9 @@ class RetweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="retwitterUserId">retwitter_user_id</label>
+            <label htmlFor="retwitterUserId">
+              retwitter_user_id (optional)
+            </label>
             <br />
             {getFieldDecorator('retwitterUserId', {
               rules: [],
@@ -210,7 +212,7 @@ class RetweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (optional)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [],
@@ -218,7 +220,7 @@ class RetweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="tweetTweetId">tweet_tweet_id</label>
+            <label htmlFor="tweetTweetId">tweet_tweet_id (required)</label>
             <br />
             {getFieldDecorator('tweetTweetId', {
               rules: [{ required: true, message: 'Required' }],
@@ -249,5 +251,5 @@ export const WrappedRetweetEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6e059a94956e6ab496ba5f07ee2a1235</Hash>
+    <Hash>a8f87ef55b8a4bb20838ff416e56ccfe</Hash>
 </Codenesium>*/

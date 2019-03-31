@@ -173,7 +173,7 @@ export class OfficerCapabilitiesTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -185,7 +185,7 @@ export class OfficerCapabilitiesTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -212,5 +212,5 @@ export class OfficerCapabilitiesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>34839e807e427c049e733d4f4bc9688d</Hash>
+    <Hash>54704ff6a5d9d98bfbd1428f94cc56ec</Hash>
 </Codenesium>*/

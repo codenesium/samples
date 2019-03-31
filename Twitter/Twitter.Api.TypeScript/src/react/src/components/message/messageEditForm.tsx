@@ -196,7 +196,7 @@ class MessageEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="content">content</label>
+            <label htmlFor="content">content (optional)</label>
             <br />
             {getFieldDecorator('content', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -204,7 +204,7 @@ class MessageEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="senderUserId">sender_user_id</label>
+            <label htmlFor="senderUserId">sender_user_id (optional)</label>
             <br />
             {getFieldDecorator('senderUserId', {
               rules: [],
@@ -235,5 +235,5 @@ export const WrappedMessageEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8ca2a5e42dd8f5286e6e316fb07c44c6</Hash>
+    <Hash>61a308bffe95b873daf2e922192f1129</Hash>
 </Codenesium>*/

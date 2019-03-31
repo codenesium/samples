@@ -33,13 +33,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
 
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
@@ -66,13 +60,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiPersonTypeClientRequestModel();
@@ -95,13 +83,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			var mapper = new ApiPersonTypeServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IPersonTypeService service = testServer.Host.Services.GetService(typeof(IPersonTypeService)) as IPersonTypeService;
@@ -130,13 +112,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			IPersonTypeService service = testServer.Host.Services.GetService(typeof(IPersonTypeService)) as IPersonTypeService;
@@ -163,13 +139,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiPersonTypeClientResponseModel response = await client.PersonTypeGetAsync(1);
@@ -188,13 +158,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApiPersonTypeClientResponseModel response = await client.PersonTypeGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -209,13 +173,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiPersonTypeClientResponseModel> response = await client.PersonTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -232,13 +190,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiCallPersonClientResponseModel> response = await client.CallPersonsByPersonTypeId(1);
 
 			response.Should().NotBeEmpty();
@@ -253,13 +205,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiCallPersonClientResponseModel> response = await client.CallPersonsByPersonTypeId(default(int));
 
 			response.Should().BeEmpty();
@@ -288,5 +234,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d79008123e0602353bdab545a0145c31</Hash>
+    <Hash>27c9233cd5b12ebec548acd0f131d157</Hash>
 </Codenesium>*/

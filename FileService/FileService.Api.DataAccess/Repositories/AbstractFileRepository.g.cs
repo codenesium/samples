@@ -43,7 +43,6 @@ namespace FileServiceNS.Api.DataAccess
 				                  x.ExternalId == query.ToGuid() ||
 				                  x.FileSizeInByte.ToDecimal() == query.ToDecimal() ||
 				                  x.FileTypeId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.Location.StartsWith(query) ||
 				                  x.PrivateKey.StartsWith(query) ||
 				                  x.PublicKey.StartsWith(query),
@@ -139,5 +138,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f950437cb6d19829a390353f0c183984</Hash>
+    <Hash>48e0ca7ebe3ea0f52ed6ce9a9d6900b8</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target":"esnext",
     "allowJs": true,
     "skipLibCheck": false,
     "esModuleInterop": true,
@@ -12,12 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ]
+    "jsx": "preserve"
   },
   "include": [
     "src"

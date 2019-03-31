@@ -37,7 +37,6 @@ namespace TicketingCRMNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Email.StartsWith(query) ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query),
 				                  limit,
@@ -116,5 +115,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cd6ff1675b7c8cf9139de6665b7e622c</Hash>
+    <Hash>f1f2d970d2c9776574c717ee137fe955</Hash>
 </Codenesium>*/

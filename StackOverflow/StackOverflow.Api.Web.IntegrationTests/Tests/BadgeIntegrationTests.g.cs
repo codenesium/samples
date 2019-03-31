@@ -33,13 +33,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
 
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
@@ -70,13 +64,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiBadgeClientRequestModel();
@@ -103,13 +91,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			var mapper = new ApiBadgeServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IBadgeService service = testServer.Host.Services.GetService(typeof(IBadgeService)) as IBadgeService;
@@ -142,13 +124,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			IBadgeService service = testServer.Host.Services.GetService(typeof(IBadgeService)) as IBadgeService;
@@ -175,13 +151,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiBadgeClientResponseModel response = await client.BadgeGetAsync(1);
@@ -202,13 +172,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApiBadgeClientResponseModel response = await client.BadgeGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -223,13 +187,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiBadgeClientResponseModel> response = await client.BadgeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -248,13 +206,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiBadgeClientResponseModel> response = await client.ByBadgeByUserId(1);
 
 			response.Should().NotBeEmpty();
@@ -273,13 +225,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiBadgeClientResponseModel> response = await client.ByBadgeByUserId(default(int));
 
 			response.Should().BeEmpty();
@@ -308,5 +254,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>21407a74edcc2a92fc1c5b8f5b43067f</Hash>
+    <Hash>b39b4266008a029df0420643a35b92a8</Hash>
 </Codenesium>*/

@@ -163,7 +163,7 @@ export class PetTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -175,7 +175,7 @@ export class PetTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -202,5 +202,5 @@ export class PetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>bbc78011daaa358542a632296eae0326</Hash>
+    <Hash>46c2b23fe5648d75666f297267a00802</Hash>
 </Codenesium>*/

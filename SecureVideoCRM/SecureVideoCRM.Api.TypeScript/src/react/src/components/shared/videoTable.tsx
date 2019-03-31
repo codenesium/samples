@@ -141,7 +141,7 @@ export class VideoTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -153,7 +153,7 @@ export class VideoTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -180,5 +180,5 @@ export class VideoTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cb988b6cd0a69cae976d7c160f568102</Hash>
+    <Hash>d0182d52a1c07fedb95c49fb8855dd2b</Hash>
 </Codenesium>*/

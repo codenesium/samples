@@ -33,13 +33,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
 
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
@@ -68,13 +62,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiVehicleOfficerClientRequestModel();
@@ -99,13 +87,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			var mapper = new ApiVehicleOfficerServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			IVehicleOfficerService service = testServer.Host.Services.GetService(typeof(IVehicleOfficerService)) as IVehicleOfficerService;
@@ -136,13 +118,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			IVehicleOfficerService service = testServer.Host.Services.GetService(typeof(IVehicleOfficerService)) as IVehicleOfficerService;
@@ -169,13 +145,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiVehicleOfficerClientResponseModel response = await client.VehicleOfficerGetAsync(1);
@@ -195,13 +165,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApiVehicleOfficerClientResponseModel response = await client.VehicleOfficerGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -216,13 +180,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiVehicleOfficerClientResponseModel> response = await client.VehicleOfficerAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -240,13 +198,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiVehicleOfficerClientResponseModel> response = await client.ByVehicleOfficerByOfficerId(1);
 
 			response.Should().NotBeEmpty();
@@ -264,13 +216,7 @@ namespace CADNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiVehicleOfficerClientResponseModel> response = await client.ByVehicleOfficerByOfficerId(default(int));
 
 			response.Should().BeEmpty();
@@ -299,5 +245,5 @@ namespace CADNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>eeb4db8fd7c75a8c89dd5c9b8b905010</Hash>
+    <Hash>3321ae94e82c5bb2c5c341d3c0d3ac2d</Hash>
 </Codenesium>*/

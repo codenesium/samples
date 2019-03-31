@@ -35,7 +35,6 @@ namespace TicketingCRMNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.PublicId.StartsWith(query) ||
 				                  x.TicketStatusId == query.ToInt(),
 				                  limit,
@@ -138,5 +137,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>735e23c2ea3fd0859d2cee265560e402</Hash>
+    <Hash>f4c4e83e7e7caaf00a41e92051a2fa4a</Hash>
 </Codenesium>*/

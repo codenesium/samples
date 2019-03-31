@@ -142,7 +142,7 @@ class MessengerCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (optional)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [],
@@ -150,7 +150,7 @@ class MessengerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fromUserId">from_user_id</label>
+            <label htmlFor="fromUserId">from_user_id (optional)</label>
             <br />
             {getFieldDecorator('fromUserId', {
               rules: [],
@@ -158,7 +158,7 @@ class MessengerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="messageId">message_id</label>
+            <label htmlFor="messageId">message_id (optional)</label>
             <br />
             {getFieldDecorator('messageId', {
               rules: [],
@@ -166,7 +166,7 @@ class MessengerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (optional)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [],
@@ -174,7 +174,7 @@ class MessengerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="toUserId">to_user_id</label>
+            <label htmlFor="toUserId">to_user_id (required)</label>
             <br />
             {getFieldDecorator('toUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -182,7 +182,7 @@ class MessengerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userId">user_id</label>
+            <label htmlFor="userId">user_id (optional)</label>
             <br />
             {getFieldDecorator('userId', {
               rules: [],
@@ -213,5 +213,5 @@ export const WrappedMessengerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>502d8cbe052a987332f801c79f27e6fb</Hash>
+    <Hash>dd7cfd376522d72f3ca6f128cdf68b92</Hash>
 </Codenesium>*/

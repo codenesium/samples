@@ -33,13 +33,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
 
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
@@ -88,13 +82,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiLinkClientRequestModel();
@@ -139,13 +127,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			var mapper = new ApiLinkServerModelMapper();
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 			ILinkService service = testServer.Host.Services.GetService(typeof(ILinkService)) as ILinkService;
@@ -196,13 +178,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ILinkService service = testServer.Host.Services.GetService(typeof(ILinkService)) as ILinkService;
@@ -229,13 +205,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			ApiLinkClientResponseModel response = await client.LinkGetAsync(1);
@@ -265,13 +235,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApiLinkClientResponseModel response = await client.LinkGetAsync(default(int));
 
 			response.Should().BeNull();
@@ -286,13 +250,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiLinkClientResponseModel> response = await client.LinkAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
@@ -320,13 +278,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApiLinkClientResponseModel response = await client.ByLinkByExternalId(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
 			response.Should().NotBeNull();
@@ -355,13 +307,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			ApiLinkClientResponseModel response = await client.ByLinkByExternalId(default(Guid));
 
 			response.Should().BeNull();
@@ -376,13 +322,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiLinkClientResponseModel> response = await client.ByLinkByChainId(1);
 
 			response.Should().NotBeEmpty();
@@ -410,13 +350,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiLinkClientResponseModel> response = await client.ByLinkByChainId(default(int));
 
 			response.Should().BeEmpty();
@@ -431,13 +365,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiLinkLogClientResponseModel> response = await client.LinkLogsByLinkId(1);
 
 			response.Should().NotBeEmpty();
@@ -452,13 +380,7 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			JWTHelper jwtHelper = new JWTHelper();
-			client.SetBearerToken(jwtHelper.GenerateBearerToken(
-									  "defaultJWTPassword",
-									  "https://www.codenesium.com",
-									  "https://www.codenesium.com",
-									  "test@test.com",
-									  "Passw0rd$"));
+			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
 			List<ApiLinkLogClientResponseModel> response = await client.LinkLogsByLinkId(default(int));
 
 			response.Should().BeEmpty();
@@ -487,5 +409,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3f30c9a828a645af7031afe44cda4777</Hash>
+    <Hash>a1b428e30c79bc90e0d1abb2a1896264</Hash>
 </Codenesium>*/

@@ -94,7 +94,10 @@ export class MessageSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class MessageSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1773b8785051c05f771fb8e96006e9b7</Hash>
+    <Hash>6ff4760fe071ad66b334793c597fca52</Hash>
 </Codenesium>*/

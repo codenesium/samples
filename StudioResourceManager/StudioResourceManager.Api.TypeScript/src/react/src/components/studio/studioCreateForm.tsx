@@ -140,7 +140,7 @@ class StudioCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="address1">Address1</label>
+            <label htmlFor="address1">Address1 (required)</label>
             <br />
             {getFieldDecorator('address1', {
               rules: [
@@ -151,7 +151,7 @@ class StudioCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="address2">Address2</label>
+            <label htmlFor="address2">Address2 (required)</label>
             <br />
             {getFieldDecorator('address2', {
               rules: [
@@ -162,7 +162,7 @@ class StudioCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="city">City</label>
+            <label htmlFor="city">City (required)</label>
             <br />
             {getFieldDecorator('city', {
               rules: [
@@ -173,7 +173,7 @@ class StudioCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -184,7 +184,7 @@ class StudioCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="province">Province</label>
+            <label htmlFor="province">Province (required)</label>
             <br />
             {getFieldDecorator('province', {
               rules: [
@@ -195,7 +195,7 @@ class StudioCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="website">Website</label>
+            <label htmlFor="website">Website (required)</label>
             <br />
             {getFieldDecorator('website', {
               rules: [
@@ -206,7 +206,7 @@ class StudioCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="zip">Zip</label>
+            <label htmlFor="zip">Zip (optional)</label>
             <br />
             {getFieldDecorator('zip', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -237,5 +237,5 @@ export const WrappedStudioCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>eddb6d25fd7b3c3089da0a6108035776</Hash>
+    <Hash>bcb86364b548b9bea145076738eec1a4</Hash>
 </Codenesium>*/

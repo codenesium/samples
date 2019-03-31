@@ -194,7 +194,7 @@ class StudentEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="birthday">Birthday</label>
+            <label htmlFor="birthday">Birthday (required)</label>
             <br />
             {getFieldDecorator('birthday', {
               rules: [{ required: true, message: 'Required' }],
@@ -202,7 +202,7 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -214,7 +214,7 @@ class StudentEditComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="emailRemindersEnabled">
-              Email Reminders Enabled
+              Email Reminders Enabled (required)
             </label>
             <br />
             {getFieldDecorator('emailRemindersEnabled', {
@@ -232,7 +232,7 @@ class StudentEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -243,7 +243,7 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isAdult">Is Adult</label>
+            <label htmlFor="isAdult">Is Adult (required)</label>
             <br />
             {getFieldDecorator('isAdult', {
               rules: [],
@@ -252,7 +252,7 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -263,7 +263,7 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -274,7 +274,9 @@ class StudentEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="smsRemindersEnabled">Sms Reminders Enabled</label>
+            <label htmlFor="smsRemindersEnabled">
+              Sms Reminders Enabled (required)
+            </label>
             <br />
             {getFieldDecorator('smsRemindersEnabled', {
               rules: [],
@@ -314,5 +316,5 @@ export const WrappedStudentEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>af6a1f9453a241f7706c28209756f245</Hash>
+    <Hash>982769de101831e10fd5d196773d91ca</Hash>
 </Codenesium>*/

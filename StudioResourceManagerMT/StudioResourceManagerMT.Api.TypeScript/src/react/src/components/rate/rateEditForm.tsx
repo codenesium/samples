@@ -194,7 +194,9 @@ class RateEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="amountPerMinute">Amount Per Minute</label>
+            <label htmlFor="amountPerMinute">
+              Amount Per Minute (required)
+            </label>
             <br />
             {getFieldDecorator('amountPerMinute', {
               rules: [{ required: true, message: 'Required' }],
@@ -241,5 +243,5 @@ export const WrappedRateEditComponent = Form.create({ name: 'Rate Edit' })(
 
 
 /*<Codenesium>
-    <Hash>ec870df4612aade3e8be4334fb916e8c</Hash>
+    <Hash>f9a3d119cd8d0b2529a1469fc4ff6352</Hash>
 </Codenesium>*/

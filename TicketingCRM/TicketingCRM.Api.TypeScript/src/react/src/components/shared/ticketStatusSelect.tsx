@@ -94,7 +94,9 @@ export class TicketStatusSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Ticket Status</label>
+          <label htmlFor={this.props.propertyName}>
+            Ticket Status {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class TicketStatusSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>79febdf806daa17c09aed17ca159cee1</Hash>
+    <Hash>37d67c9b460698098ea01e1120f3bb3d</Hash>
 </Codenesium>*/

@@ -140,7 +140,7 @@ class FileTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedFileTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7295baccba8caba33c38ac79b40a672a</Hash>
+    <Hash>1e0cd7ca7a608547efc7f623ac223975</Hash>
 </Codenesium>*/

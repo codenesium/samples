@@ -215,7 +215,7 @@ export class VenueTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -227,7 +227,7 @@ export class VenueTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -254,5 +254,5 @@ export class VenueTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>753a7b36522f10d17ed4db65440e9016</Hash>
+    <Hash>a8a473722e90df759997478a324dafde</Hash>
 </Codenesium>*/

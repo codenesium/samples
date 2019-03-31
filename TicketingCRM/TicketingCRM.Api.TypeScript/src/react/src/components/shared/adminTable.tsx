@@ -162,7 +162,7 @@ export class AdminTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -174,7 +174,7 @@ export class AdminTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -201,5 +201,5 @@ export class AdminTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c83f99e1c1ddf6c75f6f5b13d24cae85</Hash>
+    <Hash>d7da27cbb7f60bbcfc8f72a2397474cc</Hash>
 </Codenesium>*/

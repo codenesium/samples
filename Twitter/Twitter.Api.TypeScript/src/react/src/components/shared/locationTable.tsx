@@ -141,7 +141,7 @@ export class LocationTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -153,7 +153,7 @@ export class LocationTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -180,5 +180,5 @@ export class LocationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c530219c1430b212ce995b3713eb992b</Hash>
+    <Hash>c2359f44fb25d73ed2f9d94787708960</Hash>
 </Codenesium>*/

@@ -140,7 +140,7 @@ class VPersonCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="personName">Person Name</label>
+            <label htmlFor="personName">Person Name (required)</label>
             <br />
             {getFieldDecorator('personName', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedVPersonCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>04df0b6b3f93e2103b6a8bf8a2679af5</Hash>
+    <Hash>bda3d337f364304c9a94930dd5605e6b</Hash>
 </Codenesium>*/

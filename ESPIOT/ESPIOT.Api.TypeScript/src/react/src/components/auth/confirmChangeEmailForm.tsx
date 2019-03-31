@@ -61,9 +61,7 @@ class ConfirmChangeEmailComponent extends React.Component<
         Constants.ApiEndpoint + AuthApiRoutes.ConfirmChangeEmail,
         JSON.stringify(model),
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: GlobalUtilities.defaultHeaders()
         }
       )
       .then(response => {
@@ -114,31 +112,31 @@ class ConfirmChangeEmailComponent extends React.Component<
                 <Alert message={this.state.message} type='success' /> 
                 <br />          
                <Button
-			    type='primary'
                 htmlType='submit'
+				type='primary'
                >
                    <Link to={AuthClientRoutes.Login}>Log in</Link>
               </Button>
-              </div>;
-    }
-    else if (this.state.loaded) {
-      return (
-        <div>
-          {errorMessage}
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Item>
-              <Button
-			    type='primary'
-                htmlType='submit'
-                loading={this.state.submitting}
-              >
-                {this.state.submitting ? 'Submitting...' : 'Complete Email Change'}
-              </Button>
-            </Form.Item>
-        </Form>
-        </div>
-      );
-    } else {
+			 </div>;
+			}
+			else if (this.state.loaded) {
+			  return (
+				<div>
+				  {errorMessage}
+				  <Form onSubmit={this.handleSubmit}>
+					<Form.Item>
+					  <Button
+						htmlType='submit'
+						type='primary'
+						loading={this.state.submitting}
+					  >
+						{this.state.submitting ? 'Submitting...' : 'Complete Email Change'}
+					  </Button>
+					</Form.Item>
+				</Form>
+				</div>
+			  );
+			} else {
       return null;
     }
   }

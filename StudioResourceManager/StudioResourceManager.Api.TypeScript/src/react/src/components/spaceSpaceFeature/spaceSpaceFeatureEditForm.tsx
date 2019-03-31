@@ -204,6 +204,14 @@ class SpaceSpaceFeatureEditComponent extends React.Component<
             selectedValue={this.state.model!.spaceFeatureId}
           />
 
+          <SpaceSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Spaces}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="spaceId"
+            required={true}
+            selectedValue={this.state.model!.spaceId}
+          />
+
           <Form.Item>
             <Button
               type="primary"
@@ -228,5 +236,5 @@ export const WrappedSpaceSpaceFeatureEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2eac75ff44d848e5e9659ae4060b751c</Hash>
+    <Hash>d8f72b1f4dfc28dd476d51b4116ee17c</Hash>
 </Codenesium>*/

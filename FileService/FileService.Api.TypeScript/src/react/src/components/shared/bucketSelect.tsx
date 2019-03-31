@@ -94,7 +94,9 @@ export class BucketSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Buckets</label>
+          <label htmlFor={this.props.propertyName}>
+            Buckets {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class BucketSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a47198337c1e348876ce8a256bd017aa</Hash>
+    <Hash>0161f4c4ffc90bc60d0dc8469918cefc</Hash>
 </Codenesium>*/

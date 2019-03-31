@@ -140,7 +140,7 @@ class PostHistoryTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="rwType">Rw Type</label>
+            <label htmlFor="rwType">Rw Type (required)</label>
             <br />
             {getFieldDecorator('rwType', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedPostHistoryTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>db4a5b8f8ae824390e280dbbbf6a2408</Hash>
+    <Hash>81038cc270fe8b1d2ee0b71314110483</Hash>
 </Codenesium>*/

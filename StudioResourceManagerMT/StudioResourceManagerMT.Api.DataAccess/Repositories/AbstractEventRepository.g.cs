@@ -39,7 +39,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				                  x.ActualStartDate == query.ToNullableDateTime() ||
 				                  x.BillAmount.ToNullableDecimal() == query.ToNullableDecimal() ||
 				                  x.EventStatusId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.ScheduledEndDate == query.ToNullableDateTime() ||
 				                  x.ScheduledStartDate == query.ToNullableDateTime() ||
 				                  x.StudentNote.StartsWith(query) ||
@@ -148,5 +147,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>89d6a15451449a92022c0d6cb322c572</Hash>
+    <Hash>fcd858cd92736df79b915cbcbe3adafd</Hash>
 </Codenesium>*/

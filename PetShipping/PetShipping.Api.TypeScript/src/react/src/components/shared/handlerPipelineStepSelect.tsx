@@ -97,7 +97,10 @@ export class HandlerPipelineStepSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Handler Pipeline Step</label>
+          <label htmlFor={this.props.propertyName}>
+            Handler Pipeline Step{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -125,5 +128,5 @@ export class HandlerPipelineStepSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0ec575e7951b27a5c7f248cb25f27c72</Hash>
+    <Hash>348f8cee5cb274226697516330338581</Hash>
 </Codenesium>*/

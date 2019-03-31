@@ -38,7 +38,6 @@ namespace PetStoreNS.Api.DataAccess
 				                  x.AcquiredDate == query.ToDateTime() ||
 				                  x.BreedId == query.ToInt() ||
 				                  x.Description.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.PenId == query.ToInt() ||
 				                  x.Price.ToDecimal() == query.ToDecimal(),
 				                  limit,
@@ -143,5 +142,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7acfa9a9a52f0122600cbce82ab5b978</Hash>
+    <Hash>8e3a836e013b9e15729a14e9ec211d46</Hash>
 </Codenesium>*/

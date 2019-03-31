@@ -43,7 +43,6 @@ namespace StackOverflowNS.Api.DataAccess
 				                  x.CommunityOwnedDate == query.ToNullableDateTime() ||
 				                  x.CreationDate == query.ToDateTime() ||
 				                  x.FavoriteCount == query.ToNullableInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastActivityDate == query.ToDateTime() ||
 				                  x.LastEditDate == query.ToNullableDateTime() ||
 				                  x.LastEditorDisplayName.StartsWith(query) ||
@@ -273,5 +272,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54e7cbf4373aebc1c1e467dfb4db30a4</Hash>
+    <Hash>afc0e19bd2748e368705e6a9cf5b8d40</Hash>
 </Codenesium>*/

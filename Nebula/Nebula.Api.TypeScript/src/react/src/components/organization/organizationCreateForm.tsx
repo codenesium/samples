@@ -140,7 +140,7 @@ class OrganizationCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedOrganizationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5a5781b3c5530c283eaf4baa750f6cff</Hash>
+    <Hash>d60b3b1f0d5c5a9ab97d07f2790e14b2</Hash>
 </Codenesium>*/

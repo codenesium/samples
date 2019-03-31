@@ -134,7 +134,7 @@ export class TimestampCheckTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -146,7 +146,7 @@ export class TimestampCheckTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -173,5 +173,5 @@ export class TimestampCheckTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>667721c12344e18a19d51b41bc0d721c</Hash>
+    <Hash>65dda340ae3a36eefc342de32a5161b5</Hash>
 </Codenesium>*/

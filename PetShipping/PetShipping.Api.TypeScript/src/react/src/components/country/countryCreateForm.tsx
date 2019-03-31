@@ -140,7 +140,7 @@ class CountryCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedCountryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4f016db2315927dd61cfab2a4e5de771</Hash>
+    <Hash>0f2a440195549af62a6ce4fc587c40e8</Hash>
 </Codenesium>*/

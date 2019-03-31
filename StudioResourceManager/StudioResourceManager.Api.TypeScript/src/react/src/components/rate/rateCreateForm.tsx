@@ -142,7 +142,9 @@ class RateCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="amountPerMinute">Amount Per Minute</label>
+            <label htmlFor="amountPerMinute">
+              Amount Per Minute (required)
+            </label>
             <br />
             {getFieldDecorator('amountPerMinute', {
               rules: [{ required: true, message: 'Required' }],
@@ -150,7 +152,7 @@ class RateCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherId">Teacher</label>
+            <label htmlFor="teacherId">Teacher (required)</label>
             <br />
             {getFieldDecorator('teacherId', {
               rules: [{ required: true, message: 'Required' }],
@@ -158,7 +160,7 @@ class RateCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherSkillId">Teacher Skill</label>
+            <label htmlFor="teacherSkillId">Teacher Skill (required)</label>
             <br />
             {getFieldDecorator('teacherSkillId', {
               rules: [{ required: true, message: 'Required' }],
@@ -189,5 +191,5 @@ export const WrappedRateCreateComponent = Form.create({ name: 'Rate Create' })(
 
 
 /*<Codenesium>
-    <Hash>c6cf2f2f30feb8966ff37306be7fbad9</Hash>
+    <Hash>c39c2dbda220b149447fc3051dca4b31</Hash>
 </Codenesium>*/

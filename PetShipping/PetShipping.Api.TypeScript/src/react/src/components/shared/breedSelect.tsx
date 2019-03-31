@@ -94,7 +94,9 @@ export class BreedSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Breed</label>
+          <label htmlFor={this.props.propertyName}>
+            Breed {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class BreedSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ce0450fbf3ee5af121e0afaccaaf512a</Hash>
+    <Hash>1b74f1c5c4d83b57358d242d0453f3dd</Hash>
 </Codenesium>*/

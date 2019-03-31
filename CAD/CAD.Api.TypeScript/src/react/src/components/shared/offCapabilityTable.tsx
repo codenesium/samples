@@ -127,7 +127,7 @@ export class OffCapabilityTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class OffCapabilityTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class OffCapabilityTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>06d05102afd5e3c4920edfbe80197fc1</Hash>
+    <Hash>76bd6a127f8427aa690ccfd03a761c7b</Hash>
 </Codenesium>*/

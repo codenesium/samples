@@ -37,7 +37,6 @@ namespace CADNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.CallId == query.ToInt() ||
 				                  x.DateCreated == query.ToDateTime() ||
-				                  x.Id == query.ToInt() ||
 				                  x.NoteText.StartsWith(query) ||
 				                  x.OfficerId == query.ToInt(),
 				                  limit,
@@ -132,5 +131,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b4cf1f53ffe698b2491f4d43ed62a314</Hash>
+    <Hash>32893bb70a38449f7e1e7b642149fda9</Hash>
 </Codenesium>*/

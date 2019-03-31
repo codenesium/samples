@@ -94,7 +94,9 @@ export class CommentSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Comments</label>
+          <label htmlFor={this.props.propertyName}>
+            Comments {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class CommentSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>14150e668c56f9acdc3c4a78b5319f32</Hash>
+    <Hash>db203948239591c50298e731cfcc5942</Hash>
 </Codenesium>*/

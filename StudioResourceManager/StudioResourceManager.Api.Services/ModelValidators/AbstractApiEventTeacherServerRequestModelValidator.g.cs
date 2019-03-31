@@ -28,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void EventIdRules()
 		{
+			this.RuleFor(x => x.EventId).MustAsync(this.BeValidEventByEventId).When(x => !x?.EventId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void TeacherIdRules()
@@ -35,9 +36,9 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacherByTeacherId).When(x => !x?.TeacherId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		protected async Task<bool> BeValidEventById(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidEventByEventId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.EventTeacherRepository.EventById(id);
+			var record = await this.EventTeacherRepository.EventByEventId(id);
 
 			return record != null;
 		}
@@ -52,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff4d5871e5348eb9fe99d52d10f5932d</Hash>
+    <Hash>7dc2fc186b0d182395c1aca1dc55c9cc</Hash>
 </Codenesium>*/

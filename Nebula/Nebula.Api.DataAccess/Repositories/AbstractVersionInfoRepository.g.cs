@@ -36,8 +36,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.AppliedOn == query.ToNullableDateTime() ||
-				                  x.Description.StartsWith(query) ||
-				                  x.Version == query.ToLong(),
+				                  x.Description.StartsWith(query),
 				                  limit,
 				                  offset);
 			}
@@ -114,5 +113,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ab8bba0ead7071ccfef8f1a07e7386ee</Hash>
+    <Hash>fa6fb12f2c063391a0022381dd37f799</Hash>
 </Codenesium>*/

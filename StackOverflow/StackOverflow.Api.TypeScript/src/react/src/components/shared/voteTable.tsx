@@ -202,7 +202,7 @@ export class VoteTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -214,7 +214,7 @@ export class VoteTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -241,5 +241,5 @@ export class VoteTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1867a5bcfe1df8cd603789a1a40f7983</Hash>
+    <Hash>f8a8595dc18ada116bd01cac75050c05</Hash>
 </Codenesium>*/

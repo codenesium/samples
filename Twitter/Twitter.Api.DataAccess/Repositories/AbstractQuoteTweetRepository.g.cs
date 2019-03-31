@@ -37,7 +37,6 @@ namespace TwitterNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Content.StartsWith(query) ||
 				                  x.Date == query.ToDateTime() ||
-				                  x.QuoteTweetId == query.ToInt() ||
 				                  x.RetweeterUserId == query.ToInt() ||
 				                  x.SourceTweetId == query.ToInt() ||
 				                  x.Time == query.ToTimespan(),
@@ -145,5 +144,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8b5bb0642b35d58d13f0bdb45a71bf38</Hash>
+    <Hash>265e7c501a17b7e6b271bb3dbfe2446e</Hash>
 </Codenesium>*/

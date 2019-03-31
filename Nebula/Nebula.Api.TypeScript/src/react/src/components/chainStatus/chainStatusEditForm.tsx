@@ -195,7 +195,7 @@ class ChainStatusEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedChainStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4725208492e1ef988dfadbc7df386241</Hash>
+    <Hash>3d2de9429fbd82300e5175c245d78b61</Hash>
 </Codenesium>*/

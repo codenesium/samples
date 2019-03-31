@@ -94,7 +94,9 @@ export class LinkSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Link</label>
+          <label htmlFor={this.props.propertyName}>
+            Link {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class LinkSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0afeae5d68035234faabce56505f353f</Hash>
+    <Hash>13e3b33f830d16f46c6adb7430eb4073</Hash>
 </Codenesium>*/

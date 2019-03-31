@@ -127,7 +127,7 @@ export class PostTypeTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class PostTypeTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class PostTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e0473740f1799398a054ad3f3fd63599</Hash>
+    <Hash>1d4470f8cef37bfa444c560bae56f8b0</Hash>
 </Codenesium>*/

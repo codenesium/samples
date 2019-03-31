@@ -140,7 +140,7 @@ class PersonTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedPersonTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>770746015e77981351bb7661db2520f3</Hash>
+    <Hash>dee93ce95f5f29910af476b4d325f64e</Hash>
 </Codenesium>*/

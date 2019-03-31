@@ -140,7 +140,7 @@ class TransactionStatusCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedTransactionStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>50911097e65dfa6efe5451c773ad8ff0</Hash>
+    <Hash>1d25bab5e80bdc4de68130543bc79805</Hash>
 </Codenesium>*/

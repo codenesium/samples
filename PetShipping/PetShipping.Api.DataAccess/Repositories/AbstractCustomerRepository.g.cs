@@ -37,7 +37,6 @@ namespace PetShippingNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Email.StartsWith(query) ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Notes.StartsWith(query) ||
 				                  x.Phone.StartsWith(query),
@@ -127,5 +126,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f753953ff1af2451b529efc7da3f2945</Hash>
+    <Hash>2d787925525cca8bbcdad1b20c2efffa</Hash>
 </Codenesium>*/

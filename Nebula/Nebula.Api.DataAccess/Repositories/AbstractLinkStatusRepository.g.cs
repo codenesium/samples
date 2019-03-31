@@ -35,7 +35,6 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -132,5 +131,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c16ad7eeaa600688805fc600971ddaa</Hash>
+    <Hash>66cb7aa66db17ce5ed26f7dc8492ae94</Hash>
 </Codenesium>*/

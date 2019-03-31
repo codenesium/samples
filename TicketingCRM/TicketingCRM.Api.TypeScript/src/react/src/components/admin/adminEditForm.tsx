@@ -192,7 +192,7 @@ class AdminEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -203,7 +203,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -214,7 +214,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -225,7 +225,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -236,7 +236,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -247,7 +247,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username (required)</label>
             <br />
             {getFieldDecorator('username', {
               rules: [
@@ -281,5 +281,5 @@ export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(
 
 
 /*<Codenesium>
-    <Hash>987e72d7352dcf340f2b4177ff09a1ba</Hash>
+    <Hash>cfefac4bb847296ecc8cf22616f72450</Hash>
 </Codenesium>*/

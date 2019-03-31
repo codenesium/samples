@@ -141,7 +141,7 @@ class BadgeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="date">Date</label>
+            <label htmlFor="date">Date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -149,7 +149,7 @@ class BadgeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -191,5 +191,5 @@ export const WrappedBadgeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b3ec293f857332a2c7ff203574eebe9e</Hash>
+    <Hash>d6fc251c662b9ace45ce4eab370efa65</Hash>
 </Codenesium>*/

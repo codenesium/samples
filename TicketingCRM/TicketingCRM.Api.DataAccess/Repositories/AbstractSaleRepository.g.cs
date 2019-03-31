@@ -35,7 +35,6 @@ namespace TicketingCRMNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.IpAddress.StartsWith(query) ||
 				                  x.Notes.StartsWith(query) ||
 				                  x.SaleDate == query.ToDateTime() ||
@@ -140,5 +139,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb1c00fa1d444b8c2336f6a9009eed6d</Hash>
+    <Hash>2271ac0c19802c125ab81742e888cebf</Hash>
 </Codenesium>*/

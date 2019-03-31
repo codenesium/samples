@@ -171,7 +171,7 @@ export class FamilyTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -183,7 +183,7 @@ export class FamilyTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -210,5 +210,5 @@ export class FamilyTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ab573c7c527430744f354588fb6fb69f</Hash>
+    <Hash>6fc03ec975fef721183f22ddbbdc40b4</Hash>
 </Codenesium>*/

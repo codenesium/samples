@@ -94,7 +94,9 @@ export class LinkLogSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Link Log</label>
+          <label htmlFor={this.props.propertyName}>
+            Link Log {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class LinkLogSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e960b78ee17e97fb6887df1d1f6c0223</Hash>
+    <Hash>80e078afc18602fa499323a9287dfffb</Hash>
 </Codenesium>*/

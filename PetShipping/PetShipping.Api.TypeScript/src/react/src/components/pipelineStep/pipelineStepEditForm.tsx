@@ -197,7 +197,7 @@ class PipelineStepEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -247,5 +247,5 @@ export const WrappedPipelineStepEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dcd723a5e543f30f08f2582d083f274c</Hash>
+    <Hash>944a48c9c3f91671c9beaf3bd23c676c</Hash>
 </Codenesium>*/

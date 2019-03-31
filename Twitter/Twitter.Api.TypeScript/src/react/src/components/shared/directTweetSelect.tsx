@@ -94,7 +94,10 @@ export class DirectTweetSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class DirectTweetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>aef92292c31009aaba078964efffe570</Hash>
+    <Hash>ae73ce02403fbc9b812b814ed4b9c53f</Hash>
 </Codenesium>*/

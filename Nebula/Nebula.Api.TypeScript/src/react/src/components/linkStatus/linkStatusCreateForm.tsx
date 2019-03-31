@@ -140,7 +140,7 @@ class LinkStatusCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedLinkStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>26b72e60d06b09e65eadf5478dc12cab</Hash>
+    <Hash>252c0066c5c05d72dfe0cded7b810b35</Hash>
 </Codenesium>*/

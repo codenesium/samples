@@ -94,7 +94,9 @@ export class RateSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Rate</label>
+          <label htmlFor={this.props.propertyName}>
+            Rate {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class RateSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>de48af92da29bbf8587677c9621ad389</Hash>
+    <Hash>151d19fa625d41298dbc1b99095e5105</Hash>
 </Codenesium>*/

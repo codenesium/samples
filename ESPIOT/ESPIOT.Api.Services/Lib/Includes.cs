@@ -44,11 +44,25 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual bool DebugSendAuthEmailsToClient { get; set; }
 
-		public virtual string JwtSigningKey { get; set; }
+		public virtual JwtSettings JwtSettings { get; set; }
 
-		public virtual string JwtIssuer { get; set; }
+		public virtual StripeSettings StripeSettings { get; set; }
+	}
 
-		public virtual string JwtAudience { get; set; }
+	public class JwtSettings
+	{
+		public virtual string SigningKey { get; set; }
+
+		public virtual string Issuer { get; set; }
+
+		public virtual string Audience { get; set; }
+	}
+
+	public class StripeSettings
+	{
+		public virtual string SecretKey { get; set; }
+
+		public virtual string PublishableKey { get; set; }
 	}
 
 	public static class ValidationResponseFactory<T>
@@ -150,6 +164,25 @@ namespace ESPIOTNS.Api.Services
 		}
 	}
 
+	public interface IAuthService
+	{
+		Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail);
+
+		Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model, string currentEmail);
+
+		Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email);
+
+		Task<AuthResponse> Login(LoginRequestModel model);
+
+		Task<AuthResponse> Register(RegisterRequestModel model);
+
+		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
+
+		Task<AuthResponse> ResetPassword(ResetPasswordRequestModel model);
+
+		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
+	}
+
 	public partial class AuthService : IAuthService
 	{
 		private readonly ApiSettings apiSettings;
@@ -180,12 +213,22 @@ namespace ESPIOTNS.Api.Services
 			{
 				if (this.userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
 				{
+					IList<Claim> claims = await this.userManager.GetClaimsAsync(user);
+
+					IList<string> roles = await this.userManager.GetRolesAsync(user);
+
+					foreach (string role in roles)
+					{
+						claims.Add(new Claim(ClaimTypes.Role, role));
+					}
+
 					string token = this.jwtHelper.GenerateBearerToken(
-						this.apiSettings.JwtSigningKey,
-						this.apiSettings.JwtAudience,
-						this.apiSettings.JwtIssuer,
+						this.apiSettings.JwtSettings.SigningKey,
+						this.apiSettings.JwtSettings.Audience,
+						this.apiSettings.JwtSettings.Issuer,
 						user.Id,
-						user.Email);
+						user.Email,
+						claims);
 
 					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponseWithToken(token);
 				}
@@ -220,7 +263,7 @@ namespace ESPIOTNS.Api.Services
 
 						string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmregistration/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
 
-						string command = "Click the link to complete registration.";
+						string command = "Click this link to complete registration";
 
 						string email = this.FormatLink(command, confirmationLink);
 
@@ -265,7 +308,7 @@ namespace ESPIOTNS.Api.Services
 
 				string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmpasswordreset/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
 
-				string command = "Click the link to reset your password.";
+				string command = "Click this link to reset your password";
 
 				string email = this.FormatLink(command, confirmationLink);
 
@@ -282,29 +325,6 @@ namespace ESPIOTNS.Api.Services
 			}
 		}
 
-		public async Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email)
-		{
-			AuthUser user = await this.userManager.FindByEmailAsync(email);
-
-			if (user == null)
-			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
-			}
-			else
-			{
-				IdentityResult result = await this.userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
-				if (result.Succeeded)
-				{
-					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
-				}
-				else
-				{
-					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(result, AuthErrorCodes.UnableToChangePassword);
-				}
-			}
-		}
-
 		public async Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail)
 		{
 			AuthUser user = await this.userManager.FindByEmailAsync(currentEmail);
@@ -317,9 +337,13 @@ namespace ESPIOTNS.Api.Services
 			{
 				if (this.userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
 				{
+					user.NewEmail = model.NewEmail;
+
+					await this.userManager.UpdateAsync(user);
+
 					string confirmationToken = await this.userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
 
-					string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/changeemail/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
+					string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmchangeemail/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
 
 					string command = "Click the link to change your email";
 
@@ -353,7 +377,11 @@ namespace ESPIOTNS.Api.Services
 			}
 			else
 			{
-				IdentityResult result = await this.userManager.ChangeEmailAsync(user, model.NewEmail, System.Net.WebUtility.UrlDecode(model.Token));
+				IdentityResult result = await this.userManager.ChangeEmailAsync(user, user.NewEmail, System.Net.WebUtility.UrlDecode(model.Token));
+
+				user.NewEmail = string.Empty;
+
+				await this.userManager.UpdateAsync(user);
 
 				if (result.Succeeded)
 				{
@@ -362,6 +390,29 @@ namespace ESPIOTNS.Api.Services
 				else
 				{
 					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(result, AuthErrorCodes.UnableToConfirmRegistration);
+				}
+			}
+		}
+
+		public async Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email)
+		{
+			AuthUser user = await this.userManager.FindByEmailAsync(email);
+
+			if (user == null)
+			{
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+			}
+			else
+			{
+				IdentityResult result = await this.userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+				if (result.Succeeded)
+				{
+					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+				}
+				else
+				{
+					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(result, AuthErrorCodes.UnableToChangePassword);
 				}
 			}
 		}
@@ -420,12 +471,12 @@ namespace ESPIOTNS.Api.Services
 
 	public interface IJWTHelper
 	{
-		string GenerateBearerToken(string signingKey, string audience, string issuer, string id, string email);
+		string GenerateBearerToken(string signingKey, string audience, string issuer, string userId, string email, IList<Claim> claims);
 	}
 
 	public class JWTHelper : IJWTHelper
 	{
-		public string GenerateBearerToken(string signingKey, string audience, string issuer, string id, string email)
+		public string GenerateBearerToken(string signingKey, string audience, string issuer, string userId, string email, IList<Claim> claims)
 		{
 			var tokenHandler = new JwtSecurityTokenHandler();
 			byte[] key = Encoding.UTF8.GetBytes(signingKey);
@@ -433,7 +484,7 @@ namespace ESPIOTNS.Api.Services
 			{
 				Subject = new ClaimsIdentity(new Claim[]
 				{
-					new Claim(ClaimTypes.Name, id),
+					new Claim(ClaimTypes.Name, userId),
 					new Claim(ClaimTypes.Email, email)
 				}),
 				Audience = audience,
@@ -442,94 +493,18 @@ namespace ESPIOTNS.Api.Services
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 			};
 
+			foreach (Claim claim in claims)
+			{
+				tokenDescriptor.Subject.AddClaim(claim);
+			}
+
 			SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
 			return tokenHandler.WriteToken(token);
 		}
 	}
-
-	public class ConfirmPasswordResetRequestModel
-	{
-		public string Id { get; set; }
-
-		public string Token { get; set; }
-
-		public string NewPassword { get; set; }
-	}
-
-	public class ConfirmRegistrationRequestModel
-	{
-		public string Id { get; set; }
-
-		public string Token { get; set; }
-	}
-
-	public interface IAuthService
-	{
-		Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail);
-
-		Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model);
-
-		Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email);
-
-		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
-
-		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
-
-		Task<AuthResponse> Login(LoginRequestModel model);
-
-		Task<AuthResponse> Register(RegisterRequestModel model);
-
-		Task<AuthResponse> ResetPassword(ResetPasswordRequestModel model);
-	}
-
-	public class LoginRequestModel
-	{
-		public string Email { get; set; }
-
-		public string Password { get; set; }
-
-		public void SetProperties(string email, string password)
-		{
-			this.Email = email;
-			this.Password = password;
-		}
-	}
-
-	public class RegisterRequestModel
-	{
-		public string Email { get; set; }
-
-		public string Password { get; set; }
-	}
-
-	public class ResetPasswordRequestModel
-	{
-		public string Email { get; set; }
-	}
-
-	public class ChangePasswordRequestModel
-	{
-		public string CurrentPassword { get; set; }
-
-		public string NewPassword { get; set; }
-	}
-
-	public class ChangeEmailRequestModel
-	{
-		public string NewEmail { get; set; }
-
-		public string Password { get; set; }
-
-	}
-
-	public class ConfirmChangeEmailRequestModel
-	{
-		public string NewEmail { get; set; }
-		public string Token { get; set; }
-	}
 }
 
 /*<Codenesium>
-    <Hash>62c22a80a8d022453b2d0a097a09cca0</Hash>
+    <Hash>45a26e2444ad814a34a813bc9c929a92</Hash>
 </Codenesium>*/

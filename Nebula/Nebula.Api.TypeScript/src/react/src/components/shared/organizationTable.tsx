@@ -127,7 +127,7 @@ export class OrganizationTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class OrganizationTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class OrganizationTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7c8246b2703a0f01b13c6965a25c311b</Hash>
+    <Hash>e6ae77f62f52ca7dfd37cbe691446d9d</Hash>
 </Codenesium>*/

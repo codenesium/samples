@@ -225,7 +225,7 @@ export class PostHistoryTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -237,7 +237,7 @@ export class PostHistoryTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -264,5 +264,5 @@ export class PostHistoryTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4ac00ccc9c859c8ba55c052dec69f2b4</Hash>
+    <Hash>3304ea97cbe76a16a06079a4f3914cc2</Hash>
 </Codenesium>*/

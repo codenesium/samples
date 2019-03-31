@@ -94,7 +94,9 @@ export class PostTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Post Types</label>
+          <label htmlFor={this.props.propertyName}>
+            Post Types {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class PostTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6a223e58ea393257b9abc5ece3d37589</Hash>
+    <Hash>b157854c8fdf8ba74e9698f420c938dd</Hash>
 </Codenesium>*/

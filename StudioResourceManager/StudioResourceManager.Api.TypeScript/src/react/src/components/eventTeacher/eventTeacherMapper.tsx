@@ -1,5 +1,6 @@
 import * as Api from '../../api/models';
 import EventTeacherViewModel from './eventTeacherViewModel';
+import EventViewModel from '../event/eventViewModel';
 import TeacherViewModel from '../teacher/teacherViewModel';
 export default class EventTeacherMapper {
   mapApiResponseToViewModel(
@@ -8,6 +9,20 @@ export default class EventTeacherMapper {
     let response = new EventTeacherViewModel();
     response.setProperties(dto.eventId, dto.id, dto.teacherId);
 
+    if (dto.eventIdNavigation != null) {
+      response.eventIdNavigation = new EventViewModel();
+      response.eventIdNavigation.setProperties(
+        dto.eventIdNavigation.actualEndDate,
+        dto.eventIdNavigation.actualStartDate,
+        dto.eventIdNavigation.billAmount,
+        dto.eventIdNavigation.eventStatusId,
+        dto.eventIdNavigation.id,
+        dto.eventIdNavigation.scheduledEndDate,
+        dto.eventIdNavigation.scheduledStartDate,
+        dto.eventIdNavigation.studentNotes,
+        dto.eventIdNavigation.teacherNotes
+      );
+    }
     if (dto.teacherIdNavigation != null) {
       response.teacherIdNavigation = new TeacherViewModel();
       response.teacherIdNavigation.setProperties(
@@ -35,5 +50,5 @@ export default class EventTeacherMapper {
 
 
 /*<Codenesium>
-    <Hash>84292c8a3db216a0c05b57e861688185</Hash>
+    <Hash>1bb6781feef0099d8e0bcaf32b25e059</Hash>
 </Codenesium>*/

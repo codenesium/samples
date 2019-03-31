@@ -94,7 +94,9 @@ export class VehicleSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Vehicle</label>
+          <label htmlFor={this.props.propertyName}>
+            Vehicle {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class VehicleSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>36f306c3e2935f2209dbeb4e4baf02ce</Hash>
+    <Hash>09d655fed129fde223016036049a5e38</Hash>
 </Codenesium>*/

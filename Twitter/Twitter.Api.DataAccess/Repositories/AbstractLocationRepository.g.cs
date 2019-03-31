@@ -37,7 +37,6 @@ namespace TwitterNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.GpsLat == query.ToInt() ||
 				                  x.GpsLong == query.ToInt() ||
-				                  x.LocationId == query.ToInt() ||
 				                  x.LocationName.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -134,5 +133,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>050f12c32d8c185ea512711f5d803c9f</Hash>
+    <Hash>242bfaaddc8b26b3be28c144f654bbe4</Hash>
 </Codenesium>*/

@@ -94,7 +94,10 @@ export class MessengerSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class MessengerSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>e907929b58adb4dbb3b88e291f16a786</Hash>
+    <Hash>7870affcbcdd1377b05135b5df72c4df</Hash>
 </Codenesium>*/

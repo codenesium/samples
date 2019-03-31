@@ -142,7 +142,7 @@ class CallPersonCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="note">Note</label>
+            <label htmlFor="note">Note (optional)</label>
             <br />
             {getFieldDecorator('note', {
               rules: [{ max: 8000, message: 'Exceeds max length of 8000' }],
@@ -189,5 +189,5 @@ export const WrappedCallPersonCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9855c9b42d676ee2f920b49969a01165</Hash>
+    <Hash>490b3234e6e63ddfea960fa1a10b35ce</Hash>
 </Codenesium>*/

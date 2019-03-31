@@ -127,7 +127,7 @@ export class ChainStatusTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class ChainStatusTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class ChainStatusTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>31e34bff5e51eabef87cba60c5268d2b</Hash>
+    <Hash>1596d77eeb6bb1d97eefb44436ad541a</Hash>
 </Codenesium>*/

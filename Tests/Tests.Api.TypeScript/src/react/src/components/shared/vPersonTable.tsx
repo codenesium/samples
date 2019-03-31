@@ -127,7 +127,7 @@ export class VPersonTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class VPersonTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class VPersonTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>86c66a14c3afc397e370f7a0528d8cd0</Hash>
+    <Hash>56e25f8ff224e9288b26eef251ae5cf7</Hash>
 </Codenesium>*/

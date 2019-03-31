@@ -40,7 +40,6 @@ namespace TicketingCRMNS.Api.DataAccess
 				                  x.AdminId == query.ToInt() ||
 				                  x.Email.StartsWith(query) ||
 				                  x.Facebook.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
 				                  x.ProvinceId == query.ToInt() ||
@@ -149,5 +148,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ed53c0d23f2cbe02fd23340d7a48a11</Hash>
+    <Hash>0c41aedf3cae995faf5a3fe63c875e2d</Hash>
 </Codenesium>*/

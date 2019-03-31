@@ -156,7 +156,7 @@ export class CountryRequirementTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -168,7 +168,7 @@ export class CountryRequirementTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -195,5 +195,5 @@ export class CountryRequirementTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c370fb72a22d74f7d83c88f6fb7b3a68</Hash>
+    <Hash>071bcec4c6e6366f89bf8aa50cf4b208</Hash>
 </Codenesium>*/

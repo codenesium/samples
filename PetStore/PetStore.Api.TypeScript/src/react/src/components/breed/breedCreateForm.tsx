@@ -141,7 +141,7 @@ class BreedCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -183,5 +183,5 @@ export const WrappedBreedCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>45bef3a08605bbf8581fc40486ae22d4</Hash>
+    <Hash>25a8cf8a43a954cc2cc81325fba14a67</Hash>
 </Codenesium>*/

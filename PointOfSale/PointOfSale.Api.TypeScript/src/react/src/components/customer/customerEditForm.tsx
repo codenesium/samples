@@ -195,7 +195,7 @@ class CustomerEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -206,7 +206,7 @@ class CustomerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">firstName</label>
+            <label htmlFor="firstName">firstName (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -217,7 +217,7 @@ class CustomerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">lastName</label>
+            <label htmlFor="lastName">lastName (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -228,7 +228,7 @@ class CustomerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">phone</label>
+            <label htmlFor="phone">phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -262,5 +262,5 @@ export const WrappedCustomerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6bd809cae1fa79046bbbd83b5b514dd8</Hash>
+    <Hash>c1bebdb1c285ad1c2bea55afd45c05af</Hash>
 </Codenesium>*/

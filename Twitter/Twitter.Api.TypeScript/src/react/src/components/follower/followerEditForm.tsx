@@ -196,7 +196,7 @@ class FollowerEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="blocked">blocked</label>
+            <label htmlFor="blocked">blocked (required)</label>
             <br />
             {getFieldDecorator('blocked', {
               rules: [
@@ -207,7 +207,7 @@ class FollowerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateFollowed">date_followed</label>
+            <label htmlFor="dateFollowed">date_followed (required)</label>
             <br />
             {getFieldDecorator('dateFollowed', {
               rules: [{ required: true, message: 'Required' }],
@@ -215,7 +215,9 @@ class FollowerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="followRequestStatu">follow_request_status</label>
+            <label htmlFor="followRequestStatu">
+              follow_request_status (required)
+            </label>
             <br />
             {getFieldDecorator('followRequestStatu', {
               rules: [
@@ -226,7 +228,7 @@ class FollowerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="followedUserId">followed_user_id</label>
+            <label htmlFor="followedUserId">followed_user_id (required)</label>
             <br />
             {getFieldDecorator('followedUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -234,7 +236,9 @@ class FollowerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="followingUserId">following_user_id</label>
+            <label htmlFor="followingUserId">
+              following_user_id (required)
+            </label>
             <br />
             {getFieldDecorator('followingUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -242,7 +246,7 @@ class FollowerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="muted">muted</label>
+            <label htmlFor="muted">muted (required)</label>
             <br />
             {getFieldDecorator('muted', {
               rules: [
@@ -276,5 +280,5 @@ export const WrappedFollowerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>25e0fa01c72fec3b9bb2da40eddfb370</Hash>
+    <Hash>242a9718474cb180144113ba744ff1b9</Hash>
 </Codenesium>*/

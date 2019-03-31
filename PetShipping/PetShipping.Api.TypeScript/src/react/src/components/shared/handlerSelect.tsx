@@ -94,7 +94,9 @@ export class HandlerSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Handler</label>
+          <label htmlFor={this.props.propertyName}>
+            Handler {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class HandlerSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0e67b0bfe4d1de5df7aeb1ffcbdf581b</Hash>
+    <Hash>6502e64d3563fe0c15c15d48fac95ac9</Hash>
 </Codenesium>*/

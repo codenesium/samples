@@ -202,7 +202,7 @@ class FileEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCreated">DateCreated</label>
+            <label htmlFor="dateCreated">DateCreated (required)</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
@@ -212,7 +212,7 @@ class FileEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Description (optional)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [{ max: 255, message: 'Exceeds max length of 255' }],
@@ -220,7 +220,7 @@ class FileEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="expiration">Expiration</label>
+            <label htmlFor="expiration">Expiration (required)</label>
             <br />
             {getFieldDecorator('expiration', {
               rules: [{ required: true, message: 'Required' }],
@@ -228,7 +228,7 @@ class FileEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="extension">Extension</label>
+            <label htmlFor="extension">Extension (required)</label>
             <br />
             {getFieldDecorator('extension', {
               rules: [
@@ -239,7 +239,7 @@ class FileEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="externalId">ExternalId</label>
+            <label htmlFor="externalId">ExternalId (required)</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
@@ -247,7 +247,7 @@ class FileEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fileSizeInByte">FileSizeInByte</label>
+            <label htmlFor="fileSizeInByte">FileSizeInByte (required)</label>
             <br />
             {getFieldDecorator('fileSizeInByte', {
               rules: [{ required: true, message: 'Required' }],
@@ -263,7 +263,7 @@ class FileEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location">Location (required)</label>
             <br />
             {getFieldDecorator('location', {
               rules: [
@@ -274,7 +274,7 @@ class FileEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="privateKey">PrivateKey</label>
+            <label htmlFor="privateKey">PrivateKey (required)</label>
             <br />
             {getFieldDecorator('privateKey', {
               rules: [
@@ -285,7 +285,7 @@ class FileEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="publicKey">PublicKey</label>
+            <label htmlFor="publicKey">PublicKey (required)</label>
             <br />
             {getFieldDecorator('publicKey', {
               rules: [
@@ -319,5 +319,5 @@ export const WrappedFileEditComponent = Form.create({ name: 'File Edit' })(
 
 
 /*<Codenesium>
-    <Hash>4528198efc08b4d15dbfe2f080e96fbb</Hash>
+    <Hash>59a8967ab7f551bd4e8b4e988c476e76</Hash>
 </Codenesium>*/

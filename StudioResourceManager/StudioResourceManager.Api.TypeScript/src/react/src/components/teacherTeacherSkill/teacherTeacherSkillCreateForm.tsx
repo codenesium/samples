@@ -141,6 +141,14 @@ class TeacherTeacherSkillCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
+          <TeacherSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Teachers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="teacherId"
+            required={true}
+            selectedValue={this.state.model!.teacherId}
+          />
+
           <TeacherSkillSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.TeacherSkills}
             getFieldDecorator={this.props.form.getFieldDecorator}
@@ -173,5 +181,5 @@ export const WrappedTeacherTeacherSkillCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f355d23252d0683c96b51ad69aeec266</Hash>
+    <Hash>65054e1b0f0211c4d500f79d8f37a030</Hash>
 </Codenesium>*/

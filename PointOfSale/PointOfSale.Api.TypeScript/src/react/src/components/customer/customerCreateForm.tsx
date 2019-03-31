@@ -140,7 +140,7 @@ class CustomerCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -151,7 +151,7 @@ class CustomerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">firstName</label>
+            <label htmlFor="firstName">firstName (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -162,7 +162,7 @@ class CustomerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">lastName</label>
+            <label htmlFor="lastName">lastName (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -173,7 +173,7 @@ class CustomerCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">phone</label>
+            <label htmlFor="phone">phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -207,5 +207,5 @@ export const WrappedCustomerCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f25315bcb81d214992dc19d4c5dcd95e</Hash>
+    <Hash>6e363cfbf88e39556f754f6142b90472</Hash>
 </Codenesium>*/

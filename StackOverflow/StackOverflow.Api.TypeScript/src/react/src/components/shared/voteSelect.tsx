@@ -94,7 +94,9 @@ export class VoteSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Votes</label>
+          <label htmlFor={this.props.propertyName}>
+            Votes {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class VoteSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>84fb326a9b910b9a72f165603ef3ee50</Hash>
+    <Hash>b4f45be2b4f42b94b85b58b588aac25c</Hash>
 </Codenesium>*/

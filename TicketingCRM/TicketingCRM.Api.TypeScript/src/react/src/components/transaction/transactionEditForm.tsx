@@ -196,7 +196,7 @@ class TransactionEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="amount">Amount</label>
+            <label htmlFor="amount">Amount (required)</label>
             <br />
             {getFieldDecorator('amount', {
               rules: [{ required: true, message: 'Required' }],
@@ -205,7 +205,7 @@ class TransactionEditComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="gatewayConfirmationNumber">
-              Gateway Confirmation Number
+              Gateway Confirmation Number (required)
             </label>
             <br />
             {getFieldDecorator('gatewayConfirmationNumber', {
@@ -248,5 +248,5 @@ export const WrappedTransactionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a91fa3f2a1e738cb7b013fc567865879</Hash>
+    <Hash>d06c83dd502f412116d5660f5a401b8a</Hash>
 </Codenesium>*/

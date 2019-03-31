@@ -39,7 +39,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				                  x.ActualStartDate == query.ToNullableDateTime() ||
 				                  x.BillAmount.ToNullableDecimal() == query.ToNullableDecimal() ||
 				                  x.EventStatusId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.ScheduledEndDate == query.ToNullableDateTime() ||
 				                  x.ScheduledStartDate == query.ToNullableDateTime() ||
 				                  x.StudentNotes.StartsWith(query) ||
@@ -110,14 +109,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			       .Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
 		}
 
-		// Foreign key reference to this table EventTeacher via id.
-		public async virtual Task<List<EventTeacher>> EventTeachersById(int id, int limit = int.MaxValue, int offset = 0)
+		// Foreign key reference to this table EventTeacher via eventId.
+		public async virtual Task<List<EventTeacher>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventTeacher>()
-			       .Include(x => x.IdNavigation)
+			       .Include(x => x.EventIdNavigation)
 			       .Include(x => x.TeacherIdNavigation)
 
-			       .Where(x => x.Id == id).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
+			       .Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
 		}
 
 		// Foreign key reference to table EventStatus via eventStatusId.
@@ -154,5 +153,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>058c188846dccf7dc171dfda97551aff</Hash>
+    <Hash>5e82a028802af448f57f8231a7230444</Hash>
 </Codenesium>*/

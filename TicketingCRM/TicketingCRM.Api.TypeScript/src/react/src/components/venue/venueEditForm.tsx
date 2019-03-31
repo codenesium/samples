@@ -194,7 +194,7 @@ class VenueEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="address1">Address1</label>
+            <label htmlFor="address1">Address1 (required)</label>
             <br />
             {getFieldDecorator('address1', {
               rules: [
@@ -205,7 +205,7 @@ class VenueEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="address2">Address2</label>
+            <label htmlFor="address2">Address2 (required)</label>
             <br />
             {getFieldDecorator('address2', {
               rules: [
@@ -224,7 +224,7 @@ class VenueEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -235,7 +235,7 @@ class VenueEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="facebook">Facebook</label>
+            <label htmlFor="facebook">Facebook (required)</label>
             <br />
             {getFieldDecorator('facebook', {
               rules: [
@@ -246,7 +246,7 @@ class VenueEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -257,7 +257,7 @@ class VenueEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -276,7 +276,7 @@ class VenueEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="website">Website</label>
+            <label htmlFor="website">Website (required)</label>
             <br />
             {getFieldDecorator('website', {
               rules: [
@@ -310,5 +310,5 @@ export const WrappedVenueEditComponent = Form.create({ name: 'Venue Edit' })(
 
 
 /*<Codenesium>
-    <Hash>91c0e327cd95b6cf4f5a290aa1252de0</Hash>
+    <Hash>7d19a3f1326407a75ae330b0f4aac46e</Hash>
 </Codenesium>*/

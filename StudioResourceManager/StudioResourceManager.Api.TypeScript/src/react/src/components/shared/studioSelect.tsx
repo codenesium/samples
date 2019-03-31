@@ -94,7 +94,9 @@ export class StudioSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Studios</label>
+          <label htmlFor={this.props.propertyName}>
+            Studios {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class StudioSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f3521487b75905fdd6767114029bb02a</Hash>
+    <Hash>638764f7b3c2e03d944aa20c07f4b59f</Hash>
 </Codenesium>*/

@@ -165,7 +165,7 @@ export class DirectTweetTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -177,7 +177,7 @@ export class DirectTweetTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -204,5 +204,5 @@ export class DirectTweetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b49513181c9e7cad935f768b547c06e0</Hash>
+    <Hash>6b01e2c6de300659564f42d117e91d9e</Hash>
 </Codenesium>*/

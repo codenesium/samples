@@ -94,7 +94,10 @@ export class SubscriptionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class SubscriptionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>49dfe865d5e636c89d4c77ebbc22d543</Hash>
+    <Hash>7f59ad4190e02d95a36dd691c463bfc2</Hash>
 </Codenesium>*/

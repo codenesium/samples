@@ -115,6 +115,15 @@ class SpaceSpaceFeatureDetailComponent extends React.Component<
                 )}
               </p>
             </div>
+            <div style={{ marginBottom: '10px' }}>
+              <h3>Space</h3>
+              <p>
+                {String(
+                  this.state.model!.spaceIdNavigation &&
+                    this.state.model!.spaceIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
           </div>
           {message}
         </div>
@@ -131,5 +140,5 @@ export const WrappedSpaceSpaceFeatureDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>11b8d1d100098d4a5f7714888bbb1f03</Hash>
+    <Hash>9885139c125d6bd0232adbb00b7c8e54</Hash>
 </Codenesium>*/

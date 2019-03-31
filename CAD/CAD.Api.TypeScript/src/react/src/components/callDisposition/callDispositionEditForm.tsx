@@ -195,7 +195,7 @@ class CallDispositionEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedCallDispositionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>37a55f3314f9a1e99de99a63fd9f7f8b</Hash>
+    <Hash>abb4ad075f191c349d213cbba9e02c28</Hash>
 </Codenesium>*/

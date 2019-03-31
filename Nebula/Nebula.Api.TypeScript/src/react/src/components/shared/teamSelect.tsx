@@ -94,7 +94,9 @@ export class TeamSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Team</label>
+          <label htmlFor={this.props.propertyName}>
+            Team {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class TeamSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cfeec2d550b5919362379704ced3006e</Hash>
+    <Hash>56ddcd34b78d9a435477422972c5ce00</Hash>
 </Codenesium>*/

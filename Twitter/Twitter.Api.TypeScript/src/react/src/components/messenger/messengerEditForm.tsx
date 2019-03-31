@@ -197,7 +197,7 @@ class MessengerEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (optional)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [],
@@ -205,7 +205,7 @@ class MessengerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fromUserId">from_user_id</label>
+            <label htmlFor="fromUserId">from_user_id (optional)</label>
             <br />
             {getFieldDecorator('fromUserId', {
               rules: [],
@@ -213,7 +213,7 @@ class MessengerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="messageId">message_id</label>
+            <label htmlFor="messageId">message_id (optional)</label>
             <br />
             {getFieldDecorator('messageId', {
               rules: [],
@@ -221,7 +221,7 @@ class MessengerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (optional)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [],
@@ -229,7 +229,7 @@ class MessengerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="toUserId">to_user_id</label>
+            <label htmlFor="toUserId">to_user_id (required)</label>
             <br />
             {getFieldDecorator('toUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -237,7 +237,7 @@ class MessengerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userId">user_id</label>
+            <label htmlFor="userId">user_id (optional)</label>
             <br />
             {getFieldDecorator('userId', {
               rules: [],
@@ -268,5 +268,5 @@ export const WrappedMessengerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>182f51c413df43db66a875682e09efcc</Hash>
+    <Hash>0efa899dd9477f6184eab2bd0ed8dc60</Hash>
 </Codenesium>*/

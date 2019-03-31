@@ -107,6 +107,15 @@ class EventStudentDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
+              <h3>Event</h3>
+              <p>
+                {String(
+                  this.state.model!.eventIdNavigation &&
+                    this.state.model!.eventIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>Student</h3>
               <p>
                 {String(
@@ -131,5 +140,5 @@ export const WrappedEventStudentDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a2d70f8d5dcadaee9be1f6c000b46404</Hash>
+    <Hash>9972323e7cce082de57e65c7a764e758</Hash>
 </Codenesium>*/

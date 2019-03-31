@@ -168,7 +168,7 @@ class CallCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="callString">Call String</label>
+            <label htmlFor="callString">Call String (required)</label>
             <br />
             {getFieldDecorator('callString', {
               rules: [
@@ -187,7 +187,7 @@ class CallCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCleared">Date Cleared</label>
+            <label htmlFor="dateCleared">Date Cleared (optional)</label>
             <br />
             {getFieldDecorator('dateCleared', {
               rules: [],
@@ -197,7 +197,7 @@ class CallCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateCreated">Date Created</label>
+            <label htmlFor="dateCreated">Date Created (required)</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
@@ -207,7 +207,7 @@ class CallCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateDispatched">Date Dispatched</label>
+            <label htmlFor="dateDispatched">Date Dispatched (optional)</label>
             <br />
             {getFieldDecorator('dateDispatched', {
               rules: [],
@@ -220,7 +220,9 @@ class CallCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="quickCallNumber">Quick Call Number</label>
+            <label htmlFor="quickCallNumber">
+              Quick Call Number (required)
+            </label>
             <br />
             {getFieldDecorator('quickCallNumber', {
               rules: [{ required: true, message: 'Required' }],
@@ -251,5 +253,5 @@ export const WrappedCallCreateComponent = Form.create({ name: 'Call Create' })(
 
 
 /*<Codenesium>
-    <Hash>0de5e158b7cd88164f3cd3f4cb121d14</Hash>
+    <Hash>d115ef9953d058621da04f74d8a9ce61</Hash>
 </Codenesium>*/

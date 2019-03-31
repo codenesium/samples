@@ -140,7 +140,7 @@ class VoteTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedVoteTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7c192f355b467436312cecbfdbf28082</Hash>
+    <Hash>cf0ffc68c4074452c1e4ba33f6016ccb</Hash>
 </Codenesium>*/

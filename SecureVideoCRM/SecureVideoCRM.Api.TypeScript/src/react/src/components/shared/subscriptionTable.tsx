@@ -136,7 +136,7 @@ export class SubscriptionTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -148,7 +148,7 @@ export class SubscriptionTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -175,5 +175,5 @@ export class SubscriptionTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8eba72edbd3fa31036670d37bfcbea8a</Hash>
+    <Hash>0e61177afd1fe8ebe1431d5edc4ded95</Hash>
 </Codenesium>*/

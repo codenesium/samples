@@ -35,7 +35,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Notes.StartsWith(query) ||
 				                  x.PrimaryContactEmail.StartsWith(query) ||
 				                  x.PrimaryContactFirstName.StartsWith(query) ||
@@ -127,5 +126,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>013b52c4fdefc08386dd56f357a49764</Hash>
+    <Hash>a0bc691451f7cfb79b3145479eacf459</Hash>
 </Codenesium>*/

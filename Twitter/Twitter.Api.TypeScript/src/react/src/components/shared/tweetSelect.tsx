@@ -94,7 +94,10 @@ export class TweetSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class TweetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7bc9071338ff676c9c6aa8ab954206fc</Hash>
+    <Hash>afee4a049dd8ec01fadc37b12f8d68c4</Hash>
 </Codenesium>*/

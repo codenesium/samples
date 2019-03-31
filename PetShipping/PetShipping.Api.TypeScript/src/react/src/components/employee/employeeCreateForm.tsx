@@ -140,7 +140,7 @@ class EmployeeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -151,7 +151,7 @@ class EmployeeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isSalesPerson">Is Sales Person</label>
+            <label htmlFor="isSalesPerson">Is Sales Person (required)</label>
             <br />
             {getFieldDecorator('isSalesPerson', {
               rules: [],
@@ -160,7 +160,7 @@ class EmployeeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isShipper">Is Shipper</label>
+            <label htmlFor="isShipper">Is Shipper (required)</label>
             <br />
             {getFieldDecorator('isShipper', {
               rules: [],
@@ -169,7 +169,7 @@ class EmployeeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -203,5 +203,5 @@ export const WrappedEmployeeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>02f846514a94a5d657b9fc63922e60d6</Hash>
+    <Hash>f4732c5411f37badbc1c03ea943be616</Hash>
 </Codenesium>*/

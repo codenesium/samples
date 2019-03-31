@@ -127,7 +127,7 @@ export class VehicleTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class VehicleTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class VehicleTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>86f94ea77eb24ba76ecd095f0f739642</Hash>
+    <Hash>0c15abffc829dd56b8effb17f4a72343</Hash>
 </Codenesium>*/

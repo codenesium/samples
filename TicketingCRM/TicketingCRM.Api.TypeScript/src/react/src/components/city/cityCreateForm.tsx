@@ -141,7 +141,7 @@ class CityCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -183,5 +183,5 @@ export const WrappedCityCreateComponent = Form.create({ name: 'City Create' })(
 
 
 /*<Codenesium>
-    <Hash>e018a9f38e8bb03d09eba136efea6f0f</Hash>
+    <Hash>b98129ae9113671f65e5608e702d0bdc</Hash>
 </Codenesium>*/

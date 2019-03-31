@@ -140,7 +140,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="fieldBigInt">Field Big Int</label>
+            <label htmlFor="fieldBigInt">Field Big Int (required)</label>
             <br />
             {getFieldDecorator('fieldBigInt', {
               rules: [{ required: true, message: 'Required' }],
@@ -148,7 +148,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldBinary">Field Binary</label>
+            <label htmlFor="fieldBinary">Field Binary (required)</label>
             <br />
             {getFieldDecorator('fieldBinary', {
               rules: [
@@ -159,7 +159,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldBit">Field Bit</label>
+            <label htmlFor="fieldBit">Field Bit (required)</label>
             <br />
             {getFieldDecorator('fieldBit', {
               rules: [],
@@ -168,7 +168,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldChar">Field Char</label>
+            <label htmlFor="fieldChar">Field Char (required)</label>
             <br />
             {getFieldDecorator('fieldChar', {
               rules: [
@@ -179,7 +179,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDate">Field Date</label>
+            <label htmlFor="fieldDate">Field Date (required)</label>
             <br />
             {getFieldDecorator('fieldDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -187,7 +187,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTime">Field Date Time</label>
+            <label htmlFor="fieldDateTime">Field Date Time (required)</label>
             <br />
             {getFieldDecorator('fieldDateTime', {
               rules: [{ required: true, message: 'Required' }],
@@ -200,7 +200,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTime2">Field Date Time2</label>
+            <label htmlFor="fieldDateTime2">Field Date Time2 (required)</label>
             <br />
             {getFieldDecorator('fieldDateTime2', {
               rules: [{ required: true, message: 'Required' }],
@@ -213,7 +213,9 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDateTimeOffset">Field Date Time Offset</label>
+            <label htmlFor="fieldDateTimeOffset">
+              Field Date Time Offset (required)
+            </label>
             <br />
             {getFieldDecorator('fieldDateTimeOffset', {
               rules: [{ required: true, message: 'Required' }],
@@ -221,7 +223,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldDecimal">Field Decimal</label>
+            <label htmlFor="fieldDecimal">Field Decimal (required)</label>
             <br />
             {getFieldDecorator('fieldDecimal', {
               rules: [{ required: true, message: 'Required' }],
@@ -229,7 +231,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldFloat">Field Float</label>
+            <label htmlFor="fieldFloat">Field Float (required)</label>
             <br />
             {getFieldDecorator('fieldFloat', {
               rules: [{ required: true, message: 'Required' }],
@@ -237,7 +239,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldImage">Field Image</label>
+            <label htmlFor="fieldImage">Field Image (required)</label>
             <br />
             {getFieldDecorator('fieldImage', {
               rules: [{ required: true, message: 'Required' }],
@@ -245,7 +247,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldMoney">Field Money</label>
+            <label htmlFor="fieldMoney">Field Money (required)</label>
             <br />
             {getFieldDecorator('fieldMoney', {
               rules: [{ required: true, message: 'Required' }],
@@ -253,7 +255,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNChar">Field N Char</label>
+            <label htmlFor="fieldNChar">Field N Char (required)</label>
             <br />
             {getFieldDecorator('fieldNChar', {
               rules: [
@@ -264,7 +266,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNText">Field N Text</label>
+            <label htmlFor="fieldNText">Field N Text (required)</label>
             <br />
             {getFieldDecorator('fieldNText', {
               rules: [
@@ -278,7 +280,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNumeric">Field Numeric</label>
+            <label htmlFor="fieldNumeric">Field Numeric (required)</label>
             <br />
             {getFieldDecorator('fieldNumeric', {
               rules: [{ required: true, message: 'Required' }],
@@ -286,7 +288,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldNVarchar">Field N Varchar</label>
+            <label htmlFor="fieldNVarchar">Field N Varchar (required)</label>
             <br />
             {getFieldDecorator('fieldNVarchar', {
               rules: [
@@ -297,7 +299,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldReal">Field Real</label>
+            <label htmlFor="fieldReal">Field Real (required)</label>
             <br />
             {getFieldDecorator('fieldReal', {
               rules: [{ required: true, message: 'Required' }],
@@ -305,7 +307,9 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallDateTime">Field Small Date Time</label>
+            <label htmlFor="fieldSmallDateTime">
+              Field Small Date Time (required)
+            </label>
             <br />
             {getFieldDecorator('fieldSmallDateTime', {
               rules: [{ required: true, message: 'Required' }],
@@ -318,7 +322,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallInt">Field Small Int</label>
+            <label htmlFor="fieldSmallInt">Field Small Int (required)</label>
             <br />
             {getFieldDecorator('fieldSmallInt', {
               rules: [{ required: true, message: 'Required' }],
@@ -326,7 +330,9 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldSmallMoney">Field Small Money</label>
+            <label htmlFor="fieldSmallMoney">
+              Field Small Money (required)
+            </label>
             <br />
             {getFieldDecorator('fieldSmallMoney', {
               rules: [{ required: true, message: 'Required' }],
@@ -334,7 +340,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldText">Field Text</label>
+            <label htmlFor="fieldText">Field Text (required)</label>
             <br />
             {getFieldDecorator('fieldText', {
               rules: [{ required: true, message: 'Required' }],
@@ -342,7 +348,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTime">Field Time</label>
+            <label htmlFor="fieldTime">Field Time (required)</label>
             <br />
             {getFieldDecorator('fieldTime', {
               rules: [{ required: true, message: 'Required' }],
@@ -350,7 +356,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTimestamp">Field Timestamp</label>
+            <label htmlFor="fieldTimestamp">Field Timestamp (required)</label>
             <br />
             {getFieldDecorator('fieldTimestamp', {
               rules: [{ required: true, message: 'Required' }],
@@ -358,7 +364,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldTinyInt">Field Tiny Int</label>
+            <label htmlFor="fieldTinyInt">Field Tiny Int (required)</label>
             <br />
             {getFieldDecorator('fieldTinyInt', {
               rules: [{ required: true, message: 'Required' }],
@@ -367,7 +373,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="fieldUniqueIdentifier">
-              Field Unique Identifier
+              Field Unique Identifier (required)
             </label>
             <br />
             {getFieldDecorator('fieldUniqueIdentifier', {
@@ -376,7 +382,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldVarBinary">Field Var Binary</label>
+            <label htmlFor="fieldVarBinary">Field Var Binary (required)</label>
             <br />
             {getFieldDecorator('fieldVarBinary', {
               rules: [
@@ -387,7 +393,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldVarchar">Field Varchar</label>
+            <label htmlFor="fieldVarchar">Field Varchar (required)</label>
             <br />
             {getFieldDecorator('fieldVarchar', {
               rules: [
@@ -398,7 +404,7 @@ class TestAllFieldTypeCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fieldXML">Field X M L</label>
+            <label htmlFor="fieldXML">Field X M L (required)</label>
             <br />
             {getFieldDecorator('fieldXML', {
               rules: [{ required: true, message: 'Required' }],
@@ -429,5 +435,5 @@ export const WrappedTestAllFieldTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>54a5b0176774af50c7b03c8ed4efc4c3</Hash>
+    <Hash>947edee2eb07223b0b025dd5aec1f832</Hash>
 </Codenesium>*/

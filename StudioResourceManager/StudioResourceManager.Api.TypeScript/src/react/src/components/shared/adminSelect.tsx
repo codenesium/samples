@@ -94,7 +94,9 @@ export class AdminSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Admins</label>
+          <label htmlFor={this.props.propertyName}>
+            Admins {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class AdminSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ee1ad14f4c520382ede05177bb889024</Hash>
+    <Hash>7f473b3eb326be2e8c1ad62e928c504b</Hash>
 </Codenesium>*/

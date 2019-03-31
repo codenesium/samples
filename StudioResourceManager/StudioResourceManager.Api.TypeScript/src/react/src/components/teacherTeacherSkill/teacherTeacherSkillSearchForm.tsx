@@ -205,6 +205,30 @@ export default class TeacherTeacherSkillSearchComponent extends React.Component<
                 Header: 'Teacher Teacher Skill',
                 columns: [
                   {
+                    Header: 'Teacher',
+                    accessor: 'teacherId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Teachers +
+                                '/' +
+                                props.original.teacherId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.teacherIdNavigation &&
+                              props.original.teacherIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Teacher Skill',
                     accessor: 'teacherSkillId',
                     Cell: props => {
@@ -289,5 +313,5 @@ export const WrappedTeacherTeacherSkillSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7450aeb27da05ce3c10b6e63c9b02478</Hash>
+    <Hash>d4822e736d9a1b75ecb7993e4ec6ee5d</Hash>
 </Codenesium>*/

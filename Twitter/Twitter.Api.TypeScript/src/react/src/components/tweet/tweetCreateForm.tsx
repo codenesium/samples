@@ -142,7 +142,7 @@ class TweetCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="content">content</label>
+            <label htmlFor="content">content (required)</label>
             <br />
             {getFieldDecorator('content', {
               rules: [
@@ -153,7 +153,7 @@ class TweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -161,7 +161,7 @@ class TweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="locationId">location_id</label>
+            <label htmlFor="locationId">location_id (required)</label>
             <br />
             {getFieldDecorator('locationId', {
               rules: [{ required: true, message: 'Required' }],
@@ -169,7 +169,7 @@ class TweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (required)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [{ required: true, message: 'Required' }],
@@ -177,7 +177,7 @@ class TweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userUserId">user_user_id</label>
+            <label htmlFor="userUserId">user_user_id (required)</label>
             <br />
             {getFieldDecorator('userUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -208,5 +208,5 @@ export const WrappedTweetCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9c2d6d198fae0cee89af664cc699b6dd</Hash>
+    <Hash>8c021f13bc564cf3993c6dbd2184bdb0</Hash>
 </Codenesium>*/

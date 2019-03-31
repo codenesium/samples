@@ -35,7 +35,6 @@ namespace PetStoreNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -123,5 +122,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>444d6b3f20c071e6fbee25daa3fd9b07</Hash>
+    <Hash>c6645aefba6e1770d001e57de91a1010</Hash>
 </Codenesium>*/

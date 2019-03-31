@@ -195,7 +195,7 @@ class LocationEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="gpsLat">gps_lat</label>
+            <label htmlFor="gpsLat">gps_lat (required)</label>
             <br />
             {getFieldDecorator('gpsLat', {
               rules: [{ required: true, message: 'Required' }],
@@ -203,7 +203,7 @@ class LocationEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="gpsLong">gps_long</label>
+            <label htmlFor="gpsLong">gps_long (required)</label>
             <br />
             {getFieldDecorator('gpsLong', {
               rules: [{ required: true, message: 'Required' }],
@@ -211,7 +211,7 @@ class LocationEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="locationName">location_name</label>
+            <label htmlFor="locationName">location_name (required)</label>
             <br />
             {getFieldDecorator('locationName', {
               rules: [
@@ -245,5 +245,5 @@ export const WrappedLocationEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>30849060ed4006879248e960d6f5190a</Hash>
+    <Hash>545a20076b037117470e2a2611fae960</Hash>
 </Codenesium>*/

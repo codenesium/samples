@@ -17,16 +17,16 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<EventTeacher>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
-		Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<EventTeacher>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
 
-		Task<Event> EventById(int id);
+		Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+
+		Task<Event> EventByEventId(int eventId);
 
 		Task<Teacher> TeacherByTeacherId(int teacherId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>643827485dd371407052e6b7dca5deee</Hash>
+    <Hash>d28860b62728574d48da00d521f65a1f</Hash>
 </Codenesium>*/

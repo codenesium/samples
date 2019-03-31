@@ -195,7 +195,7 @@ class EventStatuEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedEventStatuEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8e578c02e4be6b0c96e250d2219db006</Hash>
+    <Hash>fb77d927626b67fe9c6f0ecad455ab99</Hash>
 </Codenesium>*/

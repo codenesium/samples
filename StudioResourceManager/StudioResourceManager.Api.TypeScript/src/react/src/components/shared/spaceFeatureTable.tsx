@@ -127,7 +127,7 @@ export class SpaceFeatureTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class SpaceFeatureTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class SpaceFeatureTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>61d2b07e0c195178954214fb1db6c074</Hash>
+    <Hash>1f2cd6e5044147ceb42212e8b646a3cf</Hash>
 </Codenesium>*/

@@ -142,7 +142,7 @@ class QuoteTweetCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="content">content</label>
+            <label htmlFor="content">content (required)</label>
             <br />
             {getFieldDecorator('content', {
               rules: [
@@ -153,7 +153,7 @@ class QuoteTweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -161,7 +161,9 @@ class QuoteTweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="retweeterUserId">retweeter_user_id</label>
+            <label htmlFor="retweeterUserId">
+              retweeter_user_id (required)
+            </label>
             <br />
             {getFieldDecorator('retweeterUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -169,7 +171,7 @@ class QuoteTweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="sourceTweetId">source_tweet_id</label>
+            <label htmlFor="sourceTweetId">source_tweet_id (required)</label>
             <br />
             {getFieldDecorator('sourceTweetId', {
               rules: [{ required: true, message: 'Required' }],
@@ -177,7 +179,7 @@ class QuoteTweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (required)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [{ required: true, message: 'Required' }],
@@ -208,5 +210,5 @@ export const WrappedQuoteTweetCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ae88ec67af687e8c808928df68d15ee6</Hash>
+    <Hash>a86c7d59e69ff53608665d4ad8ac23b9</Hash>
 </Codenesium>*/

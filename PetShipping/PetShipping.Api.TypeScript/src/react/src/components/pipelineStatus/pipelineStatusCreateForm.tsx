@@ -140,7 +140,7 @@ class PipelineStatusCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedPipelineStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ee1ba1921c56a334157f74ce2a738f8f</Hash>
+    <Hash>41f7e763b8c06d5dcd844fdb37f7f203</Hash>
 </Codenesium>*/

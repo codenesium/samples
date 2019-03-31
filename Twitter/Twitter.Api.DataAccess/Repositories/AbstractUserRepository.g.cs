@@ -46,7 +46,6 @@ namespace TwitterNS.Api.DataAccess
 				                  x.Password.StartsWith(query) ||
 				                  x.PhoneNumber.StartsWith(query) ||
 				                  x.Privacy.StartsWith(query) ||
-				                  x.UserId == query.ToInt() ||
 				                  x.Username.StartsWith(query) ||
 				                  x.Website.StartsWith(query),
 				                  limit,
@@ -265,5 +264,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d8a42197b256e87f7ea8fdcd4189d84d</Hash>
+    <Hash>5c4bb45a675fc33390210329f480cc94</Hash>
 </Codenesium>*/

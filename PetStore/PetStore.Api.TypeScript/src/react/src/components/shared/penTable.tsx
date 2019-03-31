@@ -127,7 +127,7 @@ export class PenTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class PenTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class PenTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cf5d132b9aac92fe2a0498a84d84b1ce</Hash>
+    <Hash>2851a7d48e56bed35fce0a7478c14224</Hash>
 </Codenesium>*/

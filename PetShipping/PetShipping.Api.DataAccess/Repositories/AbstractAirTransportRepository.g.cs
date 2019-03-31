@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
 				                  x.AirlineId == query.ToInt() ||
 				                  x.FlightNumber.StartsWith(query) ||
 				                  x.HandlerId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.LandDate == query.ToDateTime() ||
 				                  x.PipelineStepId == query.ToInt() ||
 				                  x.TakeoffDate == query.ToDateTime(),
@@ -126,5 +125,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb878189ad926c66816b3e13b9e82df8</Hash>
+    <Hash>bd9df7481d902f7950f874193e62663e</Hash>
 </Codenesium>*/

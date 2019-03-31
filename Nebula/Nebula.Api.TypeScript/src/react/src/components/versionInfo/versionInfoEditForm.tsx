@@ -195,7 +195,7 @@ class VersionInfoEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="appliedOn">Applied On</label>
+            <label htmlFor="appliedOn">Applied On (optional)</label>
             <br />
             {getFieldDecorator('appliedOn', {
               rules: [],
@@ -203,7 +203,7 @@ class VersionInfoEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Description (optional)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [{ max: 1024, message: 'Exceeds max length of 1024' }],
@@ -234,5 +234,5 @@ export const WrappedVersionInfoEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>55c25f6d767e72e1819e9b759a58b615</Hash>
+    <Hash>39bc4fb8eed1536b2efc52f9ffaa79cf</Hash>
 </Codenesium>*/

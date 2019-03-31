@@ -209,7 +209,7 @@ export class MessengerTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -221,7 +221,7 @@ export class MessengerTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -248,5 +248,5 @@ export class MessengerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>dfbc19aa37492b6eac4a3031e4f48c10</Hash>
+    <Hash>9cc0c567a660c1ef750e58fa87253d7d</Hash>
 </Codenesium>*/

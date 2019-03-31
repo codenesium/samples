@@ -35,7 +35,6 @@ namespace SecureVideoCRMNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.StripePlanName.StartsWith(query),
 				                  limit,
@@ -114,5 +113,5 @@ namespace SecureVideoCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c5fc0adba27f8e9e0925b9ab92d530e2</Hash>
+    <Hash>4157486fad775ac2e1ab6598f05f4c2f</Hash>
 </Codenesium>*/

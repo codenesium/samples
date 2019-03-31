@@ -140,7 +140,7 @@ class UserCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -151,7 +151,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="password">password</label>
+            <label htmlFor="password">password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -162,7 +162,9 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="stripeCustomerId">stripeCustomerId</label>
+            <label htmlFor="stripeCustomerId">
+              stripeCustomerId (required)
+            </label>
             <br />
             {getFieldDecorator('stripeCustomerId', {
               rules: [
@@ -173,7 +175,9 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="subscriptionTypeId">subscriptionTypeId</label>
+            <label htmlFor="subscriptionTypeId">
+              subscriptionTypeId (required)
+            </label>
             <br />
             {getFieldDecorator('subscriptionTypeId', {
               rules: [{ required: true, message: 'Required' }],
@@ -204,5 +208,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>ee6e8d264ec247f06cd6512a30dea7eb</Hash>
+    <Hash>0eedc265137d137f22a0e8d918a388ed</Hash>
 </Codenesium>*/

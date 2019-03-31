@@ -94,7 +94,9 @@ export class TableSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Tables</label>
+          <label htmlFor={this.props.propertyName}>
+            Tables {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class TableSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7328fd007d60307878232bc35e175446</Hash>
+    <Hash>a7fde5ad64a1d7cd5c3e694311292bbb</Hash>
 </Codenesium>*/

@@ -127,7 +127,7 @@ export class PipelineStatusTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class PipelineStatusTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class PipelineStatusTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c01950802bf71520090bf83a6780fed1</Hash>
+    <Hash>218326802239170090e1f4d7ef2ae933</Hash>
 </Codenesium>*/

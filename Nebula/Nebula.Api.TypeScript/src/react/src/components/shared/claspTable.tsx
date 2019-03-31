@@ -168,7 +168,7 @@ export class ClaspTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -180,7 +180,7 @@ export class ClaspTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -207,5 +207,5 @@ export class ClaspTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6971dbadecee295f01a5a89acd08d568</Hash>
+    <Hash>2c2856980fe20171ba116ae9eedfe2a8</Hash>
 </Codenesium>*/

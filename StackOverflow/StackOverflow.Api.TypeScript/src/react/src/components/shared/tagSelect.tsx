@@ -94,7 +94,9 @@ export class TagSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Tags</label>
+          <label htmlFor={this.props.propertyName}>
+            Tags {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class TagSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b4c86fc8fed53ce2bd6a5b41ff8f9405</Hash>
+    <Hash>1063eea1b39371e2dc4384c60438d66f</Hash>
 </Codenesium>*/

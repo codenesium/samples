@@ -136,7 +136,7 @@ namespace PetShippingNS.Api.Web
 
         public virtual void SetupAuthentication(IServiceCollection services)
         {
-			byte[] key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
+			byte[] key = Encoding.UTF8.GetBytes(this.Configuration["JwtSettings:SigningKey"]);
 			if (key.Length <= 16)
 			{
 				throw new Exception("JWT key mut be longer than 16 characters");
@@ -183,8 +183,8 @@ namespace PetShippingNS.Api.Web
                     ValidateLifetime = true,
                     RequireSignedTokens = true,
                     RequireExpirationTime = true,
-                    ValidAudience = this.Configuration["JwtAudience"],
-                    ValidIssuer = this.Configuration["JwtIssuer"],
+                    ValidAudience = this.Configuration["JwtSettings:Audience"],
+                    ValidIssuer = this.Configuration["JwtSettings:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });

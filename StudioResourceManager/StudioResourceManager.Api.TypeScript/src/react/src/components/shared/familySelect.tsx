@@ -94,7 +94,9 @@ export class FamilySelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Familes</label>
+          <label htmlFor={this.props.propertyName}>
+            Familes {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class FamilySelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b4421b3c15072d169e802fc8022d20c3</Hash>
+    <Hash>927c83a5bff53302ecbb958a76aaae1d</Hash>
 </Codenesium>*/

@@ -37,7 +37,6 @@ namespace PetStoreNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Amount.ToDecimal() == query.ToDecimal() ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.PaymentTypeId == query.ToInt() ||
 				                  x.PetId == query.ToInt() ||
@@ -134,5 +133,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5dd28bbebd5b3edca013b34ce75f78bc</Hash>
+    <Hash>4d17accbfb043d33fe6680cd5f754fe8</Hash>
 </Codenesium>*/

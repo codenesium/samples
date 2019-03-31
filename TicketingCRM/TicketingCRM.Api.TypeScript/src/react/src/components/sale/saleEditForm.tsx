@@ -193,7 +193,7 @@ class SaleEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="ipAddress">Ip Address</label>
+            <label htmlFor="ipAddress">Ip Address (required)</label>
             <br />
             {getFieldDecorator('ipAddress', {
               rules: [
@@ -204,7 +204,7 @@ class SaleEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="notes">Notes (required)</label>
             <br />
             {getFieldDecorator('notes', {
               rules: [{ required: true, message: 'Required' }],
@@ -212,7 +212,7 @@ class SaleEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="saleDate">Sale Date</label>
+            <label htmlFor="saleDate">Sale Date (required)</label>
             <br />
             {getFieldDecorator('saleDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -251,5 +251,5 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 
 /*<Codenesium>
-    <Hash>800bb454799366f275ac7998185cd50f</Hash>
+    <Hash>60c060f733d9baedd71b227dfee30de8</Hash>
 </Codenesium>*/

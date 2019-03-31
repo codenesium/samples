@@ -38,7 +38,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				                  x.Address1.StartsWith(query) ||
 				                  x.Address2.StartsWith(query) ||
 				                  x.City.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.Province.StartsWith(query) ||
 				                  x.Website.StartsWith(query) ||
@@ -119,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b5b3bd5842afbcce7a7a3ef7a7684a3f</Hash>
+    <Hash>bbb64b36091e46ac5f8fdf96b9945f7c</Hash>
 </Codenesium>*/

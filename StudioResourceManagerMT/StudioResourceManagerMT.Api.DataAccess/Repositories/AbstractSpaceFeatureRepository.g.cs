@@ -35,7 +35,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -123,5 +122,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1234cbb41518c0700fcc4380a4a0ba6b</Hash>
+    <Hash>ae53d088fd00c83ba289ce89c514dd15</Hash>
 </Codenesium>*/

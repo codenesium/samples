@@ -143,7 +143,7 @@ class PostHistoryCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="comment">Comment</label>
+            <label htmlFor="comment">Comment (optional)</label>
             <br />
             {getFieldDecorator('comment', {
               rules: [
@@ -156,7 +156,7 @@ class PostHistoryCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="creationDate">Creation Date</label>
+            <label htmlFor="creationDate">Creation Date (required)</label>
             <br />
             {getFieldDecorator('creationDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -182,7 +182,7 @@ class PostHistoryCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="revisionGUID">Revision GUID</label>
+            <label htmlFor="revisionGUID">Revision GUID (required)</label>
             <br />
             {getFieldDecorator('revisionGUID', {
               rules: [
@@ -193,7 +193,7 @@ class PostHistoryCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="text">Text</label>
+            <label htmlFor="text">Text (optional)</label>
             <br />
             {getFieldDecorator('text', {
               rules: [
@@ -206,7 +206,9 @@ class PostHistoryCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userDisplayName">User Display Name</label>
+            <label htmlFor="userDisplayName">
+              User Display Name (optional)
+            </label>
             <br />
             {getFieldDecorator('userDisplayName', {
               rules: [{ max: 40, message: 'Exceeds max length of 40' }],
@@ -245,5 +247,5 @@ export const WrappedPostHistoryCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0d0c6c23dd231272ae79b14c8fe0e16f</Hash>
+    <Hash>58b423d8d2dd5253970ae69cf09eb01f</Hash>
 </Codenesium>*/

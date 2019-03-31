@@ -195,7 +195,7 @@ class OrganizationEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedOrganizationEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>4a99960323434191b04a7886265c7b0d</Hash>
+    <Hash>9fb20217e99c120b6f5231ee162844f8</Hash>
 </Codenesium>*/

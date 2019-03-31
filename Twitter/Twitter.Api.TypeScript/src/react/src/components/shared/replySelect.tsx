@@ -94,7 +94,10 @@ export class ReplySelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class ReplySelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b2b2a1f3f6f07431c67501f6c1cda7e2</Hash>
+    <Hash>fd68f42c83ce0fedde9ac21f97e001d9</Hash>
 </Codenesium>*/

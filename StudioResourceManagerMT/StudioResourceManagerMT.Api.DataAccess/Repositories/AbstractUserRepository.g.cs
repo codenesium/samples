@@ -35,7 +35,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Password.StartsWith(query) ||
 				                  x.Username.StartsWith(query),
 				                  limit,
@@ -142,5 +141,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fc82e4db4b5dfc1e337ce60acdbe877c</Hash>
+    <Hash>874a465d36ee2df00dd876d9a5cf3a36</Hash>
 </Codenesium>*/

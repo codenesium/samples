@@ -185,7 +185,7 @@ export class CommentTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -197,7 +197,7 @@ export class CommentTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -224,5 +224,5 @@ export class CommentTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>70bd48e13ec838c9066ab224109c718b</Hash>
+    <Hash>0eb7318f03dafbc88833fa3241748c89</Hash>
 </Codenesium>*/

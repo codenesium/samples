@@ -168,7 +168,7 @@ export class OtherTransportTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -180,7 +180,7 @@ export class OtherTransportTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -207,5 +207,5 @@ export class OtherTransportTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8bae405252ab1a116356c39b8a2decd9</Hash>
+    <Hash>37d0ae4159ee154a54eb09b21cc0d406</Hash>
 </Codenesium>*/

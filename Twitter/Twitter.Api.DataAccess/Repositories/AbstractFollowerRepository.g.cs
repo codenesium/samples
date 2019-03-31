@@ -40,7 +40,6 @@ namespace TwitterNS.Api.DataAccess
 				                  x.FollowRequestStatu.StartsWith(query) ||
 				                  x.FollowedUserId == query.ToInt() ||
 				                  x.FollowingUserId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.Muted.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -146,5 +145,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0b9cf646bfe9fc11baba0911839944cb</Hash>
+    <Hash>840ea488e7d6a8571ac083a7b9cc37fc</Hash>
 </Codenesium>*/

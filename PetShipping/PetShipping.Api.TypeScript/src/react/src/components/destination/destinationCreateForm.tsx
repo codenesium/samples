@@ -149,7 +149,7 @@ class DestinationCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -160,7 +160,7 @@ class DestinationCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="order">Order</label>
+            <label htmlFor="order">Order (required)</label>
             <br />
             {getFieldDecorator('order', {
               rules: [{ required: true, message: 'Required' }],
@@ -191,5 +191,5 @@ export const WrappedDestinationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6788b870a2865d385e1bea027b796079</Hash>
+    <Hash>f983896583e1e0f4a3d2caa9f158974d</Hash>
 </Codenesium>*/

@@ -94,7 +94,10 @@ export class CallAssignmentSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Call Assignment</label>
+          <label htmlFor={this.props.propertyName}>
+            Call Assignment{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class CallAssignmentSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>78e47ffba0019fdf47c230dccaa42aa1</Hash>
+    <Hash>38d8499eaeaddf756dd374d1d42e1b28</Hash>
 </Codenesium>*/

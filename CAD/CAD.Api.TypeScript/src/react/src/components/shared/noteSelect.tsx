@@ -94,7 +94,9 @@ export class NoteSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Note</label>
+          <label htmlFor={this.props.propertyName}>
+            Note {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class NoteSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b9aaa5ec83c99526a8530ba3e9c3241a</Hash>
+    <Hash>078daae895af87dc5f6a7fbcbc39e3ba</Hash>
 </Codenesium>*/

@@ -35,7 +35,6 @@ namespace StackOverflowNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.RwType.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -124,5 +123,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2378d7d2eb27d37817931887326dcf1c</Hash>
+    <Hash>f10d5ff054bf3146c0aa3a635ceabcb6</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
 				                  x.CustomerId == query.ToInt() ||
 				                  x.DateCreated == query.ToDateTime() ||
 				                  x.EmployeeId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.Notes.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -144,5 +143,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>313d9a7d9e6d83be86555ab479443a1c</Hash>
+    <Hash>54f3a9a69a4cb0cd013e9f0e31ef0fe2</Hash>
 </Codenesium>*/

@@ -140,7 +140,7 @@ class SpaceFeatureCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedSpaceFeatureCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7eb23bfedcb5bfcbd9d62593e68a53b4</Hash>
+    <Hash>2a08fdfe16f68feca9f47eb964c2cfe1</Hash>
 </Codenesium>*/

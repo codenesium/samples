@@ -195,7 +195,7 @@ class FileTypeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedFileTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f62c1c891ea04d706bbcedc014d54c50</Hash>
+    <Hash>42bbfd109572130f4f7942b18a3b3430</Hash>
 </Codenesium>*/

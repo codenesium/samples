@@ -136,7 +136,7 @@ export class VersionInfoTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -148,7 +148,7 @@ export class VersionInfoTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -175,5 +175,5 @@ export class VersionInfoTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2b1a0be485b89351bc3a4491417bb239</Hash>
+    <Hash>07173a1ba4658a1bcc3cbd27ffe10de5</Hash>
 </Codenesium>*/

@@ -23,7 +23,7 @@ namespace StudioResourceManagerNS.Api.Client
 		}
 
 		[JsonProperty]
-		public int EventId { get; private set; } = default(int);
+		public int EventId { get; private set; }
 
 		[JsonProperty]
 		public int TeacherId { get; private set; }
@@ -31,5 +31,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>73adedda67a9dbc692863faf8c57429b</Hash>
+    <Hash>2abaf8355f3589e28f867490d36f8b4a</Hash>
 </Codenesium>*/

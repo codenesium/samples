@@ -36,7 +36,6 @@ namespace SecureVideoCRMNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Email.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.Password.StartsWith(query) ||
 				                  x.StripeCustomerId.StartsWith(query) ||
 				                  x.SubscriptionTypeId == query.ToInt(),
@@ -116,5 +115,5 @@ namespace SecureVideoCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e47667896e67ee5b331b45b3331cfdb6</Hash>
+    <Hash>d8002a0d52e84573daefb4a224d6ed77</Hash>
 </Codenesium>*/

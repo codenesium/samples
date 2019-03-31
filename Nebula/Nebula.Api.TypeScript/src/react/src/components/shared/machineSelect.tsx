@@ -94,7 +94,9 @@ export class MachineSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Machine</label>
+          <label htmlFor={this.props.propertyName}>
+            Machine {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class MachineSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6bd48cf719113f597e367e630b63e7ea</Hash>
+    <Hash>bb9acdff765c12acf500a431eaf74165</Hash>
 </Codenesium>*/

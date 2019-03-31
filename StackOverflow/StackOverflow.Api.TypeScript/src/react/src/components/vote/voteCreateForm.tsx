@@ -143,7 +143,7 @@ class VoteCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="bountyAmount">Bounty Amount</label>
+            <label htmlFor="bountyAmount">Bounty Amount (optional)</label>
             <br />
             {getFieldDecorator('bountyAmount', {
               rules: [],
@@ -151,7 +151,7 @@ class VoteCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="creationDate">Creation Date</label>
+            <label htmlFor="creationDate">Creation Date (required)</label>
             <br />
             {getFieldDecorator('creationDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -208,5 +208,5 @@ export const WrappedVoteCreateComponent = Form.create({ name: 'Vote Create' })(
 
 
 /*<Codenesium>
-    <Hash>0afefda50547ba0f724c1cb475100897</Hash>
+    <Hash>d5753eece122622d6f8d297e2194c108</Hash>
 </Codenesium>*/

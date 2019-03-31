@@ -192,7 +192,7 @@ class UserEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -203,7 +203,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username (required)</label>
             <br />
             {getFieldDecorator('username', {
               rules: [
@@ -237,5 +237,5 @@ export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(
 
 
 /*<Codenesium>
-    <Hash>0909b38fa362da0490e509751362d1af</Hash>
+    <Hash>10ddf2fe236e98b92f97c2b05980cf1c</Hash>
 </Codenesium>*/

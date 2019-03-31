@@ -165,7 +165,7 @@ export class ReplyTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -177,7 +177,7 @@ export class ReplyTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -204,5 +204,5 @@ export class ReplyTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b247457f3942cbcb37303b0166a80e98</Hash>
+    <Hash>55b14f3587bbdb1a021bb175fa741c52</Hash>
 </Codenesium>*/

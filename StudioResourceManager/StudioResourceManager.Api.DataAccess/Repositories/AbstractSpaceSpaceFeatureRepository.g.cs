@@ -35,7 +35,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.SpaceFeatureId == query.ToInt() ||
 				                  x.SpaceId == query.ToInt(),
 				                  limit,
@@ -142,5 +141,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>828516a78cecaa4b31826483e590ffde</Hash>
+    <Hash>4a8ae97b5ba8e71a27ebad9fbe641353</Hash>
 </Codenesium>*/

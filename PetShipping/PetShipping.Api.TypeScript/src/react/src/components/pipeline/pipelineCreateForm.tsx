@@ -149,7 +149,7 @@ class PipelineCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="saleId">Sale</label>
+            <label htmlFor="saleId">Sale (required)</label>
             <br />
             {getFieldDecorator('saleId', {
               rules: [{ required: true, message: 'Required' }],
@@ -180,5 +180,5 @@ export const WrappedPipelineCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a2f93e76764b9c7336754796b3e4e270</Hash>
+    <Hash>e7573f70af6df502ae99a392fe6b8045</Hash>
 </Codenesium>*/

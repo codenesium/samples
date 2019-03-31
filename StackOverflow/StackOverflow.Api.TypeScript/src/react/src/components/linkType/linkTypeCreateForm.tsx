@@ -140,7 +140,7 @@ class LinkTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="rwType">Rw Type</label>
+            <label htmlFor="rwType">Rw Type (required)</label>
             <br />
             {getFieldDecorator('rwType', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedLinkTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>bfb989c2fdb17377d36ec3ed964e5473</Hash>
+    <Hash>a2f21884f7ad288d694eb5fa5b3297b6</Hash>
 </Codenesium>*/

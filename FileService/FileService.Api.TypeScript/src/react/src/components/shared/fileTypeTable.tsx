@@ -127,7 +127,7 @@ export class FileTypeTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class FileTypeTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class FileTypeTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2e5d85621eac3fee621031055b46eeab</Hash>
+    <Hash>3987b6c72446658470044850c87f9d77</Hash>
 </Codenesium>*/

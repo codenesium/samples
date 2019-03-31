@@ -39,7 +39,6 @@ namespace TwitterNS.Api.DataAccess
 				                  x.Date == query.ToDateTime() ||
 				                  x.LocationId == query.ToInt() ||
 				                  x.Time == query.ToTimespan() ||
-				                  x.TweetId == query.ToInt() ||
 				                  x.UserUserId == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -192,5 +191,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>96eb9b20c00bcb1d315159930f033d2c</Hash>
+    <Hash>e549b900812a58115b120a9879b43f2c</Hash>
 </Codenesium>*/

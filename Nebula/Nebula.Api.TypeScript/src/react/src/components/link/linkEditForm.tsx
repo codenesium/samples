@@ -211,7 +211,7 @@ class LinkEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCompleted">Date Completed</label>
+            <label htmlFor="dateCompleted">Date Completed (optional)</label>
             <br />
             {getFieldDecorator('dateCompleted', {
               rules: [],
@@ -224,7 +224,7 @@ class LinkEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateStarted">Date Started</label>
+            <label htmlFor="dateStarted">Date Started (optional)</label>
             <br />
             {getFieldDecorator('dateStarted', {
               rules: [],
@@ -234,7 +234,9 @@ class LinkEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dynamicParameters">Dynamic Parameters</label>
+            <label htmlFor="dynamicParameters">
+              Dynamic Parameters (optional)
+            </label>
             <br />
             {getFieldDecorator('dynamicParameters', {
               rules: [],
@@ -242,7 +244,7 @@ class LinkEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="externalId">External</label>
+            <label htmlFor="externalId">External (required)</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
@@ -258,7 +260,7 @@ class LinkEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -269,7 +271,7 @@ class LinkEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="order">Order</label>
+            <label htmlFor="order">Order (required)</label>
             <br />
             {getFieldDecorator('order', {
               rules: [{ required: true, message: 'Required' }],
@@ -277,7 +279,7 @@ class LinkEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="response">Response</label>
+            <label htmlFor="response">Response (optional)</label>
             <br />
             {getFieldDecorator('response', {
               rules: [],
@@ -285,7 +287,9 @@ class LinkEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="staticParameters">Static Parameters</label>
+            <label htmlFor="staticParameters">
+              Static Parameters (optional)
+            </label>
             <br />
             {getFieldDecorator('staticParameters', {
               rules: [],
@@ -293,7 +297,9 @@ class LinkEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="timeoutInSeconds">Timeout In Seconds</label>
+            <label htmlFor="timeoutInSeconds">
+              Timeout In Seconds (required)
+            </label>
             <br />
             {getFieldDecorator('timeoutInSeconds', {
               rules: [{ required: true, message: 'Required' }],
@@ -324,5 +330,5 @@ export const WrappedLinkEditComponent = Form.create({ name: 'Link Edit' })(
 
 
 /*<Codenesium>
-    <Hash>40b67d452881c58125a825541241a017</Hash>
+    <Hash>ea4423b972372c4b619f27cc497197af</Hash>
 </Codenesium>*/

@@ -94,7 +94,10 @@ export class CallDispositionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Call Disposition</label>
+          <label htmlFor={this.props.propertyName}>
+            Call Disposition{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class CallDispositionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>88723db20358c8b9fe677e8dad0e9578</Hash>
+    <Hash>d34d11ceea3748bbc6fbf04e0d4d7eac</Hash>
 </Codenesium>*/

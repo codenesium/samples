@@ -201,7 +201,7 @@ class PetEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="clientId">Client</label>
+            <label htmlFor="clientId">Client (required)</label>
             <br />
             {getFieldDecorator('clientId', {
               rules: [{ required: true, message: 'Required' }],
@@ -209,7 +209,7 @@ class PetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -220,7 +220,7 @@ class PetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="weight">Weight</label>
+            <label htmlFor="weight">Weight (required)</label>
             <br />
             {getFieldDecorator('weight', {
               rules: [{ required: true, message: 'Required' }],
@@ -251,5 +251,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>c4c775fe449619d5836436979bd9ad92</Hash>
+    <Hash>924c0a7538bd6c55b3d2d864388a4e1e</Hash>
 </Codenesium>*/

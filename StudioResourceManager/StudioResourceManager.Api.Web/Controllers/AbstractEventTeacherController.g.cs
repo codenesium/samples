@@ -217,23 +217,6 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byEventId/{eventId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventTeacherServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEventTeacherServerResponseModel> response = await this.EventTeacherService.ByEventId(eventId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("byTeacherId/{teacherId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEventTeacherServerResponseModel>), 200)]
@@ -246,6 +229,23 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 
 			List<ApiEventTeacherServerResponseModel> response = await this.EventTeacherService.ByTeacherId(teacherId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byEventId/{eventId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiEventTeacherServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventTeacherServerResponseModel> response = await this.EventTeacherService.ByEventId(eventId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -269,5 +269,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7c1d9861f18e13cbb403cfb87fc61b62</Hash>
+    <Hash>b90a2c7596ca726d011b869cb783b555</Hash>
 </Codenesium>*/

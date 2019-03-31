@@ -195,7 +195,7 @@ class PipelineStatusEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedPipelineStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cf74123eb373b594859c5dda8524f52f</Hash>
+    <Hash>0e31ea8a723f9cff17abff9b32bdb115</Hash>
 </Codenesium>*/

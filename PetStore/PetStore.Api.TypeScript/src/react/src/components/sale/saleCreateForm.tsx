@@ -142,7 +142,7 @@ class SaleCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="amount">Amount</label>
+            <label htmlFor="amount">Amount (required)</label>
             <br />
             {getFieldDecorator('amount', {
               rules: [{ required: true, message: 'Required' }],
@@ -150,7 +150,7 @@ class SaleCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -161,7 +161,7 @@ class SaleCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -188,7 +188,7 @@ class SaleCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -222,5 +222,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>9b01aae153f40a40d63ae75942012bb2</Hash>
+    <Hash>b1212bd8760789bfb675fe90208e475a</Hash>
 </Codenesium>*/

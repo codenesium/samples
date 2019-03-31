@@ -195,7 +195,7 @@ class OffCapabilityEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedOffCapabilityEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>11cb613bcbce468c7e24e7be3f1d50f2</Hash>
+    <Hash>3f96fb0190eb7070a27cb661ab0d5a9e</Hash>
 </Codenesium>*/

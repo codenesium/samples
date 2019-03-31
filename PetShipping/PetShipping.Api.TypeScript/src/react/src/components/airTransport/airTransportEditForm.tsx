@@ -196,7 +196,7 @@ class AirTransportEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="airlineId">Airline</label>
+            <label htmlFor="airlineId">Airline (required)</label>
             <br />
             {getFieldDecorator('airlineId', {
               rules: [{ required: true, message: 'Required' }],
@@ -204,7 +204,7 @@ class AirTransportEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="flightNumber">Flight Number</label>
+            <label htmlFor="flightNumber">Flight Number (required)</label>
             <br />
             {getFieldDecorator('flightNumber', {
               rules: [
@@ -223,7 +223,7 @@ class AirTransportEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="landDate">Land Date</label>
+            <label htmlFor="landDate">Land Date (required)</label>
             <br />
             {getFieldDecorator('landDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -231,7 +231,7 @@ class AirTransportEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="pipelineStepId">Pipeline Step</label>
+            <label htmlFor="pipelineStepId">Pipeline Step (required)</label>
             <br />
             {getFieldDecorator('pipelineStepId', {
               rules: [{ required: true, message: 'Required' }],
@@ -239,7 +239,7 @@ class AirTransportEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="takeoffDate">Takeoff Date</label>
+            <label htmlFor="takeoffDate">Takeoff Date (required)</label>
             <br />
             {getFieldDecorator('takeoffDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -272,5 +272,5 @@ export const WrappedAirTransportEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5e4aa0a2a07dc408359e3e4910a90ae5</Hash>
+    <Hash>24cc8ad51315266c5b78188caf6cfcd4</Hash>
 </Codenesium>*/

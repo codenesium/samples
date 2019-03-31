@@ -97,7 +97,10 @@ export class CountryRequirementSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Country Requirement</label>
+          <label htmlFor={this.props.propertyName}>
+            Country Requirement{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -125,5 +128,5 @@ export class CountryRequirementSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ad0b083c1d89879af30117f41f85d75c</Hash>
+    <Hash>49973aa990def21d82fcf2d3cbbb78a9</Hash>
 </Codenesium>*/

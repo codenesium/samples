@@ -195,7 +195,7 @@ class CustomerEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -206,7 +206,7 @@ class CustomerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -217,7 +217,7 @@ class CustomerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -228,7 +228,7 @@ class CustomerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="notes">Notes (optional)</label>
             <br />
             {getFieldDecorator('notes', {
               rules: [],
@@ -236,7 +236,7 @@ class CustomerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -270,5 +270,5 @@ export const WrappedCustomerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3501b7436242e093423dd47c3d8692fe</Hash>
+    <Hash>635c63a3dc4e5a6e1f2e06eba9051c88</Hash>
 </Codenesium>*/

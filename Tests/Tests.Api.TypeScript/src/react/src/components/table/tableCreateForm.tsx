@@ -140,7 +140,7 @@ class TableCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedTableCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>99efee24e1efceb1e954fe29e7354790</Hash>
+    <Hash>60b8aaf021b01a72f3790e77fbd14c10</Hash>
 </Codenesium>*/

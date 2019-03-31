@@ -94,7 +94,9 @@ export class PaymentTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Payment Types</label>
+          <label htmlFor={this.props.propertyName}>
+            Payment Types {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class PaymentTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3c01a59bf4c9a3a551a3d05f6dce6e64</Hash>
+    <Hash>f57b93c32c91b351fea8b4704ef36d02</Hash>
 </Codenesium>*/

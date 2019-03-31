@@ -98,7 +98,8 @@ export class PipelineStepStepRequirementSelectComponent extends React.Component<
       return (
         <Form.Item>
           <label htmlFor={this.props.propertyName}>
-            Pipeline Step Step Requirement
+            Pipeline Step Step Requirement{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
           </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
@@ -127,5 +128,5 @@ export class PipelineStepStepRequirementSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>96d0f4996fbf1be28c1807310dd32cc8</Hash>
+    <Hash>78c4d021d6e27138f1f62c50c199c626</Hash>
 </Codenesium>*/

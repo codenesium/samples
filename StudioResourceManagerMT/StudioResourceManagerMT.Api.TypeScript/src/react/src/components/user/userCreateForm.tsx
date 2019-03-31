@@ -140,7 +140,7 @@ class UserCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -151,7 +151,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username (required)</label>
             <br />
             {getFieldDecorator('username', {
               rules: [
@@ -185,5 +185,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>658609f4ed82bb79386721150b215a88</Hash>
+    <Hash>b5e3394d5a4f4ce53e3484c65148271b</Hash>
 </Codenesium>*/

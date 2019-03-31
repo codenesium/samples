@@ -262,18 +262,18 @@ export class EventStudentClientResponseModel {
 }
 export class EventTeacherClientRequestModel {
   eventId: number;
+  eventIdEntity: string;
+  eventIdNavigation?: EventClientResponseModel;
   id: number;
-  idEntity: string;
-  idNavigation?: EventClientResponseModel;
   teacherId: number;
   teacherIdEntity: string;
   teacherIdNavigation?: TeacherClientResponseModel;
 
   constructor() {
     this.eventId = 0;
+    this.eventIdEntity = '';
+    this.eventIdNavigation = undefined;
     this.id = 0;
-    this.idEntity = '';
-    this.idNavigation = undefined;
     this.teacherId = 0;
     this.teacherIdEntity = '';
     this.teacherIdNavigation = undefined;
@@ -288,18 +288,18 @@ export class EventTeacherClientRequestModel {
 
 export class EventTeacherClientResponseModel {
   eventId: number;
+  eventIdEntity: string;
+  eventIdNavigation?: EventClientResponseModel;
   id: number;
-  idEntity: string;
-  idNavigation?: EventClientResponseModel;
   teacherId: number;
   teacherIdEntity: string;
   teacherIdNavigation?: TeacherClientResponseModel;
 
   constructor() {
     this.eventId = 0;
+    this.eventIdEntity = '';
+    this.eventIdNavigation = undefined;
     this.id = 0;
-    this.idEntity = '';
-    this.idNavigation = undefined;
     this.teacherId = 0;
     this.teacherIdEntity = '';
     this.teacherIdNavigation = undefined;
@@ -967,5 +967,5 @@ export class UserClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>eaa414b28286ab3bbf318d9e167816ef</Hash>
+    <Hash>30614add3f06545b452e9d022ea1c077</Hash>
 </Codenesium>*/

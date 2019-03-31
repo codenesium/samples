@@ -94,7 +94,9 @@ export class ChainStatusSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Chain Status</label>
+          <label htmlFor={this.props.propertyName}>
+            Chain Status {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class ChainStatusSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1916edc3dd6596ee17dc60e2f05815ce</Hash>
+    <Hash>c59464cafcbcd368c950e9271f2e8d50</Hash>
 </Codenesium>*/

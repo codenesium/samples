@@ -193,7 +193,7 @@ class AdminEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="birthday">Birthday</label>
+            <label htmlFor="birthday">Birthday (optional)</label>
             <br />
             {getFieldDecorator('birthday', {
               rules: [],
@@ -201,7 +201,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -212,7 +212,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -223,7 +223,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -234,7 +234,7 @@ class AdminEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (optional)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -273,5 +273,5 @@ export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(
 
 
 /*<Codenesium>
-    <Hash>a7fce3d1ec3fe52c987aa9079631b20f</Hash>
+    <Hash>0dfe4d760a31d3639f102566060c73c2</Hash>
 </Codenesium>*/

@@ -94,7 +94,9 @@ export class OrganizationSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Organization</label>
+          <label htmlFor={this.props.propertyName}>
+            Organization {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class OrganizationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7b86454253582872c83de6b841c1cb43</Hash>
+    <Hash>203e04191bf4d6fd4fecf3830bb6008a</Hash>
 </Codenesium>*/

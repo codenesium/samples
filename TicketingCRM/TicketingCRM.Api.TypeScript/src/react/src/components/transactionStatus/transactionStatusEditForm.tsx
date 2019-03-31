@@ -195,7 +195,7 @@ class TransactionStatusEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedTransactionStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>21839a9e0d27aedc6f87633b34e07ed1</Hash>
+    <Hash>96515ab9117f4369c0a9945471c9798d</Hash>
 </Codenesium>*/

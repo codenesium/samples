@@ -151,7 +151,7 @@ export class PipelineTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -163,7 +163,7 @@ export class PipelineTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -190,5 +190,5 @@ export class PipelineTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>846ce2e2d2bcf5062481d02979992ddb</Hash>
+    <Hash>167f7dac6c383b267658baeadfbabf37</Hash>
 </Codenesium>*/

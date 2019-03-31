@@ -491,14 +491,14 @@
               },
               {
                 "$id": "56",
-                "Name": "IX_EventTeacher_eventId",
+                "Name": "IX_EventTeacher_teacherId",
                 "TableName": "EventTeacher",
                 "IsPrimaryKey": false,
                 "ConstraintType": "NONCLUSTERED",
                 "Columns": [
                   {
                     "$id": "57",
-                    "Name": "eventId",
+                    "Name": "teacherId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
@@ -510,15 +510,15 @@
               },
               {
                 "$id": "58",
-                "Name": "IX_EventTeacher_teacherId",
+                "Name": "IX_EventTeacher_eventId",
                 "TableName": "EventTeacher",
                 "IsPrimaryKey": false,
                 "ConstraintType": "NONCLUSTERED",
                 "Columns": [
                   {
                     "$id": "59",
-                    "Name": "teacherId",
-                    "Order": 1,
+                    "Name": "eventId",
+                    "Order": 0,
                     "Descending": false,
                     "IsIncludedColumn": false,
                     "IsIdentity": false
@@ -1675,22 +1675,6 @@
             "Columns": [
               {
                 "$id": "185",
-                "ForeignKeyTableName": "EventTeacher",
-                "ForeignKeyColumnName": "id",
-                "PrimaryKeyTableName": "Event",
-                "PrimaryKeyColumnName": "id",
-                "PrimaryKeySchemaName": "dbo",
-                "ForeignKeySchemaName": "dbo",
-                "Order": 1
-              }
-            ],
-            "ForeignKeyName": "FK_EventTeacher_eventId_Event_id"
-          },
-          {
-            "$id": "186",
-            "Columns": [
-              {
-                "$id": "187",
                 "ForeignKeyTableName": "Rate",
                 "ForeignKeyColumnName": "teacherId",
                 "PrimaryKeyTableName": "Teacher",
@@ -1703,10 +1687,10 @@
             "ForeignKeyName": "FK_Rate_teacherId_Teacher_id"
           },
           {
-            "$id": "188",
+            "$id": "186",
             "Columns": [
               {
-                "$id": "189",
+                "$id": "187",
                 "ForeignKeyTableName": "Rate",
                 "ForeignKeyColumnName": "teacherSkillId",
                 "PrimaryKeyTableName": "TeacherSkill",
@@ -1719,10 +1703,10 @@
             "ForeignKeyName": "FK_Rate_teacherSkillId_TeacherSkill_id"
           },
           {
-            "$id": "190",
+            "$id": "188",
             "Columns": [
               {
-                "$id": "191",
+                "$id": "189",
                 "ForeignKeyTableName": "SpaceSpaceFeature",
                 "ForeignKeyColumnName": "spaceId",
                 "PrimaryKeyTableName": "Space",
@@ -1735,10 +1719,10 @@
             "ForeignKeyName": "FK_SpaceSpaceFeature_spaceId_Space_id"
           },
           {
-            "$id": "192",
+            "$id": "190",
             "Columns": [
               {
-                "$id": "193",
+                "$id": "191",
                 "ForeignKeyTableName": "SpaceSpaceFeature",
                 "ForeignKeyColumnName": "spaceFeatureId",
                 "PrimaryKeyTableName": "SpaceFeature",
@@ -1751,10 +1735,10 @@
             "ForeignKeyName": "FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id"
           },
           {
-            "$id": "194",
+            "$id": "192",
             "Columns": [
               {
-                "$id": "195",
+                "$id": "193",
                 "ForeignKeyTableName": "Student",
                 "ForeignKeyColumnName": "userId",
                 "PrimaryKeyTableName": "User",
@@ -1767,10 +1751,10 @@
             "ForeignKeyName": "FK_Student_userId_User_id"
           },
           {
-            "$id": "196",
+            "$id": "194",
             "Columns": [
               {
-                "$id": "197",
+                "$id": "195",
                 "ForeignKeyTableName": "Student",
                 "ForeignKeyColumnName": "familyId",
                 "PrimaryKeyTableName": "Family",
@@ -1783,10 +1767,10 @@
             "ForeignKeyName": "FK_Student_familyId_Family_id"
           },
           {
-            "$id": "198",
+            "$id": "196",
             "Columns": [
               {
-                "$id": "199",
+                "$id": "197",
                 "ForeignKeyTableName": "Teacher",
                 "ForeignKeyColumnName": "userId",
                 "PrimaryKeyTableName": "User",
@@ -1799,10 +1783,10 @@
             "ForeignKeyName": "FK_Teacher_userId_User_id"
           },
           {
-            "$id": "200",
+            "$id": "198",
             "Columns": [
               {
-                "$id": "201",
+                "$id": "199",
                 "ForeignKeyTableName": "TeacherTeacherSkill",
                 "ForeignKeyColumnName": "teacherSkillId",
                 "PrimaryKeyTableName": "TeacherSkill",
@@ -1815,10 +1799,10 @@
             "ForeignKeyName": "FK_TeacherTeacherSkill_teacherSkillId_TeacherSkill_id"
           },
           {
-            "$id": "202",
+            "$id": "200",
             "Columns": [
               {
-                "$id": "203",
+                "$id": "201",
                 "ForeignKeyTableName": "TeacherTeacherSkill",
                 "ForeignKeyColumnName": "teacherId",
                 "PrimaryKeyTableName": "Teacher",
@@ -1829,6 +1813,22 @@
               }
             ],
             "ForeignKeyName": "FK_TeacherTeacherSkill_teacherId_Teacher_id"
+          },
+          {
+            "$id": "202",
+            "Columns": [
+              {
+                "$id": "203",
+                "ForeignKeyTableName": "EventTeacher",
+                "ForeignKeyColumnName": "eventId",
+                "PrimaryKeyTableName": "Event",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 0
+              }
+            ],
+            "ForeignKeyName": "FK_EventTeacher_eventId_Event_id"
           }
         ]
       }
@@ -1842,14 +1842,14 @@
       {
         "$id": "205",
         "AppSchemaName": "dbo",
-        "AppSchemaId": "3d65536b-df48-4711-80bc-ac99f1b1776e",
+        "AppSchemaId": "e555f7b9-82f8-4a86-8bc7-d131bd574e56",
         "Tables": [
           {
             "$id": "206",
             "AppTableName": "Admin",
             "AppTableNamePlural": "Admins",
             "AppDoNotProcess": false,
-            "AppTableId": "d156b6d8-b8fe-425d-b1aa-e9dc525b9816",
+            "AppTableId": "b60922eb-3a8a-444d-96f1-451a24075597",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -2219,7 +2219,7 @@
             "AppTableName": "Event",
             "AppTableNamePlural": "Events",
             "AppDoNotProcess": false,
-            "AppTableId": "b8c48581-3201-4d9f-a538-ca8b1bd092ba",
+            "AppTableId": "1fc55e26-2000-47b8-8550-b14aed451c02",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -2655,7 +2655,7 @@
             "AppTableName": "EventStatus",
             "AppTableNamePlural": "EventStatus",
             "AppDoNotProcess": false,
-            "AppTableId": "a9b70767-c36c-46f3-83d5-fc80a7397961",
+            "AppTableId": "7543f400-0f30-48e8-aa40-d11743ded77a",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -2827,7 +2827,7 @@
             "AppTableName": "EventStudent",
             "AppTableNamePlural": "EventStudents",
             "AppDoNotProcess": false,
-            "AppTableId": "43240062-e4ef-45f3-93c8-98828283e34e",
+            "AppTableId": "57b51675-fb17-43e0-9e4a-95e882d749e0",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -3098,7 +3098,7 @@
             "AppTableName": "EventTeacher",
             "AppTableNamePlural": "EventTeachers",
             "AppDoNotProcess": false,
-            "AppTableId": "768c8fa4-658b-4f26-a090-777ec4ca0e8c",
+            "AppTableId": "1e434338-cc61-4065-9d46-c51dca9b8893",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -3122,7 +3122,7 @@
                   "$ref": "251"
                 },
                 "AppDefaultValue": null,
-                "AppViewControlType": 7,
+                "AppViewControlType": 8,
                 "AppViewDisplayOrder": 0,
                 "AppDisplayInView": true,
                 "AppViewControlLabel": "Event",
@@ -3155,7 +3155,7 @@
                   "$ref": "251"
                 },
                 "AppDefaultValue": null,
-                "AppViewControlType": 8,
+                "AppViewControlType": 7,
                 "AppViewDisplayOrder": 0,
                 "AppDisplayInView": false,
                 "AppViewControlLabel": "Id",
@@ -3274,39 +3274,6 @@
                   {
                     "$id": "259",
                     "Column": {
-                      "$ref": "252"
-                    },
-                    "Name": "EventId",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": false
-                  }
-                ],
-                "Virtual": false,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppShowInController": true,
-                "ControllerMethodName": "ByEventId",
-                "ControllerRoute": "byEventId",
-                "AppName": "IX_EventTeacher_eventId",
-                "Table": {
-                  "$ref": "251"
-                },
-                "GenerationEnabled": true,
-                "Name": "IX_EventTeacher_eventId",
-                "TableName": "EventTeacher",
-                "IsPrimaryKey": false,
-                "ConstraintType": "NONCLUSTERED",
-                "SchemaName": "dbo",
-                "IsUnique": false
-              },
-              {
-                "$id": "260",
-                "Columns": [
-                  {
-                    "$id": "261",
-                    "Column": {
                       "$ref": "255"
                     },
                     "Name": "TeacherId",
@@ -3328,6 +3295,39 @@
                 },
                 "GenerationEnabled": true,
                 "Name": "IX_EventTeacher_teacherId",
+                "TableName": "EventTeacher",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              },
+              {
+                "$id": "260",
+                "Columns": [
+                  {
+                    "$id": "261",
+                    "Column": {
+                      "$ref": "252"
+                    },
+                    "Name": "EventId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByEventId",
+                "ControllerRoute": "byEventId",
+                "AppName": "IX_EventTeacher_eventId",
+                "Table": {
+                  "$ref": "251"
+                },
+                "GenerationEnabled": true,
+                "Name": "IX_EventTeacher_eventId",
                 "TableName": "EventTeacher",
                 "IsPrimaryKey": false,
                 "ConstraintType": "NONCLUSTERED",
@@ -3369,7 +3369,7 @@
             "AppTableName": "Family",
             "AppTableNamePlural": "Families",
             "AppDoNotProcess": false,
-            "AppTableId": "f5271fa7-1eca-4bf7-ae36-9819f3763ef3",
+            "AppTableId": "0e5feca1-8aa7-4632-be8b-83cb0d315108",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -3673,7 +3673,7 @@
             "AppTableName": "Rate",
             "AppTableNamePlural": "Rates",
             "AppDoNotProcess": false,
-            "AppTableId": "e845a582-0c19-4a2b-b1fe-35a3a69a717b",
+            "AppTableId": "51df4156-38dd-4634-9c5b-e749ccc994da",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -3977,7 +3977,7 @@
             "AppTableName": "Space",
             "AppTableNamePlural": "Spaces",
             "AppDoNotProcess": false,
-            "AppTableId": "d639b48b-5fad-4726-a4e7-53b04391f70b",
+            "AppTableId": "54c08ed5-959f-4aab-8c19-b6db1c973c44",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -4182,7 +4182,7 @@
             "AppTableName": "SpaceFeature",
             "AppTableNamePlural": "SpaceFeatures",
             "AppDoNotProcess": false,
-            "AppTableId": "3d09f343-a1f7-44bb-bd59-572d3ef64031",
+            "AppTableId": "925b4f40-32a1-48e6-a2db-aeef92ab4ee8",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -4354,7 +4354,7 @@
             "AppTableName": "SpaceSpaceFeature",
             "AppTableNamePlural": "SpaceSpaceFeatures",
             "AppDoNotProcess": false,
-            "AppTableId": "adb03532-c0b7-4567-b8a7-edda8fc8ca3c",
+            "AppTableId": "377ad465-3436-460f-a05c-82dacdc2d979",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -4625,7 +4625,7 @@
             "AppTableName": "Student",
             "AppTableNamePlural": "Students",
             "AppDoNotProcess": false,
-            "AppTableId": "8ba70b5f-b122-4a9f-a2a4-c4508b80e162",
+            "AppTableId": "ecdacbd9-60a3-457c-914a-ab815bf82101",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -5160,7 +5160,7 @@
             "AppTableName": "Studio",
             "AppTableNamePlural": "Studios",
             "AppDoNotProcess": false,
-            "AppTableId": "3b7ccb47-9f86-4c48-8abb-4a84e021b45d",
+            "AppTableId": "02bf60c2-b139-487c-bd40-dc89c7ad3511",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -5530,7 +5530,7 @@
             "AppTableName": "Teacher",
             "AppTableNamePlural": "Teachers",
             "AppDoNotProcess": false,
-            "AppTableId": "c1bb108b-39d8-423f-8f71-b96c4d3d32e8",
+            "AppTableId": "039c48ff-79bf-43e1-8168-d4bb05579cb5",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -5900,7 +5900,7 @@
             "AppTableName": "TeacherSkill",
             "AppTableNamePlural": "TeacherSkills",
             "AppDoNotProcess": false,
-            "AppTableId": "cdb18d44-ba5a-417f-8474-e595c1423d69",
+            "AppTableId": "5225f4d1-4d93-4eaf-8120-697e1cd54178",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -6072,7 +6072,7 @@
             "AppTableName": "TeacherTeacherSkill",
             "AppTableNamePlural": "TeacherTeacherSkills",
             "AppDoNotProcess": false,
-            "AppTableId": "781afa39-9b46-46bb-87b8-4a952ccc7f0d",
+            "AppTableId": "206d0821-ca27-4225-8e74-b09e0781859d",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -6343,7 +6343,7 @@
             "AppTableName": "User",
             "AppTableNamePlural": "Users",
             "AppDoNotProcess": false,
-            "AppTableId": "fbc078c1-4606-4b81-aa48-58c869c25f1a",
+            "AppTableId": "e07243cf-f669-44c4-8ad8-ddc52df2396d",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -6642,24 +6642,6 @@
                 "$id": "387",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "253"
-                },
-                "PrimaryColumn": {
-                  "$ref": "224"
-                }
-              }
-            ],
-            "Virtual": false,
-            "AppDoNotProcess": false,
-            "ForeignKeyName": "FK_EventTeacher_Id_Event_Id"
-          },
-          {
-            "$id": "388",
-            "Columns": [
-              {
-                "$id": "389",
-                "AppDoNotProcess": false,
-                "ForeignColumn": {
                   "$ref": "276"
                 },
                 "PrimaryColumn": {
@@ -6672,10 +6654,10 @@
             "ForeignKeyName": "FK_Rate_TeacherId_Teacher_Id"
           },
           {
-            "$id": "390",
+            "$id": "388",
             "Columns": [
               {
-                "$id": "391",
+                "$id": "389",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "277"
@@ -6690,10 +6672,10 @@
             "ForeignKeyName": "FK_Rate_TeacherSkillId_TeacherSkill_Id"
           },
           {
-            "$id": "392",
+            "$id": "390",
             "Columns": [
               {
-                "$id": "393",
+                "$id": "391",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "301"
@@ -6708,10 +6690,10 @@
             "ForeignKeyName": "FK_SpaceSpaceFeature_SpaceId_Space_Id"
           },
           {
-            "$id": "394",
+            "$id": "392",
             "Columns": [
               {
-                "$id": "395",
+                "$id": "393",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "300"
@@ -6726,10 +6708,10 @@
             "ForeignKeyName": "FK_SpaceSpaceFeature_SpaceFeatureId_SpaceFeature_Id"
           },
           {
-            "$id": "396",
+            "$id": "394",
             "Columns": [
               {
-                "$id": "397",
+                "$id": "395",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "320"
@@ -6744,10 +6726,10 @@
             "ForeignKeyName": "FK_Student_UserId_User_Id"
           },
           {
-            "$id": "398",
+            "$id": "396",
             "Columns": [
               {
-                "$id": "399",
+                "$id": "397",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "312"
@@ -6762,10 +6744,10 @@
             "ForeignKeyName": "FK_Student_FamilyId_Family_Id"
           },
           {
-            "$id": "400",
+            "$id": "398",
             "Columns": [
               {
-                "$id": "401",
+                "$id": "399",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "347"
@@ -6780,10 +6762,10 @@
             "ForeignKeyName": "FK_Teacher_UserId_User_Id"
           },
           {
-            "$id": "402",
+            "$id": "400",
             "Columns": [
               {
-                "$id": "403",
+                "$id": "401",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "362"
@@ -6798,10 +6780,10 @@
             "ForeignKeyName": "FK_TeacherTeacherSkill_TeacherSkillId_TeacherSkill_Id"
           },
           {
-            "$id": "404",
+            "$id": "402",
             "Columns": [
               {
-                "$id": "405",
+                "$id": "403",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
                   "$ref": "361"
@@ -6814,6 +6796,24 @@
             "Virtual": false,
             "AppDoNotProcess": false,
             "ForeignKeyName": "FK_TeacherTeacherSkill_TeacherId_Teacher_Id"
+          },
+          {
+            "$id": "404",
+            "Columns": [
+              {
+                "$id": "405",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "252"
+                },
+                "PrimaryColumn": {
+                  "$ref": "224"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_EventTeacher_EventId_Event_Id"
           }
         ],
         "ReferenceForeignKeys": [],
@@ -7223,12 +7223,12 @@
       },
       {
         "$id": "422",
-        "Table": "SpaceSpaceFeature",
+        "Table": "EventStudent",
         "Schema": "dbo",
         "AppDoNotProcess": false,
-        "AppTableName": "SpaceSpaceFeature",
-        "AppTableNamePlural": "SpaceSpaceFeatures",
-        "AppReferenceTable": true,
+        "AppTableName": "EventStudent",
+        "AppTableNamePlural": "EventStudents",
+        "AppReferenceTable": false,
         "AppControllerAttribute": "",
         "AppGenerateBulkInsertMethod": true,
         "AppGenerateCreateMethod": true,
@@ -7244,45 +7244,18 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.spaceFeatureId",
-        "AppViewLabel": "Space Space Feature",
+        "ForeignKeyDisplayColumn": "this.id",
+        "AppViewLabel": "Event Student",
         "AppViewIcon": ""
       },
       {
         "$id": "423",
-        "Table": "TeacherTeacherSkill",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "TeacherTeacherSkill",
-        "AppTableNamePlural": "TeacherTeacherSkills",
-        "AppReferenceTable": true,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.teacherId",
-        "AppViewLabel": "Teacher Teacher Skill",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "424",
         "Table": "EventTeacher",
         "Schema": "dbo",
         "AppDoNotProcess": false,
         "AppTableName": "EventTeacher",
         "AppTableNamePlural": "EventTeachers",
-        "AppReferenceTable": true,
+        "AppReferenceTable": false,
         "AppControllerAttribute": "",
         "AppGenerateBulkInsertMethod": true,
         "AppGenerateCreateMethod": true,
@@ -7303,13 +7276,13 @@
         "AppViewIcon": ""
       },
       {
-        "$id": "425",
-        "Table": "EventStudent",
+        "$id": "424",
+        "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "AppDoNotProcess": false,
-        "AppTableName": "EventStudent",
-        "AppTableNamePlural": "EventStudents",
-        "AppReferenceTable": true,
+        "AppTableName": "SpaceSpaceFeature",
+        "AppTableNamePlural": "SpaceSpaceFeatures",
+        "AppReferenceTable": false,
         "AppControllerAttribute": "",
         "AppGenerateBulkInsertMethod": true,
         "AppGenerateCreateMethod": true,
@@ -7325,8 +7298,35 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id",
-        "AppViewLabel": "Event Student",
+        "ForeignKeyDisplayColumn": "this.spaceFeatureId",
+        "AppViewLabel": "Space Space Feature",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "425",
+        "Table": "TeacherTeacherSkill",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "TeacherTeacherSkill",
+        "AppTableNamePlural": "TeacherTeacherSkills",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "ForeignKeyDisplayColumn": "this.teacherId",
+        "AppViewLabel": "Teacher Teacher Skill",
         "AppViewIcon": ""
       }
     ],
@@ -8957,26 +8957,6 @@
         "$id": "505",
         "Table": "EventStudent",
         "Schema": "dbo",
-        "Column": "EventId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 8,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Event",
-        "AppName": "EventId",
-        "AppNamePlural": "EventIds"
-      },
-      {
-        "$id": "506",
-        "Table": "EventStudent",
-        "Schema": "dbo",
         "Column": "StudentId",
         "AppCLRType": "int",
         "AppDoNotProcess": false,
@@ -8994,27 +8974,7 @@
         "AppNamePlural": "StudentIds"
       },
       {
-        "$id": "507",
-        "Table": "EventTeacher",
-        "Schema": "dbo",
-        "Column": "EventId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 8,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Event",
-        "AppName": "EventId",
-        "AppNamePlural": "EventIds"
-      },
-      {
-        "$id": "508",
+        "$id": "506",
         "Table": "EventTeacher",
         "Schema": "dbo",
         "Column": "TeacherId",
@@ -9034,7 +8994,7 @@
         "AppNamePlural": "TeacherIds"
       },
       {
-        "$id": "509",
+        "$id": "507",
         "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "Column": "SpaceFeatureId",
@@ -9054,27 +9014,7 @@
         "AppNamePlural": "SpaceFeatureIds"
       },
       {
-        "$id": "510",
-        "Table": "SpaceSpaceFeature",
-        "Schema": "dbo",
-        "Column": "SpaceId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 8,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Space",
-        "AppName": "SpaceId",
-        "AppNamePlural": "SpaceIds"
-      },
-      {
-        "$id": "511",
+        "$id": "508",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "FamilyId",
@@ -9094,27 +9034,7 @@
         "AppNamePlural": "FamilyIds"
       },
       {
-        "$id": "512",
-        "Table": "TeacherTeacherSkill",
-        "Schema": "dbo",
-        "Column": "TeacherId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 8,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Teacher",
-        "AppName": "TeacherId",
-        "AppNamePlural": "TeacherIds"
-      },
-      {
-        "$id": "513",
+        "$id": "509",
         "Table": "TeacherTeacherSkill",
         "Schema": "dbo",
         "Column": "TeacherSkillId",
@@ -9132,6 +9052,86 @@
         "AppViewControlLabel": "Teacher Skill",
         "AppName": "TeacherSkillId",
         "AppNamePlural": "TeacherSkillIds"
+      },
+      {
+        "$id": "510",
+        "Table": "EventStudent",
+        "Schema": "dbo",
+        "Column": "EventId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Event",
+        "AppName": "EventId",
+        "AppNamePlural": "EventIds"
+      },
+      {
+        "$id": "511",
+        "Table": "EventTeacher",
+        "Schema": "dbo",
+        "Column": "EventId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Event",
+        "AppName": "EventId",
+        "AppNamePlural": "EventIds"
+      },
+      {
+        "$id": "512",
+        "Table": "SpaceSpaceFeature",
+        "Schema": "dbo",
+        "Column": "SpaceId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Space",
+        "AppName": "SpaceId",
+        "AppNamePlural": "SpaceIds"
+      },
+      {
+        "$id": "513",
+        "Table": "TeacherTeacherSkill",
+        "Schema": "dbo",
+        "Column": "TeacherId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Teacher",
+        "AppName": "TeacherId",
+        "AppNamePlural": "TeacherIds"
       }
     ],
     "VirtualForeignKeys": [],

@@ -35,7 +35,6 @@ namespace CADNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -125,5 +124,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ff31f85322490e8075da8642b12d6ec</Hash>
+    <Hash>62a87a6bf6596f540a6833a693e255bb</Hash>
 </Codenesium>*/

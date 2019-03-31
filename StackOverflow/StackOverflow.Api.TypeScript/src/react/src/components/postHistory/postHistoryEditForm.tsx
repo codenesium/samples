@@ -198,7 +198,7 @@ class PostHistoryEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="comment">Comment</label>
+            <label htmlFor="comment">Comment (optional)</label>
             <br />
             {getFieldDecorator('comment', {
               rules: [
@@ -211,7 +211,7 @@ class PostHistoryEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="creationDate">Creation Date</label>
+            <label htmlFor="creationDate">Creation Date (required)</label>
             <br />
             {getFieldDecorator('creationDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -237,7 +237,7 @@ class PostHistoryEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="revisionGUID">Revision GUID</label>
+            <label htmlFor="revisionGUID">Revision GUID (required)</label>
             <br />
             {getFieldDecorator('revisionGUID', {
               rules: [
@@ -248,7 +248,7 @@ class PostHistoryEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="text">Text</label>
+            <label htmlFor="text">Text (optional)</label>
             <br />
             {getFieldDecorator('text', {
               rules: [
@@ -261,7 +261,9 @@ class PostHistoryEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userDisplayName">User Display Name</label>
+            <label htmlFor="userDisplayName">
+              User Display Name (optional)
+            </label>
             <br />
             {getFieldDecorator('userDisplayName', {
               rules: [{ max: 40, message: 'Exceeds max length of 40' }],
@@ -300,5 +302,5 @@ export const WrappedPostHistoryEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d5d68cca7fd37593e41eec42a92c2653</Hash>
+    <Hash>bf3f5d657e48970ed3e9c8e41433a7f8</Hash>
 </Codenesium>*/

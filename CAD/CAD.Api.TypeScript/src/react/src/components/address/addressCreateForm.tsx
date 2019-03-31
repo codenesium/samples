@@ -140,7 +140,7 @@ class AddressCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="address1">Address1</label>
+            <label htmlFor="address1">Address1 (required)</label>
             <br />
             {getFieldDecorator('address1', {
               rules: [
@@ -151,7 +151,7 @@ class AddressCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="address2">Address2</label>
+            <label htmlFor="address2">Address2 (optional)</label>
             <br />
             {getFieldDecorator('address2', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -159,7 +159,7 @@ class AddressCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="city">City</label>
+            <label htmlFor="city">City (required)</label>
             <br />
             {getFieldDecorator('city', {
               rules: [
@@ -170,7 +170,7 @@ class AddressCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="state">State</label>
+            <label htmlFor="state">State (required)</label>
             <br />
             {getFieldDecorator('state', {
               rules: [
@@ -181,7 +181,7 @@ class AddressCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="zip">Zip</label>
+            <label htmlFor="zip">Zip (optional)</label>
             <br />
             {getFieldDecorator('zip', {
               rules: [{ max: 12, message: 'Exceeds max length of 12' }],
@@ -212,5 +212,5 @@ export const WrappedAddressCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c5de6f8b5ddc18a278d903de4d6e0964</Hash>
+    <Hash>1009e7780b75a74ade09f90e2c663046</Hash>
 </Codenesium>*/

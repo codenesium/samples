@@ -107,43 +107,103 @@ namespace TwitterNS.Api.Contracts
         }
     }
 
-		public class AuthResponse : ActionResponse
+	public class AuthResponse : ActionResponse
+	{
+		[JsonProperty]
+		public virtual string Token { get; private set; }
+
+		[JsonProperty]
+		public virtual string LinkText { get; private set; }
+
+		[JsonProperty]
+		public virtual string LinkValue { get; private set; }
+
+		[JsonProperty]
+		public virtual string Message { get; private set; }
+
+		[JsonProperty]
+		public virtual string ErrorCode { get; private set; }
+
+		public virtual void SetMessage(string message)
 		{
-			[JsonProperty]
-			public virtual string Token { get; private set; }
-
-			[JsonProperty]
-			public virtual string LinkText { get; private set; }
-
-			[JsonProperty]
-			public virtual string LinkValue { get; private set; }
-
-			[JsonProperty]
-			public virtual string Message { get; private set; }
-
-			[JsonProperty]
-			public virtual string ErrorCode { get; private set; }
-
-			public virtual void SetMessage(string message)
-			{
-				this.Message = message;
-			}
-
-		    public virtual void SetLink(string linkText, string linkValue)
-			{
-				this.LinkText = linkText;
-				this.LinkValue = linkValue;
-			}
-
-
-			public virtual void SetToken(string token)
-			{
-				this.Token = token;
-			}
-
-			public virtual void SetErrorCode(string errorCode)
-			{
-				this.ErrorCode = errorCode;
-			}
+			this.Message = message;
 		}
+
+		public virtual void SetLink(string linkText, string linkValue)
+		{
+			this.LinkText = linkText;
+			this.LinkValue = linkValue;
+		}
+
+
+		public virtual void SetToken(string token)
+		{
+			this.Token = token;
+		}
+
+		public virtual void SetErrorCode(string errorCode)
+		{
+			this.ErrorCode = errorCode;
+		}
+	}
+
+	public class ConfirmPasswordResetRequestModel
+	{
+		public string Id { get; set; }
+
+		public string Token { get; set; }
+
+		public string NewPassword { get; set; }
+	}
+
+	public class ConfirmRegistrationRequestModel
+	{
+		public string Id { get; set; }
+
+		public string Token { get; set; }
+	}
+
+	public class LoginRequestModel
+	{
+		public string Email { get; set; }
+
+		public string Password { get; set; }
+
+		public void SetProperties(string email, string password)
+		{
+			this.Email = email;
+			this.Password = password;
+		}
+	}
+
+	public class RegisterRequestModel
+	{
+		public string Email { get; set; }
+
+		public string Password { get; set; }
+	}
+
+	public class ResetPasswordRequestModel
+	{
+		public string Email { get; set; }
+	}
+
+	public class ChangePasswordRequestModel
+	{
+		public string CurrentPassword { get; set; }
+
+		public string NewPassword { get; set; }
+	}
+
+	public class ChangeEmailRequestModel
+	{
+		public string Password { get; set; }
+
+		public string NewEmail { get; set; }
+	}
+
+	public class ConfirmChangeEmailRequestModel
+	{
+		public string Token { get; set; }
+	}
 }

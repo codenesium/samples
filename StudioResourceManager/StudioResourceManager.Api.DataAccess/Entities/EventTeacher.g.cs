@@ -33,12 +33,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[Column("teacherId")]
 		public virtual int TeacherId { get; private set; }
 
-		[ForeignKey("Id")]
-		public virtual Event IdNavigation { get; private set; }
+		[ForeignKey("EventId")]
+		public virtual Event EventIdNavigation { get; private set; }
 
-		public void SetIdNavigation(Event item)
+		public void SetEventIdNavigation(Event item)
 		{
-			this.IdNavigation = item;
+			this.EventIdNavigation = item;
 		}
 
 		[ForeignKey("TeacherId")]
@@ -52,5 +52,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8367cb9aa9707ab3700066f67804279d</Hash>
+    <Hash>8c8c177f56bca7609bff2bf405be8910</Hash>
 </Codenesium>*/

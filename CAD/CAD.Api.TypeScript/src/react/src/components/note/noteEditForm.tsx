@@ -202,7 +202,7 @@ class NoteEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCreated">Date Created</label>
+            <label htmlFor="dateCreated">Date Created (required)</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
@@ -212,7 +212,7 @@ class NoteEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="noteText">Note Text</label>
+            <label htmlFor="noteText">Note Text (required)</label>
             <br />
             {getFieldDecorator('noteText', {
               rules: [
@@ -254,5 +254,5 @@ export const WrappedNoteEditComponent = Form.create({ name: 'Note Edit' })(
 
 
 /*<Codenesium>
-    <Hash>1189b36b257bb829df94b9c7e5d3a317</Hash>
+    <Hash>c638e7f661ffa7174dd74a3fa3df3e46</Hash>
 </Codenesium>*/

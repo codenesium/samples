@@ -42,7 +42,6 @@ namespace TicketingCRMNS.Api.DataAccess
 				                  x.Description.StartsWith(query) ||
 				                  x.EndDate == query.ToDateTime() ||
 				                  x.Facebook.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.StartDate == query.ToDateTime() ||
 				                  x.Website.StartsWith(query),
@@ -136,5 +135,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b62200b467d09cce5b9246efc3b37fc</Hash>
+    <Hash>9db10f4ef477329cb776d2c7699f978f</Hash>
 </Codenesium>*/

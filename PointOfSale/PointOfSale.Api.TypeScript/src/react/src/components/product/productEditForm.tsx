@@ -192,7 +192,7 @@ class ProductEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="active">active</label>
+            <label htmlFor="active">active (required)</label>
             <br />
             {getFieldDecorator('active', {
               rules: [],
@@ -200,7 +200,7 @@ class ProductEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">description (required)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [
@@ -211,7 +211,7 @@ class ProductEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -222,7 +222,7 @@ class ProductEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="price">price</label>
+            <label htmlFor="price">price (required)</label>
             <br />
             {getFieldDecorator('price', {
               rules: [{ required: true, message: 'Required' }],
@@ -230,7 +230,7 @@ class ProductEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="quantity">quantity</label>
+            <label htmlFor="quantity">quantity (required)</label>
             <br />
             {getFieldDecorator('quantity', {
               rules: [{ required: true, message: 'Required' }],
@@ -261,5 +261,5 @@ export const WrappedProductEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>d37d61711b76b709695510bde87344c6</Hash>
+    <Hash>37e40293587aa7c9711a758c013e0538</Hash>
 </Codenesium>*/

@@ -35,7 +35,6 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.NextChainId == query.ToInt() ||
 				                  x.PreviousChainId == query.ToInt(),
 				                  limit,
@@ -130,5 +129,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7b9120f7d7591f2318372b858275ea9e</Hash>
+    <Hash>343e5624bd4937ab811130fb1461ecc0</Hash>
 </Codenesium>*/

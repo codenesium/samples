@@ -140,7 +140,7 @@ class PostTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="rwType">Rw Type</label>
+            <label htmlFor="rwType">Rw Type (required)</label>
             <br />
             {getFieldDecorator('rwType', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedPostTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8099ef4ebd0c715a257dfb9fb7324a27</Hash>
+    <Hash>5d9018c014175f6aaf73ccef93bdc2e4</Hash>
 </Codenesium>*/

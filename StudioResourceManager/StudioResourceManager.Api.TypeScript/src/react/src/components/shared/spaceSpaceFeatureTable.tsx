@@ -144,12 +144,34 @@ export class SpaceSpaceFeatureTableComponent extends React.Component<
                     },
                   },
                   {
+                    Header: 'Space',
+                    accessor: 'spaceId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Spaces + '/' + props.original.spaceId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.spaceIdNavigation &&
+                              props.original.spaceIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Actions',
                     minWidth: 150,
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -161,7 +183,7 @@ export class SpaceSpaceFeatureTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -188,5 +210,5 @@ export class SpaceSpaceFeatureTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>51a58ffd493e0a1acf6ae69d9199bfba</Hash>
+    <Hash>dc80527cf46de52cd679c762d99c554a</Hash>
 </Codenesium>*/

@@ -192,7 +192,7 @@ class BucketEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="externalId">ExternalId</label>
+            <label htmlFor="externalId">ExternalId (required)</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
@@ -200,7 +200,7 @@ class BucketEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -234,5 +234,5 @@ export const WrappedBucketEditComponent = Form.create({ name: 'Bucket Edit' })(
 
 
 /*<Codenesium>
-    <Hash>0c0fd4d9e16a62179f0f92dbee40820b</Hash>
+    <Hash>e3c4235b2a529f7cf079646d0c924af2</Hash>
 </Codenesium>*/

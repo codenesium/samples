@@ -25,7 +25,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public int EventId { get; private set; } = default(int);
+		public int EventId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -34,5 +34,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0bb15f7d38d19edd55257988ef44f245</Hash>
+    <Hash>5cbdb6d5dae59c857b48395570d89c90</Hash>
 </Codenesium>*/

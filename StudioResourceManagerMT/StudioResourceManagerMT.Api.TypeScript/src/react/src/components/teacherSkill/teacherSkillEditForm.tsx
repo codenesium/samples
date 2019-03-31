@@ -195,7 +195,7 @@ class TeacherSkillEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedTeacherSkillEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2f69fcaa448fb833a257a48c9e098f0b</Hash>
+    <Hash>0d2bf848e0697afc4b504d51624fafb0</Hash>
 </Codenesium>*/

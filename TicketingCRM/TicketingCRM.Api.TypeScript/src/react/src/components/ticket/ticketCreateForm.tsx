@@ -141,7 +141,7 @@ class TicketCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="publicId">Public</label>
+            <label htmlFor="publicId">Public (required)</label>
             <br />
             {getFieldDecorator('publicId', {
               rules: [
@@ -183,5 +183,5 @@ export const WrappedTicketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>55235bba4d4f1f5b802b2e77e439b5d4</Hash>
+    <Hash>4fdcc9508fde8cb7d342feeb47a9fc06</Hash>
 </Codenesium>*/

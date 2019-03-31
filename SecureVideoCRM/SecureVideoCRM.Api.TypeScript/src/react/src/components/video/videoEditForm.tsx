@@ -192,7 +192,7 @@ class VideoEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">description (required)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [
@@ -203,7 +203,7 @@ class VideoEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="title">title</label>
+            <label htmlFor="title">title (required)</label>
             <br />
             {getFieldDecorator('title', {
               rules: [
@@ -214,7 +214,7 @@ class VideoEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="url">url</label>
+            <label htmlFor="url">url (required)</label>
             <br />
             {getFieldDecorator('url', {
               rules: [
@@ -248,5 +248,5 @@ export const WrappedVideoEditComponent = Form.create({ name: 'Video Edit' })(
 
 
 /*<Codenesium>
-    <Hash>6a7eb2155256ee25e5653fa1035dc86e</Hash>
+    <Hash>c6e1d2d32789e7e2dde7517592f9d4b0</Hash>
 </Codenesium>*/

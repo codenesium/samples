@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
 				                  x.CountryId == query.ToInt() ||
 				                  x.Email.StartsWith(query) ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query),
 				                  limit,
@@ -146,5 +145,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4517850282d3103e8b6a56698d253e45</Hash>
+    <Hash>1710bc4377ff2b58db05e6341e738806</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace CADNS.Api.DataAccess
 				                  x.Badge.StartsWith(query) ||
 				                  x.Email.StartsWith(query) ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Password.StartsWith(query),
 				                  limit,
@@ -157,5 +156,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>168e741a5e11e8817b298d08a2b1421e</Hash>
+    <Hash>298dbf71f967628f003aec26e1cfa6c8</Hash>
 </Codenesium>*/

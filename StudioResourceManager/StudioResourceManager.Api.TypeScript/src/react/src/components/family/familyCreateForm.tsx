@@ -140,7 +140,7 @@ class FamilyCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="notes">Notes (optional)</label>
             <br />
             {getFieldDecorator('notes', {
               rules: [],
@@ -148,7 +148,9 @@ class FamilyCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="primaryContactEmail">Primary Contact Email</label>
+            <label htmlFor="primaryContactEmail">
+              Primary Contact Email (optional)
+            </label>
             <br />
             {getFieldDecorator('primaryContactEmail', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -157,7 +159,7 @@ class FamilyCreateComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="primaryContactFirstName">
-              Primary Contact First Name
+              Primary Contact First Name (optional)
             </label>
             <br />
             {getFieldDecorator('primaryContactFirstName', {
@@ -167,7 +169,7 @@ class FamilyCreateComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="primaryContactLastName">
-              Primary Contact Last Name
+              Primary Contact Last Name (optional)
             </label>
             <br />
             {getFieldDecorator('primaryContactLastName', {
@@ -176,7 +178,9 @@ class FamilyCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="primaryContactPhone">Primary Contact Phone</label>
+            <label htmlFor="primaryContactPhone">
+              Primary Contact Phone (required)
+            </label>
             <br />
             {getFieldDecorator('primaryContactPhone', {
               rules: [
@@ -210,5 +214,5 @@ export const WrappedFamilyCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>02e95f72620bde29e6b17a54d834f51d</Hash>
+    <Hash>5f053c892b19571c6c7d84e826ebfb05</Hash>
 </Codenesium>*/

@@ -5,6 +5,6 @@ namespace PetStoreNS.Api.DataAccess
 {
     public class AuthUser : IdentityUser
     {
-		public string NewEmail{ get;set; }
+		public string NewEmail{ get; set; }
     }
 }

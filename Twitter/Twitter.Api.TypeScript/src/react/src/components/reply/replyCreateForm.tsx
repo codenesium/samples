@@ -141,7 +141,7 @@ class ReplyCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="content">content</label>
+            <label htmlFor="content">content (required)</label>
             <br />
             {getFieldDecorator('content', {
               rules: [
@@ -152,7 +152,7 @@ class ReplyCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -160,7 +160,7 @@ class ReplyCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="replierUserId">replier_user_id</label>
+            <label htmlFor="replierUserId">replier_user_id (required)</label>
             <br />
             {getFieldDecorator('replierUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -168,7 +168,7 @@ class ReplyCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (required)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [{ required: true, message: 'Required' }],
@@ -199,5 +199,5 @@ export const WrappedReplyCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>587788547ec34f5515aa6cf894cd9546</Hash>
+    <Hash>633ef2e3fc539452831aa12264feee6d</Hash>
 </Codenesium>*/

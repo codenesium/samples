@@ -141,7 +141,7 @@ class EventCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="address1">Address1</label>
+            <label htmlFor="address1">Address1 (required)</label>
             <br />
             {getFieldDecorator('address1', {
               rules: [
@@ -152,7 +152,7 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="address2">Address2</label>
+            <label htmlFor="address2">Address2 (required)</label>
             <br />
             {getFieldDecorator('address2', {
               rules: [
@@ -171,7 +171,7 @@ class EventCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="date">Date</label>
+            <label htmlFor="date">Date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -179,7 +179,7 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Description (required)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [{ required: true, message: 'Required' }],
@@ -187,7 +187,7 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="endDate">End Date</label>
+            <label htmlFor="endDate">End Date (required)</label>
             <br />
             {getFieldDecorator('endDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -195,7 +195,7 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="facebook">Facebook</label>
+            <label htmlFor="facebook">Facebook (required)</label>
             <br />
             {getFieldDecorator('facebook', {
               rules: [
@@ -206,7 +206,7 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -217,7 +217,7 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="startDate">Start Date</label>
+            <label htmlFor="startDate">Start Date (required)</label>
             <br />
             {getFieldDecorator('startDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -225,7 +225,7 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="website">Website</label>
+            <label htmlFor="website">Website (required)</label>
             <br />
             {getFieldDecorator('website', {
               rules: [
@@ -259,5 +259,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a9f44630b0a082504934bcbc12112659</Hash>
+    <Hash>d2325b1a6338780852c13cf1e80a0209</Hash>
 </Codenesium>*/

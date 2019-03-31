@@ -94,7 +94,9 @@ export class SelfReferenceSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Self Reference</label>
+          <label htmlFor={this.props.propertyName}>
+            Self Reference {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class SelfReferenceSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>53ad4a3ff2db0debc51a3bfc60fb4433</Hash>
+    <Hash>f577438c2a2f6ece5dc366095e086511</Hash>
 </Codenesium>*/

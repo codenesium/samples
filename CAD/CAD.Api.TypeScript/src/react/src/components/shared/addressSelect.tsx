@@ -94,7 +94,9 @@ export class AddressSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Address</label>
+          <label htmlFor={this.props.propertyName}>
+            Address {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class AddressSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0a64a2e72a72f7310e5da1e9cf3fb586</Hash>
+    <Hash>94d2222e781d542fbb530dbd792f002b</Hash>
 </Codenesium>*/

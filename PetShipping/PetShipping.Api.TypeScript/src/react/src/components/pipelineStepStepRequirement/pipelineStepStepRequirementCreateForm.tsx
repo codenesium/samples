@@ -141,7 +141,7 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="details">Details</label>
+            <label htmlFor="details">Details (required)</label>
             <br />
             {getFieldDecorator('details', {
               rules: [{ required: true, message: 'Required' }],
@@ -157,7 +157,7 @@ class PipelineStepStepRequirementCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="requirementMet">Requirement Met</label>
+            <label htmlFor="requirementMet">Requirement Met (required)</label>
             <br />
             {getFieldDecorator('requirementMet', {
               rules: [],
@@ -189,5 +189,5 @@ export const WrappedPipelineStepStepRequirementCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5aa2bd4056319a4221bcc3bdea30d79b</Hash>
+    <Hash>266ca42b9424eb730e30562367c04ef7</Hash>
 </Codenesium>*/

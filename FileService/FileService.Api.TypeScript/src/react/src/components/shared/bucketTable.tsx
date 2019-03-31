@@ -134,7 +134,7 @@ export class BucketTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -146,7 +146,7 @@ export class BucketTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -173,5 +173,5 @@ export class BucketTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>55c40b2ad66ec80bd047a1a1934de4d6</Hash>
+    <Hash>acbab3a923012cb64f8e53ab6f263ce2</Hash>
 </Codenesium>*/

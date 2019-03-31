@@ -140,7 +140,7 @@ class RowVersionCheckCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -151,7 +151,7 @@ class RowVersionCheckCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="rowVersion">Row Version</label>
+            <label htmlFor="rowVersion">Row Version (required)</label>
             <br />
             {getFieldDecorator('rowVersion', {
               rules: [{ required: true, message: 'Required' }],
@@ -182,5 +182,5 @@ export const WrappedRowVersionCheckCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9d1927b6abccc6823170807d50ea7196</Hash>
+    <Hash>0cb2566e3aef5109672c3199dd062aa9</Hash>
 </Codenesium>*/

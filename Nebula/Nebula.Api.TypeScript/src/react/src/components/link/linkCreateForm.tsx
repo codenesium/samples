@@ -159,7 +159,7 @@ class LinkCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCompleted">Date Completed</label>
+            <label htmlFor="dateCompleted">Date Completed (optional)</label>
             <br />
             {getFieldDecorator('dateCompleted', {
               rules: [],
@@ -172,7 +172,7 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateStarted">Date Started</label>
+            <label htmlFor="dateStarted">Date Started (optional)</label>
             <br />
             {getFieldDecorator('dateStarted', {
               rules: [],
@@ -182,7 +182,9 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dynamicParameters">Dynamic Parameters</label>
+            <label htmlFor="dynamicParameters">
+              Dynamic Parameters (optional)
+            </label>
             <br />
             {getFieldDecorator('dynamicParameters', {
               rules: [],
@@ -190,7 +192,7 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="externalId">External</label>
+            <label htmlFor="externalId">External (required)</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
@@ -206,7 +208,7 @@ class LinkCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -217,7 +219,7 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="order">Order</label>
+            <label htmlFor="order">Order (required)</label>
             <br />
             {getFieldDecorator('order', {
               rules: [{ required: true, message: 'Required' }],
@@ -225,7 +227,7 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="response">Response</label>
+            <label htmlFor="response">Response (optional)</label>
             <br />
             {getFieldDecorator('response', {
               rules: [],
@@ -233,7 +235,9 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="staticParameters">Static Parameters</label>
+            <label htmlFor="staticParameters">
+              Static Parameters (optional)
+            </label>
             <br />
             {getFieldDecorator('staticParameters', {
               rules: [],
@@ -241,7 +245,9 @@ class LinkCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="timeoutInSeconds">Timeout In Seconds</label>
+            <label htmlFor="timeoutInSeconds">
+              Timeout In Seconds (required)
+            </label>
             <br />
             {getFieldDecorator('timeoutInSeconds', {
               rules: [{ required: true, message: 'Required' }],
@@ -272,5 +278,5 @@ export const WrappedLinkCreateComponent = Form.create({ name: 'Link Create' })(
 
 
 /*<Codenesium>
-    <Hash>161b7d61acbc6c214a50effb4dab9c21</Hash>
+    <Hash>f4af7e87bb97d5e03d9dba5c77d800e8</Hash>
 </Codenesium>*/

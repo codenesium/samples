@@ -151,7 +151,7 @@ export class ProvinceTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -163,7 +163,7 @@ export class ProvinceTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -190,5 +190,5 @@ export class ProvinceTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>648152a0e3f87de3b87f96c8e348491c</Hash>
+    <Hash>29b4355cf8a68650678d00fb33e72248</Hash>
 </Codenesium>*/

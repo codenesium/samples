@@ -98,7 +98,8 @@ export class TestAllFieldTypesNullableSelectComponent extends React.Component<
       return (
         <Form.Item>
           <label htmlFor={this.props.propertyName}>
-            Test All Field Types Nullable
+            Test All Field Types Nullable{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
           </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
@@ -127,5 +128,5 @@ export class TestAllFieldTypesNullableSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ecce0310bd794588662094247dfc1e06</Hash>
+    <Hash>fa193d5f586c04696c833c2b6ecf9886</Hash>
 </Codenesium>*/

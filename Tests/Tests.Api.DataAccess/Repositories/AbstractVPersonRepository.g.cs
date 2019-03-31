@@ -35,7 +35,6 @@ namespace TestsNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.PersonId == query.ToInt() ||
 				                  x.PersonName.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -113,5 +112,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2cc0b0769eb2a36b20aed30b9683c551</Hash>
+    <Hash>209047eb143775188bb51364cb77b0ac</Hash>
 </Codenesium>*/

@@ -140,7 +140,7 @@ class ProductCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="active">active</label>
+            <label htmlFor="active">active (required)</label>
             <br />
             {getFieldDecorator('active', {
               rules: [],
@@ -148,7 +148,7 @@ class ProductCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">description (required)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [
@@ -159,7 +159,7 @@ class ProductCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -170,7 +170,7 @@ class ProductCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="price">price</label>
+            <label htmlFor="price">price (required)</label>
             <br />
             {getFieldDecorator('price', {
               rules: [{ required: true, message: 'Required' }],
@@ -178,7 +178,7 @@ class ProductCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="quantity">quantity</label>
+            <label htmlFor="quantity">quantity (required)</label>
             <br />
             {getFieldDecorator('quantity', {
               rules: [{ required: true, message: 'Required' }],
@@ -209,5 +209,5 @@ export const WrappedProductCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>409d9b20b2988bf3f6010346c3d59e21</Hash>
+    <Hash>712e3aa484ce314b6002a1a7e1428674</Hash>
 </Codenesium>*/

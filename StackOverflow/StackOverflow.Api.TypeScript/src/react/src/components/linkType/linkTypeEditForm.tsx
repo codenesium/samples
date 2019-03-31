@@ -195,7 +195,7 @@ class LinkTypeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="rwType">Rw Type</label>
+            <label htmlFor="rwType">Rw Type (required)</label>
             <br />
             {getFieldDecorator('rwType', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedLinkTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>594a13b4999a6adc1e723529c3d846f9</Hash>
+    <Hash>7c284a844498847d8db83cf92fa45d85</Hash>
 </Codenesium>*/

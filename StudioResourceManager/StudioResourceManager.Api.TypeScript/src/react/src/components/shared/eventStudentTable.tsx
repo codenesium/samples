@@ -115,6 +115,28 @@ export class EventStudentTableComponent extends React.Component<
                 Header: 'EventStudents',
                 columns: [
                   {
+                    Header: 'Event',
+                    accessor: 'eventId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Events + '/' + props.original.eventId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.eventIdNavigation &&
+                              props.original.eventIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Student',
                     accessor: 'studentId',
                     Cell: props => {
@@ -144,7 +166,7 @@ export class EventStudentTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -156,7 +178,7 @@ export class EventStudentTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -183,5 +205,5 @@ export class EventStudentTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9b2e1f1745b5a870e01760474ba84b81</Hash>
+    <Hash>52b529ae1e3d0608e72c864e04ab0eca</Hash>
 </Codenesium>*/

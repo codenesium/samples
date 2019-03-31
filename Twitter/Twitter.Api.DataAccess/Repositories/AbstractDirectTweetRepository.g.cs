@@ -38,8 +38,7 @@ namespace TwitterNS.Api.DataAccess
 				                  x.Content.StartsWith(query) ||
 				                  x.Date == query.ToDateTime() ||
 				                  x.TaggedUserId == query.ToInt() ||
-				                  x.Time == query.ToTimespan() ||
-				                  x.TweetId == query.ToInt(),
+				                  x.Time == query.ToTimespan(),
 				                  limit,
 				                  offset);
 			}
@@ -130,5 +129,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>289ffbb46afeaf3bccd332e3bb28d1bd</Hash>
+    <Hash>4c85d044e1ece89c6e0667898f32c539</Hash>
 </Codenesium>*/

@@ -94,7 +94,9 @@ export class ClaspSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Clasp</label>
+          <label htmlFor={this.props.propertyName}>
+            Clasp {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class ClaspSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>bd446d8c8b471a84f45f0762f65afb1d</Hash>
+    <Hash>0fa9464e00e1ca11b2c97aa1bca624a4</Hash>
 </Codenesium>*/

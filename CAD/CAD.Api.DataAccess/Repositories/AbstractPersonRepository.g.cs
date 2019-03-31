@@ -36,7 +36,6 @@ namespace CADNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
 				                  x.Ssn.StartsWith(query),
@@ -126,5 +125,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9677419c67db921f04938e115f00009b</Hash>
+    <Hash>a9b7c700d9ce3c42073d431a17b17e27</Hash>
 </Codenesium>*/

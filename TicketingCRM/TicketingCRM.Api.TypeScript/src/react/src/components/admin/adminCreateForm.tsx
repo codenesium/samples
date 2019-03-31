@@ -140,7 +140,7 @@ class AdminCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -151,7 +151,7 @@ class AdminCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -162,7 +162,7 @@ class AdminCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -173,7 +173,7 @@ class AdminCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -184,7 +184,7 @@ class AdminCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -195,7 +195,7 @@ class AdminCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username (required)</label>
             <br />
             {getFieldDecorator('username', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedAdminCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6bf9ff4de3204ec4992863b091c36ffb</Hash>
+    <Hash>d4c8f7c24b2716e31660d98d088ee78a</Hash>
 </Codenesium>*/

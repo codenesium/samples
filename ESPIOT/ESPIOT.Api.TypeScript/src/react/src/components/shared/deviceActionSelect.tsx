@@ -94,7 +94,9 @@ export class DeviceActionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Device Actions</label>
+          <label htmlFor={this.props.propertyName}>
+            Device Actions {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class DeviceActionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>fc114116935cd59762a45e0516cb2fa4</Hash>
+    <Hash>07edb9bf9e48be8f68e1f3ea56bb8464</Hash>
 </Codenesium>*/

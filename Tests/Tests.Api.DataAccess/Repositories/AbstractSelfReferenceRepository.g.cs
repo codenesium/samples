@@ -35,7 +35,6 @@ namespace TestsNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.SelfReferenceId == query.ToNullableInt() ||
 				                  x.SelfReferenceId2 == query.ToNullableInt(),
 				                  limit,
@@ -150,5 +149,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b81420c4d799cb8a94c577f909d64681</Hash>
+    <Hash>48bc7624ef644cc36a4a1689d8fd37da</Hash>
 </Codenesium>*/

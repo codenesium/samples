@@ -200,6 +200,28 @@ export default class EventTeacherSearchComponent extends React.Component<
                 Header: 'Event Teacher',
                 columns: [
                   {
+                    Header: 'Event',
+                    accessor: 'eventId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Events + '/' + props.original.eventId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.eventIdNavigation &&
+                              props.original.eventIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Teacher',
                     accessor: 'teacherId',
                     Cell: props => {
@@ -284,5 +306,5 @@ export const WrappedEventTeacherSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>8e80b6cf9501a7955df3f8c837c5a9a9</Hash>
+    <Hash>e0f25d50ffe8325e1294127ab5fd78ea</Hash>
 </Codenesium>*/

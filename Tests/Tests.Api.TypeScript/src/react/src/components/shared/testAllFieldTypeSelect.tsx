@@ -97,7 +97,10 @@ export class TestAllFieldTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Test All Field Types</label>
+          <label htmlFor={this.props.propertyName}>
+            Test All Field Types{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -125,5 +128,5 @@ export class TestAllFieldTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>975f4dccd767913604528d1333c8e637</Hash>
+    <Hash>e60340c931072382538011b10dc1fc6a</Hash>
 </Codenesium>*/

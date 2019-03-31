@@ -141,7 +141,7 @@ class DirectTweetCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="content">content</label>
+            <label htmlFor="content">content (required)</label>
             <br />
             {getFieldDecorator('content', {
               rules: [
@@ -152,7 +152,7 @@ class DirectTweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -160,7 +160,7 @@ class DirectTweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="taggedUserId">tagged_user_id</label>
+            <label htmlFor="taggedUserId">tagged_user_id (required)</label>
             <br />
             {getFieldDecorator('taggedUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -168,7 +168,7 @@ class DirectTweetCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (required)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [{ required: true, message: 'Required' }],
@@ -199,5 +199,5 @@ export const WrappedDirectTweetCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dbe91b574c6e24f74fce1bdf19dea354</Hash>
+    <Hash>8e14e6b1628ef4fe8f0d2bf6841321ea</Hash>
 </Codenesium>*/

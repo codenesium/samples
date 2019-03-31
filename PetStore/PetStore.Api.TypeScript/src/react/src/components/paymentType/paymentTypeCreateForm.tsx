@@ -140,7 +140,7 @@ class PaymentTypeCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedPaymentTypeCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1e210940828e83aadc29b59dfd7d0b1d</Hash>
+    <Hash>5abede63e984c63ec885e7fb1c23a411</Hash>
 </Codenesium>*/

@@ -37,7 +37,6 @@ namespace TicketingCRMNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Amount.ToDecimal() == query.ToDecimal() ||
 				                  x.GatewayConfirmationNumber.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.TransactionStatusId == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -138,5 +137,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>37e1e0bdaff6b50f6256c9e1ca46dbb6</Hash>
+    <Hash>8023983660325b48601172773e0d394e</Hash>
 </Codenesium>*/

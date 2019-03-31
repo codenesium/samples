@@ -182,7 +182,7 @@ export class TagTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -194,7 +194,7 @@ export class TagTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -221,5 +221,5 @@ export class TagTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ff4837948c69ba4eba8ddcb318778747</Hash>
+    <Hash>f805b7fe50754b605ba2fa26937a65bd</Hash>
 </Codenesium>*/

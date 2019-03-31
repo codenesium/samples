@@ -202,7 +202,7 @@ class ChainEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="externalId">External</label>
+            <label htmlFor="externalId">External (required)</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
@@ -210,7 +210,7 @@ class ChainEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -252,5 +252,5 @@ export const WrappedChainEditComponent = Form.create({ name: 'Chain Edit' })(
 
 
 /*<Codenesium>
-    <Hash>e9ef5b81130b42f84baf0d99d078b491</Hash>
+    <Hash>c2b96feebb1239e17dddecfa53ef491f</Hash>
 </Codenesium>*/

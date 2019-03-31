@@ -37,7 +37,6 @@ namespace StackOverflowNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Comment.StartsWith(query) ||
 				                  x.CreationDate == query.ToDateTime() ||
-				                  x.Id == query.ToInt() ||
 				                  x.PostHistoryTypeId == query.ToInt() ||
 				                  x.PostId == query.ToInt() ||
 				                  x.RevisionGUID.StartsWith(query) ||
@@ -162,5 +161,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>20eb29b9b105311f280244841de07921</Hash>
+    <Hash>aeedbe9d478a0eed3649412960688c21</Hash>
 </Codenesium>*/

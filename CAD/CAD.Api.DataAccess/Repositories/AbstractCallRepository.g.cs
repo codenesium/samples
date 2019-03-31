@@ -43,7 +43,6 @@ namespace CADNS.Api.DataAccess
 				                  x.DateCleared == query.ToNullableDateTime() ||
 				                  x.DateCreated == query.ToDateTime() ||
 				                  x.DateDispatched == query.ToNullableDateTime() ||
-				                  x.Id == query.ToInt() ||
 				                  x.QuickCallNumber == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -173,5 +172,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>648c50b1962493e6b31171c3f912a360</Hash>
+    <Hash>cc43f96a39fddff28ef33bbb0a46e022</Hash>
 </Codenesium>*/

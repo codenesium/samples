@@ -194,7 +194,7 @@ class PetEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="acquiredDate">Acquired Date</label>
+            <label htmlFor="acquiredDate">Acquired Date (required)</label>
             <br />
             {getFieldDecorator('acquiredDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -212,7 +212,7 @@ class PetEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Description (required)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [{ required: true, message: 'Required' }],
@@ -228,7 +228,7 @@ class PetEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price">Price (required)</label>
             <br />
             {getFieldDecorator('price', {
               rules: [{ required: true, message: 'Required' }],
@@ -259,5 +259,5 @@ export const WrappedPetEditComponent = Form.create({ name: 'Pet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>34f74c53c42d7a9b9fc88e70cd44066e</Hash>
+    <Hash>c31650b6bcac2f6432d7227bc5c3eea3</Hash>
 </Codenesium>*/

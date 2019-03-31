@@ -42,7 +42,6 @@ namespace StackOverflowNS.Api.DataAccess
 				                  x.DisplayName.StartsWith(query) ||
 				                  x.DownVote == query.ToInt() ||
 				                  x.EmailHash.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastAccessDate == query.ToDateTime() ||
 				                  x.Location.StartsWith(query) ||
 				                  x.Reputation == query.ToInt() ||
@@ -190,5 +189,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f1054f930afb9c206e03904bee5c71a0</Hash>
+    <Hash>40cd2009be6e3b28fa8ee65cdd2c1782</Hash>
 </Codenesium>*/

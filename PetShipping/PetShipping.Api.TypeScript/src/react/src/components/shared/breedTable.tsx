@@ -151,7 +151,7 @@ export class BreedTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -163,7 +163,7 @@ export class BreedTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -190,5 +190,5 @@ export class BreedTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>03484e67f0747d5654a02267dcb45adb</Hash>
+    <Hash>aa1e291d21f6abc8b7032e237923cb17</Hash>
 </Codenesium>*/

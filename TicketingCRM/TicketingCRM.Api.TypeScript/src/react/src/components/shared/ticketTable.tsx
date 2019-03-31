@@ -151,7 +151,7 @@ export class TicketTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -163,7 +163,7 @@ export class TicketTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -190,5 +190,5 @@ export class TicketTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>aedd45b8fd9780e1298622486331d677</Hash>
+    <Hash>02f617715803410638a4e9de8d1015b7</Hash>
 </Codenesium>*/

@@ -35,7 +35,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.TeacherId == query.ToInt() ||
 				                  x.TeacherSkillId == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -129,5 +128,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e0bd355e2a0b058744f80c8de5694c01</Hash>
+    <Hash>9d1391977e4cf5a0fb97c95f52b94015</Hash>
 </Codenesium>*/

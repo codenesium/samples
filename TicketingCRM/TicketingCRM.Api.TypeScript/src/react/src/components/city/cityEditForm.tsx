@@ -193,7 +193,7 @@ class CityEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -235,5 +235,5 @@ export const WrappedCityEditComponent = Form.create({ name: 'City Edit' })(
 
 
 /*<Codenesium>
-    <Hash>b859ff2a0963b755ea674d251c5461cd</Hash>
+    <Hash>cda94b778950aaf562e88714a205e728</Hash>
 </Codenesium>*/

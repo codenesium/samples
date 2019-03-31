@@ -150,7 +150,7 @@ class PipelineStepNoteCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="note">Note</label>
+            <label htmlFor="note">Note (required)</label>
             <br />
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
@@ -189,5 +189,5 @@ export const WrappedPipelineStepNoteCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>0a3dd1c0fbf6f3578a4c73622d53fa83</Hash>
+    <Hash>3714d3617b7af589f427835874067765</Hash>
 </Codenesium>*/

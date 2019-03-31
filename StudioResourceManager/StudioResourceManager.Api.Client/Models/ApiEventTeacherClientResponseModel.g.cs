@@ -16,17 +16,17 @@ namespace StudioResourceManagerNS.Api.Client
 			this.EventId = eventId;
 			this.TeacherId = teacherId;
 
-			this.IdEntity = nameof(ApiResponse.Events);
+			this.EventIdEntity = nameof(ApiResponse.Events);
 
 			this.TeacherIdEntity = nameof(ApiResponse.Teachers);
 		}
 
 		[JsonProperty]
-		public ApiEventClientResponseModel IdNavigation { get; private set; }
+		public ApiEventClientResponseModel EventIdNavigation { get; private set; }
 
-		public void SetIdNavigation(ApiEventClientResponseModel value)
+		public void SetEventIdNavigation(ApiEventClientResponseModel value)
 		{
-			this.IdNavigation = value;
+			this.EventIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -41,10 +41,10 @@ namespace StudioResourceManagerNS.Api.Client
 		public int EventId { get; private set; }
 
 		[JsonProperty]
-		public int Id { get; private set; }
+		public string EventIdEntity { get; set; }
 
 		[JsonProperty]
-		public string IdEntity { get; set; }
+		public int Id { get; private set; }
 
 		[JsonProperty]
 		public int TeacherId { get; private set; }
@@ -55,5 +55,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>1f13b6e9b530a8fe8a46ec52a54d4060</Hash>
+    <Hash>b1db80dcf67c69b08d69deaedd56bff9</Hash>
 </Codenesium>*/

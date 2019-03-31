@@ -140,7 +140,7 @@ class VehicleCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedVehicleCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ebc065c1afb119ac05e0d7bdc63b9acd</Hash>
+    <Hash>24d15e16bee7c26be2a9dc2ee17fddee</Hash>
 </Codenesium>*/

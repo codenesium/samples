@@ -134,8 +134,8 @@ class ChangePasswordComponent extends React.Component<
           </Form.Item>
           <Form.Item>
             <Button
-			  type='primary'
               htmlType='submit'
+			  type='primary'
               loading={this.state.submitting}
             >
               {this.state.submitting ? 'Submitting...' : 'Submit'}

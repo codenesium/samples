@@ -155,7 +155,7 @@ export class AddressTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -167,7 +167,7 @@ export class AddressTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -194,5 +194,5 @@ export class AddressTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1f7db45521b1f1759601567d75368c6a</Hash>
+    <Hash>7aa2d006b6d53e07542f16d9bf13345f</Hash>
 </Codenesium>*/

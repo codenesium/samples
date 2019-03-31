@@ -140,7 +140,7 @@ class UserCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="aboutMe">About Me</label>
+            <label htmlFor="aboutMe">About Me (optional)</label>
             <br />
             {getFieldDecorator('aboutMe', {
               rules: [],
@@ -148,7 +148,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="accountId">Account</label>
+            <label htmlFor="accountId">Account (optional)</label>
             <br />
             {getFieldDecorator('accountId', {
               rules: [],
@@ -156,7 +156,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="age">Age</label>
+            <label htmlFor="age">Age (optional)</label>
             <br />
             {getFieldDecorator('age', {
               rules: [],
@@ -164,7 +164,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="creationDate">Creation Date</label>
+            <label htmlFor="creationDate">Creation Date (required)</label>
             <br />
             {getFieldDecorator('creationDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -174,7 +174,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="displayName">Display Name</label>
+            <label htmlFor="displayName">Display Name (required)</label>
             <br />
             {getFieldDecorator('displayName', {
               rules: [
@@ -185,7 +185,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="downVote">Down Vote</label>
+            <label htmlFor="downVote">Down Vote (required)</label>
             <br />
             {getFieldDecorator('downVote', {
               rules: [{ required: true, message: 'Required' }],
@@ -193,7 +193,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="emailHash">Email Hash</label>
+            <label htmlFor="emailHash">Email Hash (optional)</label>
             <br />
             {getFieldDecorator('emailHash', {
               rules: [{ max: 40, message: 'Exceeds max length of 40' }],
@@ -201,7 +201,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastAccessDate">Last Access Date</label>
+            <label htmlFor="lastAccessDate">Last Access Date (required)</label>
             <br />
             {getFieldDecorator('lastAccessDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -214,7 +214,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location">Location (optional)</label>
             <br />
             {getFieldDecorator('location', {
               rules: [{ max: 100, message: 'Exceeds max length of 100' }],
@@ -222,7 +222,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="reputation">Reputation</label>
+            <label htmlFor="reputation">Reputation (required)</label>
             <br />
             {getFieldDecorator('reputation', {
               rules: [{ required: true, message: 'Required' }],
@@ -230,7 +230,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="upVote">Up Vote</label>
+            <label htmlFor="upVote">Up Vote (required)</label>
             <br />
             {getFieldDecorator('upVote', {
               rules: [{ required: true, message: 'Required' }],
@@ -238,7 +238,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="view">View</label>
+            <label htmlFor="view">View (required)</label>
             <br />
             {getFieldDecorator('view', {
               rules: [{ required: true, message: 'Required' }],
@@ -246,7 +246,7 @@ class UserCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="websiteUrl">Website Url</label>
+            <label htmlFor="websiteUrl">Website Url (optional)</label>
             <br />
             {getFieldDecorator('websiteUrl', {
               rules: [{ max: 200, message: 'Exceeds max length of 200' }],
@@ -277,5 +277,5 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 
 /*<Codenesium>
-    <Hash>b7ad75d6ef8f744f36615e88909b9853</Hash>
+    <Hash>85a104c0d9c982ff67cf8ca104afe4dc</Hash>
 </Codenesium>*/

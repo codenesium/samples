@@ -35,7 +35,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.TeacherId == query.ToInt() ||
 				                  x.TeacherSkillId == query.ToInt(),
 				                  limit,
@@ -142,5 +141,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>961800d2c0baf54e30584160295c69cf</Hash>
+    <Hash>646dd1e029742a6056b3d30b45dd3859</Hash>
 </Codenesium>*/

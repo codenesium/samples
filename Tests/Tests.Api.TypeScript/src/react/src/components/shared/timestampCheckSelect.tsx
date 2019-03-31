@@ -94,7 +94,10 @@ export class TimestampCheckSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Timestamp Check</label>
+          <label htmlFor={this.props.propertyName}>
+            Timestamp Check{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class TimestampCheckSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>497037253b7b12e612f69dad50fbfb47</Hash>
+    <Hash>8cd4354aa6f1efc08ad0da35d90c5609</Hash>
 </Codenesium>*/

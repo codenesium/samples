@@ -40,7 +40,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				                  x.EmailRemindersEnabled == query.ToBoolean() ||
 				                  x.FamilyId == query.ToInt() ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.IsAdult == query.ToBoolean() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
@@ -148,5 +147,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7418781cc759e18bb231d68c990fb319</Hash>
+    <Hash>6265db0602e4fc3d455fa51cc8ce7690</Hash>
 </Codenesium>*/

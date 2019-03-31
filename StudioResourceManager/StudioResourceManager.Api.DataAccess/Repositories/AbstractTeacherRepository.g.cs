@@ -38,7 +38,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				                  x.Birthday == query.ToDateTime() ||
 				                  x.Email.StartsWith(query) ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
 				                  x.UserId == query.ToInt(),
@@ -102,7 +101,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async virtual Task<List<EventTeacher>> EventTeachersByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventTeacher>()
-			       .Include(x => x.IdNavigation)
+			       .Include(x => x.EventIdNavigation)
 			       .Include(x => x.TeacherIdNavigation)
 
 			       .Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
@@ -162,5 +161,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>17857ad9141d7849c9318709783a2e56</Hash>
+    <Hash>f4e6e30fcdc4f43d1cc431921f8e8052</Hash>
 </Codenesium>*/

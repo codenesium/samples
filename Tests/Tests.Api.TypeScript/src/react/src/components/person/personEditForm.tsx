@@ -195,7 +195,7 @@ class PersonEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="personName">Person Name</label>
+            <label htmlFor="personName">Person Name (required)</label>
             <br />
             {getFieldDecorator('personName', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedPersonEditComponent = Form.create({ name: 'Person Edit' })(
 
 
 /*<Codenesium>
-    <Hash>c37f7d51739be5493b2e9cdcf53b69c1</Hash>
+    <Hash>e2ce5529e1cb93dd8da75cdac75928e1</Hash>
 </Codenesium>*/

@@ -94,7 +94,10 @@ export class RowVersionCheckSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Row Version Check</label>
+          <label htmlFor={this.props.propertyName}>
+            Row Version Check{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class RowVersionCheckSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8b4a27de43466d5453d83b593bdafa98</Hash>
+    <Hash>6b21735ce3c5b4ada4f6937af2f59e0b</Hash>
 </Codenesium>*/

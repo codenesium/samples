@@ -205,10 +205,29 @@ namespace Codenesium.Foundation.CommonMVC
 		[UnitOfWork]
 		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
-
 		public virtual async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailRequestModel model)
 		{
 			AuthResponse result = await this.authService.ChangeEmail(model, this.User.Claims.First(x => x.Type == ClaimTypes.Email).Value);
+
+			if (result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status400BadRequest, result);
+			}
+		}
+
+		[HttpPost]
+		[Route("confirmchangeemail")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ActionResponse), StatusCodes.Status401Unauthorized)]
+
+		public virtual async Task<IActionResult> ConfirmChangeEmail([FromBody] ConfirmChangeEmailRequestModel model)
+		{
+			AuthResponse result = await this.authService.ConfirmChangeEmail(model, this.User.Claims.First(x => x.Type == ClaimTypes.Email).Value);
 
 			if (result.Success)
 			{

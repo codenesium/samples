@@ -36,7 +36,6 @@ namespace PetShippingNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.HandlerId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.PipelineStepId == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -130,5 +129,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9742ee7bd168ed76dcd3342f370a240d</Hash>
+    <Hash>3bf0b8ece247b4bb45cf6ebda3f68de2</Hash>
 </Codenesium>*/

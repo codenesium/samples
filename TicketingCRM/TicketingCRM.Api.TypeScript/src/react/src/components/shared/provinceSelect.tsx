@@ -94,7 +94,9 @@ export class ProvinceSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Province</label>
+          <label htmlFor={this.props.propertyName}>
+            Province {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class ProvinceSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>827b25f32285f5cfbdf6ca0bd9e32292</Hash>
+    <Hash>82c9d2173cc5eb138246880333e9e67e</Hash>
 </Codenesium>*/

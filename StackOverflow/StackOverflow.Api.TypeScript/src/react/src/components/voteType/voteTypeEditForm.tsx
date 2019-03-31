@@ -195,7 +195,7 @@ class VoteTypeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedVoteTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>86eb0d89a86a4e39230172cb2e16d745</Hash>
+    <Hash>159a93052eff75b94866837cb861ee25</Hash>
 </Codenesium>*/

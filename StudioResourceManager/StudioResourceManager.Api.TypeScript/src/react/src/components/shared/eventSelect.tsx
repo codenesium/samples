@@ -94,7 +94,9 @@ export class EventSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Events</label>
+          <label htmlFor={this.props.propertyName}>
+            Events {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class EventSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a46fd344a5a4d31bb37ad3211f6b175f</Hash>
+    <Hash>98937e3f0a0199a629f1d646f4c0eb1c</Hash>
 </Codenesium>*/

@@ -140,7 +140,7 @@ class MachineCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Description (required)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [{ required: true, message: 'Required' }],
@@ -148,7 +148,7 @@ class MachineCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="jwtKey">Jwt Key</label>
+            <label htmlFor="jwtKey">Jwt Key (required)</label>
             <br />
             {getFieldDecorator('jwtKey', {
               rules: [
@@ -159,7 +159,7 @@ class MachineCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastIpAddress">Last Ip Address</label>
+            <label htmlFor="lastIpAddress">Last Ip Address (required)</label>
             <br />
             {getFieldDecorator('lastIpAddress', {
               rules: [
@@ -170,7 +170,7 @@ class MachineCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="machineGuid">Machine Guid</label>
+            <label htmlFor="machineGuid">Machine Guid (required)</label>
             <br />
             {getFieldDecorator('machineGuid', {
               rules: [{ required: true, message: 'Required' }],
@@ -178,7 +178,7 @@ class MachineCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -212,5 +212,5 @@ export const WrappedMachineCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c21db3cbdce973789152dcde4b9df332</Hash>
+    <Hash>3609c89bcd76964ec315dbd36eaa1abe</Hash>
 </Codenesium>*/

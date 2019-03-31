@@ -94,7 +94,9 @@ export class AirlineSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Airline</label>
+          <label htmlFor={this.props.propertyName}>
+            Airline {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class AirlineSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5485db47720751cd051f834923e0010e</Hash>
+    <Hash>e5d1c33d6292d1f1eb2e13626f5ce8bf</Hash>
 </Codenesium>*/

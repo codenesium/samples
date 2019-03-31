@@ -192,7 +192,7 @@ class OfficerEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="badge">Badge</label>
+            <label htmlFor="badge">Badge (optional)</label>
             <br />
             {getFieldDecorator('badge', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -200,7 +200,7 @@ class OfficerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -211,7 +211,7 @@ class OfficerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -222,7 +222,7 @@ class OfficerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -233,7 +233,7 @@ class OfficerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -267,5 +267,5 @@ export const WrappedOfficerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b869df06c411d7822c2ca893ca13f725</Hash>
+    <Hash>40958a2fc5e7e6937c538216a2c859c4</Hash>
 </Codenesium>*/

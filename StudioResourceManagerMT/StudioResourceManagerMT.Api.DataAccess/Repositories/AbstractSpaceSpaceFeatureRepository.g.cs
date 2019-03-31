@@ -35,8 +35,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.SpaceFeatureId == query.ToInt() ||
-				                  x.SpaceId == query.ToInt(),
+				                  x.SpaceFeatureId == query.ToInt(),
 				                  limit,
 				                  offset);
 			}
@@ -129,5 +128,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>24b959ac7f9f09fb1ea78a5989d1ff52</Hash>
+    <Hash>5302c8330420308713f366ebb626c10b</Hash>
 </Codenesium>*/

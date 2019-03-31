@@ -36,7 +36,6 @@ namespace StackOverflowNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Date == query.ToDateTime() ||
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.UserId == query.ToInt(),
 				                  limit,
@@ -129,5 +128,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be967dab00c1861650b884c3fbd6f9c1</Hash>
+    <Hash>4fb7011836e36149b560095cdf305dbf</Hash>
 </Codenesium>*/

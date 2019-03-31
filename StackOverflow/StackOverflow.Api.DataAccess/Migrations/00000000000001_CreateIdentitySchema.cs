@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace StudioResourceManagerNS.Api.DataAccess.Migrations
+namespace StackOverflowNS.Api.DataAccess.Migrations
 {
 	[DbContext(typeof(ApplicationDbContext))]
 	[Migration("00000000000001_CreateIdentitySchema")]
@@ -54,7 +54,6 @@ namespace StudioResourceManagerNS.Api.DataAccess.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
@@ -104,7 +103,7 @@ namespace StudioResourceManagerNS.Api.DataAccess.Migrations
                     LoginProvider = table.Column<string>(maxLength: 256, nullable: false),
                     ProviderKey = table.Column<string>(maxLength: 256, nullable: false),
                     ProviderDisplayName = table.Column<string>(maxLength: 256, nullable: true),
-                    UserId = table.Column<string>(maxLength: 36,nullable: false)
+                    UserId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,7 +201,21 @@ namespace StudioResourceManagerNS.Api.DataAccess.Migrations
 
 			migrationBuilder.Sql(@"--Insert a default user with a username of test@test.com and pasword of Passw0rd$
 			INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'test@test.com', N'TEST@TEST.COM', N'test@test.com', N'TEST@TEST.COM', 0, N'AQAAAAEAACcQAAAAEPHgwwSOWc0RC+QoKECQI4uhmqAuU5WWlMzgdWfVzlVqvmlH1OP3VpaIQr1t/BfPOA==', N'LYDQKGGRKXO4QYYP5NCCCMWDLKOWGI45', N'f6fbabae-d7c6-4ffd-9f93-841fcaf20e99', NULL, 0, 0, NULL, 1, 0)
-			GO");
+			GO
+			-- Add User Role
+			INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES 
+			(N'225acd4b-5ec9-43e9-9fbe-9153033f45c9', N'User', N'USER', NULL)
+			GO
+			--Add Administrator Role
+			INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'55571210-c2b0-40e0-baf8-32882524bec8', N'Administrator', N'ADMINISTRATOR', N'')
+			GO
+			--Assign Admin user to User role
+			INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'225acd4b-5ec9-43e9-9fbe-9153033f45c9')
+			GO
+			--Assign Admin to Administrator Role
+			INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'55571210-c2b0-40e0-baf8-32882524bec8')
+			GO
+			");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -227,7 +240,6 @@ namespace StudioResourceManagerNS.Api.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
         }
     }
 }

@@ -94,7 +94,9 @@ export class CallSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Call</label>
+          <label htmlFor={this.props.propertyName}>
+            Call {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class CallSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>5eafe99bd99c1009835e55f9a6aef7f2</Hash>
+    <Hash>bab9a2a45c2cc2b76f552dbb3e392efb</Hash>
 </Codenesium>*/

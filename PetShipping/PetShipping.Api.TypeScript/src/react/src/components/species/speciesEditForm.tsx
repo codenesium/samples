@@ -192,7 +192,7 @@ class SpeciesEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -226,5 +226,5 @@ export const WrappedSpeciesEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>c0623528b5d6429d0ce169d6816dac19</Hash>
+    <Hash>50c9dd023e87e9d119b58eee4d420c15</Hash>
 </Codenesium>*/

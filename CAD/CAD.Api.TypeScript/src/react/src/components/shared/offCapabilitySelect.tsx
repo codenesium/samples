@@ -94,7 +94,9 @@ export class OffCapabilitySelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Off Capability</label>
+          <label htmlFor={this.props.propertyName}>
+            Off Capability {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class OffCapabilitySelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ba3cddefc7285b8fac69484c35779e5d</Hash>
+    <Hash>6af8aba1102d895243e998a0da43863b</Hash>
 </Codenesium>*/

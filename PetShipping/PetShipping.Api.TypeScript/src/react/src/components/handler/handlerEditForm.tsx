@@ -192,7 +192,7 @@ class HandlerEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="countryId">Country</label>
+            <label htmlFor="countryId">Country (required)</label>
             <br />
             {getFieldDecorator('countryId', {
               rules: [{ required: true, message: 'Required' }],
@@ -200,7 +200,7 @@ class HandlerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -211,7 +211,7 @@ class HandlerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -222,7 +222,7 @@ class HandlerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -233,7 +233,7 @@ class HandlerEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (required)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [
@@ -267,5 +267,5 @@ export const WrappedHandlerEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>33fe8c11f057b8d3b40990c0a1e63c7b</Hash>
+    <Hash>d5852c5e1a3ff120023d3f8420293f83</Hash>
 </Codenesium>*/

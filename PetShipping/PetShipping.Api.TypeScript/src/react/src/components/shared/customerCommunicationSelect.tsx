@@ -98,7 +98,8 @@ export class CustomerCommunicationSelectComponent extends React.Component<
       return (
         <Form.Item>
           <label htmlFor={this.props.propertyName}>
-            Customer Communication
+            Customer Communication{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
           </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
@@ -127,5 +128,5 @@ export class CustomerCommunicationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d351c44e797afd494684c64db1d25992</Hash>
+    <Hash>8e242aa9e09223639cc50450de8f2ddb</Hash>
 </Codenesium>*/

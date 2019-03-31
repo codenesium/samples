@@ -194,7 +194,9 @@ class RateEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="amountPerMinute">Amount Per Minute</label>
+            <label htmlFor="amountPerMinute">
+              Amount Per Minute (required)
+            </label>
             <br />
             {getFieldDecorator('amountPerMinute', {
               rules: [{ required: true, message: 'Required' }],
@@ -202,7 +204,7 @@ class RateEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherId">Teacher</label>
+            <label htmlFor="teacherId">Teacher (required)</label>
             <br />
             {getFieldDecorator('teacherId', {
               rules: [{ required: true, message: 'Required' }],
@@ -210,7 +212,7 @@ class RateEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherSkillId">Teacher Skill</label>
+            <label htmlFor="teacherSkillId">Teacher Skill (required)</label>
             <br />
             {getFieldDecorator('teacherSkillId', {
               rules: [{ required: true, message: 'Required' }],
@@ -241,5 +243,5 @@ export const WrappedRateEditComponent = Form.create({ name: 'Rate Edit' })(
 
 
 /*<Codenesium>
-    <Hash>a28581bdd2ac2d4036f44b99a109a370</Hash>
+    <Hash>251bbe94c331a47156ddf5975fe08595</Hash>
 </Codenesium>*/

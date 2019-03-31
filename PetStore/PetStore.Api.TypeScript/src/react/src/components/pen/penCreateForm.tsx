@@ -140,7 +140,7 @@ class PenCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedPenCreateComponent = Form.create({ name: 'Pen Create' })(
 
 
 /*<Codenesium>
-    <Hash>0a3a458cc61ad76906e8cfe675164a40</Hash>
+    <Hash>f76d1c19c1a5e2be5b65574851de35ae</Hash>
 </Codenesium>*/

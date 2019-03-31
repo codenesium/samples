@@ -140,7 +140,7 @@ class DeviceCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="dateOfLastPing">Date of Last Ping</label>
+            <label htmlFor="dateOfLastPing">Date of Last Ping (required)</label>
             <br />
             {getFieldDecorator('dateOfLastPing', {
               rules: [{ required: true, message: 'Required' }],
@@ -153,7 +153,7 @@ class DeviceCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isActive">Active</label>
+            <label htmlFor="isActive">Active (required)</label>
             <br />
             {getFieldDecorator('isActive', {
               rules: [],
@@ -162,7 +162,7 @@ class DeviceCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -173,7 +173,7 @@ class DeviceCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="publicId">Public Id</label>
+            <label htmlFor="publicId">Public Id (required)</label>
             <br />
             {getFieldDecorator('publicId', {
               rules: [{ required: true, message: 'Required' }],
@@ -204,5 +204,5 @@ export const WrappedDeviceCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6f00a647852bd604094b1859b2fe3d34</Hash>
+    <Hash>6e20c952423c510bb9c3066fe968a5ca</Hash>
 </Codenesium>*/

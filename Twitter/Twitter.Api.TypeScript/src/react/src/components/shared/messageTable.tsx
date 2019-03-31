@@ -151,7 +151,7 @@ export class MessageTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -163,7 +163,7 @@ export class MessageTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -190,5 +190,5 @@ export class MessageTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4ad8f7b7bdce02be27e80587bb7506c4</Hash>
+    <Hash>04de5f3e9b3fffea1e33d0c1f374753a</Hash>
 </Codenesium>*/

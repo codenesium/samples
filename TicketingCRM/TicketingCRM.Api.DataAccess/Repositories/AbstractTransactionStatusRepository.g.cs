@@ -35,7 +35,6 @@ namespace TicketingCRMNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -122,5 +121,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>10020812369e456b46a3b8534fbdb1d3</Hash>
+    <Hash>42e3e25382b2271502d0e09094cca36d</Hash>
 </Codenesium>*/

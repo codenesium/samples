@@ -94,7 +94,9 @@ export class PenSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Pens</label>
+          <label htmlFor={this.props.propertyName}>
+            Pens {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class PenSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>862a529af4c0685ca3f359bf83d028b2</Hash>
+    <Hash>0484e4c60f82d06c27470e4cb14a7975</Hash>
 </Codenesium>*/

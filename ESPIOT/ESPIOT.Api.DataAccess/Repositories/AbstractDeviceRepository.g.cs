@@ -36,7 +36,6 @@ namespace ESPIOTNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.DateOfLastPing == query.ToDateTime() ||
-				                  x.Id == query.ToInt() ||
 				                  x.IsActive == query.ToBoolean() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.PublicId == query.ToGuid(),
@@ -133,5 +132,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cc74a7c656de21fcdfdf307dac0a097a</Hash>
+    <Hash>d922635bd6e5620a7b2c5fd9e9c06ab3</Hash>
 </Codenesium>*/

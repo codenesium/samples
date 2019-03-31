@@ -36,7 +36,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.EventId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.TeacherId == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -88,23 +87,23 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		// Non-unique constraint IX_EventTeacher_eventId.
-		public async virtual Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Where(x => x.EventId == eventId, limit, offset);
-		}
-
 		// Non-unique constraint IX_EventTeacher_teacherId.
 		public async virtual Task<List<EventTeacher>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TeacherId == teacherId, limit, offset);
 		}
 
-		// Foreign key reference to table Event via id.
-		public async virtual Task<Event> EventById(int id)
+		// Non-unique constraint IX_EventTeacher_eventId.
+		public async virtual Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Where(x => x.EventId == eventId, limit, offset);
+		}
+
+		// Foreign key reference to table Event via eventId.
+		public async virtual Task<Event> EventByEventId(int eventId)
 		{
 			return await this.Context.Set<Event>()
-			       .SingleOrDefaultAsync(x => x.Id == id);
+			       .SingleOrDefaultAsync(x => x.Id == eventId);
 		}
 
 		// Foreign key reference to table Teacher via teacherId.
@@ -126,7 +125,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 
 			return await this.Context.Set<EventTeacher>()
-			       .Include(x => x.IdNavigation)
+			       .Include(x => x.EventIdNavigation)
 			       .Include(x => x.TeacherIdNavigation)
 
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<EventTeacher>();
@@ -142,5 +141,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc426134791c8a486feca307d1f99310</Hash>
+    <Hash>b653bd5b32ff0be413f989128925fca7</Hash>
 </Codenesium>*/

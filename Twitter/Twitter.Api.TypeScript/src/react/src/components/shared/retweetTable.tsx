@@ -182,7 +182,7 @@ export class RetweetTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -194,7 +194,7 @@ export class RetweetTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -221,5 +221,5 @@ export class RetweetTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>36e2b4b084504a3e9d44ce02c8935d97</Hash>
+    <Hash>70ed803410c43901b7a0b0ef4c6b2a89</Hash>
 </Codenesium>*/

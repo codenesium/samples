@@ -141,7 +141,7 @@ class TeamCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -183,5 +183,5 @@ export const WrappedTeamCreateComponent = Form.create({ name: 'Team Create' })(
 
 
 /*<Codenesium>
-    <Hash>c08101618b058f6d433169b43ce583d1</Hash>
+    <Hash>3bab53b2b88e0e3ccc23c92295880e83</Hash>
 </Codenesium>*/

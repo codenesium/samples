@@ -107,6 +107,15 @@ class TeacherTeacherSkillDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
+              <h3>Teacher</h3>
+              <p>
+                {String(
+                  this.state.model!.teacherIdNavigation &&
+                    this.state.model!.teacherIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>Teacher Skill</h3>
               <p>
                 {String(
@@ -131,5 +140,5 @@ export const WrappedTeacherTeacherSkillDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>301b959ea09aebda0be8366f6c5b0069</Hash>
+    <Hash>b48381a629d1357a42f3ef390a6cb828</Hash>
 </Codenesium>*/

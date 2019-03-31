@@ -94,7 +94,9 @@ export class TransactionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Transaction</label>
+          <label htmlFor={this.props.propertyName}>
+            Transaction {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class TransactionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b682256321ad82c87ae414667f4d2336</Hash>
+    <Hash>bb3df6d17f0668141b4a0b787fbf2c02</Hash>
 </Codenesium>*/

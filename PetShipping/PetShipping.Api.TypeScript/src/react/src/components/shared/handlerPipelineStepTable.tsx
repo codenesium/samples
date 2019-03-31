@@ -173,7 +173,7 @@ export class HandlerPipelineStepTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -185,7 +185,7 @@ export class HandlerPipelineStepTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -212,5 +212,5 @@ export class HandlerPipelineStepTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9887657e0a00d3840b8880d45a04a745</Hash>
+    <Hash>0e6f4e5b9305b41153b2f0f504e75ded</Hash>
 </Codenesium>*/

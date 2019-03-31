@@ -196,7 +196,7 @@ class DeviceActionEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="action">Action</label>
+            <label htmlFor="action">Action (required)</label>
             <br />
             {getFieldDecorator('action', {
               rules: [
@@ -215,7 +215,7 @@ class DeviceActionEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -249,5 +249,5 @@ export const WrappedDeviceActionEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>9f68688a7e7cc12708c9bdaed78d43c8</Hash>
+    <Hash>ce2cc601eb4f4301d2b51d52d2241a59</Hash>
 </Codenesium>*/

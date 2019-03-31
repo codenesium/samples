@@ -196,7 +196,7 @@ class UserEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="bioImgUrl">bio_img_url</label>
+            <label htmlFor="bioImgUrl">bio_img_url (optional)</label>
             <br />
             {getFieldDecorator('bioImgUrl', {
               rules: [{ max: 32, message: 'Exceeds max length of 32' }],
@@ -204,7 +204,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="birthday">birthday</label>
+            <label htmlFor="birthday">birthday (optional)</label>
             <br />
             {getFieldDecorator('birthday', {
               rules: [],
@@ -212,7 +212,9 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="contentDescription">content_description</label>
+            <label htmlFor="contentDescription">
+              content_description (optional)
+            </label>
             <br />
             {getFieldDecorator('contentDescription', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -220,7 +222,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -231,7 +233,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="fullName">full_name</label>
+            <label htmlFor="fullName">full_name (required)</label>
             <br />
             {getFieldDecorator('fullName', {
               rules: [
@@ -242,7 +244,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="headerImgUrl">header_img_url</label>
+            <label htmlFor="headerImgUrl">header_img_url (optional)</label>
             <br />
             {getFieldDecorator('headerImgUrl', {
               rules: [{ max: 32, message: 'Exceeds max length of 32' }],
@@ -250,7 +252,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="interest">interest</label>
+            <label htmlFor="interest">interest (optional)</label>
             <br />
             {getFieldDecorator('interest', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -258,7 +260,9 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="locationLocationId">location_location_id</label>
+            <label htmlFor="locationLocationId">
+              location_location_id (required)
+            </label>
             <br />
             {getFieldDecorator('locationLocationId', {
               rules: [{ required: true, message: 'Required' }],
@@ -266,7 +270,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="password">password</label>
+            <label htmlFor="password">password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -277,7 +281,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phoneNumber">phone_number</label>
+            <label htmlFor="phoneNumber">phone_number (optional)</label>
             <br />
             {getFieldDecorator('phoneNumber', {
               rules: [{ max: 32, message: 'Exceeds max length of 32' }],
@@ -285,7 +289,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="privacy">privacy</label>
+            <label htmlFor="privacy">privacy (required)</label>
             <br />
             {getFieldDecorator('privacy', {
               rules: [
@@ -296,7 +300,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="username">username</label>
+            <label htmlFor="username">username (required)</label>
             <br />
             {getFieldDecorator('username', {
               rules: [
@@ -307,7 +311,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="website">website</label>
+            <label htmlFor="website">website (optional)</label>
             <br />
             {getFieldDecorator('website', {
               rules: [{ max: 32, message: 'Exceeds max length of 32' }],
@@ -338,5 +342,5 @@ export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(
 
 
 /*<Codenesium>
-    <Hash>f5f16b85a22dfcc1dfc47bb0afd76766</Hash>
+    <Hash>f06f298c6c88e9e2096ba6f7b14d8dcf</Hash>
 </Codenesium>*/

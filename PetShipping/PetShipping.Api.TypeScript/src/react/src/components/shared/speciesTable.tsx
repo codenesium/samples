@@ -127,7 +127,7 @@ export class SpeciesTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class SpeciesTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class SpeciesTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>6d0461bc65126e821d786fd854d78512</Hash>
+    <Hash>6885b27d0b7c7bfde11eeadc61a2af9f</Hash>
 </Codenesium>*/

@@ -94,7 +94,10 @@ export class LocationSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -123,5 +126,5 @@ export class LocationSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d0a3d4d4ae4d97e5083647966dd0a054</Hash>
+    <Hash>0cc3e53d0bd1985d40c1489d30f99ad2</Hash>
 </Codenesium>*/

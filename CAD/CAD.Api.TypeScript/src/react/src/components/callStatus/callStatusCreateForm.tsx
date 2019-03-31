@@ -140,7 +140,7 @@ class CallStatusCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedCallStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ed0cca9de38001a49a2d8cf1c890d5b0</Hash>
+    <Hash>cda907837b199d57d1b00710b84452ae</Hash>
 </Codenesium>*/

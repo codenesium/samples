@@ -94,7 +94,9 @@ export class PersonTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Person Type</label>
+          <label htmlFor={this.props.propertyName}>
+            Person Type {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class PersonTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>739f570175416ad4aa1bd26ce1ea6a9d</Hash>
+    <Hash>a5a11a4c006ebf70637c8c494c497a18</Hash>
 </Codenesium>*/

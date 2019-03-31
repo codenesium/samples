@@ -220,7 +220,7 @@ class CallEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="callString">Call String</label>
+            <label htmlFor="callString">Call String (required)</label>
             <br />
             {getFieldDecorator('callString', {
               rules: [
@@ -239,7 +239,7 @@ class CallEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCleared">Date Cleared</label>
+            <label htmlFor="dateCleared">Date Cleared (optional)</label>
             <br />
             {getFieldDecorator('dateCleared', {
               rules: [],
@@ -249,7 +249,7 @@ class CallEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateCreated">Date Created</label>
+            <label htmlFor="dateCreated">Date Created (required)</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
@@ -259,7 +259,7 @@ class CallEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="dateDispatched">Date Dispatched</label>
+            <label htmlFor="dateDispatched">Date Dispatched (optional)</label>
             <br />
             {getFieldDecorator('dateDispatched', {
               rules: [],
@@ -272,7 +272,9 @@ class CallEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="quickCallNumber">Quick Call Number</label>
+            <label htmlFor="quickCallNumber">
+              Quick Call Number (required)
+            </label>
             <br />
             {getFieldDecorator('quickCallNumber', {
               rules: [{ required: true, message: 'Required' }],
@@ -303,5 +305,5 @@ export const WrappedCallEditComponent = Form.create({ name: 'Call Edit' })(
 
 
 /*<Codenesium>
-    <Hash>48145bb9ffaa0a01e2c18d5c1185977c</Hash>
+    <Hash>ce2097edb2433f240c3daa1a9486ea73</Hash>
 </Codenesium>*/

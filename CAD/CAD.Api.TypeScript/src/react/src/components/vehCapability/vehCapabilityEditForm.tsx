@@ -195,7 +195,7 @@ class VehCapabilityEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedVehCapabilityEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>28deb1209500311ba5810540af53a470</Hash>
+    <Hash>8aa23ba8a420f08dc89058b7050e97f0</Hash>
 </Codenesium>*/

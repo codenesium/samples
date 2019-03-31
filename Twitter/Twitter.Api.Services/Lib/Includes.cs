@@ -44,11 +44,25 @@ namespace TwitterNS.Api.Services
 
 		public virtual bool DebugSendAuthEmailsToClient { get; set; }
 
-		public virtual string JwtSigningKey { get; set; }
+		public virtual JwtSettings JwtSettings { get; set; }
 
-		public virtual string JwtIssuer { get; set; }
+		public virtual StripeSettings StripeSettings { get; set; }
+	}
 
-		public virtual string JwtAudience { get; set; }
+	public class JwtSettings
+	{
+		public virtual string SigningKey { get; set; }
+
+		public virtual string Issuer { get; set; }
+
+		public virtual string Audience { get; set; }
+	}
+
+	public class StripeSettings
+	{
+		public virtual string SecretKey { get; set; }
+
+		public virtual string PublishableKey { get; set; }
 	}
 
 	public static class ValidationResponseFactory<T>
@@ -150,6 +164,25 @@ namespace TwitterNS.Api.Services
 		}
 	}
 
+	public interface IAuthService
+	{
+		Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail);
+
+		Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model, string currentEmail);
+
+		Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email);
+
+		Task<AuthResponse> Login(LoginRequestModel model);
+
+		Task<AuthResponse> Register(RegisterRequestModel model);
+
+		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
+
+		Task<AuthResponse> ResetPassword(ResetPasswordRequestModel model);
+
+		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
+	}
+
 	public partial class AuthService : IAuthService
 	{
 		private readonly ApiSettings apiSettings;
@@ -180,12 +213,22 @@ namespace TwitterNS.Api.Services
 			{
 				if (this.userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
 				{
+					IList<Claim> claims = await this.userManager.GetClaimsAsync(user);
+
+					IList<string> roles = await this.userManager.GetRolesAsync(user);
+
+					foreach (string role in roles)
+					{
+						claims.Add(new Claim(ClaimTypes.Role, role));
+					}
+
 					string token = this.jwtHelper.GenerateBearerToken(
-						this.apiSettings.JwtSigningKey,
-						this.apiSettings.JwtAudience,
-						this.apiSettings.JwtIssuer,
+						this.apiSettings.JwtSettings.SigningKey,
+						this.apiSettings.JwtSettings.Audience,
+						this.apiSettings.JwtSettings.Issuer,
 						user.Id,
-						user.Email);
+						user.Email,
+						claims);
 
 					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponseWithToken(token);
 				}
@@ -428,12 +471,12 @@ namespace TwitterNS.Api.Services
 
 	public interface IJWTHelper
 	{
-		string GenerateBearerToken(string signingKey, string audience, string issuer, string id, string email);
+		string GenerateBearerToken(string signingKey, string audience, string issuer, string userId, string email, IList<Claim> claims);
 	}
 
 	public class JWTHelper : IJWTHelper
 	{
-		public string GenerateBearerToken(string signingKey, string audience, string issuer, string id, string email)
+		public string GenerateBearerToken(string signingKey, string audience, string issuer, string userId, string email, IList<Claim> claims)
 		{
 			var tokenHandler = new JwtSecurityTokenHandler();
 			byte[] key = Encoding.UTF8.GetBytes(signingKey);
@@ -441,7 +484,7 @@ namespace TwitterNS.Api.Services
 			{
 				Subject = new ClaimsIdentity(new Claim[]
 				{
-					new Claim(ClaimTypes.Name, id),
+					new Claim(ClaimTypes.Name, userId),
 					new Claim(ClaimTypes.Email, email)
 				}),
 				Audience = audience,
@@ -450,92 +493,18 @@ namespace TwitterNS.Api.Services
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 			};
 
+			foreach (Claim claim in claims)
+			{
+				tokenDescriptor.Subject.AddClaim(claim);
+			}
+
 			SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
 			return tokenHandler.WriteToken(token);
 		}
 	}
-
-	public class ConfirmPasswordResetRequestModel
-	{
-		public string Id { get; set; }
-
-		public string Token { get; set; }
-
-		public string NewPassword { get; set; }
-	}
-
-	public class ConfirmRegistrationRequestModel
-	{
-		public string Id { get; set; }
-
-		public string Token { get; set; }
-	}
-
-	public interface IAuthService
-	{
-		Task<AuthResponse> ChangeEmail(ChangeEmailRequestModel model, string currentEmail);
-
-		Task<AuthResponse> ConfirmChangeEmail(ConfirmChangeEmailRequestModel model, string currentEmail);
-
-		Task<AuthResponse> ChangePassword(ChangePasswordRequestModel model, string email);
-
-		Task<AuthResponse> Login(LoginRequestModel model);
-
-		Task<AuthResponse> Register(RegisterRequestModel model);
-
-		Task<AuthResponse> ConfirmRegistration(ConfirmRegistrationRequestModel model);
-
-		Task<AuthResponse> ResetPassword(ResetPasswordRequestModel model);
-
-		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
-	}
-
-	public class LoginRequestModel
-	{
-		public string Email { get; set; }
-
-		public string Password { get; set; }
-
-		public void SetProperties(string email, string password)
-		{
-			this.Email = email;
-			this.Password = password;
-		}
-	}
-
-	public class RegisterRequestModel
-	{
-		public string Email { get; set; }
-
-		public string Password { get; set; }
-	}
-
-	public class ResetPasswordRequestModel
-	{
-		public string Email { get; set; }
-	}
-
-	public class ChangePasswordRequestModel
-	{
-		public string CurrentPassword { get; set; }
-
-		public string NewPassword { get; set; }
-	}
-
-	public class ChangeEmailRequestModel
-	{
-		public string Password { get; set; }
-
-		public string NewEmail { get; set; }
-	}
-
-	public class ConfirmChangeEmailRequestModel
-	{
-		public string Token { get; set; }
-	}
 }
 
 /*<Codenesium>
-    <Hash>e49e3e3443b24814291397aea9ab8498</Hash>
+    <Hash>07d9ede2b9cea1676b5e098085efa552</Hash>
 </Codenesium>*/

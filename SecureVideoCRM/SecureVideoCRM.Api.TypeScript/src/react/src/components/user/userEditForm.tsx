@@ -192,7 +192,7 @@ class UserEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -203,7 +203,7 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="password">password</label>
+            <label htmlFor="password">password (required)</label>
             <br />
             {getFieldDecorator('password', {
               rules: [
@@ -214,7 +214,9 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="stripeCustomerId">stripeCustomerId</label>
+            <label htmlFor="stripeCustomerId">
+              stripeCustomerId (required)
+            </label>
             <br />
             {getFieldDecorator('stripeCustomerId', {
               rules: [
@@ -225,7 +227,9 @@ class UserEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="subscriptionTypeId">subscriptionTypeId</label>
+            <label htmlFor="subscriptionTypeId">
+              subscriptionTypeId (required)
+            </label>
             <br />
             {getFieldDecorator('subscriptionTypeId', {
               rules: [{ required: true, message: 'Required' }],
@@ -256,5 +260,5 @@ export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(
 
 
 /*<Codenesium>
-    <Hash>26420f46745e3aef1305a22124fe1618</Hash>
+    <Hash>d2fb355fba05cc55f0ee7de87d6564ac</Hash>
 </Codenesium>*/

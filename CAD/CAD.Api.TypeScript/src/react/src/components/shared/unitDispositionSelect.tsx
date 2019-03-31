@@ -94,7 +94,10 @@ export class UnitDispositionSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Unit Disposition</label>
+          <label htmlFor={this.props.propertyName}>
+            Unit Disposition{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class UnitDispositionSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a9b36de985103006ce88472d747393c2</Hash>
+    <Hash>7ddb4b4bcac2eb732bb6ea38a571f397</Hash>
 </Codenesium>*/

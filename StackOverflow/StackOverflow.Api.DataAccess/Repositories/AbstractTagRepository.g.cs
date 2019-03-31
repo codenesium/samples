@@ -37,7 +37,6 @@ namespace StackOverflowNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Count == query.ToInt() ||
 				                  x.ExcerptPostId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.TagName.StartsWith(query) ||
 				                  x.WikiPostId == query.ToInt(),
 				                  limit,
@@ -144,5 +143,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd4aed5c2c86e1888a3e79a06ab87c69</Hash>
+    <Hash>409f3305daa5bf8268028dd852270363</Hash>
 </Codenesium>*/

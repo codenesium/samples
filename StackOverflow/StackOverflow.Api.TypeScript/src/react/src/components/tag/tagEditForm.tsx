@@ -193,7 +193,7 @@ class TagEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="count">Count</label>
+            <label htmlFor="count">Count (required)</label>
             <br />
             {getFieldDecorator('count', {
               rules: [{ required: true, message: 'Required' }],
@@ -209,7 +209,7 @@ class TagEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="tagName">Tag Name</label>
+            <label htmlFor="tagName">Tag Name (required)</label>
             <br />
             {getFieldDecorator('tagName', {
               rules: [
@@ -251,5 +251,5 @@ export const WrappedTagEditComponent = Form.create({ name: 'Tag Edit' })(
 
 
 /*<Codenesium>
-    <Hash>2c2d432a3a54baab69708b351b1f0d5d</Hash>
+    <Hash>fc4224f51ef8eca07c76b2a3e0662e05</Hash>
 </Codenesium>*/

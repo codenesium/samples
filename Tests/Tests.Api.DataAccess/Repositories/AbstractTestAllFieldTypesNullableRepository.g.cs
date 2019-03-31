@@ -58,8 +58,7 @@ namespace TestsNS.Api.DataAccess
 				                  x.FieldTinyInt == query.ToNullableInt() ||
 				                  x.FieldUniqueIdentifier == query.ToNullableGuid() ||
 				                  x.FieldVarchar.StartsWith(query) ||
-				                  x.FieldXML.StartsWith(query) ||
-				                  x.Id == query.ToInt(),
+				                  x.FieldXML.StartsWith(query),
 				                  limit,
 				                  offset);
 			}
@@ -136,5 +135,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>44f5ab5ac5f35d4b5b8f7a22586d44be</Hash>
+    <Hash>1ce15359b4aff371da9db517046e8dde</Hash>
 </Codenesium>*/

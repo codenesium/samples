@@ -36,7 +36,6 @@ namespace FileServiceNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.ExternalId == query.ToGuid() ||
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -140,5 +139,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>509f527af23505f3140d441953e63ce7</Hash>
+    <Hash>e116ea262a4a153cbafd1b78faaa98fe</Hash>
 </Codenesium>*/

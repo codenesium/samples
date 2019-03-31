@@ -193,7 +193,7 @@ class TeamEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -235,5 +235,5 @@ export const WrappedTeamEditComponent = Form.create({ name: 'Team Edit' })(
 
 
 /*<Codenesium>
-    <Hash>4bb1a2e4e78d747a0f884026dfa8ce7f</Hash>
+    <Hash>b165a56f1498b7463758b7b34a8413da</Hash>
 </Codenesium>*/

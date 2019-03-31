@@ -192,7 +192,7 @@ class FamilyEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="note">Notes</label>
+            <label htmlFor="note">Notes (optional)</label>
             <br />
             {getFieldDecorator('note', {
               rules: [],
@@ -200,7 +200,9 @@ class FamilyEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="primaryContactEmail">Primary Contact Email</label>
+            <label htmlFor="primaryContactEmail">
+              Primary Contact Email (optional)
+            </label>
             <br />
             {getFieldDecorator('primaryContactEmail', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -209,7 +211,7 @@ class FamilyEditComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="primaryContactFirstName">
-              Primary Contact First Name
+              Primary Contact First Name (optional)
             </label>
             <br />
             {getFieldDecorator('primaryContactFirstName', {
@@ -219,7 +221,7 @@ class FamilyEditComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="primaryContactLastName">
-              Primary Contact Last Name
+              Primary Contact Last Name (optional)
             </label>
             <br />
             {getFieldDecorator('primaryContactLastName', {
@@ -228,7 +230,9 @@ class FamilyEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="primaryContactPhone">Primary Contact Phone</label>
+            <label htmlFor="primaryContactPhone">
+              Primary Contact Phone (required)
+            </label>
             <br />
             {getFieldDecorator('primaryContactPhone', {
               rules: [
@@ -262,5 +266,5 @@ export const WrappedFamilyEditComponent = Form.create({ name: 'Family Edit' })(
 
 
 /*<Codenesium>
-    <Hash>b76d92c13b6207bcb844f50dfbb35da3</Hash>
+    <Hash>545af3ea64b229ae95b9ea8a9a47ef95</Hash>
 </Codenesium>*/

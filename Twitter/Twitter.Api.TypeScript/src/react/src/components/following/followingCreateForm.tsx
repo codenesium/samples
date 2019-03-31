@@ -140,7 +140,7 @@ class FollowingCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="dateFollowed">date_followed</label>
+            <label htmlFor="dateFollowed">date_followed (optional)</label>
             <br />
             {getFieldDecorator('dateFollowed', {
               rules: [],
@@ -148,7 +148,7 @@ class FollowingCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="muted">muted</label>
+            <label htmlFor="muted">muted (optional)</label>
             <br />
             {getFieldDecorator('muted', {
               rules: [{ max: 1, message: 'Exceeds max length of 1' }],
@@ -179,5 +179,5 @@ export const WrappedFollowingCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>baf928b104aadf11d245eed9ad80426d</Hash>
+    <Hash>f55b70f9ee87f80cebf62338e6b97523</Hash>
 </Codenesium>*/

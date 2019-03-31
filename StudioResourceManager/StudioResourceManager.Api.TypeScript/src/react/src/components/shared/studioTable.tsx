@@ -169,7 +169,7 @@ export class StudioTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -181,7 +181,7 @@ export class StudioTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -208,5 +208,5 @@ export class StudioTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d33ec82028a57be1682ceaf4599d6068</Hash>
+    <Hash>9b90d161b927c6a9913203ebf5f09929</Hash>
 </Codenesium>*/

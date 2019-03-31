@@ -193,7 +193,7 @@ class EventEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="actualEndDate">Actual End Date</label>
+            <label htmlFor="actualEndDate">Actual End Date (optional)</label>
             <br />
             {getFieldDecorator('actualEndDate', {
               rules: [],
@@ -206,7 +206,9 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="actualStartDate">Actual Start Date</label>
+            <label htmlFor="actualStartDate">
+              Actual Start Date (optional)
+            </label>
             <br />
             {getFieldDecorator('actualStartDate', {
               rules: [],
@@ -219,7 +221,7 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="billAmount">Bill Amount</label>
+            <label htmlFor="billAmount">Bill Amount (optional)</label>
             <br />
             {getFieldDecorator('billAmount', {
               rules: [],
@@ -235,7 +237,9 @@ class EventEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="scheduledEndDate">Scheduled End Date</label>
+            <label htmlFor="scheduledEndDate">
+              Scheduled End Date (optional)
+            </label>
             <br />
             {getFieldDecorator('scheduledEndDate', {
               rules: [],
@@ -248,7 +252,9 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="scheduledStartDate">Scheduled Start Date</label>
+            <label htmlFor="scheduledStartDate">
+              Scheduled Start Date (optional)
+            </label>
             <br />
             {getFieldDecorator('scheduledStartDate', {
               rules: [],
@@ -261,7 +267,7 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="studentNote">Student Notes</label>
+            <label htmlFor="studentNote">Student Notes (optional)</label>
             <br />
             {getFieldDecorator('studentNote', {
               rules: [],
@@ -269,7 +275,7 @@ class EventEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherNote">Teacher Notes</label>
+            <label htmlFor="teacherNote">Teacher Notes (optional)</label>
             <br />
             {getFieldDecorator('teacherNote', {
               rules: [],
@@ -300,5 +306,5 @@ export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
 
 
 /*<Codenesium>
-    <Hash>490b0bb5a26781ad87ce94e491eb87d7</Hash>
+    <Hash>ce4014a85e85576062e653059263f725</Hash>
 </Codenesium>*/

@@ -35,7 +35,6 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.PipelineStatusId == query.ToInt() ||
 				                  x.SaleId == query.ToInt(),
 				                  limit,
@@ -122,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>318f201b70c5a6521773e767087842ee</Hash>
+    <Hash>6ee63163731510a2ab5f83573f54565c</Hash>
 </Codenesium>*/

@@ -164,7 +164,7 @@ export class CallAssignmentTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -176,7 +176,7 @@ export class CallAssignmentTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -203,5 +203,5 @@ export class CallAssignmentTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>197ea63a3d1b14e0b22f770da3d67e39</Hash>
+    <Hash>1cb5e009fc01931ce7e5b756d9cf1c45</Hash>
 </Codenesium>*/

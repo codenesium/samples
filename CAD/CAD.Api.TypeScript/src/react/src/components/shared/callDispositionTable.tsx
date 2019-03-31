@@ -127,7 +127,7 @@ export class CallDispositionTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class CallDispositionTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class CallDispositionTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a5138cbd849688ca0e093d0394b095e8</Hash>
+    <Hash>aedc29f0450b5da35a1341ddfb97754e</Hash>
 </Codenesium>*/

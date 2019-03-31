@@ -36,7 +36,6 @@ namespace StackOverflowNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.CreationDate == query.ToDateTime() ||
-				                  x.Id == query.ToInt() ||
 				                  x.LinkTypeId == query.ToInt() ||
 				                  x.PostId == query.ToInt() ||
 				                  x.RelatedPostId == query.ToInt(),
@@ -158,5 +157,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>352ec47a390dcb03d13cd9514822c5ca</Hash>
+    <Hash>015bcdcf4dbaa78aa2b4f8e056f7b379</Hash>
 </Codenesium>*/

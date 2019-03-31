@@ -193,7 +193,7 @@ class TeacherEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="birthday">Birthday</label>
+            <label htmlFor="birthday">Birthday (required)</label>
             <br />
             {getFieldDecorator('birthday', {
               rules: [{ required: true, message: 'Required' }],
@@ -201,7 +201,7 @@ class TeacherEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email (required)</label>
             <br />
             {getFieldDecorator('email', {
               rules: [
@@ -212,7 +212,7 @@ class TeacherEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -223,7 +223,7 @@ class TeacherEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -234,7 +234,7 @@ class TeacherEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Phone (optional)</label>
             <br />
             {getFieldDecorator('phone', {
               rules: [{ max: 128, message: 'Exceeds max length of 128' }],
@@ -273,5 +273,5 @@ export const WrappedTeacherEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e1f665eb904a465ba7b4b4ad8a2b35b4</Hash>
+    <Hash>88aebe53efe976dc4b31a5e6d38673ae</Hash>
 </Codenesium>*/

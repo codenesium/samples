@@ -195,7 +195,7 @@ class PostTypeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="rwType">Rw Type</label>
+            <label htmlFor="rwType">Rw Type (required)</label>
             <br />
             {getFieldDecorator('rwType', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedPostTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1eaca7d6c35b1fa0322f85c419252280</Hash>
+    <Hash>8b3d7160c1fefda56d3fa53ae272c85f</Hash>
 </Codenesium>*/

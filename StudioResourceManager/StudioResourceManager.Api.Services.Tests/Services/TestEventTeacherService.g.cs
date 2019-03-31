@@ -203,42 +203,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ByEventId_Exists()
-		{
-			var mock = new ServiceMockFacade<IEventTeacherRepository>();
-			var records = new List<EventTeacher>();
-			records.Add(new EventTeacher());
-			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new EventTeacherService(mock.LoggerMock.Object,
-			                                      mock.MediatorMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.EventTeacherModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALEventTeacherMapperMock);
-
-			List<ApiEventTeacherServerResponseModel> response = await service.ByEventId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByEventId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IEventTeacherRepository>();
-			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventTeacher>>(new List<EventTeacher>()));
-			var service = new EventTeacherService(mock.LoggerMock.Object,
-			                                      mock.MediatorMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.EventTeacherModelValidatorMock.Object,
-			                                      mock.DALMapperMockFactory.DALEventTeacherMapperMock);
-
-			List<ApiEventTeacherServerResponseModel> response = await service.ByEventId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
 		public async void ByTeacherId_Exists()
 		{
 			var mock = new ServiceMockFacade<IEventTeacherRepository>();
@@ -273,9 +237,45 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ByEventId_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventTeacherRepository>();
+			var records = new List<EventTeacher>();
+			records.Add(new EventTeacher());
+			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new EventTeacherService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.EventTeacherModelValidatorMock.Object,
+			                                      mock.DALMapperMockFactory.DALEventTeacherMapperMock);
+
+			List<ApiEventTeacherServerResponseModel> response = await service.ByEventId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByEventId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IEventTeacherRepository>();
+			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventTeacher>>(new List<EventTeacher>()));
+			var service = new EventTeacherService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.EventTeacherModelValidatorMock.Object,
+			                                      mock.DALMapperMockFactory.DALEventTeacherMapperMock);
+
+			List<ApiEventTeacherServerResponseModel> response = await service.ByEventId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4016625a4d4a2a36d95953835c8bb413</Hash>
+    <Hash>9031e32343e878415edac0f84333dbcb</Hash>
 </Codenesium>*/

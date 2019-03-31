@@ -195,7 +195,7 @@ class PostEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="acceptedAnswerId">Accepted Answer</label>
+            <label htmlFor="acceptedAnswerId">Accepted Answer (optional)</label>
             <br />
             {getFieldDecorator('acceptedAnswerId', {
               rules: [],
@@ -203,7 +203,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="answerCount">Answer Count</label>
+            <label htmlFor="answerCount">Answer Count (optional)</label>
             <br />
             {getFieldDecorator('answerCount', {
               rules: [],
@@ -211,7 +211,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="body">Body</label>
+            <label htmlFor="body">Body (required)</label>
             <br />
             {getFieldDecorator('body', {
               rules: [{ required: true, message: 'Required' }],
@@ -219,7 +219,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="closedDate">Closed Date</label>
+            <label htmlFor="closedDate">Closed Date (optional)</label>
             <br />
             {getFieldDecorator('closedDate', {
               rules: [],
@@ -229,7 +229,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="commentCount">Comment Count</label>
+            <label htmlFor="commentCount">Comment Count (optional)</label>
             <br />
             {getFieldDecorator('commentCount', {
               rules: [],
@@ -237,7 +237,9 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="communityOwnedDate">Community Owned Date</label>
+            <label htmlFor="communityOwnedDate">
+              Community Owned Date (optional)
+            </label>
             <br />
             {getFieldDecorator('communityOwnedDate', {
               rules: [],
@@ -250,7 +252,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="creationDate">Creation Date</label>
+            <label htmlFor="creationDate">Creation Date (required)</label>
             <br />
             {getFieldDecorator('creationDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -260,7 +262,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="favoriteCount">Favorite Count</label>
+            <label htmlFor="favoriteCount">Favorite Count (optional)</label>
             <br />
             {getFieldDecorator('favoriteCount', {
               rules: [],
@@ -268,7 +270,9 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastActivityDate">Last Activity Date</label>
+            <label htmlFor="lastActivityDate">
+              Last Activity Date (required)
+            </label>
             <br />
             {getFieldDecorator('lastActivityDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -281,7 +285,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastEditDate">Last Edit Date</label>
+            <label htmlFor="lastEditDate">Last Edit Date (optional)</label>
             <br />
             {getFieldDecorator('lastEditDate', {
               rules: [],
@@ -295,7 +299,7 @@ class PostEditComponent extends React.Component<
 
           <Form.Item>
             <label htmlFor="lastEditorDisplayName">
-              Last Editor Display Name
+              Last Editor Display Name (optional)
             </label>
             <br />
             {getFieldDecorator('lastEditorDisplayName', {
@@ -336,7 +340,7 @@ class PostEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="score">Score</label>
+            <label htmlFor="score">Score (required)</label>
             <br />
             {getFieldDecorator('score', {
               rules: [{ required: true, message: 'Required' }],
@@ -344,7 +348,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="tag">Tag</label>
+            <label htmlFor="tag">Tag (optional)</label>
             <br />
             {getFieldDecorator('tag', {
               rules: [{ max: 150, message: 'Exceeds max length of 150' }],
@@ -352,7 +356,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Title (optional)</label>
             <br />
             {getFieldDecorator('title', {
               rules: [{ max: 250, message: 'Exceeds max length of 250' }],
@@ -360,7 +364,7 @@ class PostEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="viewCount">View Count</label>
+            <label htmlFor="viewCount">View Count (required)</label>
             <br />
             {getFieldDecorator('viewCount', {
               rules: [{ required: true, message: 'Required' }],
@@ -391,5 +395,5 @@ export const WrappedPostEditComponent = Form.create({ name: 'Post Edit' })(
 
 
 /*<Codenesium>
-    <Hash>cc04b135f31b41faa93b3f6e795d8f4f</Hash>
+    <Hash>a45a242f20b29324fe9e4a859ea5c171</Hash>
 </Codenesium>*/

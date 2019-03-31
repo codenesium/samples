@@ -196,6 +196,14 @@ class EventStudentEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
+          <EventSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Events}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="eventId"
+            required={true}
+            selectedValue={this.state.model!.eventId}
+          />
+
           <StudentSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.Students}
             getFieldDecorator={this.props.form.getFieldDecorator}
@@ -228,5 +236,5 @@ export const WrappedEventStudentEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7792b138c86fc15cdc0e552530fe17c0</Hash>
+    <Hash>2a2ec88c6f1913d51dd03951122b36b9</Hash>
 </Codenesium>*/

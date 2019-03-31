@@ -140,8 +140,8 @@ class ResetPasswordComponent extends React.Component<
 
           <Form.Item>
             <Button
-              type='primary'
               htmlType='submit'
+			  type='primary'
               loading={this.state.submitting}
             >
               {this.state.submitting ? 'Submitting...' : 'Submit'}

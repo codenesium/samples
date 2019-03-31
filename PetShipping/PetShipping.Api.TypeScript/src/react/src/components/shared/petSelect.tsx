@@ -94,7 +94,9 @@ export class PetSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Pet</label>
+          <label htmlFor={this.props.propertyName}>
+            Pet {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class PetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3c2e3c9abd438686c151efa381850792</Hash>
+    <Hash>5652115036e3e1132e1714553eeecbb7</Hash>
 </Codenesium>*/

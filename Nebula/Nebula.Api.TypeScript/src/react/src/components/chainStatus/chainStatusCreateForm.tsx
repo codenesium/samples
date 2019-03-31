@@ -140,7 +140,7 @@ class ChainStatusCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -174,5 +174,5 @@ export const WrappedChainStatusCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e0f27aa55f60b65e29e5acf569102b57</Hash>
+    <Hash>4dc973f7f2785e08ba39f331152e35fe</Hash>
 </Codenesium>*/

@@ -36,8 +36,7 @@ namespace TwitterNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.DateFollowed == query.ToNullableDateTime() ||
-				                  x.Muted.StartsWith(query) ||
-				                  x.UserId == query.ToInt(),
+				                  x.Muted.StartsWith(query),
 				                  limit,
 				                  offset);
 			}
@@ -114,5 +113,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>242d379cb1436fa6d6aa9f5ac171a61a</Hash>
+    <Hash>70938a777384f7e7eb38bc7923fd9624</Hash>
 </Codenesium>*/

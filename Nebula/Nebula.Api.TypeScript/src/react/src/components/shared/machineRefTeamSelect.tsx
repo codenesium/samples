@@ -94,7 +94,10 @@ export class MachineRefTeamSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Machine Ref Team</label>
+          <label htmlFor={this.props.propertyName}>
+            Machine Ref Team{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class MachineRefTeamSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>7fe605fc09268e2c5928c5711a982b3a</Hash>
+    <Hash>79858901ae6c0ce3212e27a8e80c9a81</Hash>
 </Codenesium>*/

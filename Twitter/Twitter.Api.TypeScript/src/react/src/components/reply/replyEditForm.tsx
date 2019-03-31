@@ -196,7 +196,7 @@ class ReplyEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="content">content</label>
+            <label htmlFor="content">content (required)</label>
             <br />
             {getFieldDecorator('content', {
               rules: [
@@ -207,7 +207,7 @@ class ReplyEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -215,7 +215,7 @@ class ReplyEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="replierUserId">replier_user_id</label>
+            <label htmlFor="replierUserId">replier_user_id (required)</label>
             <br />
             {getFieldDecorator('replierUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -223,7 +223,7 @@ class ReplyEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (required)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [{ required: true, message: 'Required' }],
@@ -254,5 +254,5 @@ export const WrappedReplyEditComponent = Form.create({ name: 'Reply Edit' })(
 
 
 /*<Codenesium>
-    <Hash>7ecbaf01e3c72c3b4af60e9cef7794fa</Hash>
+    <Hash>bca7956eb2861d2b19ce8211fcdeef9c</Hash>
 </Codenesium>*/

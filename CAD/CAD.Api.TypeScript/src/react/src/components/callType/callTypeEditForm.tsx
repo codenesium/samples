@@ -195,7 +195,7 @@ class CallTypeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedCallTypeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>44fa246fdfdc92657c8567b0a41b0746</Hash>
+    <Hash>b363fce116f675330f068eac2e72c2e4</Hash>
 </Codenesium>*/

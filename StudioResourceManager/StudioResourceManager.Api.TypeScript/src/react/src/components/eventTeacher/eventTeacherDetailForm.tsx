@@ -107,6 +107,15 @@ class EventTeacherDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
+              <h3>Event</h3>
+              <p>
+                {String(
+                  this.state.model!.eventIdNavigation &&
+                    this.state.model!.eventIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>Teacher</h3>
               <p>
                 {String(
@@ -131,5 +140,5 @@ export const WrappedEventTeacherDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3885a1b8088ea7091c7fdd88f72172b3</Hash>
+    <Hash>6b7dc09f52a0a69c6df17e9729962f2a</Hash>
 </Codenesium>*/

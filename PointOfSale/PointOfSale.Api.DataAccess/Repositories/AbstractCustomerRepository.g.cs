@@ -37,7 +37,6 @@ namespace PointOfSaleNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Email.StartsWith(query) ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query),
 				                  limit,
@@ -116,5 +115,5 @@ namespace PointOfSaleNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>877e138879f773046fe13c6657ba0b30</Hash>
+    <Hash>cc30412acb6f8744f12a193971d04da3</Hash>
 </Codenesium>*/

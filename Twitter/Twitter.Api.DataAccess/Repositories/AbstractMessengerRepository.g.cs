@@ -37,7 +37,6 @@ namespace TwitterNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Date == query.ToNullableDateTime() ||
 				                  x.FromUserId == query.ToNullableInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.MessageId == query.ToNullableInt() ||
 				                  x.Time == query.ToNullableTimespan() ||
 				                  x.ToUserId == query.ToInt() ||
@@ -160,5 +159,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f55626af5f40d4559882955da5c22941</Hash>
+    <Hash>113cce3146cad5b39fe118a5bd6d6e39</Hash>
 </Codenesium>*/

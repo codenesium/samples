@@ -180,7 +180,7 @@ export class NoteTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -192,7 +192,7 @@ export class NoteTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -219,5 +219,5 @@ export class NoteTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>bd4d3e903ac4b7f0cd43df7b1b2289cc</Hash>
+    <Hash>c1eea9269aaf9f8e9b73269cdb430431</Hash>
 </Codenesium>*/

@@ -140,7 +140,7 @@ class IncludedColumnTestCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -151,7 +151,7 @@ class IncludedColumnTestCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name2">Name2</label>
+            <label htmlFor="name2">Name2 (required)</label>
             <br />
             {getFieldDecorator('name2', {
               rules: [
@@ -185,5 +185,5 @@ export const WrappedIncludedColumnTestCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>2832760fbc8c126e64444839b78d4872</Hash>
+    <Hash>2b0cc89d809a839b3a5cbc92382aef81</Hash>
 </Codenesium>*/

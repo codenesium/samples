@@ -192,7 +192,7 @@ class PenEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -226,5 +226,5 @@ export const WrappedPenEditComponent = Form.create({ name: 'Pen Edit' })(
 
 
 /*<Codenesium>
-    <Hash>71c81684165719a9d0de759c5417f5c0</Hash>
+    <Hash>41f412b7d4c881069dcaedca694ddcaa</Hash>
 </Codenesium>*/

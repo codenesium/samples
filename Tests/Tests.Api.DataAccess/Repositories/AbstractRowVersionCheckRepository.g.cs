@@ -35,7 +35,6 @@ namespace TestsNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.RowVersion == query.ToGuid(),
 				                  limit,
@@ -114,5 +113,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81a4320a0d127843da6a707f251cdaf4</Hash>
+    <Hash>83220eae6859efb3b75b557b1df0f614</Hash>
 </Codenesium>*/

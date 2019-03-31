@@ -38,7 +38,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				                  x.Birthday == query.ToDateTime() ||
 				                  x.Email.StartsWith(query) ||
 				                  x.FirstName.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
 				                  x.UserId == query.ToInt(),
@@ -156,5 +155,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c49c605fe1af3df0630e28387fdb50fb</Hash>
+    <Hash>bed59c3da49c5a700eb0b3958a12a88a</Hash>
 </Codenesium>*/

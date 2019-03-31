@@ -35,7 +35,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.EventId == query.ToInt() ||
 				                  x.StudentId == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -129,5 +128,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1645f5c5171fd3139f84756309015958</Hash>
+    <Hash>d6333162f9990a8d5f24a6a6b197ff12</Hash>
 </Codenesium>*/

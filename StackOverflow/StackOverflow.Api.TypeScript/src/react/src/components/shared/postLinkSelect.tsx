@@ -94,7 +94,9 @@ export class PostLinkSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Post Links</label>
+          <label htmlFor={this.props.propertyName}>
+            Post Links {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class PostLinkSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ff303253448f4cf350767c24002c6d96</Hash>
+    <Hash>64ad3a4222eb1fc5012294d10e9989f0</Hash>
 </Codenesium>*/

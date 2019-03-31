@@ -195,7 +195,7 @@ class EmployeeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name (required)</label>
             <br />
             {getFieldDecorator('firstName', {
               rules: [
@@ -206,7 +206,7 @@ class EmployeeEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isSalesPerson">Is Sales Person</label>
+            <label htmlFor="isSalesPerson">Is Sales Person (required)</label>
             <br />
             {getFieldDecorator('isSalesPerson', {
               rules: [],
@@ -215,7 +215,7 @@ class EmployeeEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="isShipper">Is Shipper</label>
+            <label htmlFor="isShipper">Is Shipper (required)</label>
             <br />
             {getFieldDecorator('isShipper', {
               rules: [],
@@ -224,7 +224,7 @@ class EmployeeEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name (required)</label>
             <br />
             {getFieldDecorator('lastName', {
               rules: [
@@ -258,5 +258,5 @@ export const WrappedEmployeeEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>83a086b7cdfb48c62605ea0bb10c798d</Hash>
+    <Hash>2d1b813f4e3a8b49432c8cb8a665633a</Hash>
 </Codenesium>*/

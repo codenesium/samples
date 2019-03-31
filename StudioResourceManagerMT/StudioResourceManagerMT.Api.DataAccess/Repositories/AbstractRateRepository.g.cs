@@ -36,7 +36,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.AmountPerMinute.ToDecimal() == query.ToDecimal() ||
-				                  x.Id == query.ToInt() ||
 				                  x.TeacherId == query.ToInt() ||
 				                  x.TeacherSkillId == query.ToInt(),
 				                  limit,
@@ -131,5 +130,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a6eea3b83b9ab957c94d4f6c1b304859</Hash>
+    <Hash>18d25b4d7f8a3c433aaf0dd754b9f3b7</Hash>
 </Codenesium>*/

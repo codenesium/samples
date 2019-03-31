@@ -195,7 +195,7 @@ class TicketStatusEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedTicketStatusEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a2f7bf4dd33722f93af57dd413dd5838</Hash>
+    <Hash>f9f1a0317cf9db810b31cfcefd68e42c</Hash>
 </Codenesium>*/

@@ -94,7 +94,9 @@ export class BadgeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Badges</label>
+          <label htmlFor={this.props.propertyName}>
+            Badges {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class BadgeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>446e539782b92eab7218ac05b951f0e1</Hash>
+    <Hash>af634692c04a38bee73d52700885df34</Hash>
 </Codenesium>*/

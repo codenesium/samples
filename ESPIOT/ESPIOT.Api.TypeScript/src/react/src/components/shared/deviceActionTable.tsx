@@ -158,7 +158,7 @@ export class DeviceActionTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -170,7 +170,7 @@ export class DeviceActionTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -197,5 +197,5 @@ export class DeviceActionTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>25a8a8b7b1feac300f0e2de79e1cbfac</Hash>
+    <Hash>91c21f7e2c3e722c402e4e674edc6629</Hash>
 </Codenesium>*/

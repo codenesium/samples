@@ -147,6 +147,7 @@ class ChangeEmailComponent extends React.Component<
           <Form.Item>
             <Button
               htmlType='submit'
+			  type='primary'
               loading={this.state.submitting}
             >
               {this.state.submitting ? 'Submitting...' : 'Submit'}

@@ -94,7 +94,10 @@ export class OtherTransportSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Other Transport</label>
+          <label htmlFor={this.props.propertyName}>
+            Other Transport{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class OtherTransportSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>b21fc96e702a386c1363045bf560e855</Hash>
+    <Hash>95d5cf007759067d5bacc7e1f4ddce74</Hash>
 </Codenesium>*/

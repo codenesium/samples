@@ -37,7 +37,6 @@ namespace StackOverflowNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.BountyAmount == query.ToNullableInt() ||
 				                  x.CreationDate == query.ToDateTime() ||
-				                  x.Id == query.ToInt() ||
 				                  x.PostId == query.ToInt() ||
 				                  x.UserId == query.ToNullableInt() ||
 				                  x.VoteTypeId == query.ToInt(),
@@ -159,5 +158,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b1a602409153507a1738f08f722e45f9</Hash>
+    <Hash>a8bda3b450ca7f69d26ab9f214ff6a63</Hash>
 </Codenesium>*/

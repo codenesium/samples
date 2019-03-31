@@ -195,7 +195,7 @@ class CountryEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -229,5 +229,5 @@ export const WrappedCountryEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>1216165ac1c12c8f5a406a5c2b7adb1e</Hash>
+    <Hash>647c7859d44904d40e8ff62d9cb0827f</Hash>
 </Codenesium>*/

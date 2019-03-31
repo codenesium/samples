@@ -204,7 +204,7 @@ class ProvinceEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -238,5 +238,5 @@ export const WrappedProvinceEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>5956f7dedabb64d146cedd9f384adc1c</Hash>
+    <Hash>61d84fefa83c191d0b97dcae8ed19b59</Hash>
 </Codenesium>*/

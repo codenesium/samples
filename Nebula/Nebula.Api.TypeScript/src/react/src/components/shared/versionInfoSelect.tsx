@@ -94,7 +94,9 @@ export class VersionInfoSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Version Info</label>
+          <label htmlFor={this.props.propertyName}>
+            Version Info {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class VersionInfoSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cf2ddf87148212f8b525d65dae9846f7</Hash>
+    <Hash>bd18f2b319125b0c37d0106027ea10a0</Hash>
 </Codenesium>*/

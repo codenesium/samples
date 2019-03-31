@@ -104,8 +104,8 @@ class ConfirmRegistrationComponent extends React.Component<
               <Alert message={this.state.message} type='success' /> 
               <br />          
              <Button
-              type='primary'
               htmlType='submit'
+			  type='primary'
              >
                  <Link to={AuthClientRoutes.Login}>Log in</Link>
             </Button>
@@ -118,8 +118,8 @@ class ConfirmRegistrationComponent extends React.Component<
           <Form onSubmit={this.handleSubmit}>
           <Form.Item>
             <Button
-              type='primary'
               htmlType='submit'
+			  type='primary'
               loading={this.state.submitting}
             >
               {this.state.submitting ? 'Submitting...' : 'Complete Registration'}

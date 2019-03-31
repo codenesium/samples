@@ -142,7 +142,7 @@ class PostLinkCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="creationDate">Creation Date</label>
+            <label htmlFor="creationDate">Creation Date (required)</label>
             <br />
             {getFieldDecorator('creationDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -199,5 +199,5 @@ export const WrappedPostLinkCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>75e419de81f13440c8e0aa15451a2913</Hash>
+    <Hash>3065fa4953adc8905bf26ea17daa0b65</Hash>
 </Codenesium>*/

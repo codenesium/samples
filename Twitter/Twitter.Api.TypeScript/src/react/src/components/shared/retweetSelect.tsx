@@ -94,7 +94,10 @@ export class RetweetSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class RetweetSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f2fe514039cfb6978bee553ff647c2d5</Hash>
+    <Hash>3d7933d54ecd8f32102c977c847dbd0d</Hash>
 </Codenesium>*/

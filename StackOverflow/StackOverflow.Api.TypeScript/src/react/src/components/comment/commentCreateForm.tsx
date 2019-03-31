@@ -142,7 +142,7 @@ class CommentCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="creationDate">Creation Date</label>
+            <label htmlFor="creationDate">Creation Date (required)</label>
             <br />
             {getFieldDecorator('creationDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -160,7 +160,7 @@ class CommentCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="score">Score</label>
+            <label htmlFor="score">Score (optional)</label>
             <br />
             {getFieldDecorator('score', {
               rules: [],
@@ -168,7 +168,7 @@ class CommentCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="text">Text</label>
+            <label htmlFor="text">Text (required)</label>
             <br />
             {getFieldDecorator('text', {
               rules: [
@@ -210,5 +210,5 @@ export const WrappedCommentCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b5f39ad6cc71ef604968e925a1165cf2</Hash>
+    <Hash>902febb1ba82efb9928b9d8de041e0ce</Hash>
 </Codenesium>*/

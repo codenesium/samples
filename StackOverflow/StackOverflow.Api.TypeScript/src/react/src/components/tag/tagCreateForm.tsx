@@ -141,7 +141,7 @@ class TagCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="count">Count</label>
+            <label htmlFor="count">Count (required)</label>
             <br />
             {getFieldDecorator('count', {
               rules: [{ required: true, message: 'Required' }],
@@ -157,7 +157,7 @@ class TagCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="tagName">Tag Name</label>
+            <label htmlFor="tagName">Tag Name (required)</label>
             <br />
             {getFieldDecorator('tagName', {
               rules: [
@@ -199,5 +199,5 @@ export const WrappedTagCreateComponent = Form.create({ name: 'Tag Create' })(
 
 
 /*<Codenesium>
-    <Hash>8155e444000f30f1b4b70663c8638f47</Hash>
+    <Hash>05f44d677d98f7cb8e91795c2f6c5304</Hash>
 </Codenesium>*/

@@ -204,7 +204,7 @@ class PipelineEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="saleId">Sale</label>
+            <label htmlFor="saleId">Sale (required)</label>
             <br />
             {getFieldDecorator('saleId', {
               rules: [{ required: true, message: 'Required' }],
@@ -235,5 +235,5 @@ export const WrappedPipelineEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ac11ffa64d30f5edfa909fbf571af7ca</Hash>
+    <Hash>80252cac2bdc6bdb839373761d0cb824</Hash>
 </Codenesium>*/

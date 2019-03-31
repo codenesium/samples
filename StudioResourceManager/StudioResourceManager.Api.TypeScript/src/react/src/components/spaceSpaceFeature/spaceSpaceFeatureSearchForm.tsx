@@ -229,6 +229,28 @@ export default class SpaceSpaceFeatureSearchComponent extends React.Component<
                     },
                   },
                   {
+                    Header: 'Space',
+                    accessor: 'spaceId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Spaces + '/' + props.original.spaceId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.spaceIdNavigation &&
+                              props.original.spaceIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Actions',
                     minWidth: 150,
                     Cell: row => (
@@ -289,5 +311,5 @@ export const WrappedSpaceSpaceFeatureSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>a61f10d618614e921991befe1c999a41</Hash>
+    <Hash>e1140ad3d26ab3ab5d015ccd45c68003</Hash>
 </Codenesium>*/

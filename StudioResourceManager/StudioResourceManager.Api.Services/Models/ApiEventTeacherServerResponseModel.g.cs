@@ -22,18 +22,18 @@ namespace StudioResourceManagerNS.Api.Services
 		public int EventId { get; private set; }
 
 		[JsonProperty]
-		public int Id { get; private set; }
+		public string EventIdEntity { get; private set; } = RouteConstants.Events;
 
 		[JsonProperty]
-		public string IdEntity { get; private set; } = RouteConstants.Events;
+		public ApiEventServerResponseModel EventIdNavigation { get; private set; }
 
-		[JsonProperty]
-		public ApiEventServerResponseModel IdNavigation { get; private set; }
-
-		public void SetIdNavigation(ApiEventServerResponseModel value)
+		public void SetEventIdNavigation(ApiEventServerResponseModel value)
 		{
-			this.IdNavigation = value;
+			this.EventIdNavigation = value;
 		}
+
+		[JsonProperty]
+		public int Id { get; private set; }
 
 		[JsonProperty]
 		public int TeacherId { get; private set; }
@@ -52,5 +52,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c4dfbbdea76b780cf837dc69e683394</Hash>
+    <Hash>379f674e014d7c06ff351b8228fb8ff9</Hash>
 </Codenesium>*/

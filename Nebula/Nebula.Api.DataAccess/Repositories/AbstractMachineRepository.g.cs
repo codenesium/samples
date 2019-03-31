@@ -36,7 +36,6 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Description.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.JwtKey.StartsWith(query) ||
 				                  x.LastIpAddress.StartsWith(query) ||
 				                  x.MachineGuid == query.ToGuid() ||
@@ -146,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>119408df3681e28c0dedf558e49dffb9</Hash>
+    <Hash>bc04eb19501847e0b2e63986c7ef2cf1</Hash>
 </Codenesium>*/

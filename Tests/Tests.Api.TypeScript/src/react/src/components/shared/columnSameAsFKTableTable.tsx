@@ -171,7 +171,7 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -183,7 +183,7 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -210,5 +210,5 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d65835f8c53c4f0ab99e33cb592877ec</Hash>
+    <Hash>eacfdde90cceb8e8a3cb2db7e78d3acd</Hash>
 </Codenesium>*/

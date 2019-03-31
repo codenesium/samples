@@ -192,7 +192,7 @@ class SpaceEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Description (required)</label>
             <br />
             {getFieldDecorator('description', {
               rules: [
@@ -203,7 +203,7 @@ class SpaceEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -237,5 +237,5 @@ export const WrappedSpaceEditComponent = Form.create({ name: 'Space Edit' })(
 
 
 /*<Codenesium>
-    <Hash>51db4a8ceb679a9d6616165ceb6d2faa</Hash>
+    <Hash>1dbd1f9b28e31f2ff7101380edc78137</Hash>
 </Codenesium>*/

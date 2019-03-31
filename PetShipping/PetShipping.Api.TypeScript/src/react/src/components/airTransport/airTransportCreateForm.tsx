@@ -141,7 +141,7 @@ class AirTransportCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="airlineId">Airline</label>
+            <label htmlFor="airlineId">Airline (required)</label>
             <br />
             {getFieldDecorator('airlineId', {
               rules: [{ required: true, message: 'Required' }],
@@ -149,7 +149,7 @@ class AirTransportCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="flightNumber">Flight Number</label>
+            <label htmlFor="flightNumber">Flight Number (required)</label>
             <br />
             {getFieldDecorator('flightNumber', {
               rules: [
@@ -168,7 +168,7 @@ class AirTransportCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="landDate">Land Date</label>
+            <label htmlFor="landDate">Land Date (required)</label>
             <br />
             {getFieldDecorator('landDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -176,7 +176,7 @@ class AirTransportCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="pipelineStepId">Pipeline Step</label>
+            <label htmlFor="pipelineStepId">Pipeline Step (required)</label>
             <br />
             {getFieldDecorator('pipelineStepId', {
               rules: [{ required: true, message: 'Required' }],
@@ -184,7 +184,7 @@ class AirTransportCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="takeoffDate">Takeoff Date</label>
+            <label htmlFor="takeoffDate">Takeoff Date (required)</label>
             <br />
             {getFieldDecorator('takeoffDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -217,5 +217,5 @@ export const WrappedAirTransportCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>cd56bb28da6ebde34f4ad045dd12b15c</Hash>
+    <Hash>180cd7a394cf256321185fac2014e529</Hash>
 </Codenesium>*/

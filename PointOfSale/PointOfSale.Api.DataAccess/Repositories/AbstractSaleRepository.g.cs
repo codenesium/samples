@@ -36,8 +36,7 @@ namespace PointOfSaleNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.CustomerId == query.ToInt() ||
-				                  x.Date == query.ToDateTime() ||
-				                  x.Id == query.ToInt(),
+				                  x.Date == query.ToDateTime(),
 				                  limit,
 				                  offset);
 			}
@@ -120,5 +119,5 @@ namespace PointOfSaleNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1489808e3018d9ff0d4c8246f30318a2</Hash>
+    <Hash>ed2500b260a8ef3a4a840cc7dc26fb8f</Hash>
 </Codenesium>*/

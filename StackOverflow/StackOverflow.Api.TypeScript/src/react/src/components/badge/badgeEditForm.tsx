@@ -193,7 +193,7 @@ class BadgeEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="date">Date</label>
+            <label htmlFor="date">Date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -201,7 +201,7 @@ class BadgeEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -243,5 +243,5 @@ export const WrappedBadgeEditComponent = Form.create({ name: 'Badge Edit' })(
 
 
 /*<Codenesium>
-    <Hash>9c84d732f4fb8d063bbcd5b950e6c00c</Hash>
+    <Hash>7a0fb5644d9dbc96987320f00c6f5337</Hash>
 </Codenesium>*/

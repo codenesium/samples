@@ -37,7 +37,6 @@ namespace PointOfSaleNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Active == query.ToBoolean() ||
 				                  x.Description.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.Price.ToDecimal() == query.ToDecimal() ||
 				                  x.Quantity == query.ToInt(),
@@ -117,5 +116,5 @@ namespace PointOfSaleNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d6423207efc240b414e5301886247b0</Hash>
+    <Hash>653032a3785f8bb1c5d30e4bac812f3a</Hash>
 </Codenesium>*/

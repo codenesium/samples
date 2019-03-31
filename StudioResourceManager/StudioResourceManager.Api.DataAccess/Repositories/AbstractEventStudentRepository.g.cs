@@ -36,7 +36,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.EventId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.StudentId == query.ToInt(),
 				                  limit,
 				                  offset);
@@ -142,5 +141,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4ea19673e9f655af26d337170a0dc6f3</Hash>
+    <Hash>ee9c00fd209c53ad83af2bd35b00a13c</Hash>
 </Codenesium>*/

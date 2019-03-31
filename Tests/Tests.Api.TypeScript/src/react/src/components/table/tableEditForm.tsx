@@ -192,7 +192,7 @@ class TableEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -226,5 +226,5 @@ export const WrappedTableEditComponent = Form.create({ name: 'Table Edit' })(
 
 
 /*<Codenesium>
-    <Hash>03221e01df97b8b8650f98d279da595b</Hash>
+    <Hash>4f29fc9460d6310cb82a1045c8b88900</Hash>
 </Codenesium>*/

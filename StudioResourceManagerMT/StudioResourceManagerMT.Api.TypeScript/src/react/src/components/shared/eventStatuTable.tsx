@@ -127,7 +127,7 @@ export class EventStatuTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -139,7 +139,7 @@ export class EventStatuTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -166,5 +166,5 @@ export class EventStatuTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f62eeb2ffc1fc0740333cd7041bce7b6</Hash>
+    <Hash>b3bb85cd0796d57572042aa3821e6d44</Hash>
 </Codenesium>*/

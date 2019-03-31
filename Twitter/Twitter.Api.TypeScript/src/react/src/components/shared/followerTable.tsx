@@ -198,7 +198,7 @@ export class FollowerTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -210,7 +210,7 @@ export class FollowerTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -237,5 +237,5 @@ export class FollowerTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>363dc86052aae91c1e62eb9406256b28</Hash>
+    <Hash>8ef3bbec10934c2e8a40255314348b8f</Hash>
 </Codenesium>*/

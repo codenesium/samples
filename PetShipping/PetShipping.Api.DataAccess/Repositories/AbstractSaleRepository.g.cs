@@ -37,7 +37,6 @@ namespace PetShippingNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Amount.ToDecimal() == query.ToDecimal() ||
 				                  x.CutomerId == query.ToInt() ||
-				                  x.Id == query.ToInt() ||
 				                  x.Note.StartsWith(query) ||
 				                  x.PetId == query.ToInt() ||
 				                  x.SaleDate == query.ToDateTime() ||
@@ -126,5 +125,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0b7d767366451baf05525f7f1579fd19</Hash>
+    <Hash>2c9915e2a48ff588902074592182b1ad</Hash>
 </Codenesium>*/

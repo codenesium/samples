@@ -120,6 +120,30 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
                 Header: 'TeacherTeacherSkills',
                 columns: [
                   {
+                    Header: 'Teacher',
+                    accessor: 'teacherId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Teachers +
+                                '/' +
+                                props.original.teacherId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.teacherIdNavigation &&
+                              props.original.teacherIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Teacher Skill',
                     accessor: 'teacherSkillId',
                     Cell: props => {
@@ -149,7 +173,7 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -161,7 +185,7 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -188,5 +212,5 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d8bed2c9ac13d119987ab7c1f557e104</Hash>
+    <Hash>faa7ac6df4fb3db988b67d9405a894b1</Hash>
 </Codenesium>*/

@@ -21,12 +21,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<EventStudent>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<EventTeacher>> EventTeachersById(int id, int limit = int.MaxValue, int offset = 0);
+		Task<List<EventTeacher>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
 
 		Task<EventStatus> EventStatusByEventStatusId(int eventStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>626a264464c3fe1b268250fc4b48c514</Hash>
+    <Hash>b139b8376e432a4b7800f3a019204842</Hash>
 </Codenesium>*/

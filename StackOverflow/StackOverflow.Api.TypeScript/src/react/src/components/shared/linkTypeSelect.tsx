@@ -94,7 +94,9 @@ export class LinkTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Link Types</label>
+          <label htmlFor={this.props.propertyName}>
+            Link Types {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class LinkTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>977c2e10f5631a003563a15cd4f03667</Hash>
+    <Hash>9290f18142fe81872db91e852408c5f5</Hash>
 </Codenesium>*/

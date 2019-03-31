@@ -38,7 +38,6 @@ namespace CADNS.Api.DataAccess
 				                  x.Address1.StartsWith(query) ||
 				                  x.Address2.StartsWith(query) ||
 				                  x.City.StartsWith(query) ||
-				                  x.Id == query.ToInt() ||
 				                  x.State.StartsWith(query) ||
 				                  x.Zip.StartsWith(query),
 				                  limit,
@@ -129,5 +128,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f78f6d49f0966bc46c4fe202a554b0e9</Hash>
+    <Hash>96459ba24e5aa2974311590c00246268</Hash>
 </Codenesium>*/

@@ -140,7 +140,7 @@ class BucketCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="externalId">ExternalId</label>
+            <label htmlFor="externalId">ExternalId (required)</label>
             <br />
             {getFieldDecorator('externalId', {
               rules: [{ required: true, message: 'Required' }],
@@ -148,7 +148,7 @@ class BucketCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -182,5 +182,5 @@ export const WrappedBucketCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>ef7bca90100ee77304637c73541e08f8</Hash>
+    <Hash>607a9f04d91f9bb04d56ab0d7d52a4fa</Hash>
 </Codenesium>*/

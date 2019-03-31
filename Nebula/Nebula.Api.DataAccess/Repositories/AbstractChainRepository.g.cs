@@ -37,7 +37,6 @@ namespace NebulaNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.ChainStatusId == query.ToInt() ||
 				                  x.ExternalId == query.ToGuid() ||
-				                  x.Id == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.TeamId == query.ToInt(),
 				                  limit,
@@ -173,5 +172,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fe9704e29ffdde6c9337df469470edc5</Hash>
+    <Hash>5bf11156b4ea1058ffa78f37e4914a7a</Hash>
 </Codenesium>*/

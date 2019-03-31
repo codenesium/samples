@@ -139,7 +139,7 @@ export class IncludedColumnTestTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -151,7 +151,7 @@ export class IncludedColumnTestTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -178,5 +178,5 @@ export class IncludedColumnTestTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>31c59531d36ebb1593d1cf4254b79b98</Hash>
+    <Hash>5be1c53b9f05dc98bfbfc60bd2ec73e7</Hash>
 </Codenesium>*/

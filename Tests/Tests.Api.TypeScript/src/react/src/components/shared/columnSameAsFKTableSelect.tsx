@@ -98,7 +98,8 @@ export class ColumnSameAsFKTableSelectComponent extends React.Component<
       return (
         <Form.Item>
           <label htmlFor={this.props.propertyName}>
-            Column Same As F K Table
+            Column Same As F K Table{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
           </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
@@ -127,5 +128,5 @@ export class ColumnSameAsFKTableSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>407a267ff7bcc14d57e83246d805133d</Hash>
+    <Hash>665a124efe4d97a9633f516cbb559ab8</Hash>
 </Codenesium>*/

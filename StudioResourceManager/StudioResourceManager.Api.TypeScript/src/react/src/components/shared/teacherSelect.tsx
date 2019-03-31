@@ -94,7 +94,9 @@ export class TeacherSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Teachers</label>
+          <label htmlFor={this.props.propertyName}>
+            Teachers {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class TeacherSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2ba82cdcb669e39d43ac71a3c08af1f1</Hash>
+    <Hash>8dc8f7b3701991abf01a622fc6efb9d8</Hash>
 </Codenesium>*/

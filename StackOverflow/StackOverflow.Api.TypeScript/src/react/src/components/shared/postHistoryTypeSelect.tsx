@@ -94,7 +94,10 @@ export class PostHistoryTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Post History Types</label>
+          <label htmlFor={this.props.propertyName}>
+            Post History Types{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class PostHistoryTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>75b67549385ba87f3a33bd0ee934bbe0</Hash>
+    <Hash>1f55a9c7b291901aa9cff685ceca5868</Hash>
 </Codenesium>*/

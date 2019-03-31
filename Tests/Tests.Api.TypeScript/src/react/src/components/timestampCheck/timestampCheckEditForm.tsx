@@ -195,7 +195,7 @@ class TimestampCheckEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name (optional)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [{ max: 50, message: 'Exceeds max length of 50' }],
@@ -203,7 +203,7 @@ class TimestampCheckEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="timestamp">Timestamp</label>
+            <label htmlFor="timestamp">Timestamp (required)</label>
             <br />
             {getFieldDecorator('timestamp', {
               rules: [{ required: true, message: 'Required' }],
@@ -234,5 +234,5 @@ export const WrappedTimestampCheckEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>b18268dd0c650287b067d5f20eb339dd</Hash>
+    <Hash>08beb581818bef5f729efc9afcc6a0c8</Hash>
 </Codenesium>*/

@@ -94,7 +94,9 @@ export class FileTypeSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>File Types</label>
+          <label htmlFor={this.props.propertyName}>
+            File Types {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class FileTypeSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>823202323a812c098032f9a493fc63ce</Hash>
+    <Hash>3879acd6ec45e2d1f4a78ce70ff2ebd1</Hash>
 </Codenesium>*/

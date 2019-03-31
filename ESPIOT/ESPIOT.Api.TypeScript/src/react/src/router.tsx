@@ -8,10 +8,11 @@ import { WrappedLoginComponent } from './components/auth/loginForm';
 import { WrappedLogoutComponent } from './components/auth/logoutForm';
 import { WrappedRegisterComponent } from './components/auth/registerForm';
 import { WrappedResetPasswordComponent } from './components/auth/resetPasswordForm';
-import { WrappedChangeEmailComponent } from './components/auth/changeEmailForm';
 import { WrappedConfirmPasswordResetComponent } from './components/auth/confirmPasswordResetForm';
 import { WrappedConfirmRegistrationComponent } from './components/auth/confirmRegistrationForm';
 import { WrappedChangePasswordComponent } from './components/auth/changePasswordForm';
+import { WrappedChangeEmailComponent } from './components/auth/changeEmailForm';
+import { WrappedConfirmChangeEmailComponent } from './components/auth/confirmChangeEmailForm';
 import { WrappedDeviceCreateComponent } from './components/device/deviceCreateForm';
 import { WrappedDeviceDetailComponent } from './components/device/deviceDetailForm';
 import { WrappedDeviceEditComponent } from './components/device/deviceEditForm';
@@ -72,13 +73,10 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'Change Password'
           )}
         />
-         <Route
+        <Route
           exact
           path={AuthClientRoutes.ChangeEmail}
-          component={wrapperHeader(
-            WrappedChangeEmailComponent,
-            'Change Email'
-          )}
+          component={wrapperHeader(WrappedChangeEmailComponent, 'Change Email')}
         />
         <Route
           exact
@@ -153,5 +151,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>c726e06dd741dac9f63486613156ccb4</Hash>
+    <Hash>eadf684f1fdb5185cece3eb5b14a7f1b</Hash>
 </Codenesium>*/

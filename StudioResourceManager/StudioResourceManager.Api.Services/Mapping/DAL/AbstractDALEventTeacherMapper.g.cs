@@ -28,21 +28,21 @@ namespace StudioResourceManagerNS.Api.Services
 			model.SetProperties(item.Id,
 			                    item.EventId,
 			                    item.TeacherId);
-			if (item.IdNavigation != null)
+			if (item.EventIdNavigation != null)
 			{
-				var idModel = new ApiEventServerResponseModel();
-				idModel.SetProperties(
-					item.IdNavigation.Id,
-					item.IdNavigation.ActualEndDate,
-					item.IdNavigation.ActualStartDate,
-					item.IdNavigation.BillAmount,
-					item.IdNavigation.EventStatusId,
-					item.IdNavigation.ScheduledEndDate,
-					item.IdNavigation.ScheduledStartDate,
-					item.IdNavigation.StudentNotes,
-					item.IdNavigation.TeacherNotes);
+				var eventIdModel = new ApiEventServerResponseModel();
+				eventIdModel.SetProperties(
+					item.EventIdNavigation.Id,
+					item.EventIdNavigation.ActualEndDate,
+					item.EventIdNavigation.ActualStartDate,
+					item.EventIdNavigation.BillAmount,
+					item.EventIdNavigation.EventStatusId,
+					item.EventIdNavigation.ScheduledEndDate,
+					item.EventIdNavigation.ScheduledStartDate,
+					item.EventIdNavigation.StudentNotes,
+					item.EventIdNavigation.TeacherNotes);
 
-				model.SetIdNavigation(idModel);
+				model.SetEventIdNavigation(eventIdModel);
 			}
 
 			if (item.TeacherIdNavigation != null)
@@ -79,5 +79,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e70b02137b55d395f582406ae91601e5</Hash>
+    <Hash>74e9f072b874f0177a544a98c9547067</Hash>
 </Codenesium>*/

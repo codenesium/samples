@@ -1,6 +1,7 @@
 import * as Api from '../../api/models';
 import SpaceSpaceFeatureViewModel from './spaceSpaceFeatureViewModel';
 import SpaceFeatureViewModel from '../spaceFeature/spaceFeatureViewModel';
+import SpaceViewModel from '../space/spaceViewModel';
 export default class SpaceSpaceFeatureMapper {
   mapApiResponseToViewModel(
     dto: Api.SpaceSpaceFeatureClientResponseModel
@@ -13,6 +14,14 @@ export default class SpaceSpaceFeatureMapper {
       response.spaceFeatureIdNavigation.setProperties(
         dto.spaceFeatureIdNavigation.id,
         dto.spaceFeatureIdNavigation.name
+      );
+    }
+    if (dto.spaceIdNavigation != null) {
+      response.spaceIdNavigation = new SpaceViewModel();
+      response.spaceIdNavigation.setProperties(
+        dto.spaceIdNavigation.description,
+        dto.spaceIdNavigation.id,
+        dto.spaceIdNavigation.name
       );
     }
 
@@ -30,5 +39,5 @@ export default class SpaceSpaceFeatureMapper {
 
 
 /*<Codenesium>
-    <Hash>cf83da43da8861db98784e23e8a0b20e</Hash>
+    <Hash>a29ea04403c4b05185e81fbc687df360</Hash>
 </Codenesium>*/

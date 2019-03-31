@@ -197,7 +197,7 @@ class TweetEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="content">content</label>
+            <label htmlFor="content">content (required)</label>
             <br />
             {getFieldDecorator('content', {
               rules: [
@@ -208,7 +208,7 @@ class TweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">date (required)</label>
             <br />
             {getFieldDecorator('date', {
               rules: [{ required: true, message: 'Required' }],
@@ -216,7 +216,7 @@ class TweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="locationId">location_id</label>
+            <label htmlFor="locationId">location_id (required)</label>
             <br />
             {getFieldDecorator('locationId', {
               rules: [{ required: true, message: 'Required' }],
@@ -224,7 +224,7 @@ class TweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="time">time</label>
+            <label htmlFor="time">time (required)</label>
             <br />
             {getFieldDecorator('time', {
               rules: [{ required: true, message: 'Required' }],
@@ -232,7 +232,7 @@ class TweetEditComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="userUserId">user_user_id</label>
+            <label htmlFor="userUserId">user_user_id (required)</label>
             <br />
             {getFieldDecorator('userUserId', {
               rules: [{ required: true, message: 'Required' }],
@@ -263,5 +263,5 @@ export const WrappedTweetEditComponent = Form.create({ name: 'Tweet Edit' })(
 
 
 /*<Codenesium>
-    <Hash>61c9c37bedcee52c9b53a6034cd9612e</Hash>
+    <Hash>0437094b740dd79eda0eb45fd65c94b9</Hash>
 </Codenesium>*/

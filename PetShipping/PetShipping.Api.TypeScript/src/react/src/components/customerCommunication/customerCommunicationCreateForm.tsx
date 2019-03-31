@@ -150,7 +150,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="dateCreated">Date Created</label>
+            <label htmlFor="dateCreated">Date Created (required)</label>
             <br />
             {getFieldDecorator('dateCreated', {
               rules: [{ required: true, message: 'Required' }],
@@ -168,7 +168,7 @@ class CustomerCommunicationCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="notes">Notes (required)</label>
             <br />
             {getFieldDecorator('notes', {
               rules: [{ required: true, message: 'Required' }],
@@ -199,5 +199,5 @@ export const WrappedCustomerCommunicationCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>6b1385c4e6290acca0b8295a2ce29c85</Hash>
+    <Hash>8169aabd8ac078f86d172e1b1a6ecd1e</Hash>
 </Codenesium>*/

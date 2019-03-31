@@ -140,7 +140,7 @@ class SubscriptionCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="name">name</label>
+            <label htmlFor="name">name (required)</label>
             <br />
             {getFieldDecorator('name', {
               rules: [
@@ -151,7 +151,7 @@ class SubscriptionCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="stripePlanName">stripePlanName</label>
+            <label htmlFor="stripePlanName">stripePlanName (required)</label>
             <br />
             {getFieldDecorator('stripePlanName', {
               rules: [
@@ -185,5 +185,5 @@ export const WrappedSubscriptionCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>dfc1ebd8d81a45d51887534694282dba</Hash>
+    <Hash>2ad022305e2a0f2ff1ebc18ee311dba7</Hash>
 </Codenesium>*/

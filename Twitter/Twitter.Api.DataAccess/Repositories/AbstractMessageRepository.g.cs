@@ -36,7 +36,6 @@ namespace TwitterNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Content.StartsWith(query) ||
-				                  x.MessageId == query.ToInt() ||
 				                  x.SenderUserId == query.ToNullableInt(),
 				                  limit,
 				                  offset);
@@ -139,5 +138,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c08f27a86c6a3687a6f16bb252c1b8d</Hash>
+    <Hash>cfad4354a20d6dd1224b9a59daa3e5ae</Hash>
 </Codenesium>*/

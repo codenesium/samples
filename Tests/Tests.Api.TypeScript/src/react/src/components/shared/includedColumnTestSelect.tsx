@@ -97,7 +97,10 @@ export class IncludedColumnTestSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Included Column Test</label>
+          <label htmlFor={this.props.propertyName}>
+            Included Column Test{' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -125,5 +128,5 @@ export class IncludedColumnTestSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>aead69b155355e235e61ccb54bd5dc39</Hash>
+    <Hash>5b5559b5a949a92178f31f444d43a2d2</Hash>
 </Codenesium>*/

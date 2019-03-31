@@ -94,7 +94,10 @@ export class FollowingSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName} />
+          <label htmlFor={this.props.propertyName}>
+            {' '}
+            {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +123,5 @@ export class FollowingSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>abbcc2c1785835e2099cfaf4318f8326</Hash>
+    <Hash>2b6bec3466298e5c86fd0431d50f199c</Hash>
 </Codenesium>*/

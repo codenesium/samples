@@ -141,7 +141,7 @@ class SaleCreateComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="amount">Amount</label>
+            <label htmlFor="amount">Amount (required)</label>
             <br />
             {getFieldDecorator('amount', {
               rules: [{ required: true, message: 'Required' }],
@@ -149,7 +149,7 @@ class SaleCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="cutomerId">Cutomer</label>
+            <label htmlFor="cutomerId">Cutomer (required)</label>
             <br />
             {getFieldDecorator('cutomerId', {
               rules: [{ required: true, message: 'Required' }],
@@ -157,7 +157,7 @@ class SaleCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="note">Note</label>
+            <label htmlFor="note">Note (required)</label>
             <br />
             {getFieldDecorator('note', {
               rules: [{ required: true, message: 'Required' }],
@@ -173,7 +173,7 @@ class SaleCreateComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="saleDate">Sale Date</label>
+            <label htmlFor="saleDate">Sale Date (required)</label>
             <br />
             {getFieldDecorator('saleDate', {
               rules: [{ required: true, message: 'Required' }],
@@ -181,7 +181,7 @@ class SaleCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="salesPersonId">Sales Person</label>
+            <label htmlFor="salesPersonId">Sales Person (required)</label>
             <br />
             {getFieldDecorator('salesPersonId', {
               rules: [{ required: true, message: 'Required' }],
@@ -212,5 +212,5 @@ export const WrappedSaleCreateComponent = Form.create({ name: 'Sale Create' })(
 
 
 /*<Codenesium>
-    <Hash>6ac5c886b77ee874bca0342e71eba17a</Hash>
+    <Hash>d3f911030254bfa85f27876e8a509357</Hash>
 </Codenesium>*/

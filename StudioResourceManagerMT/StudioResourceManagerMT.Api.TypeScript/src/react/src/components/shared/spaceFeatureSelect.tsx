@@ -94,7 +94,9 @@ export class SpaceFeatureSelectComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form.Item>
-          <label htmlFor={this.props.propertyName}>Space Feature</label>
+          <label htmlFor={this.props.propertyName}>
+            Space Feature {this.props.required ? ' (required)' : ' (optional)'}
+          </label>
           <br />
           {this.props.getFieldDecorator(this.props.propertyName, {
             initialValue: this.props.selectedValue || [],
@@ -120,5 +122,5 @@ export class SpaceFeatureSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>2e0df4b11eef7250bf50103cfa422ef6</Hash>
+    <Hash>5b40b5cee837667ca5ba2e8b51d8fe18</Hash>
 </Codenesium>*/

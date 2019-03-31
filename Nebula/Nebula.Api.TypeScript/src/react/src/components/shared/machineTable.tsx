@@ -157,7 +157,7 @@ export class MachineTableComponent extends React.Component<
                     Cell: row => (
                       <div>
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleDetailClick(
                               e,
@@ -169,7 +169,7 @@ export class MachineTableComponent extends React.Component<
                         </Button>
                         &nbsp;
                         <Button
-                          type="primary"
+                          htmlType="button"
                           onClick={(e: any) => {
                             this.handleEditClick(
                               e,
@@ -196,5 +196,5 @@ export class MachineTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>a3af1bfd98a6f1930e36fc7c79115225</Hash>
+    <Hash>21a262d707dfbb61ce9379a3977fb016</Hash>
 </Codenesium>*/

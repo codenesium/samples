@@ -204,7 +204,7 @@ class CountryRequirementEditComponent extends React.Component<
           />
 
           <Form.Item>
-            <label htmlFor="details">Details</label>
+            <label htmlFor="details">Details (required)</label>
             <br />
             {getFieldDecorator('details', {
               rules: [{ required: true, message: 'Required' }],
@@ -235,5 +235,5 @@ export const WrappedCountryRequirementEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7e0f82bee8f542338e9c44135673a4f2</Hash>
+    <Hash>bbb35f325d140b944e3855e3b950390d</Hash>
 </Codenesium>*/

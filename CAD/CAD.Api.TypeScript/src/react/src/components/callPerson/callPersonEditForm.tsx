@@ -197,7 +197,7 @@ class CallPersonEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="note">Note</label>
+            <label htmlFor="note">Note (optional)</label>
             <br />
             {getFieldDecorator('note', {
               rules: [{ max: 8000, message: 'Exceeds max length of 8000' }],
@@ -244,5 +244,5 @@ export const WrappedCallPersonEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3decbc92f222acf8bf27eb19cdf1dead</Hash>
+    <Hash>6459cf41665b6d30142d7fa554c866af</Hash>
 </Codenesium>*/
