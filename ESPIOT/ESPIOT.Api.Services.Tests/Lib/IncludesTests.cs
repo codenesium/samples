@@ -131,6 +131,79 @@ namespace ESPIOTNS.Api.Services.Tests
 	[Trait("Area", "Auth")]
 	public partial class ServiceIncludesAuthTests
 	{
+
+		Mock<UserManager<AuthUser>> GetDefaultUserManagerUserFound()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+
+			var jwtHelper = new Mock<IJWTHelper>();
+			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<IList<Claim>>())).Returns("token");
+
+			var emailSender = new Mock<IEmailSender>();
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
+			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
+
+			return userManager;
+		}
+
+		Mock<UserManager<AuthUser>> GetDefaultUserManagerUserNotFound()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+
+			var jwtHelper = new Mock<IJWTHelper>();
+			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<IList<Claim>>())).Returns("token");
+
+			var emailSender = new Mock<IEmailSender>();
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
+			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
+
+			return userManager;
+		}
+
 		[Fact]
 		public async void LoginSucceeded()
 		{
@@ -144,53 +217,210 @@ namespace ESPIOTNS.Api.Services.Tests
 				It.IsAny<string>(),
 				It.IsAny<IList<Claim>>())).Returns("token");
 
-
 			var emailSender = new Mock<IEmailSender>();
 			var apiSettings = new Mock<ApiSettings>();
 			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
-
 
 			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
 			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
 
 			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
 			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
-		
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
 			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>> () { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
 			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
-			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(new List<Claim>() as IList<Claim>));
-			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(new List<string>() as IList<string>));
+			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
+			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
 
 			var service = new AuthService(apiSettings.Object,
 				userManager.Object,
 				emailSender.Object,
-				jwtHelper.Object
-				);
+				jwtHelper.Object);
 
 			AuthResponse result = await service.Login(new LoginRequestModel()
 			{
-				Email = "test!test.com",
+				Email = "test@test.com",
 				Password = "1"
 			});
 
 			result.Success.Should().BeTrue();
 			result.Token.Should().Be("token");
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
-		public void LoginFaileUserNotFound()
+		public async void LoginFaileUserNotFound()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
 
+			var jwtHelper = new Mock<IJWTHelper>();
+			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<IList<Claim>>())).Returns("token");
+
+			var emailSender = new Mock<IEmailSender>();
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
+			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailSender.Object,
+				jwtHelper.Object);
+
+			AuthResponse result = await service.Login(new LoginRequestModel()
+			{
+				Email = "test@test.com",
+				Password = "1"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("Invalid email or password");
+			result.ErrorCode.Should().Be(AuthErrorCodes.InvalidUsernameOrPassword);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
-		public void LoginFailedInvalidPassword()
+		public async void LoginFailedInvalidPassword()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+
+			var jwtHelper = new Mock<IJWTHelper>();
+			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<IList<Claim>>())).Returns("token");
+
+			var emailSender = new Mock<IEmailSender>();
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Failed);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
+			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailSender.Object,
+				jwtHelper.Object);
+
+			AuthResponse result = await service.Login(new LoginRequestModel()
+			{
+				Email = "test@test.com",
+				Password = "1"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("Invalid email or password");
+			result.ErrorCode.Should().Be(AuthErrorCodes.InvalidUsernameOrPassword);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
-		public void RegisterSuceededWithDebugEmail()
+		public async void RegisterSuceededWithDebugEmail()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+
+			var jwtHelper = new Mock<IJWTHelper>();
+			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<IList<Claim>>())).Returns("token");
+
+			var emailSender = new Mock<IEmailSender>();
+			emailSender.Setup(x => x.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.DebugSendAuthEmailsToClient).Returns(true);
+			apiSettings.SetupGet(x => x.ExternalBaseUrl).Returns("http://localhost/");
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+
+			userManager.Setup(x => x.CreateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Success));
+			userManager.Setup(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult("token"));
+			userManager.Setup(x => x.AddPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailSender.Object,
+				jwtHelper.Object);
+
+			AuthResponse result = await service.Register(new RegisterRequestModel()
+			{
+				Email = "test@test.com",
+				Password = "Passw0rd$"
+			});
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
