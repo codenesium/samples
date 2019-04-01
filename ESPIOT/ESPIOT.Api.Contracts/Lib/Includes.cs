@@ -14,6 +14,8 @@ namespace ESPIOTNS.Api.Contracts
 		public const string UnableToConfirmRegistration = "UnableToConfirmRegistration";
 		public const string UnableToConfirmPasssordReset = "UnableToConfirmPasssordReset";
 		public const string UnableToChangePassword = "UnableToChangePassword";
+		public const string UnableToUpdateUser = "UnableToUpdateUser";
+		public const string UnableToChangeEmail = "UnableToChangeEmail";
 	}
 
 	public class ValidationErrorCodes
@@ -134,7 +136,6 @@ namespace ESPIOTNS.Api.Contracts
 			this.LinkText = linkText;
 			this.LinkValue = linkValue;
 		}
-
 
 		public virtual void SetToken(string token)
 		{

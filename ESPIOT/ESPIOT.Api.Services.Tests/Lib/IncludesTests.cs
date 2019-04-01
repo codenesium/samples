@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -131,93 +133,21 @@ namespace ESPIOTNS.Api.Services.Tests
 	[Trait("Area", "Auth")]
 	public partial class ServiceIncludesAuthTests
 	{
-
-		Mock<UserManager<AuthUser>> GetDefaultUserManagerUserFound()
-		{
-			var store = new Mock<IUserStore<AuthUser>>();
-
-			var jwtHelper = new Mock<IJWTHelper>();
-			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<IList<Claim>>())).Returns("token");
-
-			var emailSender = new Mock<IEmailSender>();
-			var apiSettings = new Mock<ApiSettings>();
-			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
-
-			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
-			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
-
-			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
-			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
-
-			IList<Claim> claims = new List<Claim>();
-			claims.Add(new Claim("testClaim", "testValue"));
-
-			IList<string> roles = new List<string>();
-			roles.Add("testRole");
-
-			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
-			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
-			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
-			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
-
-			return userManager;
-		}
-
-		Mock<UserManager<AuthUser>> GetDefaultUserManagerUserNotFound()
-		{
-			var store = new Mock<IUserStore<AuthUser>>();
-
-			var jwtHelper = new Mock<IJWTHelper>();
-			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<IList<Claim>>())).Returns("token");
-
-			var emailSender = new Mock<IEmailSender>();
-			var apiSettings = new Mock<ApiSettings>();
-			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
-
-			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
-			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
-
-			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
-			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
-
-			IList<Claim> claims = new List<Claim>();
-			claims.Add(new Claim("testClaim", "testValue"));
-
-			IList<string> roles = new List<string>();
-			roles.Add("testRole");
-
-			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
-			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
-			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
-			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
-
-			return userManager;
-		}
-
 		[Fact]
 		public async void LoginSucceeded()
 		{
 			var store = new Mock<IUserStore<AuthUser>>();
 
-			var jwtHelper = new Mock<IJWTHelper>();
-			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
+			var jwtService = new Mock<IJwtService>();
+			jwtService.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
 				It.IsAny<string>(),
 				It.IsAny<string>(),
 				It.IsAny<string>(),
 				It.IsAny<string>(),
 				It.IsAny<IList<Claim>>())).Returns("token");
 
-			var emailSender = new Mock<IEmailSender>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
 			var apiSettings = new Mock<ApiSettings>();
 			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
 
@@ -225,7 +155,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
 
 			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
-			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
 
 			IList<Claim> claims = new List<Claim>();
 			claims.Add(new Claim("testClaim", "testValue"));
@@ -233,15 +162,16 @@ namespace ESPIOTNS.Api.Services.Tests
 			IList<string> roles = new List<string>();
 			roles.Add("testRole");
 
-			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>> () { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
 			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
 			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
 			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
 
 			var service = new AuthService(apiSettings.Object,
 				userManager.Object,
-				emailSender.Object,
-				jwtHelper.Object);
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
 
 			AuthResponse result = await service.Login(new LoginRequestModel()
 			{
@@ -256,30 +186,21 @@ namespace ESPIOTNS.Api.Services.Tests
 			result.ValidationErrors.Should().BeEmpty();
 			result.LinkText.Should().BeNull();
 			result.LinkValue.Should().BeNull();
+			passwordHasher.Verify(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>()));
+			userManager.Verify(x => x.GetClaimsAsync(It.IsAny<AuthUser>()));
+			userManager.Verify(x => x.GetRolesAsync(It.IsAny<AuthUser>()));
 		}
 
 		[Fact]
 		public async void LoginFaileUserNotFound()
 		{
 			var store = new Mock<IUserStore<AuthUser>>();
-
-			var jwtHelper = new Mock<IJWTHelper>();
-			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<IList<Claim>>())).Returns("token");
-
-			var emailSender = new Mock<IEmailSender>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
 			var apiSettings = new Mock<ApiSettings>();
-			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
-
 			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
-			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
-
 			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
-			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
 
 			IList<Claim> claims = new List<Claim>();
 			claims.Add(new Claim("testClaim", "testValue"));
@@ -289,13 +210,11 @@ namespace ESPIOTNS.Api.Services.Tests
 
 			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
 			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
-			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
-			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
-
 			var service = new AuthService(apiSettings.Object,
 				userManager.Object,
-				emailSender.Object,
-				jwtHelper.Object);
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
 
 			AuthResponse result = await service.Login(new LoginRequestModel()
 			{
@@ -316,24 +235,15 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void LoginFailedInvalidPassword()
 		{
 			var store = new Mock<IUserStore<AuthUser>>();
-
-			var jwtHelper = new Mock<IJWTHelper>();
-			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<IList<Claim>>())).Returns("token");
-
-			var emailSender = new Mock<IEmailSender>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
 			var apiSettings = new Mock<ApiSettings>();
-			apiSettings.SetupGet(x => x.JwtSettings).Returns(new JwtSettings());
 
 			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
 			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Failed);
 
 			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
-			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
 
 			IList<Claim> claims = new List<Claim>();
 			claims.Add(new Claim("testClaim", "testValue"));
@@ -343,13 +253,12 @@ namespace ESPIOTNS.Api.Services.Tests
 
 			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
 			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
-			userManager.Setup(x => x.GetClaimsAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(claims));
-			userManager.Setup(x => x.GetRolesAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(roles));
 
 			var service = new AuthService(apiSettings.Object,
 				userManager.Object,
-				emailSender.Object,
-				jwtHelper.Object);
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
 
 			AuthResponse result = await service.Login(new LoginRequestModel()
 			{
@@ -364,32 +273,23 @@ namespace ESPIOTNS.Api.Services.Tests
 			result.ValidationErrors.Should().BeEmpty();
 			result.LinkText.Should().BeNull();
 			result.LinkValue.Should().BeNull();
+			passwordHasher.Verify(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>()));
 		}
 
 		[Fact]
 		public async void RegisterSuceededWithDebugEmail()
 		{
 			var store = new Mock<IUserStore<AuthUser>>();
-
-			var jwtHelper = new Mock<IJWTHelper>();
-			jwtHelper.Setup(x => x.GenerateBearerToken(It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<IList<Claim>>())).Returns("token");
-
-			var emailSender = new Mock<IEmailSender>();
-			emailSender.Setup(x => x.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			guidService.Setup(x => x.NewGuid()).Returns(Guid.Parse("ffa474d6-1b19-4e98-803a-c9f5e064c975"));
+			var emailService = new Mock<IEmailService>();
 			var apiSettings = new Mock<ApiSettings>();
 			apiSettings.SetupGet(x => x.DebugSendAuthEmailsToClient).Returns(true);
-			apiSettings.SetupGet(x => x.ExternalBaseUrl).Returns("http://localhost/");
+			apiSettings.SetupGet(x => x.ExternalBaseUrl).Returns("http://localhost");
 
 			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
-			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
-
 			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
-			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
 
 			IList<Claim> claims = new List<Claim>();
 			claims.Add(new Claim("testClaim", "testValue"));
@@ -399,14 +299,66 @@ namespace ESPIOTNS.Api.Services.Tests
 
 			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
 			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
-
 			userManager.Setup(x => x.CreateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Success));
 			userManager.Setup(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult("token"));
 			userManager.Setup(x => x.AddPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+
 			var service = new AuthService(apiSettings.Object,
 				userManager.Object,
-				emailSender.Object,
-				jwtHelper.Object);
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.Register(new RegisterRequestModel()
+			{
+				Email = "test@test.com",
+				Password = "Passw0rd$"
+			});
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().Be("Click this link to complete registration");
+			result.LinkValue.Should().Be($"http://localhost/confirmregistration/{Guid.Parse("ffa474d6-1b19-4e98-803a-c9f5e064c975")}/token");
+			emailService.Verify(x => x.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			userManager.Verify(x => x.CreateAsync(It.IsAny<AuthUser>()));
+			userManager.Verify(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<AuthUser>()));
+		}
+
+		[Fact]
+		public async void RegisterSuceededWithoutDebugEmail()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.DebugSendAuthEmailsToClient).Returns(false);
+			apiSettings.SetupGet(x => x.ExternalBaseUrl).Returns("http://localhost");
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+			userManager.Setup(x => x.CreateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Success));
+			userManager.Setup(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult("token"));
+			userManager.Setup(x => x.AddPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
 
 			AuthResponse result = await service.Register(new RegisterRequestModel()
 			{
@@ -421,126 +373,1085 @@ namespace ESPIOTNS.Api.Services.Tests
 			result.ValidationErrors.Should().BeEmpty();
 			result.LinkText.Should().BeNull();
 			result.LinkValue.Should().BeNull();
+			emailService.Verify(x => x.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			userManager.Verify(x => x.CreateAsync(It.IsAny<AuthUser>()));
+			userManager.Verify(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<AuthUser>()));
 		}
 
 		[Fact]
-		public void RegisterSuceededWithoutDebugEmail()
+		public async void RegisterFailedUserAlreadyExists()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.Register(new RegisterRequestModel()
+			{
+				Email = "test@test.com",
+				Password = "Passw0rd$"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("User already exists");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UserAlreadyExists);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
-		public void RegisterFailedUserAlreadyExists()
+		public async void RegisterFailedUnableToCreateUser()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+	
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+			userManager.Setup(x => x.CreateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error"} }.ToArray())));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.Register(new RegisterRequestModel()
+			{
+				Email = "test@test.com",
+				Password = "Passw0rd$"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().StartWith("error");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToRegister);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.CreateAsync(It.IsAny<AuthUser>()));
 		}
 
 		[Fact]
-		public void RegisterFailedUnableToCreateUser()
+		public async void RegisterFailedUnableToSetPassword()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.DebugSendAuthEmailsToClient).Returns(true);
+			apiSettings.SetupGet(x => x.ExternalBaseUrl).Returns("http://localhost");
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+	
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+			userManager.Setup(x => x.CreateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Success));
+			userManager.Setup(x => x.AddPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error" } }.ToArray())));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.Register(new RegisterRequestModel()
+			{
+				Email = "test@test.com",
+				Password = "Passw0rd$"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().StartWith("error");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToRegister);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.CreateAsync(It.IsAny<AuthUser>()));
+			userManager.Verify(x => x.AddPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>()));
 		}
 
 		[Fact]
-		public void RegisterFailedUnableToSetPassword()
+		public async void ResetPasswordSuceededWithDebugEmail()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.DebugSendAuthEmailsToClient).Returns(true);
+			apiSettings.SetupGet(x => x.ExternalBaseUrl).Returns("http://localhost");
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser() { Id = "ffa474d6-1b19-4e98-803a-c9f5e064c975" }));
+			userManager.Setup(x => x.GeneratePasswordResetTokenAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult("token"));
+
+			var service = new AuthService(apiSettings.Object,
+			userManager.Object,
+			emailService.Object,
+			jwtService.Object,
+			guidService.Object);
+
+			AuthResponse result = await service.ResetPassword(new ResetPasswordRequestModel()
+			{ 
+				Email = "test@test.com",
+			});
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().Be("Click this link to reset your password");
+			result.LinkValue.Should().Be($"http://localhost/confirmpasswordreset/{Guid.Parse("ffa474d6-1b19-4e98-803a-c9f5e064c975")}/token");
+			userManager.Verify(x => x.GeneratePasswordResetTokenAsync(It.IsAny<AuthUser>()));
 		}
 
 		[Fact]
-		public void ResetPasswordSuceededWithDebugEmail()
+		public async void ResetPasswordSuceededWithoutDebugEmail()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser() { Id = "ffa474d6-1b19-4e98-803a-c9f5e064c975" }));
+			userManager.Setup(x => x.GeneratePasswordResetTokenAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult("token"));
+
+			var service = new AuthService(apiSettings.Object,
+			userManager.Object,
+			emailService.Object,
+			jwtService.Object,
+			guidService.Object);
+
+			AuthResponse result = await service.ResetPassword(new ResetPasswordRequestModel()
+			{
+				Email = "test@test.com",
+			});
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			emailService.Verify(x => x.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			userManager.Verify(x => x.GeneratePasswordResetTokenAsync(It.IsAny<AuthUser>()));
 		}
 
 		[Fact]
-		public void ResetPasswordSuceededWithoutDebugEmail()
+		public async void ResetPasswordFailedUserNotFound()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+
+			var service = new AuthService(apiSettings.Object,
+			userManager.Object,
+			emailService.Object,
+			jwtService.Object,
+			guidService.Object);
+
+			AuthResponse result = await service.ResetPassword(new ResetPasswordRequestModel()
+			{
+				Email = "test@test.com",
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("User not found");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UserDoesNotExist);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
-		public void ResetPasswordFailedUserNotFound()
+		public async void ChangeEmailSuceededWithDebugEmail()
 		{
-		}
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			apiSettings.SetupGet(x => x.DebugSendAuthEmailsToClient).Returns(true);
+			apiSettings.SetupGet(x => x.ExternalBaseUrl).Returns("http://localhost");
 
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
 
-		[Fact]
-		public void ChangeEmailSuceededWithDebugEmail()
-		{
-		}
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
 
-		[Fact]
-		public void ChangeEmailSuceededWithoutDebugEmail()
-		{
-		}
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
 
-		[Fact]
-		public void ChangeEmailFailedUserNotFound()
-		{
-		}
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
 
-		[Fact]
-		public void ChangeEmailFailedInvalidPassword()
-		{
-		}
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser() {Id = "ffa474d6-1b19-4e98-803a-c9f5e064c975", Email = "current@test.com" }));
+			userManager.Setup(x => x.UpdateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Success));
+			userManager.Setup(x => x.GenerateChangeEmailTokenAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult("token"));
 
-		[Fact]
-		public void ConfirmChangeEmailSuceeded()
-		{
-		}
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
 
-		[Fact]
-		public void ConfirmChangeEmailFailedUserNotFound()
-		{
-		}
+			AuthResponse result = await service.ChangeEmail(new ChangeEmailRequestModel()
+			{
+				 NewEmail = "test@test.com",
+				 Password = "Passw0rd$"
+			}, "existingemail@test.com");
 
-		[Fact]
-		public void ConfirmChangeEmailFailedUnableToConfirmToken()
-		{
-		}
-
-		[Fact]
-		public void ChangePasswordSuceeded()
-		{
-		}
-
-		[Fact]
-		public void ChangePasswordFailedUserNotFound()
-		{
-		}
-
-		[Fact]
-		public void ChangePasswordFailedUnableToChangePassword()
-		{
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().Be("Click the link to change your email");
+			result.LinkValue.Should().Be($"http://localhost/confirmchangeemail/{Guid.Parse("ffa474d6-1b19-4e98-803a-c9f5e064c975")}/token");
+			userManager.Verify(x => x.UpdateAsync(It.IsAny<AuthUser>()));
+			userManager.Verify(x => x.GenerateChangeEmailTokenAsync(It.IsAny<AuthUser>(), It.IsAny<string>()));
 		}
 
 		[Fact]
-		public void ConfirmRegistrationSuceeded()
+		public async void ChangeEmailSucceededWithoutDebugEmail()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser() { Id = "ffa474d6-1b19-4e98-803a-c9f5e064c975", Email = "current@test.com" }));
+			userManager.Setup(x => x.UpdateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Success));
+			userManager.Setup(x => x.GenerateChangeEmailTokenAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult("token"));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ChangeEmail(new ChangeEmailRequestModel()
+			{
+				NewEmail = "test@test.com",
+				Password = "Passw0rd$"
+			}, "existingemail@test.com");
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.UpdateAsync(It.IsAny<AuthUser>()));
+			userManager.Verify(x => x.GenerateChangeEmailTokenAsync(It.IsAny<AuthUser>(), It.IsAny<string>()));
 		}
 
 		[Fact]
-		public void ConfirmRegistrationFailedUserNotFound()
+		public async void ChangeEmailFailedUserNotFound()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ChangeEmail(new ChangeEmailRequestModel()
+			{
+				NewEmail = "test@test.com",
+				Password = "Passw0rd$"
+			}, "existingemail@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("User not found");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UserDoesNotExist);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
-		public void ConfirmRegistrationFailedUnableToConfirmRegistration()
+		public async void ChangeEmailFailedInvalidPassword()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Failed);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ChangeEmail(new ChangeEmailRequestModel()
+			{
+				NewEmail = "test@test.com",
+				Password = "Passw0rd$"
+			}, "existingemail@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("Invalid email or password");
+			result.ErrorCode.Should().Be(AuthErrorCodes.InvalidUsernameOrPassword);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
 		[Fact]
-		public void ConfirmPasswordResetSuceeded()
+		public async void ChangeEmailUpdatedFailed()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.UpdateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error" } }.ToArray())));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ChangeEmail(new ChangeEmailRequestModel()
+			{
+				NewEmail = "test@test.com",
+				Password = "Passw0rd$"
+			}, "existingemail@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("Unable to update user");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToUpdateUser);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.UpdateAsync(It.IsAny<AuthUser>()));
 		}
 
 		[Fact]
-		public void ConfirmPasswordResetFailedUserNotFound()
+		public async void ConfirmChangeEmailSucceeded()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ChangeEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+			userManager.Setup(x => x.UpdateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Success));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmChangeEmail(new ConfirmChangeEmailRequestModel()
+			{
+				Token = "test"
+			}, "newemail@test.com");
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.ChangeEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>()));
 		}
 
 		[Fact]
-		public void ConfirmPasswordResetFailedUnableToConfirmPasswordReset()
+		public async void ConfirmChangeEmailFailedUserNotFound()
 		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmChangeEmail(new ConfirmChangeEmailRequestModel()
+			{
+				Token = "test"
+			}, "newemail@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("User not found");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UserDoesNotExist);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
 		}
 
+		[Fact]
+		public async void ConfirmChangeEmailFailedUnableToConfirmToken()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ChangeEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error" } }.ToArray())));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmChangeEmail(new ConfirmChangeEmailRequestModel()
+			{
+				Token = "test"
+			}, "newemail@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().NotBeNullOrWhiteSpace();
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToChangeEmail);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+		}
+
+		[Fact]
+		public async void ConfirmChangeEmailUpdateFailed()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+
+			passwordHasher.Setup(x => x.VerifyHashedPassword(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(PasswordVerificationResult.Success);
+
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+			passwordValidator.Setup(x => x.ValidateAsync(It.IsAny<UserManager<AuthUser>>(), It.IsAny<AuthUser>(), It.IsAny<string>()));
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ChangeEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+
+			userManager.Setup(x => x.UpdateAsync(It.IsAny<AuthUser>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error" } }.ToArray())));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmChangeEmail(new ConfirmChangeEmailRequestModel()
+			{
+				Token = "test"
+			}, "newemail@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().NotBeNullOrWhiteSpace();
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToUpdateUser);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.UpdateAsync(It.IsAny<AuthUser>()));
+		}
+
+		[Fact]
+		public async void ChangePasswordSucceeded()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ChangePasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ChangePassword(new ChangePasswordRequestModel()
+			{
+				CurrentPassword = "Passw0rd$",
+				NewPassword = "NewPassw0rd0$"
+			}, "test@test.com");
+			
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.ChangePasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>()));
+		}
+
+		[Fact]
+		public async void ChangePasswordFailedUserNotFound()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ChangePassword(new ChangePasswordRequestModel()
+			{
+				CurrentPassword = "Passw0rd$",
+				NewPassword = "NewPassw0rd0$"
+			}, "test@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("User not found");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UserDoesNotExist);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+		}
+
+		[Fact]
+		public async void ChangePasswordFailedUnableToChangePassword()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ChangePasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error" } }.ToArray())));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ChangePassword(new ChangePasswordRequestModel()
+			{
+				CurrentPassword = "Passw0rd$",
+				NewPassword = "NewPassw0rd0$"
+			}, "test@test.com");
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().NotBeNullOrWhiteSpace();
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToChangePassword);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+		}
+
+		[Fact]
+		public async void ConfirmRegistrationSuceeded()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ConfirmEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmRegistration(new ConfirmRegistrationRequestModel()
+			{
+				Token = "token",
+				Id = "test"
+			});
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.ConfirmEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>()));
+		}
+
+		[Fact]
+		public async void ConfirmRegistrationFailedUserNotFound()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmRegistration(new ConfirmRegistrationRequestModel()
+			{
+				Token = "token",
+				Id = "test"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().NotBeNullOrWhiteSpace();
+			result.ErrorCode.Should().Be(AuthErrorCodes.UserDoesNotExist);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+		}
+
+		[Fact]
+		public async void ConfirmRegistrationFailedUnableToConfirmRegistration()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ConfirmEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error" } }.ToArray())));
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmRegistration(new ConfirmRegistrationRequestModel()
+			{
+				Token = "token",
+				Id = "test"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().NotBeNullOrWhiteSpace();
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToConfirmRegistration);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.ConfirmEmailAsync(It.IsAny<AuthUser>(), It.IsAny<string>()));
+		}
+
+		[Fact]
+		public async void ConfirmPasswordResetSucceeded()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ResetPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmPasswordReset(new ConfirmPasswordResetRequestModel()
+			{
+				Token = "token",
+				Id = "test",
+				NewPassword = "Passw0rd$"
+			});
+
+			result.Success.Should().BeTrue();
+			result.Token.Should().BeNull();
+			result.Message.Should().BeNull();
+			result.ErrorCode.Should().BeNull();
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+			userManager.Verify(x => x.ResetPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>()));
+		}
+
+		[Fact]
+		public async void ConfirmPasswordResetFailedUserNotFound()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(null as AuthUser));
+			userManager.Setup(x => x.ResetPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmPasswordReset(new ConfirmPasswordResetRequestModel()
+			{
+				Token = "token",
+				Id = "test",
+				NewPassword = "Passw0rd$"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().Be("User not found");
+			result.ErrorCode.Should().Be(AuthErrorCodes.UserDoesNotExist);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+		}
+
+		[Fact]
+		public async void ConfirmPasswordResetFailedUnableToConfirmPasswordReset()
+		{
+			var store = new Mock<IUserStore<AuthUser>>();
+			var jwtService = new Mock<IJwtService>();
+			var guidService = new Mock<IGuidService>();
+			var emailService = new Mock<IEmailService>();
+			var apiSettings = new Mock<ApiSettings>();
+			var passwordHasher = new Mock<IPasswordHasher<AuthUser>>();
+			var passwordValidator = new Mock<IPasswordValidator<AuthUser>>();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("testClaim", "testValue"));
+
+			IList<string> roles = new List<string>();
+			roles.Add("testRole");
+
+			var userManager = new Mock<UserManager<AuthUser>>(store.Object, null, passwordHasher.Object, new List<IUserValidator<AuthUser>>() { }, new List<IPasswordValidator<AuthUser>>() { passwordValidator.Object }, null, null, null, null);
+			userManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).Returns(Task.FromResult(new AuthUser()));
+			userManager.Setup(x => x.ResetPasswordAsync(It.IsAny<AuthUser>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Failed(new List<IdentityError>() { new IdentityError() { Code = "error", Description = "error" } }.ToArray())));
+
+			var service = new AuthService(apiSettings.Object,
+				userManager.Object,
+				emailService.Object,
+				jwtService.Object,
+				guidService.Object);
+
+			AuthResponse result = await service.ConfirmPasswordReset(new ConfirmPasswordResetRequestModel()
+			{
+				Token = "token",
+				Id = "test",
+				NewPassword = "Passw0rd$"
+			});
+
+			result.Success.Should().BeFalse();
+			result.Token.Should().BeNull();
+			result.Message.Should().NotBeNullOrWhiteSpace();
+			result.ErrorCode.Should().Be(AuthErrorCodes.UnableToConfirmPasssordReset);
+			result.ValidationErrors.Should().BeEmpty();
+			result.LinkText.Should().BeNull();
+			result.LinkValue.Should().BeNull();
+		}
+
+		[Fact]
+		public void JwtServiceGeneratedToken()
+		{
+			IJwtService service = new JwtService();
+
+			IList<Claim> claims = new List<Claim>();
+			claims.Add(new Claim("test_claim", "value"));
+
+			string token = service.GenerateBearerToken("Passw0rdPassw0rd", "audience", "issuer", "userId", "test@test.com", claims);
+
+			JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+			var result = tokenHandler.ReadJwtToken(token);
+			result.Audiences.First().Should().Be("audience");
+			result.Issuer.Should().Be("issuer");
+			result.Claims.First(x => x.Type == "unique_name").Value.Should().Be("userId");
+			result.Claims.First(x => x.Type == "email").Value.Should().Be("test@test.com");
+			result.Claims.First(x => x.Type == "test_claim").Value.Should().Be("value");
+		}
 	}
-
 }
 
 

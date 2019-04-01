@@ -21,12 +21,12 @@ namespace ESPIOTNS.Api.Services
 	{
 	}
 
-	public interface IEmailSender
+	public interface IEmailService
 	{
 		Task SendEmailAsync(string email, string subject, string message);
 	}
 
-	public class EmailSender : IEmailSender
+	public class EmailService : IEmailService
 	{
 		public Task SendEmailAsync(string email, string subject, string message)
 		{
@@ -113,7 +113,7 @@ namespace ESPIOTNS.Api.Services
 			return response;
 		}
 
-		public static AuthResponse SuccessAuthResponse(string message = "")
+		public static AuthResponse SuccessAuthResponse(string message = null)
 		{
 			var response = new AuthResponse();
 			response.SetMessage(message);
@@ -183,22 +183,30 @@ namespace ESPIOTNS.Api.Services
 		Task<AuthResponse> ConfirmPasswordReset(ConfirmPasswordResetRequestModel model);
 	}
 
+	public interface IGuidService
+	{
+		Guid NewGuid();
+	}
+
 	public partial class AuthService : IAuthService
 	{
 		private readonly ApiSettings apiSettings;
 
 		private readonly UserManager<AuthUser> userManager;
 
-		private readonly IEmailSender emailSender;
+		private readonly IEmailService emailService;
 
-		private readonly IJWTHelper jwtHelper;
+		private readonly IJwtService jwtService;
 
-		public AuthService(ApiSettings apiSettings, UserManager<AuthUser> userManager, IEmailSender emailSender, IJWTHelper jwtHelper)
+		private readonly IGuidService guidService;
+
+		public AuthService(ApiSettings apiSettings, UserManager<AuthUser> userManager, IEmailService emailSService, IJwtService jwtService, IGuidService guidService)
 		{
 			this.apiSettings = apiSettings;
 			this.userManager = userManager;
-			this.emailSender = emailSender;
-			this.jwtHelper = jwtHelper;
+			this.emailService = emailSService;
+			this.jwtService = jwtService;
+			this.guidService = guidService;
 		}
 
 		public async Task<AuthResponse> Login(LoginRequestModel model)
@@ -222,7 +230,7 @@ namespace ESPIOTNS.Api.Services
 						claims.Add(new Claim(ClaimTypes.Role, role));
 					}
 
-					string token = this.jwtHelper.GenerateBearerToken(
+					string token = this.jwtService.GenerateBearerToken(
 						this.apiSettings.JwtSettings.SigningKey,
 						this.apiSettings.JwtSettings.Audience,
 						this.apiSettings.JwtSettings.Issuer,
@@ -248,7 +256,8 @@ namespace ESPIOTNS.Api.Services
 				AuthUser user = new AuthUser
 				{
 					Email = model.Email,
-					UserName = model.Email
+					UserName = model.Email,
+					Id = this.guidService.NewGuid().ToString()
 				};
 
 				IdentityResult result = await this.userManager.CreateAsync(user);
@@ -267,7 +276,7 @@ namespace ESPIOTNS.Api.Services
 
 						string email = this.FormatLink(command, confirmationLink);
 
-						await this.emailSender.SendEmailAsync(model.Email, "Registration", email);
+						await this.emailService.SendEmailAsync(model.Email, "Registration", email);
 
 						if (this.apiSettings.DebugSendAuthEmailsToClient)
 						{
@@ -290,7 +299,7 @@ namespace ESPIOTNS.Api.Services
 			}
 			else
 			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Already Exists", AuthErrorCodes.UserAlreadyExists);
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User already exists", AuthErrorCodes.UserAlreadyExists);
 			}
 		}
 
@@ -300,7 +309,7 @@ namespace ESPIOTNS.Api.Services
 
 			if (user == null)
 			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User not found", AuthErrorCodes.UserDoesNotExist);
 			}
 			else
 			{
@@ -310,16 +319,16 @@ namespace ESPIOTNS.Api.Services
 
 				string command = "Click this link to reset your password";
 
-				string email = this.FormatLink(command, confirmationLink);
-
-				await this.emailSender.SendEmailAsync(model.Email, "Password Reset", email);
-
 				if (this.apiSettings.DebugSendAuthEmailsToClient)
 				{
 					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponseWithLink(command, confirmationLink);
 				}
 				else
 				{
+					string email = this.FormatLink(command, confirmationLink);
+
+					await this.emailService.SendEmailAsync(model.Email, "Password Reset", email);
+
 					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
 				}
 			}
@@ -331,7 +340,7 @@ namespace ESPIOTNS.Api.Services
 
 			if (user == null)
 			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User not found", AuthErrorCodes.UserDoesNotExist);
 			}
 			else
 			{
@@ -339,25 +348,32 @@ namespace ESPIOTNS.Api.Services
 				{
 					user.NewEmail = model.NewEmail;
 
-					await this.userManager.UpdateAsync(user);
+					IdentityResult updateResult = await this.userManager.UpdateAsync(user);
 
-					string confirmationToken = await this.userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
-
-					string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmchangeemail/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
-
-					string command = "Click the link to change your email";
-
-					string email = this.FormatLink(command, confirmationLink);
-
-					await this.emailSender.SendEmailAsync(model.NewEmail, "Change Email", email);
-
-					if (this.apiSettings.DebugSendAuthEmailsToClient)
+					if (updateResult.Succeeded)
 					{
-						return ValidationResponseFactory<AuthResponse>.SuccessAuthResponseWithLink(command, confirmationLink);
+						string confirmationToken = await this.userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
+
+						string confirmationLink = $"{this.apiSettings.ExternalBaseUrl}/confirmchangeemail/{user.Id}/{UrlEncoder.Default.Encode(confirmationToken)}";
+
+						string command = "Click the link to change your email";
+
+						string email = this.FormatLink(command, confirmationLink);
+
+						await this.emailService.SendEmailAsync(model.NewEmail, "Change Email", email);
+
+						if (this.apiSettings.DebugSendAuthEmailsToClient)
+						{
+							return ValidationResponseFactory<AuthResponse>.SuccessAuthResponseWithLink(command, confirmationLink);
+						}
+						else
+						{
+							return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+						}
 					}
 					else
 					{
-						return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+						return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("Unable to update user", AuthErrorCodes.UnableToUpdateUser);
 					}
 				}
 				else
@@ -373,23 +389,30 @@ namespace ESPIOTNS.Api.Services
 
 			if (user == null)
 			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User not found", AuthErrorCodes.UserDoesNotExist);
 			}
 			else
 			{
 				IdentityResult result = await this.userManager.ChangeEmailAsync(user, user.NewEmail, System.Net.WebUtility.UrlDecode(model.Token));
 
-				user.NewEmail = string.Empty;
-
-				await this.userManager.UpdateAsync(user);
-
 				if (result.Succeeded)
 				{
-					return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+					user.NewEmail = string.Empty;
+
+					var updateResult = await this.userManager.UpdateAsync(user);
+
+					if (updateResult.Succeeded)
+					{
+						return ValidationResponseFactory<AuthResponse>.SuccessAuthResponse();
+					}
+					else
+					{
+						return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(updateResult, AuthErrorCodes.UnableToUpdateUser);
+					}
 				}
 				else
 				{
-					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(result, AuthErrorCodes.UnableToConfirmRegistration);
+					return ValidationResponseFactory<AuthResponse>.FailureAuthResponse(result, AuthErrorCodes.UnableToChangeEmail);
 				}
 			}
 		}
@@ -400,7 +423,7 @@ namespace ESPIOTNS.Api.Services
 
 			if (user == null)
 			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User not found", AuthErrorCodes.UserDoesNotExist);
 			}
 			else
 			{
@@ -423,7 +446,7 @@ namespace ESPIOTNS.Api.Services
 
 			if (user == null)
 			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User not found", AuthErrorCodes.UserDoesNotExist);
 			}
 			else
 			{
@@ -446,7 +469,7 @@ namespace ESPIOTNS.Api.Services
 
 			if (user == null)
 			{
-				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User Not Found", AuthErrorCodes.UserDoesNotExist);
+				return ValidationResponseFactory<AuthResponse>.FailureAuthResponse("User not found", AuthErrorCodes.UserDoesNotExist);
 			}
 			else
 			{
@@ -469,12 +492,12 @@ namespace ESPIOTNS.Api.Services
 		}
 	}
 
-	public interface IJWTHelper
+	public interface IJwtService
 	{
 		string GenerateBearerToken(string signingKey, string audience, string issuer, string userId, string email, IList<Claim> claims);
 	}
 
-	public class JWTHelper : IJWTHelper
+	public class JwtService : IJwtService
 	{
 		public string GenerateBearerToken(string signingKey, string audience, string issuer, string userId, string email, IList<Claim> claims)
 		{

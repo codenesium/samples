@@ -77,7 +77,6 @@ namespace Codenesium.Foundation.CommonMVC
 			this.authService = authService;
 		}
 
-
 		[HttpPost]
 		[Route("login")]
 		[UnitOfWork]

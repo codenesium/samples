@@ -21,7 +21,7 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 	{
 		public static string GenerateBearerToken()
 		{
-			JWTHelper jwtHelper = new JWTHelper();
+			JwtService jwtHelper = new JwtService();
 			return jwtHelper.GenerateBearerToken(
 									  "defaultJWTPassword",
 									  "https://www.codenesium.com",
