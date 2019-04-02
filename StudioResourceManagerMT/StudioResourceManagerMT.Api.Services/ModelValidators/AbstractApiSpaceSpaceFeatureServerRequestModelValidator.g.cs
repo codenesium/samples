@@ -31,6 +31,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.RuleFor(x => x.SpaceFeatureId).MustAsync(this.BeValidSpaceFeatureBySpaceFeatureId).When(x => !x?.SpaceFeatureId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
+		public virtual void SpaceIdRules()
+		{
+			this.RuleFor(x => x.SpaceId).MustAsync(this.BeValidSpaceBySpaceId).When(x => !x?.SpaceId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
 		protected async Task<bool> BeValidSpaceFeatureBySpaceFeatureId(int id,  CancellationToken cancellationToken)
 		{
 			var record = await this.SpaceSpaceFeatureRepository.SpaceFeatureBySpaceFeatureId(id);
@@ -48,5 +53,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55f48dbf16446e9a56e59fbab577ccc5</Hash>
+    <Hash>05a7c50ace77e6ad6094d7dc6971f54a</Hash>
 </Codenesium>*/

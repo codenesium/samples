@@ -13,7 +13,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 
 		public Mock<IApiEventServerRequestModelValidator> EventModelValidatorMock { get; set; } = new Mock<IApiEventServerRequestModelValidator>();
 
-		public Mock<IApiEventStatuServerRequestModelValidator> EventStatuModelValidatorMock { get; set; } = new Mock<IApiEventStatuServerRequestModelValidator>();
+		public Mock<IApiEventStatusServerRequestModelValidator> EventStatusModelValidatorMock { get; set; } = new Mock<IApiEventStatusServerRequestModelValidator>();
 
 		public Mock<IApiEventStudentServerRequestModelValidator> EventStudentModelValidatorMock { get; set; } = new Mock<IApiEventStudentServerRequestModelValidator>();
 
@@ -51,9 +51,9 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			this.EventModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.EventModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.EventStatuModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.EventStatuModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.EventStatuModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.EventStatusModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.EventStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatusServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.EventStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.EventStudentModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventStudentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.EventStudentModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStudentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -111,5 +111,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8a92f2c1eb504ecad6a5f36594226038</Hash>
+    <Hash>b88e49db511815671b36e8004d7864ed</Hash>
 </Codenesium>*/

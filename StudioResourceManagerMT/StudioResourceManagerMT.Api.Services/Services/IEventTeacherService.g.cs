@@ -11,17 +11,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 		Task<CreateResponse<ApiEventTeacherServerResponseModel>> Create(
 			ApiEventTeacherServerRequestModel model);
 
-		Task<UpdateResponse<ApiEventTeacherServerResponseModel>> Update(int eventId,
+		Task<UpdateResponse<ApiEventTeacherServerResponseModel>> Update(int id,
 		                                                                 ApiEventTeacherServerRequestModel model);
 
-		Task<ActionResponse> Delete(int eventId);
+		Task<ActionResponse> Delete(int id);
 
-		Task<ApiEventTeacherServerResponseModel> Get(int eventId);
+		Task<ApiEventTeacherServerResponseModel> Get(int id);
 
 		Task<List<ApiEventTeacherServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ff916c300d2fa8d753603d8e427619e</Hash>
+    <Hash>13aff813007da571c2f59e0805125d64</Hash>
 </Codenesium>*/

@@ -52,13 +52,11 @@ export default class EventStudentSearchComponent extends React.Component<
   }
 
   handleEditClick(e: any, row: EventStudentViewModel) {
-    this.props.history.push(
-      ClientRoutes.EventStudents + '/edit/' + row.eventId
-    );
+    this.props.history.push(ClientRoutes.EventStudents + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: EventStudentViewModel) {
-    this.props.history.push(ClientRoutes.EventStudents + '/' + row.eventId);
+    this.props.history.push(ClientRoutes.EventStudents + '/' + row.id);
   }
 
   handleCreateClick(e: any) {
@@ -67,12 +65,9 @@ export default class EventStudentSearchComponent extends React.Component<
 
   handleDeleteClick(e: any, row: Api.EventStudentClientResponseModel) {
     axios
-      .delete(
-        Constants.ApiEndpoint + ApiRoutes.EventStudents + '/' + row.eventId,
-        {
-          headers: GlobalUtilities.defaultHeaders(),
-        }
-      )
+      .delete(Constants.ApiEndpoint + ApiRoutes.EventStudents + '/' + row.id, {
+        headers: GlobalUtilities.defaultHeaders(),
+      })
       .then(resp => {
         this.setState({
           ...this.state,
@@ -205,6 +200,28 @@ export default class EventStudentSearchComponent extends React.Component<
                 Header: 'EventStudents',
                 columns: [
                   {
+                    Header: 'Event',
+                    accessor: 'eventId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Events + '/' + props.original.eventId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.eventIdNavigation &&
+                              props.original.eventIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Student',
                     accessor: 'studentId',
                     Cell: props => {
@@ -289,5 +306,5 @@ export const WrappedEventStudentSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>68bd069c624cdac19adc96dba4a31aa6</Hash>
+    <Hash>ff134024c58984063cad7ec15a6c02b6</Hash>
 </Codenesium>*/

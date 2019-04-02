@@ -17,9 +17,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALEventStudentMapper();
 			ApiEventStudentServerRequestModel model = new ApiEventStudentServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			EventStudent response = mapper.MapModelToEntity(1, model);
 
+			response.EventId.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 
@@ -28,10 +29,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALEventStudentMapper();
 			EventStudent item = new EventStudent();
-			item.SetProperties(1, 1);
+			item.SetProperties(1, 1, 1);
 			ApiEventStudentServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.EventId.Should().Be(1);
+			response.Id.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 
@@ -40,7 +42,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALEventStudentMapper();
 			EventStudent item = new EventStudent();
-			item.SetProperties(1, 1);
+			item.SetProperties(1, 1, 1);
 			List<ApiEventStudentServerResponseModel> response = mapper.MapEntityToModel(new List<EventStudent>() { { item} });
 
 			response.Count.Should().Be(1);
@@ -49,5 +51,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>069aa948c2d13004ecbd4450ffd4561c</Hash>
+    <Hash>e2754ac85beba9d36094f85bc8fd4889</Hash>
 </Codenesium>*/

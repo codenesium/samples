@@ -15,12 +15,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiEventStudentServerRequestModel model)
 		{
+			this.EventIdRules();
 			this.StudentIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiEventStudentServerRequestModel model)
 		{
+			this.EventIdRules();
 			this.StudentIdRules();
 			return await this.ValidateAsync(model, id);
 		}
@@ -33,5 +35,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d2a607a4e0e099354341fc7d152a402e</Hash>
+    <Hash>65977dfda4921131aefcc134c1866c7c</Hash>
 </Codenesium>*/

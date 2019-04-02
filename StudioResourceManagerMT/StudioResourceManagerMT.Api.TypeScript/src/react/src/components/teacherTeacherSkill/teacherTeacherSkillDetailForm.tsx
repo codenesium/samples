@@ -36,7 +36,7 @@ class TeacherTeacherSkillDetailComponent extends React.Component<
 
   handleEditClick(e: any) {
     this.props.history.push(
-      ClientRoutes.TeacherTeacherSkills + '/edit/' + this.state.model!.teacherId
+      ClientRoutes.TeacherTeacherSkills + '/edit/' + this.state.model!.id
     );
   }
 
@@ -107,6 +107,15 @@ class TeacherTeacherSkillDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
+              <h3>Teacher</h3>
+              <p>
+                {String(
+                  this.state.model!.teacherIdNavigation &&
+                    this.state.model!.teacherIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>Teacher Skill</h3>
               <p>
                 {String(
@@ -131,5 +140,5 @@ export const WrappedTeacherTeacherSkillDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>83a47b7a27fef746e50894b2a407132b</Hash>
+    <Hash>b48381a629d1357a42f3ef390a6cb828</Hash>
 </Codenesium>*/

@@ -203,31 +203,31 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiEventTeacherClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiEventStatuClientResponseModel>>> EventStatuBulkInsertAsync(List<ApiEventStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiEventStatusClientResponseModel>>> EventStatusBulkInsertAsync(List<ApiEventStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/EventStatus/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEventStatuClientResponseModel>>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEventStatusClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiEventStatuClientResponseModel>> EventStatuCreateAsync(ApiEventStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<ApiEventStatusClientResponseModel>> EventStatusCreateAsync(ApiEventStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/EventStatus", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiEventStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiEventStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiEventStatuClientResponseModel>> EventStatuUpdateAsync(int id, ApiEventStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<UpdateResponse<ApiEventStatusClientResponseModel>> EventStatusUpdateAsync(int id, ApiEventStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/EventStatus/{id}", item, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiEventStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiEventStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> EventStatuDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ActionResponse> EventStatusDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/EventStatus/{id}", cancellationToken).ConfigureAwait(false);
 
@@ -235,25 +235,25 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiEventStatuClientResponseModel> EventStatuGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<ApiEventStatusClientResponseModel> EventStatusGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/EventStatus/{id}", cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiEventStatuClientResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiEventStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiEventStatuClientResponseModel>> EventStatuAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<List<ApiEventStatusClientResponseModel>> EventStatusAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			int offset = 0;
 			bool moreRecords = true;
-			List<ApiEventStatuClientResponseModel> response = new List<ApiEventStatuClientResponseModel>();
+			List<ApiEventStatusClientResponseModel> response = new List<ApiEventStatusClientResponseModel>();
 			while (moreRecords)
 			{
 				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/EventStatus?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
 				this.HandleResponseCode(httpResponse);
-				List<ApiEventStatuClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiEventStatuClientResponseModel>>(httpResponse.Content.ContentToString());
+				List<ApiEventStatusClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiEventStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 				response.AddRange(records);
 				if (records.Count < this.MaxLimit)
 				{
@@ -1309,5 +1309,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>54c863eac4d7bcfa2bc86aa77077ded6</Hash>
+    <Hash>25f5f16f709157be979235db11eae175</Hash>
 </Codenesium>*/

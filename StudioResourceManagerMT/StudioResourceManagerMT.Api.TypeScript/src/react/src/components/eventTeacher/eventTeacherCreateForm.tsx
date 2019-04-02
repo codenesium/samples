@@ -141,6 +141,14 @@ class EventTeacherCreateComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
+          <EventSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Events}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="eventId"
+            required={true}
+            selectedValue={this.state.model!.eventId}
+          />
+
           <TeacherSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.Teachers}
             getFieldDecorator={this.props.form.getFieldDecorator}
@@ -173,5 +181,5 @@ export const WrappedEventTeacherCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>88f36fc45b6897d7d3cab7681fd7ea9b</Hash>
+    <Hash>b7111c7d48ba9f53e38c533f143c26fb</Hash>
 </Codenesium>*/

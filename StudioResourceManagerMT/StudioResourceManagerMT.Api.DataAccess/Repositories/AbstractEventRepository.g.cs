@@ -41,8 +41,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				                  x.EventStatusId == query.ToInt() ||
 				                  x.ScheduledEndDate == query.ToNullableDateTime() ||
 				                  x.ScheduledStartDate == query.ToNullableDateTime() ||
-				                  x.StudentNote.StartsWith(query) ||
-				                  x.TeacherNote.StartsWith(query),
+				                  x.StudentNotes.StartsWith(query) ||
+				                  x.TeacherNotes.StartsWith(query),
 				                  limit,
 				                  offset);
 			}
@@ -113,10 +113,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			       .Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
 		}
 
-		// Foreign key reference to table EventStatu via eventStatusId.
-		public async virtual Task<EventStatu> EventStatuByEventStatusId(int eventStatusId)
+		// Foreign key reference to table EventStatus via eventStatusId.
+		public async virtual Task<EventStatus> EventStatusByEventStatusId(int eventStatusId)
 		{
-			return await this.Context.Set<EventStatu>()
+			return await this.Context.Set<EventStatus>()
 			       .SingleOrDefaultAsync(x => x.Id == eventStatusId);
 		}
 
@@ -147,5 +147,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fcd858cd92736df79b915cbcbe3adafd</Hash>
+    <Hash>1ca9692d032dbe03040109663eef4c67</Hash>
 </Codenesium>*/

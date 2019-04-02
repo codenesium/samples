@@ -14,7 +14,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var response = new ApiFamilyServerResponseModel();
 			response.SetProperties(id,
-			                       request.Note,
+			                       request.Notes,
 			                       request.PrimaryContactEmail,
 			                       request.PrimaryContactFirstName,
 			                       request.PrimaryContactLastName,
@@ -27,7 +27,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var request = new ApiFamilyServerRequestModel();
 			request.SetProperties(
-				response.Note,
+				response.Notes,
 				response.PrimaryContactEmail,
 				response.PrimaryContactFirstName,
 				response.PrimaryContactLastName,
@@ -40,7 +40,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var request = new ApiFamilyClientRequestModel();
 			request.SetProperties(
-				response.Note,
+				response.Notes,
 				response.PrimaryContactEmail,
 				response.PrimaryContactFirstName,
 				response.PrimaryContactLastName,
@@ -51,7 +51,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		public JsonPatchDocument<ApiFamilyServerRequestModel> CreatePatch(ApiFamilyServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiFamilyServerRequestModel>();
-			patch.Replace(x => x.Note, model.Note);
+			patch.Replace(x => x.Notes, model.Notes);
 			patch.Replace(x => x.PrimaryContactEmail, model.PrimaryContactEmail);
 			patch.Replace(x => x.PrimaryContactFirstName, model.PrimaryContactFirstName);
 			patch.Replace(x => x.PrimaryContactLastName, model.PrimaryContactLastName);
@@ -62,5 +62,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e865eed08067a11926354712b0a0e08</Hash>
+    <Hash>57e6d59a8c76181d3417c7a52eadb7fd</Hash>
 </Codenesium>*/

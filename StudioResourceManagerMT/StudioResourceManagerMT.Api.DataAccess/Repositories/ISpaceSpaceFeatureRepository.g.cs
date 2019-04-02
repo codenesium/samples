@@ -11,9 +11,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task Update(SpaceSpaceFeature item);
 
-		Task Delete(int spaceId);
+		Task Delete(int id);
 
-		Task<SpaceSpaceFeature> Get(int spaceId);
+		Task<SpaceSpaceFeature> Get(int id);
 
 		Task<List<SpaceSpaceFeature>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
@@ -24,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0f45363512996ad666df75630dcffa37</Hash>
+    <Hash>f174a39c6bc029297fd7b7ba48c4eea4</Hash>
 </Codenesium>*/

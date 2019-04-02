@@ -53,14 +53,12 @@ export default class SpaceSpaceFeatureSearchComponent extends React.Component<
 
   handleEditClick(e: any, row: SpaceSpaceFeatureViewModel) {
     this.props.history.push(
-      ClientRoutes.SpaceSpaceFeatures + '/edit/' + row.spaceId
+      ClientRoutes.SpaceSpaceFeatures + '/edit/' + row.id
     );
   }
 
   handleDetailClick(e: any, row: SpaceSpaceFeatureViewModel) {
-    this.props.history.push(
-      ClientRoutes.SpaceSpaceFeatures + '/' + row.spaceId
-    );
+    this.props.history.push(ClientRoutes.SpaceSpaceFeatures + '/' + row.id);
   }
 
   handleCreateClick(e: any) {
@@ -70,10 +68,7 @@ export default class SpaceSpaceFeatureSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.SpaceSpaceFeatureClientResponseModel) {
     axios
       .delete(
-        Constants.ApiEndpoint +
-          ApiRoutes.SpaceSpaceFeatures +
-          '/' +
-          row.spaceId,
+        Constants.ApiEndpoint + ApiRoutes.SpaceSpaceFeatures + '/' + row.id,
         {
           headers: GlobalUtilities.defaultHeaders(),
         }
@@ -234,6 +229,28 @@ export default class SpaceSpaceFeatureSearchComponent extends React.Component<
                     },
                   },
                   {
+                    Header: 'Space',
+                    accessor: 'spaceId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Spaces + '/' + props.original.spaceId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.spaceIdNavigation &&
+                              props.original.spaceIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Actions',
                     minWidth: 150,
                     Cell: row => (
@@ -294,5 +311,5 @@ export const WrappedSpaceSpaceFeatureSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>3194abd823816459c55b005412bcad62</Hash>
+    <Hash>01399753b4738bbb29209dc2fa6cec79</Hash>
 </Codenesium>*/

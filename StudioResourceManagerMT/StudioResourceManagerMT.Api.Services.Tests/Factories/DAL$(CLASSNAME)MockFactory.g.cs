@@ -12,7 +12,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 
 		public IDALEventMapper DALEventMapperMock { get; set; } = new DALEventMapper();
 
-		public IDALEventStatuMapper DALEventStatuMapperMock { get; set; } = new DALEventStatuMapper();
+		public IDALEventStatusMapper DALEventStatusMapperMock { get; set; } = new DALEventStatusMapper();
 
 		public IDALEventStudentMapper DALEventStudentMapperMock { get; set; } = new DALEventStudentMapper();
 
@@ -47,5 +47,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19a2e13ce9462161bae4cfd376132cee</Hash>
+    <Hash>b6128a87a716378472bff4cddf654d48</Hash>
 </Codenesium>*/

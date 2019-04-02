@@ -42,9 +42,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 			return this.DalTeacherTeacherSkillMapper.MapEntityToModel(records);
 		}
 
-		public virtual async Task<ApiTeacherTeacherSkillServerResponseModel> Get(int teacherId)
+		public virtual async Task<ApiTeacherTeacherSkillServerResponseModel> Get(int id)
 		{
-			TeacherTeacherSkill record = await this.TeacherTeacherSkillRepository.Get(teacherId);
+			TeacherTeacherSkill record = await this.TeacherTeacherSkillRepository.Get(id);
 
 			if (record == null)
 			{
@@ -74,17 +74,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 		}
 
 		public virtual async Task<UpdateResponse<ApiTeacherTeacherSkillServerResponseModel>> Update(
-			int teacherId,
+			int id,
 			ApiTeacherTeacherSkillServerRequestModel model)
 		{
-			var validationResult = await this.TeacherTeacherSkillModelValidator.ValidateUpdateAsync(teacherId, model);
+			var validationResult = await this.TeacherTeacherSkillModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				TeacherTeacherSkill record = this.DalTeacherTeacherSkillMapper.MapModelToEntity(teacherId, model);
+				TeacherTeacherSkill record = this.DalTeacherTeacherSkillMapper.MapModelToEntity(id, model);
 				await this.TeacherTeacherSkillRepository.Update(record);
 
-				record = await this.TeacherTeacherSkillRepository.Get(teacherId);
+				record = await this.TeacherTeacherSkillRepository.Get(id);
 
 				ApiTeacherTeacherSkillServerResponseModel apiModel = this.DalTeacherTeacherSkillMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TeacherTeacherSkillUpdatedNotification(apiModel));
@@ -98,15 +98,15 @@ namespace StudioResourceManagerMTNS.Api.Services
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			int teacherId)
+			int id)
 		{
-			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TeacherTeacherSkillModelValidator.ValidateDeleteAsync(teacherId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TeacherTeacherSkillModelValidator.ValidateDeleteAsync(id));
 
 			if (response.Success)
 			{
-				await this.TeacherTeacherSkillRepository.Delete(teacherId);
+				await this.TeacherTeacherSkillRepository.Delete(id);
 
-				await this.mediator.Publish(new TeacherTeacherSkillDeletedNotification(teacherId));
+				await this.mediator.Publish(new TeacherTeacherSkillDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +115,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ed8788d6d67c8c087118b8ad548c92eb</Hash>
+    <Hash>a209c6f05510d7ecd95700987bef4e20</Hash>
 </Codenesium>*/

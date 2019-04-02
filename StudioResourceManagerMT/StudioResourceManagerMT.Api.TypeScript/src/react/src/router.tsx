@@ -21,10 +21,10 @@ import { WrappedEventCreateComponent } from './components/event/eventCreateForm'
 import { WrappedEventDetailComponent } from './components/event/eventDetailForm';
 import { WrappedEventEditComponent } from './components/event/eventEditForm';
 import { WrappedEventSearchComponent } from './components/event/eventSearchForm';
-import { WrappedEventStatuCreateComponent } from './components/eventStatu/eventStatuCreateForm';
-import { WrappedEventStatuDetailComponent } from './components/eventStatu/eventStatuDetailForm';
-import { WrappedEventStatuEditComponent } from './components/eventStatu/eventStatuEditForm';
-import { WrappedEventStatuSearchComponent } from './components/eventStatu/eventStatuSearchForm';
+import { WrappedEventStatusCreateComponent } from './components/eventStatus/eventStatusCreateForm';
+import { WrappedEventStatusDetailComponent } from './components/eventStatus/eventStatusDetailForm';
+import { WrappedEventStatusEditComponent } from './components/eventStatus/eventStatusEditForm';
+import { WrappedEventStatusSearchComponent } from './components/eventStatus/eventStatusSearchForm';
 import { WrappedEventStudentCreateComponent } from './components/eventStudent/eventStudentCreateForm';
 import { WrappedEventStudentDetailComponent } from './components/eventStudent/eventStudentDetailForm';
 import { WrappedEventStudentEditComponent } from './components/eventStudent/eventStudentEditForm';
@@ -182,28 +182,28 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
         <Route
           path={ClientRoutes.EventStatus + '/create'}
           component={wrapperHeader(
-            WrappedEventStatuCreateComponent,
+            WrappedEventStatusCreateComponent,
             'Event Status Create'
           )}
         />
         <Route
           path={ClientRoutes.EventStatus + '/edit/:id'}
           component={wrapperHeader(
-            WrappedEventStatuEditComponent,
+            WrappedEventStatusEditComponent,
             'Event Status Edit'
           )}
         />
         <Route
           path={ClientRoutes.EventStatus + '/:id'}
           component={wrapperHeader(
-            WrappedEventStatuDetailComponent,
+            WrappedEventStatusDetailComponent,
             'Event Status Detail'
           )}
         />
         <Route
           path={ClientRoutes.EventStatus}
           component={wrapperHeader(
-            WrappedEventStatuSearchComponent,
+            WrappedEventStatusSearchComponent,
             'Event Status Search'
           )}
         />
@@ -530,5 +530,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>dfc6f42396bb533cbd603f60d981ab07</Hash>
+    <Hash>072725159d1b051ed6a916e3b890d9ae</Hash>
 </Codenesium>*/

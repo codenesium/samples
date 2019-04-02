@@ -20,7 +20,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 			model.SetProperties("A", "A", "A", "A", "A");
 			Family response = mapper.MapModelToEntity(1, model);
 
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -36,7 +36,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 			ApiFamilyServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Id.Should().Be(1);
-			response.Note.Should().Be("A");
+			response.Notes.Should().Be("A");
 			response.PrimaryContactEmail.Should().Be("A");
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
@@ -57,5 +57,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c28cba4a70c17e10bcd894532b56bc4a</Hash>
+    <Hash>f08aa17c08563fbbd97eabb69d04e4f0</Hash>
 </Codenesium>*/

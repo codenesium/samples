@@ -35,15 +35,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
+				                  x.EventId == query.ToInt() ||
 				                  x.StudentId == query.ToInt(),
 				                  limit,
 				                  offset);
 			}
 		}
 
-		public async virtual Task<EventStudent> Get(int eventId)
+		public async virtual Task<EventStudent> Get(int id)
 		{
-			return await this.GetById(eventId);
+			return await this.GetById(id);
 		}
 
 		public async virtual Task<EventStudent> Create(EventStudent item)
@@ -57,7 +58,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		public async virtual Task Update(EventStudent item)
 		{
-			var entity = this.Context.Set<EventStudent>().Local.FirstOrDefault(x => x.EventId == item.EventId);
+			var entity = this.Context.Set<EventStudent>().Local.FirstOrDefault(x => x.Id == item.Id);
 			if (entity == null)
 			{
 				this.Context.Set<EventStudent>().Attach(item);
@@ -71,9 +72,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			int eventId)
+			int id)
 		{
-			EventStudent record = await this.GetById(eventId);
+			EventStudent record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -108,7 +109,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		{
 			if (orderBy == null)
 			{
-				orderBy = x => x.EventId;
+				orderBy = x => x.Id;
 			}
 
 			return await this.Context.Set<EventStudent>()
@@ -118,9 +119,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<EventStudent>();
 		}
 
-		private async Task<EventStudent> GetById(int eventId)
+		private async Task<EventStudent> GetById(int id)
 		{
-			List<EventStudent> records = await this.Where(x => x.EventId == eventId);
+			List<EventStudent> records = await this.Where(x => x.Id == id);
 
 			return records.FirstOrDefault();
 		}
@@ -128,5 +129,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6333162f9990a8d5f24a6a6b197ff12</Hash>
+    <Hash>57107f8c9cd0714dded9426b2bc354bf</Hash>
 </Codenesium>*/

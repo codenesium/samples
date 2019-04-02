@@ -42,9 +42,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 			return this.DalSpaceSpaceFeatureMapper.MapEntityToModel(records);
 		}
 
-		public virtual async Task<ApiSpaceSpaceFeatureServerResponseModel> Get(int spaceId)
+		public virtual async Task<ApiSpaceSpaceFeatureServerResponseModel> Get(int id)
 		{
-			SpaceSpaceFeature record = await this.SpaceSpaceFeatureRepository.Get(spaceId);
+			SpaceSpaceFeature record = await this.SpaceSpaceFeatureRepository.Get(id);
 
 			if (record == null)
 			{
@@ -74,17 +74,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 		}
 
 		public virtual async Task<UpdateResponse<ApiSpaceSpaceFeatureServerResponseModel>> Update(
-			int spaceId,
+			int id,
 			ApiSpaceSpaceFeatureServerRequestModel model)
 		{
-			var validationResult = await this.SpaceSpaceFeatureModelValidator.ValidateUpdateAsync(spaceId, model);
+			var validationResult = await this.SpaceSpaceFeatureModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				SpaceSpaceFeature record = this.DalSpaceSpaceFeatureMapper.MapModelToEntity(spaceId, model);
+				SpaceSpaceFeature record = this.DalSpaceSpaceFeatureMapper.MapModelToEntity(id, model);
 				await this.SpaceSpaceFeatureRepository.Update(record);
 
-				record = await this.SpaceSpaceFeatureRepository.Get(spaceId);
+				record = await this.SpaceSpaceFeatureRepository.Get(id);
 
 				ApiSpaceSpaceFeatureServerResponseModel apiModel = this.DalSpaceSpaceFeatureMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SpaceSpaceFeatureUpdatedNotification(apiModel));
@@ -98,15 +98,15 @@ namespace StudioResourceManagerMTNS.Api.Services
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			int spaceId)
+			int id)
 		{
-			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SpaceSpaceFeatureModelValidator.ValidateDeleteAsync(spaceId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SpaceSpaceFeatureModelValidator.ValidateDeleteAsync(id));
 
 			if (response.Success)
 			{
-				await this.SpaceSpaceFeatureRepository.Delete(spaceId);
+				await this.SpaceSpaceFeatureRepository.Delete(id);
 
-				await this.mediator.Publish(new SpaceSpaceFeatureDeletedNotification(spaceId));
+				await this.mediator.Publish(new SpaceSpaceFeatureDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +115,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d26cfd772859b12e820e5495d9aebfe8</Hash>
+    <Hash>88f1b9d5a131dcbaca1a4df27b660833</Hash>
 </Codenesium>*/

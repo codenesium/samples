@@ -9,12 +9,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public partial class ApiTeacherTeacherSkillServerResponseModel : AbstractApiServerResponseModel
 	{
 		public virtual void SetProperties(
+			int id,
 			int teacherId,
 			int teacherSkillId)
 		{
+			this.Id = id;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
 		}
+
+		[JsonProperty]
+		public int Id { get; private set; }
 
 		[JsonProperty]
 		public int TeacherId { get; private set; }
@@ -47,5 +52,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31b2cd21c4a3bda5152165efb4a5776a</Hash>
+    <Hash>fa61a703627467a5ec04feb6f2bae4b7</Hash>
 </Codenesium>*/

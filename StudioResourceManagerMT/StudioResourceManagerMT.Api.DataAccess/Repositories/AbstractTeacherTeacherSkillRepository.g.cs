@@ -35,15 +35,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
+				                  x.TeacherId == query.ToInt() ||
 				                  x.TeacherSkillId == query.ToInt(),
 				                  limit,
 				                  offset);
 			}
 		}
 
-		public async virtual Task<TeacherTeacherSkill> Get(int teacherId)
+		public async virtual Task<TeacherTeacherSkill> Get(int id)
 		{
-			return await this.GetById(teacherId);
+			return await this.GetById(id);
 		}
 
 		public async virtual Task<TeacherTeacherSkill> Create(TeacherTeacherSkill item)
@@ -57,7 +58,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		public async virtual Task Update(TeacherTeacherSkill item)
 		{
-			var entity = this.Context.Set<TeacherTeacherSkill>().Local.FirstOrDefault(x => x.TeacherId == item.TeacherId);
+			var entity = this.Context.Set<TeacherTeacherSkill>().Local.FirstOrDefault(x => x.Id == item.Id);
 			if (entity == null)
 			{
 				this.Context.Set<TeacherTeacherSkill>().Attach(item);
@@ -71,9 +72,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			int teacherId)
+			int id)
 		{
-			TeacherTeacherSkill record = await this.GetById(teacherId);
+			TeacherTeacherSkill record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -108,7 +109,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		{
 			if (orderBy == null)
 			{
-				orderBy = x => x.TeacherId;
+				orderBy = x => x.Id;
 			}
 
 			return await this.Context.Set<TeacherTeacherSkill>()
@@ -118,9 +119,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TeacherTeacherSkill>();
 		}
 
-		private async Task<TeacherTeacherSkill> GetById(int teacherId)
+		private async Task<TeacherTeacherSkill> GetById(int id)
 		{
-			List<TeacherTeacherSkill> records = await this.Where(x => x.TeacherId == teacherId);
+			List<TeacherTeacherSkill> records = await this.Where(x => x.Id == id);
 
 			return records.FirstOrDefault();
 		}
@@ -128,5 +129,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9d1391977e4cf5a0fb97c95f52b94015</Hash>
+    <Hash>b3a7292978d5b05232367581579c4c7c</Hash>
 </Codenesium>*/

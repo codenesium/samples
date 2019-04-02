@@ -183,16 +183,16 @@ export class EventTableComponent extends React.Component<
                   },
                   {
                     Header: 'Student Notes',
-                    accessor: 'studentNote',
+                    accessor: 'studentNotes',
                     Cell: props => {
-                      return <span>{String(props.original.studentNote)}</span>;
+                      return <span>{String(props.original.studentNotes)}</span>;
                     },
                   },
                   {
                     Header: 'Teacher Notes',
-                    accessor: 'teacherNote',
+                    accessor: 'teacherNotes',
                     Cell: props => {
-                      return <span>{String(props.original.teacherNote)}</span>;
+                      return <span>{String(props.original.teacherNotes)}</span>;
                     },
                   },
                   {
@@ -240,5 +240,5 @@ export class EventTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4cfcaeefa932aaa37cac0305ea82cfb7</Hash>
+    <Hash>6742407cd5d22f69fbee8b3c59d043f0</Hash>
 </Codenesium>*/

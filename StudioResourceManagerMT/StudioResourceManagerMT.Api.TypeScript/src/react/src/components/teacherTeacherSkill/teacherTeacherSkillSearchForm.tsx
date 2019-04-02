@@ -53,14 +53,12 @@ export default class TeacherTeacherSkillSearchComponent extends React.Component<
 
   handleEditClick(e: any, row: TeacherTeacherSkillViewModel) {
     this.props.history.push(
-      ClientRoutes.TeacherTeacherSkills + '/edit/' + row.teacherId
+      ClientRoutes.TeacherTeacherSkills + '/edit/' + row.id
     );
   }
 
   handleDetailClick(e: any, row: TeacherTeacherSkillViewModel) {
-    this.props.history.push(
-      ClientRoutes.TeacherTeacherSkills + '/' + row.teacherId
-    );
+    this.props.history.push(ClientRoutes.TeacherTeacherSkills + '/' + row.id);
   }
 
   handleCreateClick(e: any) {
@@ -70,10 +68,7 @@ export default class TeacherTeacherSkillSearchComponent extends React.Component<
   handleDeleteClick(e: any, row: Api.TeacherTeacherSkillClientResponseModel) {
     axios
       .delete(
-        Constants.ApiEndpoint +
-          ApiRoutes.TeacherTeacherSkills +
-          '/' +
-          row.teacherId,
+        Constants.ApiEndpoint + ApiRoutes.TeacherTeacherSkills + '/' + row.id,
         {
           headers: GlobalUtilities.defaultHeaders(),
         }
@@ -210,6 +205,30 @@ export default class TeacherTeacherSkillSearchComponent extends React.Component<
                 Header: 'TeacherTeacherSkills',
                 columns: [
                   {
+                    Header: 'Teacher',
+                    accessor: 'teacherId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Teachers +
+                                '/' +
+                                props.original.teacherId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.teacherIdNavigation &&
+                              props.original.teacherIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Teacher Skill',
                     accessor: 'teacherSkillId',
                     Cell: props => {
@@ -294,5 +313,5 @@ export const WrappedTeacherTeacherSkillSearchComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>70d35b36d583b6c9cd366af893612934</Hash>
+    <Hash>ab0e53d477b3d29f560cba18897926dc</Hash>
 </Codenesium>*/

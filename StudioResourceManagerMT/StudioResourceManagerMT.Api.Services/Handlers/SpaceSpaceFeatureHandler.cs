@@ -51,15 +51,15 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class SpaceSpaceFeatureDeletedNotification : INotification
 	{
-		public int SpaceId { get; private set; }
+		public int Id { get; private set; }
 
-		public SpaceSpaceFeatureDeletedNotification(int spaceId)
+		public SpaceSpaceFeatureDeletedNotification(int id)
 		{
-			this.SpaceId = spaceId;
+			this.Id = id;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8171bdcc4400858377bf079d10c52aba</Hash>
+    <Hash>a5c7729237f9cd84d2c472b328ef4e52</Hash>
 </Codenesium>*/

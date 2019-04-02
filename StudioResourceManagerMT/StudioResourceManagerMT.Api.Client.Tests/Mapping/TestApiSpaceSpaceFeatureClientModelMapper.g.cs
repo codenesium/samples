@@ -15,10 +15,11 @@ namespace StudioResourceManagerMTNS.Api.Client.Tests
 		{
 			var mapper = new ApiSpaceSpaceFeatureModelMapper();
 			var model = new ApiSpaceSpaceFeatureClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			ApiSpaceSpaceFeatureClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
 		}
 
 		[Fact]
@@ -26,14 +27,15 @@ namespace StudioResourceManagerMTNS.Api.Client.Tests
 		{
 			var mapper = new ApiSpaceSpaceFeatureModelMapper();
 			var model = new ApiSpaceSpaceFeatureClientResponseModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiSpaceSpaceFeatureClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>684a689ba5fd8549e8f21fa9afd79e62</Hash>
+    <Hash>ce508f0f8047c8d9a5556850a2945ca0</Hash>
 </Codenesium>*/

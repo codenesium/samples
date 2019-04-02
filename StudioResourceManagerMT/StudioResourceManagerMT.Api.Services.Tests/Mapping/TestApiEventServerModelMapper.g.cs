@@ -25,8 +25,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.EventStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.StudentNote.Should().Be("A");
-			response.TeacherNote.Should().Be("A");
+			response.StudentNotes.Should().Be("A");
+			response.TeacherNotes.Should().Be("A");
 		}
 
 		[Fact]
@@ -43,8 +43,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.EventStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.StudentNote.Should().Be("A");
-			response.TeacherNote.Should().Be("A");
+			response.StudentNotes.Should().Be("A");
+			response.TeacherNotes.Should().Be("A");
 		}
 
 		[Fact]
@@ -63,12 +63,12 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.EventStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.StudentNote.Should().Be("A");
-			response.TeacherNote.Should().Be("A");
+			response.StudentNotes.Should().Be("A");
+			response.TeacherNotes.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5170c9fb5e14dcde1d9e09d2abd97801</Hash>
+    <Hash>46201a964c75ddbdfe8cd74c70fdaa27</Hash>
 </Codenesium>*/

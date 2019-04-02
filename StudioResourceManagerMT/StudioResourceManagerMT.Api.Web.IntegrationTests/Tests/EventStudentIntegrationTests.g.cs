@@ -38,17 +38,19 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventStudentClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			var model2 = new ApiEventStudentClientRequestModel();
-			model2.SetProperties(1);
+			model2.SetProperties(1, 1);
 			var request = new List<ApiEventStudentClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiEventStudentClientResponseModel>> result = await client.EventStudentBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
+			context.Set<EventStudent>().ToList()[1].EventId.Should().Be(1);
 			context.Set<EventStudent>().ToList()[1].StudentId.Should().Be(1);
 
+			context.Set<EventStudent>().ToList()[2].EventId.Should().Be(1);
 			context.Set<EventStudent>().ToList()[2].StudentId.Should().Be(1);
 		}
 
@@ -64,13 +66,15 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventStudentClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			CreateResponse<ApiEventStudentClientResponseModel> result = await client.EventStudentCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
+			context.Set<EventStudent>().ToList()[1].EventId.Should().Be(1);
 			context.Set<EventStudent>().ToList()[1].StudentId.Should().Be(1);
 
+			result.Record.EventId.Should().Be(1);
 			result.Record.StudentId.Should().Be(1);
 		}
 
@@ -90,16 +94,18 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApiEventStudentServerResponseModel model = await service.Get(1);
 
 			ApiEventStudentClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(1);
+			request.SetProperties(1, 1);
 
-			UpdateResponse<ApiEventStudentClientResponseModel> updateResponse = await client.EventStudentUpdateAsync(model.EventId, request);
+			UpdateResponse<ApiEventStudentClientResponseModel> updateResponse = await client.EventStudentUpdateAsync(model.Id, request);
 
 			context.Entry(context.Set<EventStudent>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-			updateResponse.Record.EventId.Should().Be(1);
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<EventStudent>().ToList()[0].EventId.Should().Be(1);
 			context.Set<EventStudent>().ToList()[0].StudentId.Should().Be(1);
 
+			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.EventId.Should().Be(1);
 			updateResponse.Record.StudentId.Should().Be(1);
 		}
@@ -117,7 +123,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			IEventStudentService service = testServer.Host.Services.GetService(typeof(IEventStudentService)) as IEventStudentService;
 			var model = new ApiEventStudentServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			CreateResponse<ApiEventStudentServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -146,6 +152,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 			response.EventId.Should().Be(1);
+			response.Id.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 
@@ -178,6 +185,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			response.Count.Should().BeGreaterThan(0);
 			response[0].EventId.Should().Be(1);
+			response[0].Id.Should().Be(1);
 			response[0].StudentId.Should().Be(1);
 		}
 
@@ -204,5 +212,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c0a4d7044aecdbcdebdc51946bd954d1</Hash>
+    <Hash>2b722c507ec98294a886c9bdd73dca08</Hash>
 </Codenesium>*/

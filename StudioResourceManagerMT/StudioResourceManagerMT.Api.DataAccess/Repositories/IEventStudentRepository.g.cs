@@ -11,9 +11,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task Update(EventStudent item);
 
-		Task Delete(int eventId);
+		Task Delete(int id);
 
-		Task<EventStudent> Get(int eventId);
+		Task<EventStudent> Get(int id);
 
 		Task<List<EventStudent>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
@@ -24,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3f7932188dd999528169abfebbaee119</Hash>
+    <Hash>2443db16f120cba0d8947e61f5081d54</Hash>
 </Codenesium>*/

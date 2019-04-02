@@ -9,7 +9,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public partial interface IApiTeacherTeacherSkillServerModelMapper
 	{
 		ApiTeacherTeacherSkillServerResponseModel MapServerRequestToResponse(
-			int teacherId,
+			int id,
 			ApiTeacherTeacherSkillServerRequestModel request);
 
 		ApiTeacherTeacherSkillServerRequestModel MapServerResponseToRequest(
@@ -23,5 +23,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ff392af36f2b4075ad90cebbf811417</Hash>
+    <Hash>00d5060e4b8010b778fc5d32c78afd09</Hash>
 </Codenesium>*/

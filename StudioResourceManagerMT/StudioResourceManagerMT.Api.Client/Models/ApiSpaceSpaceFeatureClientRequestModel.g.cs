@@ -15,16 +15,21 @@ namespace StudioResourceManagerMTNS.Api.Client
 		}
 
 		public virtual void SetProperties(
-			int spaceFeatureId)
+			int spaceFeatureId,
+			int spaceId)
 		{
 			this.SpaceFeatureId = spaceFeatureId;
+			this.SpaceId = spaceId;
 		}
 
 		[JsonProperty]
 		public int SpaceFeatureId { get; private set; }
+
+		[JsonProperty]
+		public int SpaceId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>72d5d7338fcbbd5c9ee3c016d45964af</Hash>
+    <Hash>35c22c28542c4b5496bf59363ce5ba14</Hash>
 </Codenesium>*/

@@ -37,14 +37,12 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
 
   handleEditClick(e: any, row: TeacherTeacherSkillViewModel) {
     this.props.history.push(
-      ClientRoutes.TeacherTeacherSkills + '/edit/' + row.teacherId
+      ClientRoutes.TeacherTeacherSkills + '/edit/' + row.id
     );
   }
 
   handleDetailClick(e: any, row: TeacherTeacherSkillViewModel) {
-    this.props.history.push(
-      ClientRoutes.TeacherTeacherSkills + '/' + row.teacherId
-    );
+    this.props.history.push(ClientRoutes.TeacherTeacherSkills + '/' + row.id);
   }
 
   componentDidMount() {
@@ -122,6 +120,30 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
                 Header: 'TeacherTeacherSkills',
                 columns: [
                   {
+                    Header: 'Teacher',
+                    accessor: 'teacherId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Teachers +
+                                '/' +
+                                props.original.teacherId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.teacherIdNavigation &&
+                              props.original.teacherIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Teacher Skill',
                     accessor: 'teacherSkillId',
                     Cell: props => {
@@ -190,5 +212,5 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3feffb9f5e7663725ab47fc812aa09f2</Hash>
+    <Hash>faa7ac6df4fb3db988b67d9405a894b1</Hash>
 </Codenesium>*/

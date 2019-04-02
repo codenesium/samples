@@ -42,9 +42,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 			return this.DalEventTeacherMapper.MapEntityToModel(records);
 		}
 
-		public virtual async Task<ApiEventTeacherServerResponseModel> Get(int eventId)
+		public virtual async Task<ApiEventTeacherServerResponseModel> Get(int id)
 		{
-			EventTeacher record = await this.EventTeacherRepository.Get(eventId);
+			EventTeacher record = await this.EventTeacherRepository.Get(id);
 
 			if (record == null)
 			{
@@ -74,17 +74,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 		}
 
 		public virtual async Task<UpdateResponse<ApiEventTeacherServerResponseModel>> Update(
-			int eventId,
+			int id,
 			ApiEventTeacherServerRequestModel model)
 		{
-			var validationResult = await this.EventTeacherModelValidator.ValidateUpdateAsync(eventId, model);
+			var validationResult = await this.EventTeacherModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				EventTeacher record = this.DalEventTeacherMapper.MapModelToEntity(eventId, model);
+				EventTeacher record = this.DalEventTeacherMapper.MapModelToEntity(id, model);
 				await this.EventTeacherRepository.Update(record);
 
-				record = await this.EventTeacherRepository.Get(eventId);
+				record = await this.EventTeacherRepository.Get(id);
 
 				ApiEventTeacherServerResponseModel apiModel = this.DalEventTeacherMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new EventTeacherUpdatedNotification(apiModel));
@@ -98,15 +98,15 @@ namespace StudioResourceManagerMTNS.Api.Services
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			int eventId)
+			int id)
 		{
-			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.EventTeacherModelValidator.ValidateDeleteAsync(eventId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.EventTeacherModelValidator.ValidateDeleteAsync(id));
 
 			if (response.Success)
 			{
-				await this.EventTeacherRepository.Delete(eventId);
+				await this.EventTeacherRepository.Delete(id);
 
-				await this.mediator.Publish(new EventTeacherDeletedNotification(eventId));
+				await this.mediator.Publish(new EventTeacherDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +115,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2102486d23ac8eb1c2f708eb42ff1ca7</Hash>
+    <Hash>4078fe7f874a73acb6819046d9137060</Hash>
 </Codenesium>*/

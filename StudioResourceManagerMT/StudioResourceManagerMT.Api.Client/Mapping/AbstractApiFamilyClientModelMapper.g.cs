@@ -12,7 +12,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		{
 			var response = new ApiFamilyClientResponseModel();
 			response.SetProperties(id,
-			                       request.Note,
+			                       request.Notes,
 			                       request.PrimaryContactEmail,
 			                       request.PrimaryContactFirstName,
 			                       request.PrimaryContactLastName,
@@ -25,7 +25,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		{
 			var request = new ApiFamilyClientRequestModel();
 			request.SetProperties(
-				response.Note,
+				response.Notes,
 				response.PrimaryContactEmail,
 				response.PrimaryContactFirstName,
 				response.PrimaryContactLastName,
@@ -36,5 +36,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d65a9a66b58c510e992d67dbf89330b2</Hash>
+    <Hash>3a8866c5c342f110b477bcea31a4a3de</Hash>
 </Codenesium>*/

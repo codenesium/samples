@@ -51,15 +51,15 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class EventStudentDeletedNotification : INotification
 	{
-		public int EventId { get; private set; }
+		public int Id { get; private set; }
 
-		public EventStudentDeletedNotification(int eventId)
+		public EventStudentDeletedNotification(int id)
 		{
-			this.EventId = eventId;
+			this.Id = id;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b1523c6d89effc7606999145f0d04c64</Hash>
+    <Hash>7434614131d6d74a2acac8bfd00112b2</Hash>
 </Codenesium>*/

@@ -123,7 +123,7 @@ class TeacherTeacherSkillEditComponent extends React.Component<
         Constants.ApiEndpoint +
           ApiRoutes.TeacherTeacherSkills +
           '/' +
-          this.state.model!.teacherId,
+          this.state.model!.id,
         mapper.mapViewModelToApiRequest(model),
         {
           headers: GlobalUtilities.defaultHeaders(),
@@ -196,6 +196,14 @@ class TeacherTeacherSkillEditComponent extends React.Component<
     } else if (this.state.loaded) {
       return (
         <Form onSubmit={this.handleSubmit}>
+          <TeacherSelectComponent
+            apiRoute={Constants.ApiEndpoint + ApiRoutes.Teachers}
+            getFieldDecorator={this.props.form.getFieldDecorator}
+            propertyName="teacherId"
+            required={true}
+            selectedValue={this.state.model!.teacherId}
+          />
+
           <TeacherSkillSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.TeacherSkills}
             getFieldDecorator={this.props.form.getFieldDecorator}
@@ -228,5 +236,5 @@ export const WrappedTeacherTeacherSkillEditComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>887e4fa38a384f7998fd89b056af46d4</Hash>
+    <Hash>3b54633902eba25c5fe98aff5a3a9db9</Hash>
 </Codenesium>*/

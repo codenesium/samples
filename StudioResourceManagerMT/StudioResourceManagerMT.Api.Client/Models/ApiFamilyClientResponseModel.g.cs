@@ -9,14 +9,14 @@ namespace StudioResourceManagerMTNS.Api.Client
 	{
 		public virtual void SetProperties(
 			int id,
-			string note,
+			string notes,
 			string primaryContactEmail,
 			string primaryContactFirstName,
 			string primaryContactLastName,
 			string primaryContactPhone)
 		{
 			this.Id = id;
-			this.Note = note;
+			this.Notes = notes;
 			this.PrimaryContactEmail = primaryContactEmail;
 			this.PrimaryContactFirstName = primaryContactFirstName;
 			this.PrimaryContactLastName = primaryContactLastName;
@@ -27,7 +27,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public int Id { get; private set; }
 
 		[JsonProperty]
-		public string Note { get; private set; }
+		public string Notes { get; private set; }
 
 		[JsonProperty]
 		public string PrimaryContactEmail { get; private set; }
@@ -44,5 +44,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>71032afc516ce10c1b350f518ba65498</Hash>
+    <Hash>e21ac05c0e280f1a7239445b9a57af2a</Hash>
 </Codenesium>*/

@@ -126,7 +126,7 @@ namespace StudioResourceManagerMTNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/SpaceSpaceFeatures/{result.Record.SpaceId}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/SpaceSpaceFeatures/{result.Record.Id}", result);
 			}
 			else
 			{
@@ -235,5 +235,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6dca9c3e701284f427e39b11561fa3b9</Hash>
+    <Hash>2297ed7b329856ed06c900f9f34afaab</Hash>
 </Codenesium>*/

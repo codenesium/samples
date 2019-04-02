@@ -8,7 +8,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public partial interface IDALEventStudentMapper
 	{
 		EventStudent MapModelToEntity(
-			int eventId,
+			int id,
 			ApiEventStudentServerRequestModel model);
 
 		ApiEventStudentServerResponseModel MapEntityToModel(
@@ -20,5 +20,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1a93ac5407a0f6509a36689ffec1cde4</Hash>
+    <Hash>eca8ac8b91aaf1ff3095a75765517d94</Hash>
 </Codenesium>*/

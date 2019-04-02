@@ -11,17 +11,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 		Task<CreateResponse<ApiTeacherTeacherSkillServerResponseModel>> Create(
 			ApiTeacherTeacherSkillServerRequestModel model);
 
-		Task<UpdateResponse<ApiTeacherTeacherSkillServerResponseModel>> Update(int teacherId,
+		Task<UpdateResponse<ApiTeacherTeacherSkillServerResponseModel>> Update(int id,
 		                                                                        ApiTeacherTeacherSkillServerRequestModel model);
 
-		Task<ActionResponse> Delete(int teacherId);
+		Task<ActionResponse> Delete(int id);
 
-		Task<ApiTeacherTeacherSkillServerResponseModel> Get(int teacherId);
+		Task<ApiTeacherTeacherSkillServerResponseModel> Get(int id);
 
 		Task<List<ApiTeacherTeacherSkillServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f16c7a0da75fe06e64bad90c27e0e035</Hash>
+    <Hash>207ac5faef43a2337169292a3dbd4bc1</Hash>
 </Codenesium>*/

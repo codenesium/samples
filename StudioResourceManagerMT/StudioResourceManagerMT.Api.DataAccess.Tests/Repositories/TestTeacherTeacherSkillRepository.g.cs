@@ -73,11 +73,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new TeacherTeacherSkillRepository(loggerMoc.Object, context);
 
 			TeacherTeacherSkill entity = new TeacherTeacherSkill();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<TeacherTeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.TeacherId);
+			var record = await repository.Get(entity.Id);
 
 			record.Should().NotBeNull();
 		}
@@ -90,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new TeacherTeacherSkillRepository(loggerMoc.Object, context);
 
 			var entity = new TeacherTeacherSkill();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<TeacherTeacherSkill>().ToListAsync();
@@ -105,11 +105,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = TeacherTeacherSkillRepositoryMoc.GetContext();
 			var repository = new TeacherTeacherSkillRepository(loggerMoc.Object, context);
 			TeacherTeacherSkill entity = new TeacherTeacherSkill();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<TeacherTeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.TeacherId);
+			var record = await repository.Get(entity.Id);
 
 			await repository.Update(record);
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = TeacherTeacherSkillRepositoryMoc.GetContext();
 			var repository = new TeacherTeacherSkillRepository(loggerMoc.Object, context);
 			TeacherTeacherSkill entity = new TeacherTeacherSkill();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<TeacherTeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,11 +145,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = TeacherTeacherSkillRepositoryMoc.GetContext();
 			var repository = new TeacherTeacherSkillRepository(loggerMoc.Object, context);
 			TeacherTeacherSkill entity = new TeacherTeacherSkill();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<TeacherTeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Delete(entity.TeacherId);
+			await repository.Delete(entity.Id);
 
 			var records = await context.Set<TeacherTeacherSkill>().ToListAsync();
 
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fed36c06f6b3c80426abef7b74d2e976</Hash>
+    <Hash>ee6a20c5057b043ff7e61533f940a6cf</Hash>
 </Codenesium>*/

@@ -7,11 +7,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 	public abstract class AbstractApiTeacherTeacherSkillModelMapper
 	{
 		public virtual ApiTeacherTeacherSkillClientResponseModel MapClientRequestToResponse(
-			int teacherId,
+			int id,
 			ApiTeacherTeacherSkillClientRequestModel request)
 		{
 			var response = new ApiTeacherTeacherSkillClientResponseModel();
-			response.SetProperties(teacherId,
+			response.SetProperties(id,
+			                       request.TeacherId,
 			                       request.TeacherSkillId);
 			return response;
 		}
@@ -21,6 +22,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		{
 			var request = new ApiTeacherTeacherSkillClientRequestModel();
 			request.SetProperties(
+				response.TeacherId,
 				response.TeacherSkillId);
 			return request;
 		}
@@ -28,5 +30,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>c0884ce3a4b874cb1bb85b36dd25b39a</Hash>
+    <Hash>3ab27d22d63930e747cd0c3018402d79</Hash>
 </Codenesium>*/

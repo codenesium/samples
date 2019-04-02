@@ -21,10 +21,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task<List<EventTeacher>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
 
-		Task<EventStatu> EventStatuByEventStatusId(int eventStatusId);
+		Task<EventStatus> EventStatusByEventStatusId(int eventStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>81f27ccd44fc8c17d1627bedaa9b6a17</Hash>
+    <Hash>7414aa58cf19f2560887f70a9869adf4</Hash>
 </Codenesium>*/

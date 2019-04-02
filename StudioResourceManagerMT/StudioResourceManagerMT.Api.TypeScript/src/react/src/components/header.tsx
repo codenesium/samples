@@ -56,7 +56,7 @@ export const wrapperHeader = (
                 <Link to={ClientRoutes.Events} />
               </Menu.Item>
 
-              <Menu.Item key="eventStatu">
+              <Menu.Item key="eventStatus">
                 <Icon type="bars" />
                 <span>Event Status</span>
                 <Link to={ClientRoutes.EventStatus} />
@@ -188,5 +188,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>067f9a0bdb5e27f574ee1d6c40bb9f10</Hash>
+    <Hash>18fe2af95875572ba359b9ac6d38e736</Hash>
 </Codenesium>*/

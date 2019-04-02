@@ -15,9 +15,10 @@ namespace StudioResourceManagerMTNS.Api.Client.Tests
 		{
 			var mapper = new ApiTeacherTeacherSkillModelMapper();
 			var model = new ApiTeacherTeacherSkillClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			ApiTeacherTeacherSkillClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
+			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
 
@@ -26,14 +27,15 @@ namespace StudioResourceManagerMTNS.Api.Client.Tests
 		{
 			var mapper = new ApiTeacherTeacherSkillModelMapper();
 			var model = new ApiTeacherTeacherSkillClientResponseModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiTeacherTeacherSkillClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
+			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>52b0666661e84e83fe120723f372489a</Hash>
+    <Hash>9b66bba6efb6969c0417314facf1cd65</Hash>
 </Codenesium>*/

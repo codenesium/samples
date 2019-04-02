@@ -11,17 +11,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 		Task<CreateResponse<ApiSpaceSpaceFeatureServerResponseModel>> Create(
 			ApiSpaceSpaceFeatureServerRequestModel model);
 
-		Task<UpdateResponse<ApiSpaceSpaceFeatureServerResponseModel>> Update(int spaceId,
+		Task<UpdateResponse<ApiSpaceSpaceFeatureServerResponseModel>> Update(int id,
 		                                                                      ApiSpaceSpaceFeatureServerRequestModel model);
 
-		Task<ActionResponse> Delete(int spaceId);
+		Task<ActionResponse> Delete(int id);
 
-		Task<ApiSpaceSpaceFeatureServerResponseModel> Get(int spaceId);
+		Task<ApiSpaceSpaceFeatureServerResponseModel> Get(int id);
 
 		Task<List<ApiSpaceSpaceFeatureServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>18f7b008aa45e2ec427b48e67a5f6eec</Hash>
+    <Hash>9263f92e3260bbe08151942ca35e03c6</Hash>
 </Codenesium>*/

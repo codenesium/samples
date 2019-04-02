@@ -21,8 +21,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			int eventStatusId,
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
-			string studentNote,
-			string teacherNote)
+			string studentNotes,
+			string teacherNotes)
 		{
 			this.Id = id;
 			this.ActualEndDate = actualEndDate;
@@ -31,8 +31,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.EventStatusId = eventStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.StudentNote = studentNote;
-			this.TeacherNote = teacherNote;
+			this.StudentNotes = studentNotes;
+			this.TeacherNotes = teacherNotes;
 		}
 
 		[Column("actualEndDate")]
@@ -59,16 +59,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("studentNotes")]
-		public virtual string StudentNote { get; private set; }
+		public virtual string StudentNotes { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("teacherNotes")]
-		public virtual string TeacherNote { get; private set; }
+		public virtual string TeacherNotes { get; private set; }
 
 		[ForeignKey("EventStatusId")]
-		public virtual EventStatu EventStatusIdNavigation { get; private set; }
+		public virtual EventStatus EventStatusIdNavigation { get; private set; }
 
-		public void SetEventStatusIdNavigation(EventStatu item)
+		public void SetEventStatusIdNavigation(EventStatus item)
 		{
 			this.EventStatusIdNavigation = item;
 		}
@@ -76,5 +76,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e72eeb087c52dc48a45abd6b5cce362f</Hash>
+    <Hash>e959ce1832abaa275703d74b6687bbab</Hash>
 </Codenesium>*/

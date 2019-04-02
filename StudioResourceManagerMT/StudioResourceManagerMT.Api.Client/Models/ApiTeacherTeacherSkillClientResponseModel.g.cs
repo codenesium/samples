@@ -8,9 +8,11 @@ namespace StudioResourceManagerMTNS.Api.Client
 	public partial class ApiTeacherTeacherSkillClientResponseModel : AbstractApiClientResponseModel
 	{
 		public virtual void SetProperties(
+			int id,
 			int teacherId,
 			int teacherSkillId)
 		{
+			this.Id = id;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
 
@@ -36,6 +38,9 @@ namespace StudioResourceManagerMTNS.Api.Client
 		}
 
 		[JsonProperty]
+		public int Id { get; private set; }
+
+		[JsonProperty]
 		public int TeacherId { get; private set; }
 
 		[JsonProperty]
@@ -50,5 +55,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>6ee3df5bd01a411597a2f39207a7d6f3</Hash>
+    <Hash>39d97072d10f2a97a45a44879a19d001</Hash>
 </Codenesium>*/

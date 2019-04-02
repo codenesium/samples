@@ -7,11 +7,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 	public abstract class AbstractApiEventTeacherModelMapper
 	{
 		public virtual ApiEventTeacherClientResponseModel MapClientRequestToResponse(
-			int eventId,
+			int id,
 			ApiEventTeacherClientRequestModel request)
 		{
 			var response = new ApiEventTeacherClientResponseModel();
-			response.SetProperties(eventId,
+			response.SetProperties(id,
+			                       request.EventId,
 			                       request.TeacherId);
 			return response;
 		}
@@ -21,6 +22,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		{
 			var request = new ApiEventTeacherClientRequestModel();
 			request.SetProperties(
+				response.EventId,
 				response.TeacherId);
 			return request;
 		}
@@ -28,5 +30,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>e80a58d875d476f89ac61af5368f1a01</Hash>
+    <Hash>f1b93dfa7509799b73ebb18b5d503706</Hash>
 </Codenesium>*/

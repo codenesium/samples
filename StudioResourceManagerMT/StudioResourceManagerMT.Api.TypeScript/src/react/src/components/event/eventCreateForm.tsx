@@ -18,7 +18,7 @@ import {
 } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
-import { EventStatuSelectComponent } from '../shared/eventStatuSelect';
+import { EventStatusSelectComponent } from '../shared/eventStatusSelect';
 
 interface EventCreateComponentProps {
   form: WrappedFormUtils;
@@ -176,7 +176,7 @@ class EventCreateComponent extends React.Component<
             })(<InputNumber placeholder={'Bill Amount'} />)}
           </Form.Item>
 
-          <EventStatuSelectComponent
+          <EventStatusSelectComponent
             apiRoute={Constants.ApiEndpoint + ApiRoutes.EventStatus}
             getFieldDecorator={this.props.form.getFieldDecorator}
             propertyName="eventStatusId"
@@ -215,17 +215,17 @@ class EventCreateComponent extends React.Component<
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="studentNote">Student Notes (optional)</label>
+            <label htmlFor="studentNotes">Student Notes (optional)</label>
             <br />
-            {getFieldDecorator('studentNote', {
+            {getFieldDecorator('studentNotes', {
               rules: [],
             })(<Input placeholder={'Student Notes'} />)}
           </Form.Item>
 
           <Form.Item>
-            <label htmlFor="teacherNote">Teacher Notes (optional)</label>
+            <label htmlFor="teacherNotes">Teacher Notes (optional)</label>
             <br />
-            {getFieldDecorator('teacherNote', {
+            {getFieldDecorator('teacherNotes', {
               rules: [],
             })(<Input placeholder={'Teacher Notes'} />)}
           </Form.Item>
@@ -254,5 +254,5 @@ export const WrappedEventCreateComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>7501ac1b57408836adbafdf877246817</Hash>
+    <Hash>0fd4b921aa0d809e43a582b0807276be</Hash>
 </Codenesium>*/

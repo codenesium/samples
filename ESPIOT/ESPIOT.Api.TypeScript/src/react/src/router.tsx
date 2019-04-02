@@ -144,6 +144,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'Device Actions Search'
           )}
         />
+      <Route render={() => <div>No handler for route found...</div>}/>
       </Switch>
     </BrowserRouter>
   );

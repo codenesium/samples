@@ -37,14 +37,12 @@ export class SpaceSpaceFeatureTableComponent extends React.Component<
 
   handleEditClick(e: any, row: SpaceSpaceFeatureViewModel) {
     this.props.history.push(
-      ClientRoutes.SpaceSpaceFeatures + '/edit/' + row.spaceId
+      ClientRoutes.SpaceSpaceFeatures + '/edit/' + row.id
     );
   }
 
   handleDetailClick(e: any, row: SpaceSpaceFeatureViewModel) {
-    this.props.history.push(
-      ClientRoutes.SpaceSpaceFeatures + '/' + row.spaceId
-    );
+    this.props.history.push(ClientRoutes.SpaceSpaceFeatures + '/' + row.id);
   }
 
   componentDidMount() {
@@ -146,6 +144,28 @@ export class SpaceSpaceFeatureTableComponent extends React.Component<
                     },
                   },
                   {
+                    Header: 'Space',
+                    accessor: 'spaceId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Spaces + '/' + props.original.spaceId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.spaceIdNavigation &&
+                              props.original.spaceIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Actions',
                     minWidth: 150,
                     Cell: row => (
@@ -190,5 +210,5 @@ export class SpaceSpaceFeatureTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>92bd37d4511ca8f29cb696c95f4d8e27</Hash>
+    <Hash>dc80527cf46de52cd679c762d99c554a</Hash>
 </Codenesium>*/

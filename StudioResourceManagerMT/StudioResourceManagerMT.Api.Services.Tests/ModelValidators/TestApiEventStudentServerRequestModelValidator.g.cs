@@ -25,6 +25,56 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void EventId_Create_Valid_Reference()
+		{
+			Mock<IEventStudentRepository> eventStudentRepository = new Mock<IEventStudentRepository>();
+			eventStudentRepository.Setup(x => x.EventByEventId(It.IsAny<int>())).Returns(Task.FromResult<Event>(new Event()));
+
+			var validator = new ApiEventStudentServerRequestModelValidator(eventStudentRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventStudentServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.EventId, 1);
+		}
+
+		[Fact]
+		public async void EventId_Create_Invalid_Reference()
+		{
+			Mock<IEventStudentRepository> eventStudentRepository = new Mock<IEventStudentRepository>();
+			eventStudentRepository.Setup(x => x.EventByEventId(It.IsAny<int>())).Returns(Task.FromResult<Event>(null));
+
+			var validator = new ApiEventStudentServerRequestModelValidator(eventStudentRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiEventStudentServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.EventId, 1);
+		}
+
+		[Fact]
+		public async void EventId_Update_Valid_Reference()
+		{
+			Mock<IEventStudentRepository> eventStudentRepository = new Mock<IEventStudentRepository>();
+			eventStudentRepository.Setup(x => x.EventByEventId(It.IsAny<int>())).Returns(Task.FromResult<Event>(new Event()));
+
+			var validator = new ApiEventStudentServerRequestModelValidator(eventStudentRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventStudentServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.EventId, 1);
+		}
+
+		[Fact]
+		public async void EventId_Update_Invalid_Reference()
+		{
+			Mock<IEventStudentRepository> eventStudentRepository = new Mock<IEventStudentRepository>();
+			eventStudentRepository.Setup(x => x.EventByEventId(It.IsAny<int>())).Returns(Task.FromResult<Event>(null));
+
+			var validator = new ApiEventStudentServerRequestModelValidator(eventStudentRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiEventStudentServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.EventId, 1);
+		}
+
+		[Fact]
 		public async void StudentId_Create_Valid_Reference()
 		{
 			Mock<IEventStudentRepository> eventStudentRepository = new Mock<IEventStudentRepository>();
@@ -77,5 +127,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aa05d7c8c4ef6cc8c3d4caa7d399363e</Hash>
+    <Hash>83a71917cbbad538dcef0ddb3a5cd17f</Hash>
 </Codenesium>*/

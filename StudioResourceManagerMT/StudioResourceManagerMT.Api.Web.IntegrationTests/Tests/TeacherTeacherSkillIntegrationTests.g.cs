@@ -38,17 +38,19 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTeacherTeacherSkillClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			var model2 = new ApiTeacherTeacherSkillClientRequestModel();
-			model2.SetProperties(1);
+			model2.SetProperties(1, 1);
 			var request = new List<ApiTeacherTeacherSkillClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiTeacherTeacherSkillClientResponseModel>> result = await client.TeacherTeacherSkillBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
+			context.Set<TeacherTeacherSkill>().ToList()[1].TeacherId.Should().Be(1);
 			context.Set<TeacherTeacherSkill>().ToList()[1].TeacherSkillId.Should().Be(1);
 
+			context.Set<TeacherTeacherSkill>().ToList()[2].TeacherId.Should().Be(1);
 			context.Set<TeacherTeacherSkill>().ToList()[2].TeacherSkillId.Should().Be(1);
 		}
 
@@ -64,13 +66,15 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTeacherTeacherSkillClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			CreateResponse<ApiTeacherTeacherSkillClientResponseModel> result = await client.TeacherTeacherSkillCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
+			context.Set<TeacherTeacherSkill>().ToList()[1].TeacherId.Should().Be(1);
 			context.Set<TeacherTeacherSkill>().ToList()[1].TeacherSkillId.Should().Be(1);
 
+			result.Record.TeacherId.Should().Be(1);
 			result.Record.TeacherSkillId.Should().Be(1);
 		}
 
@@ -90,16 +94,18 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApiTeacherTeacherSkillServerResponseModel model = await service.Get(1);
 
 			ApiTeacherTeacherSkillClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(1);
+			request.SetProperties(1, 1);
 
-			UpdateResponse<ApiTeacherTeacherSkillClientResponseModel> updateResponse = await client.TeacherTeacherSkillUpdateAsync(model.TeacherId, request);
+			UpdateResponse<ApiTeacherTeacherSkillClientResponseModel> updateResponse = await client.TeacherTeacherSkillUpdateAsync(model.Id, request);
 
 			context.Entry(context.Set<TeacherTeacherSkill>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-			updateResponse.Record.TeacherId.Should().Be(1);
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<TeacherTeacherSkill>().ToList()[0].TeacherId.Should().Be(1);
 			context.Set<TeacherTeacherSkill>().ToList()[0].TeacherSkillId.Should().Be(1);
 
+			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.TeacherId.Should().Be(1);
 			updateResponse.Record.TeacherSkillId.Should().Be(1);
 		}
@@ -117,7 +123,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			ITeacherTeacherSkillService service = testServer.Host.Services.GetService(typeof(ITeacherTeacherSkillService)) as ITeacherTeacherSkillService;
 			var model = new ApiTeacherTeacherSkillServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			CreateResponse<ApiTeacherTeacherSkillServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -145,6 +151,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApiTeacherTeacherSkillClientResponseModel response = await client.TeacherTeacherSkillGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
@@ -177,6 +184,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			List<ApiTeacherTeacherSkillClientResponseModel> response = await client.TeacherTeacherSkillAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
 			response[0].TeacherId.Should().Be(1);
 			response[0].TeacherSkillId.Should().Be(1);
 		}
@@ -204,5 +212,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>5a763f80e9caf404a43d3af0bfa7c292</Hash>
+    <Hash>b95816a2a05a272a8a714f10b2100ee9</Hash>
 </Codenesium>*/

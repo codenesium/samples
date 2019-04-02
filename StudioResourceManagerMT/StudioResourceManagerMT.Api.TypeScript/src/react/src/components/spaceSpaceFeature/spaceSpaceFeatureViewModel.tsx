@@ -3,6 +3,7 @@ import SpaceFeatureViewModel from '../spaceFeature/spaceFeatureViewModel';
 import SpaceViewModel from '../space/spaceViewModel';
 
 export default class SpaceSpaceFeatureViewModel {
+  id: number;
   spaceFeatureId: number;
   spaceFeatureIdEntity: string;
   spaceFeatureIdNavigation?: SpaceFeatureViewModel;
@@ -11,6 +12,7 @@ export default class SpaceSpaceFeatureViewModel {
   spaceIdNavigation?: SpaceViewModel;
 
   constructor() {
+    this.id = 0;
     this.spaceFeatureId = 0;
     this.spaceFeatureIdEntity = '';
     this.spaceFeatureIdNavigation = undefined;
@@ -19,7 +21,8 @@ export default class SpaceSpaceFeatureViewModel {
     this.spaceIdNavigation = undefined;
   }
 
-  setProperties(spaceFeatureId: number, spaceId: number): void {
+  setProperties(id: number, spaceFeatureId: number, spaceId: number): void {
+    this.id = id;
     this.spaceFeatureId = spaceFeatureId;
     this.spaceId = spaceId;
   }
@@ -31,5 +34,5 @@ export default class SpaceSpaceFeatureViewModel {
 
 
 /*<Codenesium>
-    <Hash>2ae17706c46e20c4d09254875e8bba53</Hash>
+    <Hash>099e0211352db7c8661bed471f0a0600</Hash>
 </Codenesium>*/

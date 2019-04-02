@@ -8,14 +8,15 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public abstract class AbstractDALSpaceSpaceFeatureMapper
 	{
 		public virtual SpaceSpaceFeature MapModelToEntity(
-			int spaceId,
+			int id,
 			ApiSpaceSpaceFeatureServerRequestModel model
 			)
 		{
 			SpaceSpaceFeature item = new SpaceSpaceFeature();
 			item.SetProperties(
-				spaceId,
-				model.SpaceFeatureId);
+				id,
+				model.SpaceFeatureId,
+				model.SpaceId);
 			return item;
 		}
 
@@ -24,8 +25,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var model = new ApiSpaceSpaceFeatureServerResponseModel();
 
-			model.SetProperties(item.SpaceId,
-			                    item.SpaceFeatureId);
+			model.SetProperties(item.Id,
+			                    item.SpaceFeatureId,
+			                    item.SpaceId);
 			if (item.SpaceFeatureIdNavigation != null)
 			{
 				var spaceFeatureIdModel = new ApiSpaceFeatureServerResponseModel();
@@ -66,5 +68,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>19e2b935d82cd70c0d2cd2f5a3027b8a</Hash>
+    <Hash>f0056d7eb4f5084bccf63ab45cbae68c</Hash>
 </Codenesium>*/

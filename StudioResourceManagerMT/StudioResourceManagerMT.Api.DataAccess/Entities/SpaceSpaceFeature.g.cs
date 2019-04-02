@@ -14,18 +14,22 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int spaceId,
-			int spaceFeatureId)
+			int id,
+			int spaceFeatureId,
+			int spaceId)
 		{
-			this.SpaceId = spaceId;
+			this.Id = id;
 			this.SpaceFeatureId = spaceFeatureId;
+			this.SpaceId = spaceId;
 		}
 
 		[Key]
+		[Column("id")]
+		public virtual int Id { get; private set; }
+
 		[Column("spaceFeatureId")]
 		public virtual int SpaceFeatureId { get; private set; }
 
-		[Key]
 		[Column("spaceId")]
 		public virtual int SpaceId { get; private set; }
 
@@ -48,5 +52,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c4e38823650ee48a2854ca2b2ba1d9f5</Hash>
+    <Hash>3ee6a77fa00ebaa04f915ab6b8d74054</Hash>
 </Codenesium>*/

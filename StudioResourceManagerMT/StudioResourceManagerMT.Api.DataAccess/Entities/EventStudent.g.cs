@@ -14,18 +14,22 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int eventId,
 			int studentId)
 		{
+			this.Id = id;
 			this.EventId = eventId;
 			this.StudentId = studentId;
 		}
 
-		[Key]
 		[Column("eventId")]
 		public virtual int EventId { get; private set; }
 
 		[Key]
+		[Column("id")]
+		public virtual int Id { get; private set; }
+
 		[Column("studentId")]
 		public virtual int StudentId { get; private set; }
 
@@ -48,5 +52,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54c567509fd69ae161cd4cb554db4abf</Hash>
+    <Hash>8c2c1f1b21b5107f0ddc275f7edec236</Hash>
 </Codenesium>*/

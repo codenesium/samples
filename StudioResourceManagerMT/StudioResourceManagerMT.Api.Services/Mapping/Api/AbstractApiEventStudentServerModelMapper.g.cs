@@ -9,11 +9,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public abstract class AbstractApiEventStudentServerModelMapper
 	{
 		public virtual ApiEventStudentServerResponseModel MapServerRequestToResponse(
-			int eventId,
+			int id,
 			ApiEventStudentServerRequestModel request)
 		{
 			var response = new ApiEventStudentServerResponseModel();
-			response.SetProperties(eventId,
+			response.SetProperties(id,
+			                       request.EventId,
 			                       request.StudentId);
 			return response;
 		}
@@ -23,6 +24,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var request = new ApiEventStudentServerRequestModel();
 			request.SetProperties(
+				response.EventId,
 				response.StudentId);
 			return request;
 		}
@@ -32,6 +34,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var request = new ApiEventStudentClientRequestModel();
 			request.SetProperties(
+				response.EventId,
 				response.StudentId);
 			return request;
 		}
@@ -39,6 +42,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		public JsonPatchDocument<ApiEventStudentServerRequestModel> CreatePatch(ApiEventStudentServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiEventStudentServerRequestModel>();
+			patch.Replace(x => x.EventId, model.EventId);
 			patch.Replace(x => x.StudentId, model.StudentId);
 			return patch;
 		}
@@ -46,5 +50,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ba73b6bc5f951899ff1b11dee0e8675</Hash>
+    <Hash>bb1c05ecd2c4fa46094880147f026e9a</Hash>
 </Codenesium>*/

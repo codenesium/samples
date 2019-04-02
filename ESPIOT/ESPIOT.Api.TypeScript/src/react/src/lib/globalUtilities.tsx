@@ -38,7 +38,7 @@ export const logError = (error:any) => {
   console.log(error);
   if(error.response && error.response.status)
   {
-    if(error.response.status == 401)
+    if(error.response.status === 401)
     {
         window.location.href = Constants.HostedUrl + AuthClientRoutes.Login;
     }

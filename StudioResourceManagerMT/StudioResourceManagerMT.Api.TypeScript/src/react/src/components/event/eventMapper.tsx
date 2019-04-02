@@ -1,6 +1,6 @@
 import * as Api from '../../api/models';
 import EventViewModel from './eventViewModel';
-import EventStatuViewModel from '../eventStatu/eventStatuViewModel';
+import EventStatusViewModel from '../eventStatus/eventStatusViewModel';
 export default class EventMapper {
   mapApiResponseToViewModel(dto: Api.EventClientResponseModel): EventViewModel {
     let response = new EventViewModel();
@@ -12,12 +12,12 @@ export default class EventMapper {
       dto.id,
       dto.scheduledEndDate,
       dto.scheduledStartDate,
-      dto.studentNote,
-      dto.teacherNote
+      dto.studentNotes,
+      dto.teacherNotes
     );
 
     if (dto.eventStatusIdNavigation != null) {
-      response.eventStatusIdNavigation = new EventStatuViewModel();
+      response.eventStatusIdNavigation = new EventStatusViewModel();
       response.eventStatusIdNavigation.setProperties(
         dto.eventStatusIdNavigation.id,
         dto.eventStatusIdNavigation.name
@@ -37,8 +37,8 @@ export default class EventMapper {
       model.id,
       model.scheduledEndDate,
       model.scheduledStartDate,
-      model.studentNote,
-      model.teacherNote
+      model.studentNotes,
+      model.teacherNotes
     );
     return response;
   }
@@ -46,5 +46,5 @@ export default class EventMapper {
 
 
 /*<Codenesium>
-    <Hash>f789182d16f8813a41c81e65954122a1</Hash>
+    <Hash>b6db3b131602c89e143bf3364c38002e</Hash>
 </Codenesium>*/

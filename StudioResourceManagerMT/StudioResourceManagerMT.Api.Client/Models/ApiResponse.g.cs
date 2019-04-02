@@ -15,7 +15,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 		{
 			from.Admins.ForEach(x => this.AddAdmin(x));
 			from.Events.ForEach(x => this.AddEvent(x));
-			from.EventStatus.ForEach(x => this.AddEventStatu(x));
+			from.EventStatus.ForEach(x => this.AddEventStatus(x));
 			from.EventStudents.ForEach(x => this.AddEventStudent(x));
 			from.EventTeachers.ForEach(x => this.AddEventTeacher(x));
 			from.Families.ForEach(x => this.AddFamily(x));
@@ -35,7 +35,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		public List<ApiEventClientResponseModel> Events { get; private set; } = new List<ApiEventClientResponseModel>();
 
-		public List<ApiEventStatuClientResponseModel> EventStatus { get; private set; } = new List<ApiEventStatuClientResponseModel>();
+		public List<ApiEventStatusClientResponseModel> EventStatus { get; private set; } = new List<ApiEventStatusClientResponseModel>();
 
 		public List<ApiEventStudentClientResponseModel> EventStudents { get; private set; } = new List<ApiEventStudentClientResponseModel>();
 
@@ -79,7 +79,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 			}
 		}
 
-		public void AddEventStatu(ApiEventStatuClientResponseModel item)
+		public void AddEventStatus(ApiEventStatusClientResponseModel item)
 		{
 			if (!this.EventStatus.Any(x => x.Id == item.Id))
 			{
@@ -89,7 +89,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		public void AddEventStudent(ApiEventStudentClientResponseModel item)
 		{
-			if (!this.EventStudents.Any(x => x.EventId == item.EventId))
+			if (!this.EventStudents.Any(x => x.Id == item.Id))
 			{
 				this.EventStudents.Add(item);
 			}
@@ -97,7 +97,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		public void AddEventTeacher(ApiEventTeacherClientResponseModel item)
 		{
-			if (!this.EventTeachers.Any(x => x.EventId == item.EventId))
+			if (!this.EventTeachers.Any(x => x.Id == item.Id))
 			{
 				this.EventTeachers.Add(item);
 			}
@@ -137,7 +137,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		public void AddSpaceSpaceFeature(ApiSpaceSpaceFeatureClientResponseModel item)
 		{
-			if (!this.SpaceSpaceFeatures.Any(x => x.SpaceId == item.SpaceId))
+			if (!this.SpaceSpaceFeatures.Any(x => x.Id == item.Id))
 			{
 				this.SpaceSpaceFeatures.Add(item);
 			}
@@ -177,7 +177,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 
 		public void AddTeacherTeacherSkill(ApiTeacherTeacherSkillClientResponseModel item)
 		{
-			if (!this.TeacherTeacherSkills.Any(x => x.TeacherId == item.TeacherId))
+			if (!this.TeacherTeacherSkills.Any(x => x.Id == item.Id))
 			{
 				this.TeacherTeacherSkills.Add(item);
 			}
@@ -194,5 +194,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>8c1d4b25e44072c9beca846d5aa905e7</Hash>
+    <Hash>5472bcb88b4c4e8404cb73e0f8b7c07e</Hash>
 </Codenesium>*/

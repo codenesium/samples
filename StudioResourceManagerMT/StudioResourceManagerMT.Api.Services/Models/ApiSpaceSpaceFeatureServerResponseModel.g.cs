@@ -9,12 +9,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public partial class ApiSpaceSpaceFeatureServerResponseModel : AbstractApiServerResponseModel
 	{
 		public virtual void SetProperties(
-			int spaceId,
-			int spaceFeatureId)
+			int id,
+			int spaceFeatureId,
+			int spaceId)
 		{
-			this.SpaceId = spaceId;
+			this.Id = id;
 			this.SpaceFeatureId = spaceFeatureId;
+			this.SpaceId = spaceId;
 		}
+
+		[JsonProperty]
+		public int Id { get; private set; }
 
 		[JsonProperty]
 		public int SpaceFeatureId { get; private set; }
@@ -47,5 +52,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>25487a77c5b64b038e30ce490094541c</Hash>
+    <Hash>09a44583839848df7821d4a5258870a1</Hash>
 </Codenesium>*/

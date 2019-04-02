@@ -9,7 +9,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public partial interface IApiSpaceSpaceFeatureServerModelMapper
 	{
 		ApiSpaceSpaceFeatureServerResponseModel MapServerRequestToResponse(
-			int spaceId,
+			int id,
 			ApiSpaceSpaceFeatureServerRequestModel request);
 
 		ApiSpaceSpaceFeatureServerRequestModel MapServerResponseToRequest(
@@ -23,5 +23,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bc44b70ab126282039e8a0e8c478e66</Hash>
+    <Hash>92c6b2c09230e1d4cb83cea42d3b0e27</Hash>
 </Codenesium>*/

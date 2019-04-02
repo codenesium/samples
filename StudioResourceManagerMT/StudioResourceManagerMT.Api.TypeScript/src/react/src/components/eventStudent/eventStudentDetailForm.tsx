@@ -36,7 +36,7 @@ class EventStudentDetailComponent extends React.Component<
 
   handleEditClick(e: any) {
     this.props.history.push(
-      ClientRoutes.EventStudents + '/edit/' + this.state.model!.eventId
+      ClientRoutes.EventStudents + '/edit/' + this.state.model!.id
     );
   }
 
@@ -107,6 +107,15 @@ class EventStudentDetailComponent extends React.Component<
           </Button>
           <div>
             <div style={{ marginBottom: '10px' }}>
+              <h3>Event</h3>
+              <p>
+                {String(
+                  this.state.model!.eventIdNavigation &&
+                    this.state.model!.eventIdNavigation!.toDisplay()
+                )}
+              </p>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
               <h3>Student</h3>
               <p>
                 {String(
@@ -131,5 +140,5 @@ export const WrappedEventStudentDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>479167fb8195652a42063e37f182b590</Hash>
+    <Hash>9972323e7cce082de57e65c7a764e758</Hash>
 </Codenesium>*/

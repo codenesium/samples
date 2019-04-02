@@ -8,7 +8,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 	public partial interface IApiTeacherTeacherSkillModelMapper
 	{
 		ApiTeacherTeacherSkillClientResponseModel MapClientRequestToResponse(
-			int teacherId,
+			int id,
 			ApiTeacherTeacherSkillClientRequestModel request);
 
 		ApiTeacherTeacherSkillClientRequestModel MapClientResponseToRequest(
@@ -17,5 +17,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9522e6aa21ecb6384b8c62da0d9bfa85</Hash>
+    <Hash>c4d83c1c57e174b800abbfa51b133dae</Hash>
 </Codenesium>*/

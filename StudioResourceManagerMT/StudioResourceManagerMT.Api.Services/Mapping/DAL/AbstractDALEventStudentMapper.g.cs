@@ -8,13 +8,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public abstract class AbstractDALEventStudentMapper
 	{
 		public virtual EventStudent MapModelToEntity(
-			int eventId,
+			int id,
 			ApiEventStudentServerRequestModel model
 			)
 		{
 			EventStudent item = new EventStudent();
 			item.SetProperties(
-				eventId,
+				id,
+				model.EventId,
 				model.StudentId);
 			return item;
 		}
@@ -24,7 +25,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var model = new ApiEventStudentServerResponseModel();
 
-			model.SetProperties(item.EventId,
+			model.SetProperties(item.Id,
+			                    item.EventId,
 			                    item.StudentId);
 			if (item.EventIdNavigation != null)
 			{
@@ -37,8 +39,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 					item.EventIdNavigation.EventStatusId,
 					item.EventIdNavigation.ScheduledEndDate,
 					item.EventIdNavigation.ScheduledStartDate,
-					item.EventIdNavigation.StudentNote,
-					item.EventIdNavigation.TeacherNote);
+					item.EventIdNavigation.StudentNotes,
+					item.EventIdNavigation.TeacherNotes);
 
 				model.SetEventIdNavigation(eventIdModel);
 			}
@@ -81,5 +83,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7c2d9e0a575ac103f293d7ccb74a5e18</Hash>
+    <Hash>475ed58980deaebb8e2feb43578ba06a</Hash>
 </Codenesium>*/

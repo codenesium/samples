@@ -40,7 +40,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void EventStatusIdRules()
 		{
-			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatuByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatusByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ScheduledEndDateRules()
@@ -51,19 +51,19 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 		}
 
-		public virtual void StudentNoteRules()
+		public virtual void StudentNotesRules()
 		{
-			this.RuleFor(x => x.StudentNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.StudentNotes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void TeacherNoteRules()
+		public virtual void TeacherNotesRules()
 		{
-			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.TeacherNotes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		protected async Task<bool> BeValidEventStatuByEventStatusId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidEventStatusByEventStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.EventRepository.EventStatuByEventStatusId(id);
+			var record = await this.EventRepository.EventStatusByEventStatusId(id);
 
 			return record != null;
 		}
@@ -71,5 +71,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b3156fcca796b364bef5b187157b66b</Hash>
+    <Hash>dd5553823266dc9ec989a5cd1864da0e</Hash>
 </Codenesium>*/

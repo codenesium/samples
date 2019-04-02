@@ -16,9 +16,10 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		{
 			var mapper = new ApiEventStudentServerModelMapper();
 			var model = new ApiEventStudentServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			ApiEventStudentServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
+			response.EventId.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 
@@ -27,9 +28,10 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		{
 			var mapper = new ApiEventStudentServerModelMapper();
 			var model = new ApiEventStudentServerResponseModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiEventStudentServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
+			response.EventId.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 
@@ -38,16 +40,17 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		{
 			var mapper = new ApiEventStudentServerModelMapper();
 			var model = new ApiEventStudentServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 
 			JsonPatchDocument<ApiEventStudentServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiEventStudentServerRequestModel();
 			patch.ApplyTo(response);
+			response.EventId.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9bb691ec7c8f6e5b290d200ed908b86</Hash>
+    <Hash>2f53d93a4b6a664fa289e913d14b2d05</Hash>
 </Codenesium>*/

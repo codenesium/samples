@@ -73,11 +73,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.EventId);
+			var record = await repository.Get(entity.Id);
 
 			record.Should().NotBeNull();
 		}
@@ -90,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 
 			var entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<EventTeacher>().ToListAsync();
@@ -105,11 +105,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventTeacherRepositoryMoc.GetContext();
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.EventId);
+			var record = await repository.Get(entity.Id);
 
 			await repository.Update(record);
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventTeacherRepositoryMoc.GetContext();
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,11 +145,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventTeacherRepositoryMoc.GetContext();
 			var repository = new EventTeacherRepository(loggerMoc.Object, context);
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<EventTeacher>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Delete(entity.EventId);
+			await repository.Delete(entity.Id);
 
 			var records = await context.Set<EventTeacher>().ToListAsync();
 
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a70e8b675d984072b627b905d7b8737e</Hash>
+    <Hash>4968c4f97eb501212989f99d3cfcb098</Hash>
 </Codenesium>*/

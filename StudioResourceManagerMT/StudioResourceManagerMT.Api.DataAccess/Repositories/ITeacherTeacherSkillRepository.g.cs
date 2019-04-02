@@ -11,9 +11,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		Task Update(TeacherTeacherSkill item);
 
-		Task Delete(int teacherId);
+		Task Delete(int id);
 
-		Task<TeacherTeacherSkill> Get(int teacherId);
+		Task<TeacherTeacherSkill> Get(int id);
 
 		Task<List<TeacherTeacherSkill>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
@@ -24,5 +24,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>806aec5a8379f8b73a0f2d93f9bc51f8</Hash>
+    <Hash>79e708cef81a2c37c8cf92b159744cf4</Hash>
 </Codenesium>*/

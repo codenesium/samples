@@ -16,12 +16,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 		public async Task<ValidationResult> ValidateCreateAsync(ApiSpaceSpaceFeatureServerRequestModel model)
 		{
 			this.SpaceFeatureIdRules();
+			this.SpaceIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceSpaceFeatureServerRequestModel model)
 		{
 			this.SpaceFeatureIdRules();
+			this.SpaceIdRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -33,5 +35,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>568b1336d613c606a4959caf9ff64a06</Hash>
+    <Hash>4247b9c74cea6102454e73eb4ddd1b4f</Hash>
 </Codenesium>*/

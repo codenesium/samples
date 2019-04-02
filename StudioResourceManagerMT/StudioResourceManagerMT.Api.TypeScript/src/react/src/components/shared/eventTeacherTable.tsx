@@ -36,13 +36,11 @@ export class EventTeacherTableComponent extends React.Component<
   };
 
   handleEditClick(e: any, row: EventTeacherViewModel) {
-    this.props.history.push(
-      ClientRoutes.EventTeachers + '/edit/' + row.eventId
-    );
+    this.props.history.push(ClientRoutes.EventTeachers + '/edit/' + row.id);
   }
 
   handleDetailClick(e: any, row: EventTeacherViewModel) {
-    this.props.history.push(ClientRoutes.EventTeachers + '/' + row.eventId);
+    this.props.history.push(ClientRoutes.EventTeachers + '/' + row.id);
   }
 
   componentDidMount() {
@@ -117,6 +115,28 @@ export class EventTeacherTableComponent extends React.Component<
                 Header: 'EventTeachers',
                 columns: [
                   {
+                    Header: 'Event',
+                    accessor: 'eventId',
+                    Cell: props => {
+                      return (
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.history.push(
+                              ClientRoutes.Events + '/' + props.original.eventId
+                            );
+                          }}
+                        >
+                          {String(
+                            props.original.eventIdNavigation &&
+                              props.original.eventIdNavigation.toDisplay()
+                          )}
+                        </a>
+                      );
+                    },
+                  },
+                  {
                     Header: 'Teacher',
                     accessor: 'teacherId',
                     Cell: props => {
@@ -185,5 +205,5 @@ export class EventTeacherTableComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>cb162c6886417f55617fd09f2db2a413</Hash>
+    <Hash>6ebaf0e056ca604b03a9f0bba132dc30</Hash>
 </Codenesium>*/

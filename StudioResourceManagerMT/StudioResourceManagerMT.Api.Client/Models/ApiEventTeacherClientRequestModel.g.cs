@@ -15,10 +15,15 @@ namespace StudioResourceManagerMTNS.Api.Client
 		}
 
 		public virtual void SetProperties(
+			int eventId,
 			int teacherId)
 		{
+			this.EventId = eventId;
 			this.TeacherId = teacherId;
 		}
+
+		[JsonProperty]
+		public int EventId { get; private set; }
 
 		[JsonProperty]
 		public int TeacherId { get; private set; }
@@ -26,5 +31,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a1aa363ea12af6e1bd72a4b66724837a</Hash>
+    <Hash>0e2554413a289cb661686d2acd43e404</Hash>
 </Codenesium>*/

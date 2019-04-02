@@ -9,12 +9,13 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public abstract class AbstractApiSpaceSpaceFeatureServerModelMapper
 	{
 		public virtual ApiSpaceSpaceFeatureServerResponseModel MapServerRequestToResponse(
-			int spaceId,
+			int id,
 			ApiSpaceSpaceFeatureServerRequestModel request)
 		{
 			var response = new ApiSpaceSpaceFeatureServerResponseModel();
-			response.SetProperties(spaceId,
-			                       request.SpaceFeatureId);
+			response.SetProperties(id,
+			                       request.SpaceFeatureId,
+			                       request.SpaceId);
 			return response;
 		}
 
@@ -23,7 +24,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var request = new ApiSpaceSpaceFeatureServerRequestModel();
 			request.SetProperties(
-				response.SpaceFeatureId);
+				response.SpaceFeatureId,
+				response.SpaceId);
 			return request;
 		}
 
@@ -32,7 +34,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var request = new ApiSpaceSpaceFeatureClientRequestModel();
 			request.SetProperties(
-				response.SpaceFeatureId);
+				response.SpaceFeatureId,
+				response.SpaceId);
 			return request;
 		}
 
@@ -40,11 +43,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var patch = new JsonPatchDocument<ApiSpaceSpaceFeatureServerRequestModel>();
 			patch.Replace(x => x.SpaceFeatureId, model.SpaceFeatureId);
+			patch.Replace(x => x.SpaceId, model.SpaceId);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9aab38412daeee958a56cd3097b2aac</Hash>
+    <Hash>a931e1c205b90b89a8b1c2ea51674a8b</Hash>
 </Codenesium>*/

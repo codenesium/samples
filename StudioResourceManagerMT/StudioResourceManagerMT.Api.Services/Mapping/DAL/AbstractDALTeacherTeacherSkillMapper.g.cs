@@ -8,13 +8,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public abstract class AbstractDALTeacherTeacherSkillMapper
 	{
 		public virtual TeacherTeacherSkill MapModelToEntity(
-			int teacherId,
+			int id,
 			ApiTeacherTeacherSkillServerRequestModel model
 			)
 		{
 			TeacherTeacherSkill item = new TeacherTeacherSkill();
 			item.SetProperties(
-				teacherId,
+				id,
+				model.TeacherId,
 				model.TeacherSkillId);
 			return item;
 		}
@@ -24,7 +25,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var model = new ApiTeacherTeacherSkillServerResponseModel();
 
-			model.SetProperties(item.TeacherId,
+			model.SetProperties(item.Id,
+			                    item.TeacherId,
 			                    item.TeacherSkillId);
 			if (item.TeacherIdNavigation != null)
 			{
@@ -70,5 +72,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>21d07dd0cd6501705d5d9626bf45e267</Hash>
+    <Hash>1c14e1a67e3a4f108a80c535f978ae3c</Hash>
 </Codenesium>*/

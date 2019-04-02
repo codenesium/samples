@@ -3,6 +3,7 @@ import TeacherViewModel from '../teacher/teacherViewModel';
 import TeacherSkillViewModel from '../teacherSkill/teacherSkillViewModel';
 
 export default class TeacherTeacherSkillViewModel {
+  id: number;
   teacherId: number;
   teacherIdEntity: string;
   teacherIdNavigation?: TeacherViewModel;
@@ -11,6 +12,7 @@ export default class TeacherTeacherSkillViewModel {
   teacherSkillIdNavigation?: TeacherSkillViewModel;
 
   constructor() {
+    this.id = 0;
     this.teacherId = 0;
     this.teacherIdEntity = '';
     this.teacherIdNavigation = undefined;
@@ -19,7 +21,8 @@ export default class TeacherTeacherSkillViewModel {
     this.teacherSkillIdNavigation = undefined;
   }
 
-  setProperties(teacherId: number, teacherSkillId: number): void {
+  setProperties(id: number, teacherId: number, teacherSkillId: number): void {
+    this.id = id;
     this.teacherId = teacherId;
     this.teacherSkillId = teacherSkillId;
   }
@@ -31,5 +34,5 @@ export default class TeacherTeacherSkillViewModel {
 
 
 /*<Codenesium>
-    <Hash>5e222c1cb8a3fe0f64395906fb5371d0</Hash>
+    <Hash>dd46232e096c72a3cb80e86ae2181ee3</Hash>
 </Codenesium>*/

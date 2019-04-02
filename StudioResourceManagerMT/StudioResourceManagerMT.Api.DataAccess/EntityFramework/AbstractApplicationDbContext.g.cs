@@ -37,7 +37,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		public virtual DbSet<Event> Events { get; set; }
 
-		public virtual DbSet<EventStatu> EventStatus { get; set; }
+		public virtual DbSet<EventStatus> EventStatus { get; set; }
 
 		public virtual DbSet<EventStudent> EventStudents { get; set; }
 
@@ -129,13 +129,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<EventStatu>()
+			modelBuilder.Entity<EventStatus>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<EventStatu>()
+			modelBuilder.Entity<EventStatus>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -143,16 +143,24 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			modelBuilder.Entity<EventStudent>()
 			.HasKey(c => new
 			{
-				c.EventId,
-				c.StudentId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<EventStudent>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<EventTeacher>()
 			.HasKey(c => new
 			{
-				c.EventId,
-				c.TeacherId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<EventTeacher>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Family>()
 			.HasKey(c => new
@@ -201,9 +209,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			modelBuilder.Entity<SpaceSpaceFeature>()
 			.HasKey(c => new
 			{
-				c.SpaceId,
-				c.SpaceFeatureId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<SpaceSpaceFeature>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Student>()
 			.HasKey(c => new
@@ -252,9 +264,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			modelBuilder.Entity<TeacherTeacherSkill>()
 			.HasKey(c => new
 			{
-				c.TeacherId,
-				c.TeacherSkillId,
+				c.Id,
 			});
+
+			modelBuilder.Entity<TeacherTeacherSkill>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Tenant>()
 			.HasKey(c => new
@@ -281,7 +297,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 			modelBuilder.Entity<Admin>().HasQueryFilter(x => x.TenantId == this.TenantId && !x.IsDeleted);
 			modelBuilder.Entity<Event>().HasQueryFilter(x => x.TenantId == this.TenantId && !x.IsDeleted);
-			modelBuilder.Entity<EventStatu>().HasQueryFilter(x => x.TenantId == this.TenantId && !x.IsDeleted);
+			modelBuilder.Entity<EventStatus>().HasQueryFilter(x => x.TenantId == this.TenantId && !x.IsDeleted);
 			modelBuilder.Entity<EventStudent>().HasQueryFilter(x => x.TenantId == this.TenantId && !x.IsDeleted);
 			modelBuilder.Entity<EventTeacher>().HasQueryFilter(x => x.TenantId == this.TenantId && !x.IsDeleted);
 			modelBuilder.Entity<Family>().HasQueryFilter(x => x.TenantId == this.TenantId && !x.IsDeleted);
@@ -326,5 +342,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3e00367e30d1dfef5aad2322683c7982</Hash>
+    <Hash>31d1239a0d8af1b3a3f82270b6ec1046</Hash>
 </Codenesium>*/

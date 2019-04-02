@@ -26,16 +26,16 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			eventItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 			this.Context.Events.Add(eventItem1);
 
-			var eventStatuItem1 = new EventStatu();
-			eventStatuItem1.SetProperties(1, "A");
-			this.Context.EventStatus.Add(eventStatuItem1);
+			var eventStatusItem1 = new EventStatus();
+			eventStatusItem1.SetProperties(1, "A");
+			this.Context.EventStatus.Add(eventStatusItem1);
 
 			var eventStudentItem1 = new EventStudent();
-			eventStudentItem1.SetProperties(1, 1);
+			eventStudentItem1.SetProperties(1, 1, 1);
 			this.Context.EventStudents.Add(eventStudentItem1);
 
 			var eventTeacherItem1 = new EventTeacher();
-			eventTeacherItem1.SetProperties(1, 1);
+			eventTeacherItem1.SetProperties(1, 1, 1);
 			this.Context.EventTeachers.Add(eventTeacherItem1);
 
 			var familyItem1 = new Family();
@@ -55,7 +55,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context.SpaceFeatures.Add(spaceFeatureItem1);
 
 			var spaceSpaceFeatureItem1 = new SpaceSpaceFeature();
-			spaceSpaceFeatureItem1.SetProperties(1, 1);
+			spaceSpaceFeatureItem1.SetProperties(1, 1, 1);
 			this.Context.SpaceSpaceFeatures.Add(spaceSpaceFeatureItem1);
 
 			var studentItem1 = new Student();
@@ -75,7 +75,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context.TeacherSkills.Add(teacherSkillItem1);
 
 			var teacherTeacherSkillItem1 = new TeacherTeacherSkill();
-			teacherTeacherSkillItem1.SetProperties(1, 1);
+			teacherTeacherSkillItem1.SetProperties(1, 1, 1);
 			this.Context.TeacherTeacherSkills.Add(teacherTeacherSkillItem1);
 
 			var userItem1 = new User();
@@ -88,5 +88,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>afd92e118d28e2f2e39ff476f2ff481a</Hash>
+    <Hash>2edbb91a6fc6b4f0297e3654fab4b499</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			int eventStatusId,
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
-			string studentNote,
-			string teacherNote)
+			string studentNotes,
+			string teacherNotes)
 		{
 			this.Id = id;
 			this.ActualEndDate = actualEndDate;
@@ -26,8 +26,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.EventStatusId = eventStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.StudentNote = studentNote;
-			this.TeacherNote = teacherNote;
+			this.StudentNotes = studentNotes;
+			this.TeacherNotes = teacherNotes;
 		}
 
 		[Required]
@@ -49,9 +49,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 		public string EventStatusIdEntity { get; private set; } = RouteConstants.EventStatus;
 
 		[JsonProperty]
-		public ApiEventStatuServerResponseModel EventStatusIdNavigation { get; private set; }
+		public ApiEventStatusServerResponseModel EventStatusIdNavigation { get; private set; }
 
-		public void SetEventStatusIdNavigation(ApiEventStatuServerResponseModel value)
+		public void SetEventStatusIdNavigation(ApiEventStatusServerResponseModel value)
 		{
 			this.EventStatusIdNavigation = value;
 		}
@@ -69,14 +69,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string StudentNote { get; private set; }
+		public string StudentNotes { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public string TeacherNote { get; private set; }
+		public string TeacherNotes { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>04e2fc0ff1871010da877626b03cb89b</Hash>
+    <Hash>4682ab1d44e339fc578bbf4ac0203f9c</Hash>
 </Codenesium>*/

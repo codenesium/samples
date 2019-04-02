@@ -7,7 +7,7 @@ export default class FamilyMapper {
     let response = new FamilyViewModel();
     response.setProperties(
       dto.id,
-      dto.note,
+      dto.notes,
       dto.primaryContactEmail,
       dto.primaryContactFirstName,
       dto.primaryContactLastName,
@@ -23,7 +23,7 @@ export default class FamilyMapper {
     let response = new Api.FamilyClientRequestModel();
     response.setProperties(
       model.id,
-      model.note,
+      model.notes,
       model.primaryContactEmail,
       model.primaryContactFirstName,
       model.primaryContactLastName,
@@ -35,5 +35,5 @@ export default class FamilyMapper {
 
 
 /*<Codenesium>
-    <Hash>c649e9bb8b9c59072ff217680ede2c60</Hash>
+    <Hash>617ffefbb24158469e9e0ff565df8277</Hash>
 </Codenesium>*/

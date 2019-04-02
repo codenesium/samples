@@ -15,9 +15,10 @@ namespace StudioResourceManagerMTNS.Api.Client.Tests
 		{
 			var mapper = new ApiEventStudentModelMapper();
 			var model = new ApiEventStudentClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			ApiEventStudentClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
+			response.EventId.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 
@@ -26,14 +27,15 @@ namespace StudioResourceManagerMTNS.Api.Client.Tests
 		{
 			var mapper = new ApiEventStudentModelMapper();
 			var model = new ApiEventStudentClientResponseModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiEventStudentClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
+			response.EventId.Should().Be(1);
 			response.StudentId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ba775497443ca20a5c63c470830ff7d</Hash>
+    <Hash>43336da8e7f9b5b9d90019cd8a1ea703</Hash>
 </Codenesium>*/

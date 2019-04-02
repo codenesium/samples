@@ -1,0 +1,7 @@
+{
+    "parser": "eslint-plugin-typescript/parser",
+    "plugins": ["typescript"],
+    "rules": {
+        "no-unused-vars": "off"
+    }
+}

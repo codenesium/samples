@@ -8,7 +8,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public partial interface IDALSpaceSpaceFeatureMapper
 	{
 		SpaceSpaceFeature MapModelToEntity(
-			int spaceId,
+			int id,
 			ApiSpaceSpaceFeatureServerRequestModel model);
 
 		ApiSpaceSpaceFeatureServerResponseModel MapEntityToModel(
@@ -20,5 +20,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>434385e05f2baffc59c3029551b1fd70</Hash>
+    <Hash>c24a78e3211a24a01d4d389001032d90</Hash>
 </Codenesium>*/

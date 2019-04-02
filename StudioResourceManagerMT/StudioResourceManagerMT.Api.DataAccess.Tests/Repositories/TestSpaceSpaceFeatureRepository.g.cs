@@ -73,11 +73,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new SpaceSpaceFeatureRepository(loggerMoc.Object, context);
 
 			SpaceSpaceFeature entity = new SpaceSpaceFeature();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SpaceSpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.SpaceId);
+			var record = await repository.Get(entity.Id);
 
 			record.Should().NotBeNull();
 		}
@@ -90,7 +90,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new SpaceSpaceFeatureRepository(loggerMoc.Object, context);
 
 			var entity = new SpaceSpaceFeature();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<SpaceSpaceFeature>().ToListAsync();
@@ -105,11 +105,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = SpaceSpaceFeatureRepositoryMoc.GetContext();
 			var repository = new SpaceSpaceFeatureRepository(loggerMoc.Object, context);
 			SpaceSpaceFeature entity = new SpaceSpaceFeature();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SpaceSpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.SpaceId);
+			var record = await repository.Get(entity.Id);
 
 			await repository.Update(record);
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = SpaceSpaceFeatureRepositoryMoc.GetContext();
 			var repository = new SpaceSpaceFeatureRepository(loggerMoc.Object, context);
 			SpaceSpaceFeature entity = new SpaceSpaceFeature();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SpaceSpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -145,11 +145,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = SpaceSpaceFeatureRepositoryMoc.GetContext();
 			var repository = new SpaceSpaceFeatureRepository(loggerMoc.Object, context);
 			SpaceSpaceFeature entity = new SpaceSpaceFeature();
-			entity.SetProperties(default(int), 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SpaceSpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Delete(entity.SpaceId);
+			await repository.Delete(entity.Id);
 
 			var records = await context.Set<SpaceSpaceFeature>().ToListAsync();
 
@@ -174,5 +174,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4a0f44a93dc055fe3fc50da3eb626ff8</Hash>
+    <Hash>acb57ad09e5dcd8228e322ae4a4eb7c4</Hash>
 </Codenesium>*/

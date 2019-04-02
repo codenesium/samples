@@ -106,7 +106,7 @@ export class EventTeacherSelectComponent extends React.Component<
             <Select>
               {this.state.filteredRecords.map((x: EventTeacherViewModel) => {
                 return (
-                  <Select.Option key={String(x.eventId)} value={x.eventId}>
+                  <Select.Option key={String(x.id)} value={x.id}>
                     {x.toDisplay()}
                   </Select.Option>
                 );
@@ -123,5 +123,5 @@ export class EventTeacherSelectComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3a1fcb1625ad5897262f135e6f29c50f</Hash>
+    <Hash>32b0f7d4236f4835b0a8ba07c7b5ae76</Hash>
 </Codenesium>*/

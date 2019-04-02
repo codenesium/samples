@@ -15,7 +15,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiFamilyServerRequestModel model)
 		{
-			this.NoteRules();
+			this.NotesRules();
 			this.PrimaryContactEmailRules();
 			this.PrimaryContactFirstNameRules();
 			this.PrimaryContactLastNameRules();
@@ -25,7 +25,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiFamilyServerRequestModel model)
 		{
-			this.NoteRules();
+			this.NotesRules();
 			this.PrimaryContactEmailRules();
 			this.PrimaryContactFirstNameRules();
 			this.PrimaryContactLastNameRules();
@@ -41,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec841c3e9eb1a99678fc7eac5895f43a</Hash>
+    <Hash>369cf21c33cb2fb70711a0d51a2e6fe4</Hash>
 </Codenesium>*/

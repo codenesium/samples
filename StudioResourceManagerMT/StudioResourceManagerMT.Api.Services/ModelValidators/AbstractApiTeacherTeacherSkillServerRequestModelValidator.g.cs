@@ -26,6 +26,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
+		public virtual void TeacherIdRules()
+		{
+			this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacherByTeacherId).When(x => !x?.TeacherId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
 		public virtual void TeacherSkillIdRules()
 		{
 			this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkillByTeacherSkillId).When(x => !x?.TeacherSkillId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
@@ -48,5 +53,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3473aa7d4acb78526f387a7548c84fa7</Hash>
+    <Hash>5e428e84f1135f4b4dbae1d79d59261a</Hash>
 </Codenesium>*/

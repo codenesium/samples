@@ -139,11 +139,11 @@ class EventDetailComponent extends React.Component<
             </div>
             <div>
               <h3>Student Notes</h3>
-              <p>{String(this.state.model!.studentNote)}</p>
+              <p>{String(this.state.model!.studentNotes)}</p>
             </div>
             <div>
               <h3>Teacher Notes</h3>
-              <p>{String(this.state.model!.teacherNote)}</p>
+              <p>{String(this.state.model!.teacherNotes)}</p>
             </div>
           </div>
           {message}
@@ -191,5 +191,5 @@ export const WrappedEventDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>f301c82b82f9aacc284e29459c1da8f5</Hash>
+    <Hash>3fc387f7c7d6877cd59cbf6dfc178437</Hash>
 </Codenesium>*/

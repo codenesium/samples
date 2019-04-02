@@ -8,7 +8,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 	public partial interface IApiEventTeacherModelMapper
 	{
 		ApiEventTeacherClientResponseModel MapClientRequestToResponse(
-			int eventId,
+			int id,
 			ApiEventTeacherClientRequestModel request);
 
 		ApiEventTeacherClientRequestModel MapClientResponseToRequest(
@@ -17,5 +17,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>5cae1a6330b4189797feceaa351a8acf</Hash>
+    <Hash>94144719c45a1a816b3825f96363e770</Hash>
 </Codenesium>*/

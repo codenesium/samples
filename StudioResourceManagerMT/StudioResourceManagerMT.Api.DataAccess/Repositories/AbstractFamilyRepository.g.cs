@@ -35,7 +35,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Note.StartsWith(query) ||
+				                  x.Notes.StartsWith(query) ||
 				                  x.PrimaryContactEmail.StartsWith(query) ||
 				                  x.PrimaryContactFirstName.StartsWith(query) ||
 				                  x.PrimaryContactLastName.StartsWith(query) ||
@@ -126,5 +126,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f13aab20762072ca7ab9c79e76155b3c</Hash>
+    <Hash>0a61e366967bec9467ca138ffcf4368d</Hash>
 </Codenesium>*/

@@ -192,9 +192,9 @@ class FamilyEditComponent extends React.Component<
       return (
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            <label htmlFor="note">Notes (optional)</label>
+            <label htmlFor="notes">Notes (optional)</label>
             <br />
-            {getFieldDecorator('note', {
+            {getFieldDecorator('notes', {
               rules: [],
             })(<Input placeholder={'Notes'} />)}
           </Form.Item>
@@ -266,5 +266,5 @@ export const WrappedFamilyEditComponent = Form.create({ name: 'Family Edit' })(
 
 
 /*<Codenesium>
-    <Hash>545af3ea64b229ae95b9ea8a9a47ef95</Hash>
+    <Hash>d39005a2a026649408c5449444dac290</Hash>
 </Codenesium>*/

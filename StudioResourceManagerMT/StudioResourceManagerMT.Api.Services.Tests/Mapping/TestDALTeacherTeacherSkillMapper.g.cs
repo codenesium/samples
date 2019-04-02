@@ -17,9 +17,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALTeacherTeacherSkillMapper();
 			ApiTeacherTeacherSkillServerRequestModel model = new ApiTeacherTeacherSkillServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			TeacherTeacherSkill response = mapper.MapModelToEntity(1, model);
 
+			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
 
@@ -28,9 +29,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALTeacherTeacherSkillMapper();
 			TeacherTeacherSkill item = new TeacherTeacherSkill();
-			item.SetProperties(1, 1);
+			item.SetProperties(1, 1, 1);
 			ApiTeacherTeacherSkillServerResponseModel response = mapper.MapEntityToModel(item);
 
+			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
@@ -40,7 +42,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALTeacherTeacherSkillMapper();
 			TeacherTeacherSkill item = new TeacherTeacherSkill();
-			item.SetProperties(1, 1);
+			item.SetProperties(1, 1, 1);
 			List<ApiTeacherTeacherSkillServerResponseModel> response = mapper.MapEntityToModel(new List<TeacherTeacherSkill>() { { item} });
 
 			response.Count.Should().Be(1);
@@ -49,5 +51,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1708c04fa7b3f499259adc1b08e04268</Hash>
+    <Hash>4132cf081321dcfc1acb01808d0ad75f</Hash>
 </Codenesium>*/

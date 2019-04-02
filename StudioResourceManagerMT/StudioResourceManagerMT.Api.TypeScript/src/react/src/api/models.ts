@@ -87,12 +87,12 @@ export class EventClientRequestModel {
   billAmount: number;
   eventStatusId: number;
   eventStatusIdEntity: string;
-  eventStatusIdNavigation?: EventStatuClientResponseModel;
+  eventStatusIdNavigation?: EventStatusClientResponseModel;
   id: number;
   scheduledEndDate: any;
   scheduledStartDate: any;
-  studentNote: string;
-  teacherNote: string;
+  studentNotes: string;
+  teacherNotes: string;
 
   constructor() {
     this.actualEndDate = undefined;
@@ -104,8 +104,8 @@ export class EventClientRequestModel {
     this.id = 0;
     this.scheduledEndDate = undefined;
     this.scheduledStartDate = undefined;
-    this.studentNote = '';
-    this.teacherNote = '';
+    this.studentNotes = '';
+    this.teacherNotes = '';
   }
 
   setProperties(
@@ -116,8 +116,8 @@ export class EventClientRequestModel {
     id: number,
     scheduledEndDate: any,
     scheduledStartDate: any,
-    studentNote: string,
-    teacherNote: string
+    studentNotes: string,
+    teacherNotes: string
   ): void {
     this.actualEndDate = actualEndDate;
     this.actualStartDate = actualStartDate;
@@ -126,8 +126,8 @@ export class EventClientRequestModel {
     this.id = id;
     this.scheduledEndDate = scheduledEndDate;
     this.scheduledStartDate = scheduledStartDate;
-    this.studentNote = studentNote;
-    this.teacherNote = teacherNote;
+    this.studentNotes = studentNotes;
+    this.teacherNotes = teacherNotes;
   }
 }
 
@@ -137,12 +137,12 @@ export class EventClientResponseModel {
   billAmount: number;
   eventStatusId: number;
   eventStatusIdEntity: string;
-  eventStatusIdNavigation?: EventStatuClientResponseModel;
+  eventStatusIdNavigation?: EventStatusClientResponseModel;
   id: number;
   scheduledEndDate: any;
   scheduledStartDate: any;
-  studentNote: string;
-  teacherNote: string;
+  studentNotes: string;
+  teacherNotes: string;
 
   constructor() {
     this.actualEndDate = undefined;
@@ -154,8 +154,8 @@ export class EventClientResponseModel {
     this.id = 0;
     this.scheduledEndDate = undefined;
     this.scheduledStartDate = undefined;
-    this.studentNote = '';
-    this.teacherNote = '';
+    this.studentNotes = '';
+    this.teacherNotes = '';
   }
 
   setProperties(
@@ -166,8 +166,8 @@ export class EventClientResponseModel {
     id: number,
     scheduledEndDate: any,
     scheduledStartDate: any,
-    studentNote: string,
-    teacherNote: string
+    studentNotes: string,
+    teacherNotes: string
   ): void {
     this.actualEndDate = actualEndDate;
     this.actualStartDate = actualStartDate;
@@ -176,11 +176,11 @@ export class EventClientResponseModel {
     this.id = id;
     this.scheduledEndDate = scheduledEndDate;
     this.scheduledStartDate = scheduledStartDate;
-    this.studentNote = studentNote;
-    this.teacherNote = teacherNote;
+    this.studentNotes = studentNotes;
+    this.teacherNotes = teacherNotes;
   }
 }
-export class EventStatuClientRequestModel {
+export class EventStatusClientRequestModel {
   id: number;
   name: string;
 
@@ -195,7 +195,7 @@ export class EventStatuClientRequestModel {
   }
 }
 
-export class EventStatuClientResponseModel {
+export class EventStatusClientResponseModel {
   id: number;
   name: string;
 
@@ -213,6 +213,7 @@ export class EventStudentClientRequestModel {
   eventId: number;
   eventIdEntity: string;
   eventIdNavigation?: EventClientResponseModel;
+  id: number;
   studentId: number;
   studentIdEntity: string;
   studentIdNavigation?: StudentClientResponseModel;
@@ -221,13 +222,15 @@ export class EventStudentClientRequestModel {
     this.eventId = 0;
     this.eventIdEntity = '';
     this.eventIdNavigation = undefined;
+    this.id = 0;
     this.studentId = 0;
     this.studentIdEntity = '';
     this.studentIdNavigation = undefined;
   }
 
-  setProperties(eventId: number, studentId: number): void {
+  setProperties(eventId: number, id: number, studentId: number): void {
     this.eventId = eventId;
+    this.id = id;
     this.studentId = studentId;
   }
 }
@@ -236,6 +239,7 @@ export class EventStudentClientResponseModel {
   eventId: number;
   eventIdEntity: string;
   eventIdNavigation?: EventClientResponseModel;
+  id: number;
   studentId: number;
   studentIdEntity: string;
   studentIdNavigation?: StudentClientResponseModel;
@@ -244,13 +248,15 @@ export class EventStudentClientResponseModel {
     this.eventId = 0;
     this.eventIdEntity = '';
     this.eventIdNavigation = undefined;
+    this.id = 0;
     this.studentId = 0;
     this.studentIdEntity = '';
     this.studentIdNavigation = undefined;
   }
 
-  setProperties(eventId: number, studentId: number): void {
+  setProperties(eventId: number, id: number, studentId: number): void {
     this.eventId = eventId;
+    this.id = id;
     this.studentId = studentId;
   }
 }
@@ -258,6 +264,7 @@ export class EventTeacherClientRequestModel {
   eventId: number;
   eventIdEntity: string;
   eventIdNavigation?: EventClientResponseModel;
+  id: number;
   teacherId: number;
   teacherIdEntity: string;
   teacherIdNavigation?: TeacherClientResponseModel;
@@ -266,13 +273,15 @@ export class EventTeacherClientRequestModel {
     this.eventId = 0;
     this.eventIdEntity = '';
     this.eventIdNavigation = undefined;
+    this.id = 0;
     this.teacherId = 0;
     this.teacherIdEntity = '';
     this.teacherIdNavigation = undefined;
   }
 
-  setProperties(eventId: number, teacherId: number): void {
+  setProperties(eventId: number, id: number, teacherId: number): void {
     this.eventId = eventId;
+    this.id = id;
     this.teacherId = teacherId;
   }
 }
@@ -281,6 +290,7 @@ export class EventTeacherClientResponseModel {
   eventId: number;
   eventIdEntity: string;
   eventIdNavigation?: EventClientResponseModel;
+  id: number;
   teacherId: number;
   teacherIdEntity: string;
   teacherIdNavigation?: TeacherClientResponseModel;
@@ -289,19 +299,21 @@ export class EventTeacherClientResponseModel {
     this.eventId = 0;
     this.eventIdEntity = '';
     this.eventIdNavigation = undefined;
+    this.id = 0;
     this.teacherId = 0;
     this.teacherIdEntity = '';
     this.teacherIdNavigation = undefined;
   }
 
-  setProperties(eventId: number, teacherId: number): void {
+  setProperties(eventId: number, id: number, teacherId: number): void {
     this.eventId = eventId;
+    this.id = id;
     this.teacherId = teacherId;
   }
 }
 export class FamilyClientRequestModel {
   id: number;
-  note: string;
+  notes: string;
   primaryContactEmail: string;
   primaryContactFirstName: string;
   primaryContactLastName: string;
@@ -309,7 +321,7 @@ export class FamilyClientRequestModel {
 
   constructor() {
     this.id = 0;
-    this.note = '';
+    this.notes = '';
     this.primaryContactEmail = '';
     this.primaryContactFirstName = '';
     this.primaryContactLastName = '';
@@ -318,14 +330,14 @@ export class FamilyClientRequestModel {
 
   setProperties(
     id: number,
-    note: string,
+    notes: string,
     primaryContactEmail: string,
     primaryContactFirstName: string,
     primaryContactLastName: string,
     primaryContactPhone: string
   ): void {
     this.id = id;
-    this.note = note;
+    this.notes = notes;
     this.primaryContactEmail = primaryContactEmail;
     this.primaryContactFirstName = primaryContactFirstName;
     this.primaryContactLastName = primaryContactLastName;
@@ -335,7 +347,7 @@ export class FamilyClientRequestModel {
 
 export class FamilyClientResponseModel {
   id: number;
-  note: string;
+  notes: string;
   primaryContactEmail: string;
   primaryContactFirstName: string;
   primaryContactLastName: string;
@@ -343,7 +355,7 @@ export class FamilyClientResponseModel {
 
   constructor() {
     this.id = 0;
-    this.note = '';
+    this.notes = '';
     this.primaryContactEmail = '';
     this.primaryContactFirstName = '';
     this.primaryContactLastName = '';
@@ -352,14 +364,14 @@ export class FamilyClientResponseModel {
 
   setProperties(
     id: number,
-    note: string,
+    notes: string,
     primaryContactEmail: string,
     primaryContactFirstName: string,
     primaryContactLastName: string,
     primaryContactPhone: string
   ): void {
     this.id = id;
-    this.note = note;
+    this.notes = notes;
     this.primaryContactEmail = primaryContactEmail;
     this.primaryContactFirstName = primaryContactFirstName;
     this.primaryContactLastName = primaryContactLastName;
@@ -498,6 +510,7 @@ export class SpaceFeatureClientResponseModel {
   }
 }
 export class SpaceSpaceFeatureClientRequestModel {
+  id: number;
   spaceFeatureId: number;
   spaceFeatureIdEntity: string;
   spaceFeatureIdNavigation?: SpaceFeatureClientResponseModel;
@@ -506,6 +519,7 @@ export class SpaceSpaceFeatureClientRequestModel {
   spaceIdNavigation?: SpaceClientResponseModel;
 
   constructor() {
+    this.id = 0;
     this.spaceFeatureId = 0;
     this.spaceFeatureIdEntity = '';
     this.spaceFeatureIdNavigation = undefined;
@@ -514,13 +528,15 @@ export class SpaceSpaceFeatureClientRequestModel {
     this.spaceIdNavigation = undefined;
   }
 
-  setProperties(spaceFeatureId: number, spaceId: number): void {
+  setProperties(id: number, spaceFeatureId: number, spaceId: number): void {
+    this.id = id;
     this.spaceFeatureId = spaceFeatureId;
     this.spaceId = spaceId;
   }
 }
 
 export class SpaceSpaceFeatureClientResponseModel {
+  id: number;
   spaceFeatureId: number;
   spaceFeatureIdEntity: string;
   spaceFeatureIdNavigation?: SpaceFeatureClientResponseModel;
@@ -529,6 +545,7 @@ export class SpaceSpaceFeatureClientResponseModel {
   spaceIdNavigation?: SpaceClientResponseModel;
 
   constructor() {
+    this.id = 0;
     this.spaceFeatureId = 0;
     this.spaceFeatureIdEntity = '';
     this.spaceFeatureIdNavigation = undefined;
@@ -537,7 +554,8 @@ export class SpaceSpaceFeatureClientResponseModel {
     this.spaceIdNavigation = undefined;
   }
 
-  setProperties(spaceFeatureId: number, spaceId: number): void {
+  setProperties(id: number, spaceFeatureId: number, spaceId: number): void {
+    this.id = id;
     this.spaceFeatureId = spaceFeatureId;
     this.spaceId = spaceId;
   }
@@ -861,6 +879,7 @@ export class TeacherSkillClientResponseModel {
   }
 }
 export class TeacherTeacherSkillClientRequestModel {
+  id: number;
   teacherId: number;
   teacherIdEntity: string;
   teacherIdNavigation?: TeacherClientResponseModel;
@@ -869,6 +888,7 @@ export class TeacherTeacherSkillClientRequestModel {
   teacherSkillIdNavigation?: TeacherSkillClientResponseModel;
 
   constructor() {
+    this.id = 0;
     this.teacherId = 0;
     this.teacherIdEntity = '';
     this.teacherIdNavigation = undefined;
@@ -877,13 +897,15 @@ export class TeacherTeacherSkillClientRequestModel {
     this.teacherSkillIdNavigation = undefined;
   }
 
-  setProperties(teacherId: number, teacherSkillId: number): void {
+  setProperties(id: number, teacherId: number, teacherSkillId: number): void {
+    this.id = id;
     this.teacherId = teacherId;
     this.teacherSkillId = teacherSkillId;
   }
 }
 
 export class TeacherTeacherSkillClientResponseModel {
+  id: number;
   teacherId: number;
   teacherIdEntity: string;
   teacherIdNavigation?: TeacherClientResponseModel;
@@ -892,6 +914,7 @@ export class TeacherTeacherSkillClientResponseModel {
   teacherSkillIdNavigation?: TeacherSkillClientResponseModel;
 
   constructor() {
+    this.id = 0;
     this.teacherId = 0;
     this.teacherIdEntity = '';
     this.teacherIdNavigation = undefined;
@@ -900,7 +923,8 @@ export class TeacherTeacherSkillClientResponseModel {
     this.teacherSkillIdNavigation = undefined;
   }
 
-  setProperties(teacherId: number, teacherSkillId: number): void {
+  setProperties(id: number, teacherId: number, teacherSkillId: number): void {
+    this.id = id;
     this.teacherId = teacherId;
     this.teacherSkillId = teacherSkillId;
   }
@@ -943,5 +967,5 @@ export class UserClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>410909861a20777616085e65e8bd100b</Hash>
+    <Hash>30614add3f06545b452e9d022ea1c077</Hash>
 </Codenesium>*/

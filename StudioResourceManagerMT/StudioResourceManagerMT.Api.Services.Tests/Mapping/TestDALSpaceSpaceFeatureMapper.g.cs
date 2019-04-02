@@ -17,10 +17,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALSpaceSpaceFeatureMapper();
 			ApiSpaceSpaceFeatureServerRequestModel model = new ApiSpaceSpaceFeatureServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			SpaceSpaceFeature response = mapper.MapModelToEntity(1, model);
 
 			response.SpaceFeatureId.Should().Be(1);
+			response.SpaceId.Should().Be(1);
 		}
 
 		[Fact]
@@ -28,9 +29,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALSpaceSpaceFeatureMapper();
 			SpaceSpaceFeature item = new SpaceSpaceFeature();
-			item.SetProperties(1, 1);
+			item.SetProperties(1, 1, 1);
 			ApiSpaceSpaceFeatureServerResponseModel response = mapper.MapEntityToModel(item);
 
+			response.Id.Should().Be(1);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
 		}
@@ -40,7 +42,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 		{
 			var mapper = new DALSpaceSpaceFeatureMapper();
 			SpaceSpaceFeature item = new SpaceSpaceFeature();
-			item.SetProperties(1, 1);
+			item.SetProperties(1, 1, 1);
 			List<ApiSpaceSpaceFeatureServerResponseModel> response = mapper.MapEntityToModel(new List<SpaceSpaceFeature>() { { item} });
 
 			response.Count.Should().Be(1);
@@ -49,5 +51,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc8bfafeda6806355a58ab972b1f44c4</Hash>
+    <Hash>3294555740e7b12f4259fd12a9efd83a</Hash>
 </Codenesium>*/

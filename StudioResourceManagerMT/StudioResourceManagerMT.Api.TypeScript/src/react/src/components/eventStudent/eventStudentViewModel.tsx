@@ -6,6 +6,7 @@ export default class EventStudentViewModel {
   eventId: number;
   eventIdEntity: string;
   eventIdNavigation?: EventViewModel;
+  id: number;
   studentId: number;
   studentIdEntity: string;
   studentIdNavigation?: StudentViewModel;
@@ -14,13 +15,15 @@ export default class EventStudentViewModel {
     this.eventId = 0;
     this.eventIdEntity = '';
     this.eventIdNavigation = undefined;
+    this.id = 0;
     this.studentId = 0;
     this.studentIdEntity = '';
     this.studentIdNavigation = undefined;
   }
 
-  setProperties(eventId: number, studentId: number): void {
+  setProperties(eventId: number, id: number, studentId: number): void {
     this.eventId = eventId;
+    this.id = id;
     this.studentId = studentId;
   }
 
@@ -31,5 +34,5 @@ export default class EventStudentViewModel {
 
 
 /*<Codenesium>
-    <Hash>4b9d9992a3038858150a9b01af66a94d</Hash>
+    <Hash>df56fbbfe5975caa4bc8449044a50800</Hash>
 </Codenesium>*/

@@ -38,17 +38,19 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventTeacherClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			var model2 = new ApiEventTeacherClientRequestModel();
-			model2.SetProperties(1);
+			model2.SetProperties(1, 1);
 			var request = new List<ApiEventTeacherClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiEventTeacherClientResponseModel>> result = await client.EventTeacherBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
+			context.Set<EventTeacher>().ToList()[1].EventId.Should().Be(1);
 			context.Set<EventTeacher>().ToList()[1].TeacherId.Should().Be(1);
 
+			context.Set<EventTeacher>().ToList()[2].EventId.Should().Be(1);
 			context.Set<EventTeacher>().ToList()[2].TeacherId.Should().Be(1);
 		}
 
@@ -64,13 +66,15 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiEventTeacherClientRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			CreateResponse<ApiEventTeacherClientResponseModel> result = await client.EventTeacherCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
+			context.Set<EventTeacher>().ToList()[1].EventId.Should().Be(1);
 			context.Set<EventTeacher>().ToList()[1].TeacherId.Should().Be(1);
 
+			result.Record.EventId.Should().Be(1);
 			result.Record.TeacherId.Should().Be(1);
 		}
 
@@ -90,16 +94,18 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 			ApiEventTeacherServerResponseModel model = await service.Get(1);
 
 			ApiEventTeacherClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(1);
+			request.SetProperties(1, 1);
 
-			UpdateResponse<ApiEventTeacherClientResponseModel> updateResponse = await client.EventTeacherUpdateAsync(model.EventId, request);
+			UpdateResponse<ApiEventTeacherClientResponseModel> updateResponse = await client.EventTeacherUpdateAsync(model.Id, request);
 
 			context.Entry(context.Set<EventTeacher>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-			updateResponse.Record.EventId.Should().Be(1);
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<EventTeacher>().ToList()[0].EventId.Should().Be(1);
 			context.Set<EventTeacher>().ToList()[0].TeacherId.Should().Be(1);
 
+			updateResponse.Record.Id.Should().Be(1);
 			updateResponse.Record.EventId.Should().Be(1);
 			updateResponse.Record.TeacherId.Should().Be(1);
 		}
@@ -117,7 +123,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			IEventTeacherService service = testServer.Host.Services.GetService(typeof(IEventTeacherService)) as IEventTeacherService;
 			var model = new ApiEventTeacherServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			CreateResponse<ApiEventTeacherServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -146,6 +152,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 			response.EventId.Should().Be(1);
+			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 		}
 
@@ -178,6 +185,7 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 
 			response.Count.Should().BeGreaterThan(0);
 			response[0].EventId.Should().Be(1);
+			response[0].Id.Should().Be(1);
 			response[0].TeacherId.Should().Be(1);
 		}
 
@@ -204,5 +212,5 @@ namespace StudioResourceManagerMTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>fa5e584db1b03f7a801dd6571809f9ce</Hash>
+    <Hash>551bce0c6e5ea734fc95016aabd1cccd</Hash>
 </Codenesium>*/

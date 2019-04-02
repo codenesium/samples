@@ -8,7 +8,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 	public partial interface IDALTeacherTeacherSkillMapper
 	{
 		TeacherTeacherSkill MapModelToEntity(
-			int teacherId,
+			int id,
 			ApiTeacherTeacherSkillServerRequestModel model);
 
 		ApiTeacherTeacherSkillServerResponseModel MapEntityToModel(
@@ -20,5 +20,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d19bdbb0679bc290e2fc7eb5c54188c3</Hash>
+    <Hash>ccff28510f21462c3caec6068d580d51</Hash>
 </Codenesium>*/

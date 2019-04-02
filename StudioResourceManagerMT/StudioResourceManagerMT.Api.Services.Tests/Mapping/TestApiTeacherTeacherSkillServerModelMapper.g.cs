@@ -16,9 +16,10 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		{
 			var mapper = new ApiTeacherTeacherSkillServerModelMapper();
 			var model = new ApiTeacherTeacherSkillServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 			ApiTeacherTeacherSkillServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
+			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
 
@@ -27,9 +28,10 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		{
 			var mapper = new ApiTeacherTeacherSkillServerModelMapper();
 			var model = new ApiTeacherTeacherSkillServerResponseModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiTeacherTeacherSkillServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
+			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
 
@@ -38,16 +40,17 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		{
 			var mapper = new ApiTeacherTeacherSkillServerModelMapper();
 			var model = new ApiTeacherTeacherSkillServerRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, 1);
 
 			JsonPatchDocument<ApiTeacherTeacherSkillServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiTeacherTeacherSkillServerRequestModel();
 			patch.ApplyTo(response);
+			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3a1d71f287c3f6772fa8bf1a9506bd9</Hash>
+    <Hash>e59bc9e1373b8e66bd36799493f4f853</Hash>
 </Codenesium>*/
