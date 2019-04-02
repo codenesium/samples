@@ -150,6 +150,7 @@ namespace ESPIOTNS.Api.Web
 			{
 				// Password settings.
 				options.Password.RequiredLength = 8;
+
 				// options.Password.RequireDigit = true;
 				// options.Password.RequireLowercase = true;
 				// options.Password.RequireNonAlphanumeric = true;
@@ -371,11 +372,14 @@ namespace ESPIOTNS.Api.Web
 			builder.RegisterType<UserStore<AuthUser>>().As<IUserStore<AuthUser>>();
 
 			// register EmailSender so we can send auth emails
-			builder.RegisterType<EmailSender>().As<IEmailSender>();
+			builder.RegisterType<EmailService>().As<IEmailService>();
 
-			// register JWTHelper so we can create bearer tokens
-			builder.RegisterType<JWTHelper>().As<IJWTHelper>();
+			// register JwtService so we can create bearer tokens
+			builder.RegisterType<JwtService>().As<IJwtService>();
 			
+			// register GuidService so we can mock Guid.NewGuid
+			builder.RegisterType<GuidService>().As<IGuidService>();
+
             // build the DI container
             this.ApplicationApiContainer = builder.Build();
 
@@ -427,7 +431,6 @@ namespace ESPIOTNS.Api.Web
 					RequestPath = string.Empty
 				});
 			}
-
 
             // If you want to dispose of resources that have been resolved in the
             // application container, register for the "ApplicationStopped" event.

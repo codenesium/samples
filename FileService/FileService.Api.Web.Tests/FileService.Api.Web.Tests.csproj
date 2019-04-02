@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../FileService.Api.Contracts/FileService.Api.Contracts.csproj" />
 	<ProjectReference Include="../FileService.Api.Web/FileService.Api.Web.csproj" />
 	<ProjectReference Include="../FileService.Api.Services/FileService.Api.Services.csproj" />
   </ItemGroup>

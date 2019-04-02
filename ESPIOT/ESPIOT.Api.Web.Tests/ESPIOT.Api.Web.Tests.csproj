@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../ESPIOT.Api.Contracts/ESPIOT.Api.Contracts.csproj" />
 	<ProjectReference Include="../ESPIOT.Api.Web/ESPIOT.Api.Web.csproj" />
 	<ProjectReference Include="../ESPIOT.Api.Services/ESPIOT.Api.Services.csproj" />
   </ItemGroup>

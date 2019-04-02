@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../PetShipping.Api.Contracts/PetShipping.Api.Contracts.csproj" />
 	<ProjectReference Include="../PetShipping.Api.Web/PetShipping.Api.Web.csproj" />
 	<ProjectReference Include="../PetShipping.Api.Services/PetShipping.Api.Services.csproj" />
   </ItemGroup>

@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../CAD.Api.Contracts/CAD.Api.Contracts.csproj" />
 	<ProjectReference Include="../CAD.Api.Web/CAD.Api.Web.csproj" />
 	<ProjectReference Include="../CAD.Api.Services/CAD.Api.Services.csproj" />
   </ItemGroup>

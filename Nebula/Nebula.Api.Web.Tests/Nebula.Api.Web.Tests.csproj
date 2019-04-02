@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../Nebula.Api.Contracts/Nebula.Api.Contracts.csproj" />
 	<ProjectReference Include="../Nebula.Api.Web/Nebula.Api.Web.csproj" />
 	<ProjectReference Include="../Nebula.Api.Services/Nebula.Api.Services.csproj" />
   </ItemGroup>

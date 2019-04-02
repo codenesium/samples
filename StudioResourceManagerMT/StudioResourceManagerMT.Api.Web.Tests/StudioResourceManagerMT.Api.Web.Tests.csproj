@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../StudioResourceManagerMT.Api.Contracts/StudioResourceManagerMT.Api.Contracts.csproj" />
 	<ProjectReference Include="../StudioResourceManagerMT.Api.Web/StudioResourceManagerMT.Api.Web.csproj" />
 	<ProjectReference Include="../StudioResourceManagerMT.Api.Services/StudioResourceManagerMT.Api.Services.csproj" />
   </ItemGroup>

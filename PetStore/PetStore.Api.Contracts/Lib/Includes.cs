@@ -14,6 +14,9 @@ namespace PetStoreNS.Api.Contracts
 		public const string UnableToConfirmRegistration = "UnableToConfirmRegistration";
 		public const string UnableToConfirmPasssordReset = "UnableToConfirmPasssordReset";
 		public const string UnableToChangePassword = "UnableToChangePassword";
+		public const string UnableToUpdateUser = "UnableToUpdateUser";
+		public const string UnableToChangeEmail = "UnableToChangeEmail";
+		public const string UnableToConfirmChangeEmail = "UnableToConfirmChangeEmail";
 	}
 
 	public class ValidationErrorCodes

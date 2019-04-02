@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../Twitter.Api.Contracts/Twitter.Api.Contracts.csproj" />
 	<ProjectReference Include="../Twitter.Api.Web/Twitter.Api.Web.csproj" />
 	<ProjectReference Include="../Twitter.Api.Services/Twitter.Api.Services.csproj" />
   </ItemGroup>

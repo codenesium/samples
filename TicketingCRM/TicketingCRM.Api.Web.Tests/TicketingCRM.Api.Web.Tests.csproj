@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../TicketingCRM.Api.Contracts/TicketingCRM.Api.Contracts.csproj" />
 	<ProjectReference Include="../TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj" />
 	<ProjectReference Include="../TicketingCRM.Api.Services/TicketingCRM.Api.Services.csproj" />
   </ItemGroup>

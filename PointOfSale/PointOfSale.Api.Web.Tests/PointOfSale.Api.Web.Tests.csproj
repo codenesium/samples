@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../PointOfSale.Api.Contracts/PointOfSale.Api.Contracts.csproj" />
 	<ProjectReference Include="../PointOfSale.Api.Web/PointOfSale.Api.Web.csproj" />
 	<ProjectReference Include="../PointOfSale.Api.Services/PointOfSale.Api.Services.csproj" />
   </ItemGroup>

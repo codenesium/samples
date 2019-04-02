@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Threading;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using StudioResourceManagerNS.Api.Services;
@@ -76,7 +76,6 @@ namespace Codenesium.Foundation.CommonMVC
 		{
 			this.authService = authService;
 		}
-
 
 		[HttpPost]
 		[Route("login")]
@@ -290,7 +289,7 @@ namespace Codenesium.Foundation.CommonMVC
 
     /// <summary>
     /// EntityFrameworkTransactionCoordinator is the transaction coordinator when using
-    ///  Entity Framework
+    /// Entity Framework
     /// </summary>
     public class EntityFrameworkTransactionCoordinator : ITransactionCoordinator
     {

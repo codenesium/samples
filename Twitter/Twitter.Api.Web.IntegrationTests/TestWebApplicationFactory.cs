@@ -21,8 +21,8 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	{
 		public static string GenerateBearerToken()
 		{
-			JWTHelper jwtHelper = new JWTHelper();
-			return jwtHelper.GenerateBearerToken(
+			JwtService jwtService = new JwtService();
+			return jwtService.GenerateBearerToken(
 									  "defaultJWTPassword",
 									  "https://www.codenesium.com",
 									  "https://www.codenesium.com",

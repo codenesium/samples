@@ -21,6 +21,7 @@
   </ItemGroup>
 
    <ItemGroup>
+	<ProjectReference Include="../StackOverflow.Api.Contracts/StackOverflow.Api.Contracts.csproj" />
 	<ProjectReference Include="../StackOverflow.Api.Web/StackOverflow.Api.Web.csproj" />
 	<ProjectReference Include="../StackOverflow.Api.Services/StackOverflow.Api.Services.csproj" />
   </ItemGroup>
