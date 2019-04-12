@@ -2206,7 +2206,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.birthday",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Admin",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -2642,7 +2642,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.actualEndDate",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Event",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -2814,7 +2814,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Event Status",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -3085,7 +3085,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.eventId",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Event Student",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -3356,7 +3356,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.eventId",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Event Teacher",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -3660,7 +3660,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Family",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -3964,7 +3964,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.amountPerMinute",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Rate",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -4169,7 +4169,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.description",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Space",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -4341,7 +4341,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Space Feature",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -4612,7 +4612,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Space Space Feature",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -5147,7 +5147,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.birthday",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Student",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -5517,7 +5517,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.address1",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Studio",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -5887,7 +5887,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.birthday",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Teacher",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -6059,7 +6059,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Teacher Skill",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -6330,7 +6330,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "Teacher Teacher Skill",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -6535,7 +6535,7 @@
             "AppAllMethodAttribute": "",
             "AppGetMethodAttribute": "",
             "AppPatchMethodAttribute": "",
-            "ForeignKeyDisplayColumn": "this.id",
+            "AppForeignKeyDisplayColumn": "",
             "AppViewLabel": "User",
             "AppViewIcon": "",
             "GenerationEnabled": true,
@@ -6866,7 +6866,7 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "",
+        "AppForeignKeyDisplayColumn": "",
         "AppViewLabel": "",
         "AppViewIcon": ""
       },
@@ -6893,66 +6893,12 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "",
+        "AppForeignKeyDisplayColumn": "",
         "AppViewLabel": "",
         "AppViewIcon": ""
       },
       {
         "$id": "410",
-        "Table": "Admin",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Admin",
-        "AppTableNamePlural": "Admins",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.lastName",
-        "AppViewLabel": "Admins",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "411",
-        "Table": "Event",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Event",
-        "AppTableNamePlural": "Events",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id",
-        "AppViewLabel": "Events",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "412",
         "Table": "EventStatu",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -6974,17 +6920,17 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name",
+        "AppForeignKeyDisplayColumn": "",
         "AppViewLabel": "Event Status",
         "AppViewIcon": ""
       },
       {
-        "$id": "413",
-        "Table": "Family",
+        "$id": "411",
+        "Table": "Admin",
         "Schema": "dbo",
         "AppDoNotProcess": false,
-        "AppTableName": "Family",
-        "AppTableNamePlural": "Families",
+        "AppTableName": "Admin",
+        "AppTableNamePlural": "Admins",
         "AppReferenceTable": false,
         "AppControllerAttribute": "",
         "AppGenerateBulkInsertMethod": true,
@@ -7001,228 +6947,66 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.primaryContactLastName",
-        "AppViewLabel": "Familes",
+        "AppForeignKeyDisplayColumn": "LastName",
+        "AppViewLabel": "Admins",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "412",
+        "Table": "Event",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Event",
+        "AppTableNamePlural": "Events",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Id",
+        "AppViewLabel": "Events",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "413",
+        "Table": "EventStatus",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "EventStatus",
+        "AppTableNamePlural": "EventStatus",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Event Status",
         "AppViewIcon": ""
       },
       {
         "$id": "414",
-        "Table": "Rate",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Rate",
-        "AppTableNamePlural": "Rates",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id",
-        "AppViewLabel": "Rates",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "415",
-        "Table": "Space",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Space",
-        "AppTableNamePlural": "Spaces",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name",
-        "AppViewLabel": "Spaces",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "416",
-        "Table": "SpaceFeature",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "SpaceFeature",
-        "AppTableNamePlural": "SpaceFeatures",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name",
-        "AppViewLabel": "Space Feature",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "417",
-        "Table": "Student",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Student",
-        "AppTableNamePlural": "Students",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.lastName",
-        "AppViewLabel": "Students",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "418",
-        "Table": "Studio",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Studio",
-        "AppTableNamePlural": "Studios",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name",
-        "AppViewLabel": "Studios",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "419",
-        "Table": "Teacher",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Teacher",
-        "AppTableNamePlural": "Teachers",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.lastName",
-        "AppViewLabel": "Teachers",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "420",
-        "Table": "TeacherSkill",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "TeacherSkill",
-        "AppTableNamePlural": "TeacherSkills",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name",
-        "AppViewLabel": "Teacher Skills",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "421",
-        "Table": "User",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "User",
-        "AppTableNamePlural": "Users",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.username",
-        "AppViewLabel": "Users",
-        "AppViewIcon": ""
-      },
-      {
-        "$id": "422",
         "Table": "EventStudent",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -7244,12 +7028,12 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id",
+        "AppForeignKeyDisplayColumn": "Id",
         "AppViewLabel": "Event Student",
         "AppViewIcon": ""
       },
       {
-        "$id": "423",
+        "$id": "415",
         "Table": "EventTeacher",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -7271,12 +7055,120 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.id",
+        "AppForeignKeyDisplayColumn": "Id",
         "AppViewLabel": "Event Teacher",
         "AppViewIcon": ""
       },
       {
-        "$id": "424",
+        "$id": "416",
+        "Table": "Family",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Family",
+        "AppTableNamePlural": "Families",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "PrimaryContactLastName",
+        "AppViewLabel": "Familes",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "417",
+        "Table": "Rate",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Rate",
+        "AppTableNamePlural": "Rates",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "AmountPerMinute",
+        "AppViewLabel": "Rates",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "418",
+        "Table": "Space",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Space",
+        "AppTableNamePlural": "Spaces",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Spaces",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "419",
+        "Table": "SpaceFeature",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "SpaceFeature",
+        "AppTableNamePlural": "SpaceFeatures",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Space Feature",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "420",
         "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -7298,8 +7190,116 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.spaceFeatureId",
+        "AppForeignKeyDisplayColumn": "Id",
         "AppViewLabel": "Space Space Feature",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "421",
+        "Table": "Student",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Student",
+        "AppTableNamePlural": "Students",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "LastName",
+        "AppViewLabel": "Students",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "422",
+        "Table": "Studio",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Studio",
+        "AppTableNamePlural": "Studios",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Studios",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "423",
+        "Table": "Teacher",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Teacher",
+        "AppTableNamePlural": "Teachers",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "LastName",
+        "AppViewLabel": "Teachers",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "424",
+        "Table": "TeacherSkill",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "TeacherSkill",
+        "AppTableNamePlural": "TeacherSkills",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Teacher Skills",
         "AppViewIcon": ""
       },
       {
@@ -7325,14 +7325,41 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.teacherId",
+        "AppForeignKeyDisplayColumn": "TeacherId",
         "AppViewLabel": "Teacher Teacher Skill",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "426",
+        "Table": "User",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "User",
+        "AppTableNamePlural": "Users",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Username",
+        "AppViewLabel": "Users",
         "AppViewIcon": ""
       }
     ],
     "ColumnParameterSettings": [
       {
-        "$id": "426",
+        "$id": "427",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Birthday",
@@ -7352,7 +7379,7 @@
         "AppNamePlural": "Birthdays"
       },
       {
-        "$id": "427",
+        "$id": "428",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Email",
@@ -7372,7 +7399,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "428",
+        "$id": "429",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "Phone",
@@ -7392,7 +7419,7 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "429",
+        "$id": "430",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "Id",
@@ -7412,7 +7439,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "430",
+        "$id": "431",
         "Table": "EventStatu",
         "Schema": "dbo",
         "Column": "Name",
@@ -7432,7 +7459,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "431",
+        "$id": "432",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "Note",
@@ -7452,7 +7479,7 @@
         "AppNamePlural": "Notes"
       },
       {
-        "$id": "432",
+        "$id": "433",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "Description",
@@ -7472,28 +7499,8 @@
         "AppNamePlural": "Descriptions"
       },
       {
-        "$id": "433",
-        "Table": "Space",
-        "Schema": "dbo",
-        "Column": "Name",
-        "AppCLRType": "string",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 11,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Name",
-        "AppName": "Name",
-        "AppNamePlural": "Names"
-      },
-      {
         "$id": "434",
-        "Table": "SpaceFeature",
+        "Table": "Space",
         "Schema": "dbo",
         "Column": "Name",
         "AppCLRType": "string",
@@ -7513,6 +7520,26 @@
       },
       {
         "$id": "435",
+        "Table": "SpaceFeature",
+        "Schema": "dbo",
+        "Column": "Name",
+        "AppCLRType": "string",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 11,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "Name",
+        "AppName": "Name",
+        "AppNamePlural": "Names"
+      },
+      {
+        "$id": "436",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Id",
@@ -7532,7 +7559,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "436",
+        "$id": "437",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Address1",
@@ -7552,7 +7579,7 @@
         "AppNamePlural": "Address1"
       },
       {
-        "$id": "437",
+        "$id": "438",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Address2",
@@ -7572,7 +7599,7 @@
         "AppNamePlural": "Address2"
       },
       {
-        "$id": "438",
+        "$id": "439",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "City",
@@ -7592,7 +7619,7 @@
         "AppNamePlural": "Cities"
       },
       {
-        "$id": "439",
+        "$id": "440",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Name",
@@ -7612,7 +7639,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "440",
+        "$id": "441",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Province",
@@ -7632,7 +7659,7 @@
         "AppNamePlural": "Provinces"
       },
       {
-        "$id": "441",
+        "$id": "442",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Website",
@@ -7652,7 +7679,7 @@
         "AppNamePlural": "Websites"
       },
       {
-        "$id": "442",
+        "$id": "443",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Zip",
@@ -7672,7 +7699,7 @@
         "AppNamePlural": "Zips"
       },
       {
-        "$id": "443",
+        "$id": "444",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Birthday",
@@ -7692,7 +7719,7 @@
         "AppNamePlural": "Birthdays"
       },
       {
-        "$id": "444",
+        "$id": "445",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Email",
@@ -7712,7 +7739,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "445",
+        "$id": "446",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Phone",
@@ -7732,7 +7759,7 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "446",
+        "$id": "447",
         "Table": "TeacherSkill",
         "Schema": "dbo",
         "Column": "Name",
@@ -7752,7 +7779,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "447",
+        "$id": "448",
         "Table": "User",
         "Schema": "dbo",
         "Column": "Password",
@@ -7772,7 +7799,7 @@
         "AppNamePlural": "Passwords"
       },
       {
-        "$id": "448",
+        "$id": "449",
         "Table": "User",
         "Schema": "dbo",
         "Column": "Username",
@@ -7792,7 +7819,7 @@
         "AppNamePlural": "Usernames"
       },
       {
-        "$id": "449",
+        "$id": "450",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -7812,7 +7839,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "450",
+        "$id": "451",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "LastName",
@@ -7832,7 +7859,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "451",
+        "$id": "452",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ActualEndDate",
@@ -7852,7 +7879,7 @@
         "AppNamePlural": "ActualEndDates"
       },
       {
-        "$id": "452",
+        "$id": "453",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ActualStartDate",
@@ -7872,7 +7899,7 @@
         "AppNamePlural": "ActualStartDates"
       },
       {
-        "$id": "453",
+        "$id": "454",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "BillAmount",
@@ -7892,7 +7919,7 @@
         "AppNamePlural": "BillAmounts"
       },
       {
-        "$id": "454",
+        "$id": "455",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ScheduledEndDate",
@@ -7912,7 +7939,7 @@
         "AppNamePlural": "ScheduledEndDates"
       },
       {
-        "$id": "455",
+        "$id": "456",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "ScheduledStartDate",
@@ -7932,7 +7959,7 @@
         "AppNamePlural": "ScheduledStartDates"
       },
       {
-        "$id": "456",
+        "$id": "457",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "StudentNote",
@@ -7952,7 +7979,7 @@
         "AppNamePlural": "StudentNotes"
       },
       {
-        "$id": "457",
+        "$id": "458",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactEmail",
@@ -7972,7 +7999,7 @@
         "AppNamePlural": "PrimaryContactEmails"
       },
       {
-        "$id": "458",
+        "$id": "459",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactFirstName",
@@ -7992,7 +8019,7 @@
         "AppNamePlural": "PrimaryContactFirstNames"
       },
       {
-        "$id": "459",
+        "$id": "460",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactLastName",
@@ -8012,7 +8039,7 @@
         "AppNamePlural": "PrimaryContactLastNames"
       },
       {
-        "$id": "460",
+        "$id": "461",
         "Table": "Family",
         "Schema": "dbo",
         "Column": "PrimaryContactPhone",
@@ -8032,7 +8059,7 @@
         "AppNamePlural": "PrimaryContactPhones"
       },
       {
-        "$id": "461",
+        "$id": "462",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "AmountPerMinute",
@@ -8052,7 +8079,7 @@
         "AppNamePlural": "AmountPerMinutes"
       },
       {
-        "$id": "462",
+        "$id": "463",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "EmailRemindersEnabled",
@@ -8072,7 +8099,7 @@
         "AppNamePlural": "EmailRemindersEnableds"
       },
       {
-        "$id": "463",
+        "$id": "464",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -8092,7 +8119,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "464",
+        "$id": "465",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "IsAdult",
@@ -8112,7 +8139,7 @@
         "AppNamePlural": "IsAdults"
       },
       {
-        "$id": "465",
+        "$id": "466",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "LastName",
@@ -8132,7 +8159,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "466",
+        "$id": "467",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "SmsRemindersEnabled",
@@ -8152,7 +8179,7 @@
         "AppNamePlural": "SmsRemindersEnableds"
       },
       {
-        "$id": "467",
+        "$id": "468",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "FirstName",
@@ -8172,7 +8199,7 @@
         "AppNamePlural": "FirstNames"
       },
       {
-        "$id": "468",
+        "$id": "469",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "LastName",
@@ -8192,7 +8219,7 @@
         "AppNamePlural": "LastNames"
       },
       {
-        "$id": "469",
+        "$id": "470",
         "Table": "Admin",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8212,7 +8239,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "470",
+        "$id": "471",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8232,7 +8259,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "471",
+        "$id": "472",
         "Table": "EventStatu",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8252,7 +8279,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "472",
+        "$id": "473",
         "Table": "EventStudent",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8272,7 +8299,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "473",
+        "$id": "474",
         "Table": "EventTeacher",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8292,7 +8319,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "474",
+        "$id": "475",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8312,7 +8339,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "475",
+        "$id": "476",
         "Table": "SpaceFeature",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8332,7 +8359,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "476",
+        "$id": "477",
         "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8352,7 +8379,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "477",
+        "$id": "478",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8372,7 +8399,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "478",
+        "$id": "479",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8392,7 +8419,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "479",
+        "$id": "480",
         "Table": "Teacher",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8412,7 +8439,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "480",
+        "$id": "481",
         "Table": "TeacherSkill",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8432,7 +8459,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "481",
+        "$id": "482",
         "Table": "TeacherTeacherSkill",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8452,7 +8479,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "482",
+        "$id": "483",
         "Table": "User",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8470,9 +8497,6 @@
         "AppViewControlLabel": "Is Deleted",
         "AppName": "IsDeleted",
         "AppNamePlural": "IsDeleteds"
-      },
-      {
-        "$ref": "469"
       },
       {
         "$ref": "470"
@@ -8514,7 +8538,10 @@
         "$ref": "482"
       },
       {
-        "$id": "483",
+        "$ref": "483"
+      },
+      {
+        "$id": "484",
         "Table": "EventStatu",
         "Schema": "dbo",
         "Column": "Id",
@@ -8534,28 +8561,8 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "484",
-        "Table": "Admin",
-        "Schema": "dbo",
-        "Column": "Id",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Id",
-        "AppName": "Id",
-        "AppNamePlural": "Ids"
-      },
-      {
         "$id": "485",
-        "Table": "Family",
+        "Table": "Admin",
         "Schema": "dbo",
         "Column": "Id",
         "AppCLRType": "int",
@@ -8577,6 +8584,26 @@
         "$id": "486",
         "Table": "Family",
         "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 7,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "Id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "487",
+        "Table": "Family",
+        "Schema": "dbo",
         "Column": "IsDeleted",
         "AppCLRType": "bool",
         "AppDoNotProcess": true,
@@ -8594,7 +8621,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "487",
+        "$id": "488",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "Id",
@@ -8614,7 +8641,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "488",
+        "$id": "489",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "IsDeleted",
@@ -8634,7 +8661,7 @@
         "AppNamePlural": "IsDeleteds"
       },
       {
-        "$id": "489",
+        "$id": "490",
         "Table": "Space",
         "Schema": "dbo",
         "Column": "Id",
@@ -8654,7 +8681,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "490",
+        "$id": "491",
         "Table": "SpaceFeature",
         "Schema": "dbo",
         "Column": "Id",
@@ -8674,7 +8701,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "491",
+        "$id": "492",
         "Table": "Studio",
         "Schema": "dbo",
         "Column": "Id",
@@ -8694,28 +8721,8 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "492",
-        "Table": "Teacher",
-        "Schema": "dbo",
-        "Column": "Id",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 7,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": false,
-        "AppViewControlLabel": "Id",
-        "AppName": "Id",
-        "AppNamePlural": "Ids"
-      },
-      {
         "$id": "493",
-        "Table": "TeacherSkill",
+        "Table": "Teacher",
         "Schema": "dbo",
         "Column": "Id",
         "AppCLRType": "int",
@@ -8735,7 +8742,7 @@
       },
       {
         "$id": "494",
-        "Table": "User",
+        "Table": "TeacherSkill",
         "Schema": "dbo",
         "Column": "Id",
         "AppCLRType": "int",
@@ -8755,6 +8762,26 @@
       },
       {
         "$id": "495",
+        "Table": "User",
+        "Schema": "dbo",
+        "Column": "Id",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 7,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": false,
+        "AppViewControlLabel": "Id",
+        "AppName": "Id",
+        "AppNamePlural": "Ids"
+      },
+      {
+        "$id": "496",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "TeacherNote",
@@ -8774,7 +8801,7 @@
         "AppNamePlural": "TeacherNotes"
       },
       {
-        "$id": "496",
+        "$id": "497",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "TeacherId",
@@ -8794,7 +8821,7 @@
         "AppNamePlural": "TeacherIds"
       },
       {
-        "$id": "497",
+        "$id": "498",
         "Table": "Rate",
         "Schema": "dbo",
         "Column": "TeacherSkillId",
@@ -8814,7 +8841,7 @@
         "AppNamePlural": "TeacherSkillIds"
       },
       {
-        "$id": "498",
+        "$id": "499",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Birthday",
@@ -8834,7 +8861,7 @@
         "AppNamePlural": "Birthdays"
       },
       {
-        "$id": "499",
+        "$id": "500",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Email",
@@ -8854,7 +8881,7 @@
         "AppNamePlural": "Emails"
       },
       {
-        "$id": "500",
+        "$id": "501",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "Phone",
@@ -8874,28 +8901,8 @@
         "AppNamePlural": "Phones"
       },
       {
-        "$id": "501",
-        "Table": "Student",
-        "Schema": "dbo",
-        "Column": "UserId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 8,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "User",
-        "AppName": "UserId",
-        "AppNamePlural": "UserIds"
-      },
-      {
         "$id": "502",
-        "Table": "Teacher",
+        "Table": "Student",
         "Schema": "dbo",
         "Column": "UserId",
         "AppCLRType": "int",
@@ -8915,7 +8922,7 @@
       },
       {
         "$id": "503",
-        "Table": "Admin",
+        "Table": "Teacher",
         "Schema": "dbo",
         "Column": "UserId",
         "AppCLRType": "int",
@@ -8935,6 +8942,26 @@
       },
       {
         "$id": "504",
+        "Table": "Admin",
+        "Schema": "dbo",
+        "Column": "UserId",
+        "AppCLRType": "int",
+        "AppDoNotProcess": false,
+        "AppIsConcurrencyColumn": false,
+        "AppIsRequired": true,
+        "AppShowInRequestModel": true,
+        "AppShowInResponseModel": true,
+        "AppIsBooleanWithYNConversion": false,
+        "AppDefaultValue": "",
+        "AppViewControlType": 8,
+        "AppViewDisplayOrder": 0,
+        "AppDisplayInView": true,
+        "AppViewControlLabel": "User",
+        "AppName": "UserId",
+        "AppNamePlural": "UserIds"
+      },
+      {
+        "$id": "505",
         "Table": "Event",
         "Schema": "dbo",
         "Column": "EventStatusId",
@@ -8954,7 +8981,7 @@
         "AppNamePlural": "EventStatusIds"
       },
       {
-        "$id": "505",
+        "$id": "506",
         "Table": "EventStudent",
         "Schema": "dbo",
         "Column": "StudentId",
@@ -8974,7 +9001,7 @@
         "AppNamePlural": "StudentIds"
       },
       {
-        "$id": "506",
+        "$id": "507",
         "Table": "EventTeacher",
         "Schema": "dbo",
         "Column": "TeacherId",
@@ -8994,7 +9021,7 @@
         "AppNamePlural": "TeacherIds"
       },
       {
-        "$id": "507",
+        "$id": "508",
         "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "Column": "SpaceFeatureId",
@@ -9014,7 +9041,7 @@
         "AppNamePlural": "SpaceFeatureIds"
       },
       {
-        "$id": "508",
+        "$id": "509",
         "Table": "Student",
         "Schema": "dbo",
         "Column": "FamilyId",
@@ -9034,7 +9061,7 @@
         "AppNamePlural": "FamilyIds"
       },
       {
-        "$id": "509",
+        "$id": "510",
         "Table": "TeacherTeacherSkill",
         "Schema": "dbo",
         "Column": "TeacherSkillId",
@@ -9054,7 +9081,7 @@
         "AppNamePlural": "TeacherSkillIds"
       },
       {
-        "$id": "510",
+        "$id": "511",
         "Table": "EventStudent",
         "Schema": "dbo",
         "Column": "EventId",
@@ -9074,7 +9101,7 @@
         "AppNamePlural": "EventIds"
       },
       {
-        "$id": "511",
+        "$id": "512",
         "Table": "EventTeacher",
         "Schema": "dbo",
         "Column": "EventId",
@@ -9094,7 +9121,7 @@
         "AppNamePlural": "EventIds"
       },
       {
-        "$id": "512",
+        "$id": "513",
         "Table": "SpaceSpaceFeature",
         "Schema": "dbo",
         "Column": "SpaceId",
@@ -9114,7 +9141,7 @@
         "AppNamePlural": "SpaceIds"
       },
       {
-        "$id": "513",
+        "$id": "514",
         "Table": "TeacherTeacherSkill",
         "Schema": "dbo",
         "Column": "TeacherId",
@@ -9139,7 +9166,7 @@
     "VirtualConstraints": [],
     "ConstraintParameterSettings": [
       {
-        "$id": "514",
+        "$id": "515",
         "SchemaName": "dbo",
         "TableName": "EventStatus",
         "Name": "PK_EventStatus",

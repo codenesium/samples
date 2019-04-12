@@ -37,7 +37,7 @@ namespace StackOverflowNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Date == query.ToDateTime() ||
 				                  x.Name.StartsWith(query) ||
-				                  x.UserId == query.ToInt(),
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.DisplayName == null?false : x.UserIdNavigation.DisplayName.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -128,5 +128,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4fb7011836e36149b560095cdf305dbf</Hash>
+    <Hash>891dd6bdce4676f6d07d63f1f02421a7</Hash>
 </Codenesium>*/

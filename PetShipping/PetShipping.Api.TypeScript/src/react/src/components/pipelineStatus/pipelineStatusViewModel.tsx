@@ -15,11 +15,11 @@ export default class PipelineStatusViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>257bbcd97e68ad34089b1b487ab51abf</Hash>
+    <Hash>7adab0b264ed17e486ee0324666b891f</Hash>
 </Codenesium>*/

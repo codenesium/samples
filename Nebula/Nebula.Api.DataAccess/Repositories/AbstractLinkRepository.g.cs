@@ -35,13 +35,13 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.AssignedMachineId == query.ToNullableInt() ||
-				                  x.ChainId == query.ToInt() ||
+				                  (x.AssignedMachineIdNavigation == null || x.AssignedMachineIdNavigation.Name == null?false : x.AssignedMachineIdNavigation.Name.StartsWith(query)) ||
+				                  (x.ChainIdNavigation == null || x.ChainIdNavigation.Name == null?false : x.ChainIdNavigation.Name.StartsWith(query)) ||
 				                  x.DateCompleted == query.ToNullableDateTime() ||
 				                  x.DateStarted == query.ToNullableDateTime() ||
 				                  x.DynamicParameters.StartsWith(query) ||
 				                  x.ExternalId == query.ToGuid() ||
-				                  x.LinkStatusId == query.ToInt() ||
+				                  (x.LinkStatusIdNavigation == null || x.LinkStatusIdNavigation.Name == null?false : x.LinkStatusIdNavigation.Name.StartsWith(query)) ||
 				                  x.Name.StartsWith(query) ||
 				                  x.Order == query.ToInt() ||
 				                  x.Response.StartsWith(query) ||
@@ -173,5 +173,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5a1676bb5eefce3353f18a2ace48bb47</Hash>
+    <Hash>c0c5803b644592b30f68c22cd866e2c9</Hash>
 </Codenesium>*/

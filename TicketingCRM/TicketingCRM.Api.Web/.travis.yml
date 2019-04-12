@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build TicketingCRM.Api.Web.csproj
    -  dotnet test TicketingCRM.Api.DataAccess.csproj
-   -  dotnet test TicketingCRM.Api.Servicea.csproj
+   -  dotnet test TicketingCRM.Api.Services.csproj
    -  dotnet test TicketingCRM.Api.Client.csproj
    -  dotnet test TicketingCRM.Api.Web.csproj

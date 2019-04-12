@@ -18,11 +18,11 @@ export default class RowVersionCheckViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>bdd9365eee9993e65b7b5befbb0878f1</Hash>
+    <Hash>535ed6b6cd8151aa32eee9469e5cd265</Hash>
 </Codenesium>*/

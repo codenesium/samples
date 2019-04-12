@@ -23,11 +23,9 @@ namespace NebulaNS.Api.Services
 		Task<ApiTeamServerResponseModel> ByName(string name);
 
 		Task<List<ApiChainServerResponseModel>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiMachineRefTeamServerResponseModel>> MachineRefTeamsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>378bc3be6a5fd789e762810e49f6818e</Hash>
+    <Hash>06c4f6e50dba4014760a6b7084a54a5b</Hash>
 </Codenesium>*/

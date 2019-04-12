@@ -73,6 +73,10 @@ import { WrappedTeacherTeacherSkillCreateComponent } from './components/teacherT
 import { WrappedTeacherTeacherSkillDetailComponent } from './components/teacherTeacherSkill/teacherTeacherSkillDetailForm';
 import { WrappedTeacherTeacherSkillEditComponent } from './components/teacherTeacherSkill/teacherTeacherSkillEditForm';
 import { WrappedTeacherTeacherSkillSearchComponent } from './components/teacherTeacherSkill/teacherTeacherSkillSearchForm';
+import { WrappedTenantCreateComponent } from './components/tenant/tenantCreateForm';
+import { WrappedTenantDetailComponent } from './components/tenant/tenantDetailForm';
+import { WrappedTenantEditComponent } from './components/tenant/tenantEditForm';
+import { WrappedTenantSearchComponent } from './components/tenant/tenantSearchForm';
 import { WrappedUserCreateComponent } from './components/user/userCreateForm';
 import { WrappedUserDetailComponent } from './components/user/userDetailForm';
 import { WrappedUserEditComponent } from './components/user/userEditForm';
@@ -508,6 +512,31 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           )}
         />
         <Route
+          path={ClientRoutes.Tenants + '/create'}
+          component={wrapperHeader(
+            WrappedTenantCreateComponent,
+            'Tenant Create'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Tenants + '/edit/:id'}
+          component={wrapperHeader(WrappedTenantEditComponent, 'Tenant Edit')}
+        />
+        <Route
+          path={ClientRoutes.Tenants + '/:id'}
+          component={wrapperHeader(
+            WrappedTenantDetailComponent,
+            'Tenant Detail'
+          )}
+        />
+        <Route
+          path={ClientRoutes.Tenants}
+          component={wrapperHeader(
+            WrappedTenantSearchComponent,
+            'Tenant Search'
+          )}
+        />
+        <Route
           path={ClientRoutes.Users + '/create'}
           component={wrapperHeader(WrappedUserCreateComponent, 'User Create')}
         />
@@ -523,6 +552,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.Users}
           component={wrapperHeader(WrappedUserSearchComponent, 'User Search')}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -530,5 +560,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>072725159d1b051ed6a916e3b890d9ae</Hash>
+    <Hash>2e69f05b68b1078b9fc4cf588f281095</Hash>
 </Codenesium>*/

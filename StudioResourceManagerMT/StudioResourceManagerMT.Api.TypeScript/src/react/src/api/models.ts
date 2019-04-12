@@ -929,6 +929,35 @@ export class TeacherTeacherSkillClientResponseModel {
     this.teacherSkillId = teacherSkillId;
   }
 }
+export class TenantClientRequestModel {
+  id: number;
+  name: string;
+
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
+
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+export class TenantClientResponseModel {
+  id: number;
+  name: string;
+
+  constructor() {
+    this.id = 0;
+    this.name = '';
+  }
+
+  setProperties(id: number, name: string): void {
+    this.id = id;
+    this.name = name;
+  }
+}
 export class UserClientRequestModel {
   id: number;
   password: string;
@@ -967,5 +996,5 @@ export class UserClientResponseModel {
 
 
 /*<Codenesium>
-    <Hash>30614add3f06545b452e9d022ea1c077</Hash>
+    <Hash>8586d68db7c43d5df69ed8792384c713</Hash>
 </Codenesium>*/

@@ -35,8 +35,8 @@ namespace CADNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.CapabilityId == query.ToInt() ||
-				                  x.OfficerId == query.ToInt(),
+				                  (x.CapabilityIdNavigation == null || x.CapabilityIdNavigation.Name == null?false : x.CapabilityIdNavigation.Name.StartsWith(query)) ||
+				                  (x.OfficerIdNavigation == null || x.OfficerIdNavigation.LastName == null?false : x.OfficerIdNavigation.LastName.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -129,5 +129,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e2bb1c7f747a792f89aa84bf10c5f631</Hash>
+    <Hash>edf44b2151bec4afde818f76a80ecc26</Hash>
 </Codenesium>*/

@@ -15,11 +15,11 @@ export default class OffCapabilityViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>cc56746ca287405f650a32fcc8eda297</Hash>
+    <Hash>4520a094714bb424f1299db878b35edd</Hash>
 </Codenesium>*/

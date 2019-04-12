@@ -43,11 +43,11 @@ export default class TeacherViewModel {
   }
 
   toDisplay(): string {
-    return String(this.birthday);
+    return String(this.lastName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>661db5efd93ff522ffd91f88d889b5ee</Hash>
+    <Hash>0fdaea5256cef969259900aed38e51b2</Hash>
 </Codenesium>*/

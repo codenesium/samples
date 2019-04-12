@@ -15,11 +15,11 @@ export default class CallDispositionViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c5ff22593a36dbf082600bcacb98dbef</Hash>
+    <Hash>43d43d051fddaa7378d79ffaa0372095</Hash>
 </Codenesium>*/

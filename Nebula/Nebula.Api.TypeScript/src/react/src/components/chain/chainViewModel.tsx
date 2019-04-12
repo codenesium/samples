@@ -40,11 +40,11 @@ export default class ChainViewModel {
   }
 
   toDisplay(): string {
-    return String(this.externalId);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>d1f159cdd48fd3774f7f82e8f84b6d00</Hash>
+    <Hash>d4d421b43ce4e7bbd84cf93fcb2ebceb</Hash>
 </Codenesium>*/

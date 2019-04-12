@@ -15,7 +15,9 @@ namespace PointOfSaleNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -119,6 +121,84 @@ GO
 
 
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+
+--DROP TABLE IF EXISTS ""dbo"".""Customer"";
+--DROP TABLE IF EXISTS ""dbo"".""Product"";
+--DROP TABLE IF EXISTS ""dbo"".""Sale"";
+--DROP TABLE IF EXISTS ""dbo"".""SaleProduct"";
+
+CREATE TABLE ""dbo"".""Customer""(
+""id"" int    NOT NULL,
+""email"" varchar  (128)  NOT NULL,
+""firstName"" varchar  (128)  NOT NULL,
+""lastName"" varchar  (128)  NOT NULL,
+""phone"" varchar  (15)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Product""(
+""id"" int    NOT NULL,
+""active"" boolean    NOT NULL,
+""description"" varchar  (4096)  NOT NULL,
+""name"" varchar  (128)  NOT NULL,
+""price"" money    NOT NULL,
+""quantity"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Sale""(
+""id"" int    NOT NULL,
+""customerId"" int    NOT NULL,
+""date"" timestamp    NOT NULL);
+
+CREATE TABLE ""dbo"".""SaleProduct""(
+""productId"" int    NOT NULL,
+""saleId"" int    NOT NULL);
+
+ALTER TABLE ""dbo"".""Customer""
+ADD CONSTRAINT ""PK_Customer""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Product""
+ADD CONSTRAINT ""PK_Product""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_sale_customerId"" ON ""dbo"".""sale""
+(
+""customerId"" ASC);
+ALTER TABLE ""dbo"".""Sale""
+ADD CONSTRAINT ""PK_Sale""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_saleProduct_productId"" ON ""dbo"".""saleProduct""
+(
+""productId"" ASC);
+CREATE  INDEX ""IX_saleProduct_saleId"" ON ""dbo"".""saleProduct""
+(
+""saleId"" ASC);
+ALTER TABLE ""dbo"".""SaleProduct""
+ADD CONSTRAINT ""PK_SaleProduct""
+PRIMARY KEY
+(
+""productId""
+,""saleId""
+);
+
+
+
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

@@ -35,8 +35,7 @@ namespace TestsNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.Person == query.ToInt() ||
-				                  x.PersonId == query.ToInt(),
+				                  ,
 				                  limit,
 				                  offset);
 			}
@@ -129,5 +128,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c11ff31429a9c6b1f66c009bc69cacd</Hash>
+    <Hash>db024090a56dc91b1536ba7e1cf2e9fb</Hash>
 </Codenesium>*/

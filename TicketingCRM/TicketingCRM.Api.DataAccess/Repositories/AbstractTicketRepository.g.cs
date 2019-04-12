@@ -36,7 +36,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.PublicId.StartsWith(query) ||
-				                  x.TicketStatusId == query.ToInt(),
+				                  (x.TicketStatusIdNavigation == null || x.TicketStatusIdNavigation.Name == null?false : x.TicketStatusIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -137,5 +137,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f4c4e83e7e7caaf00a41e92051a2fa4a</Hash>
+    <Hash>16ca97de88e688c8e34159815e11b99f</Hash>
 </Codenesium>*/

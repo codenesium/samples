@@ -675,6 +675,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'Vehicle Officer Search'
           )}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -682,5 +683,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>997313518c3345338836146d8e955d59</Hash>
+    <Hash>2cb22df405fbae794f67b897a7138589</Hash>
 </Codenesium>*/

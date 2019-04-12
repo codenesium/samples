@@ -37,7 +37,7 @@ namespace TwitterNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Content.StartsWith(query) ||
 				                  x.Date == query.ToDateTime() ||
-				                  x.ReplierUserId == query.ToInt() ||
+				                  (x.ReplierUserIdNavigation == null || x.ReplierUserIdNavigation.Username == null?false : x.ReplierUserIdNavigation.Username.StartsWith(query)) ||
 				                  x.Time == query.ToTimespan(),
 				                  limit,
 				                  offset);
@@ -129,5 +129,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e3f76bb82773397491b4b1da18926a8f</Hash>
+    <Hash>730d5d4df72c20ca7ae0d6e9b4a3ee89</Hash>
 </Codenesium>*/

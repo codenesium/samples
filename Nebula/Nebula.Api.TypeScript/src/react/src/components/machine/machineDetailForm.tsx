@@ -8,7 +8,6 @@ import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
 import { LinkTableComponent } from '../shared/linkTable';
-import { MachineRefTeamTableComponent } from '../shared/machineRefTeamTable';
 
 interface MachineDetailComponentProps {
   form: WrappedFormUtils;
@@ -145,21 +144,6 @@ class MachineDetailComponent extends React.Component<
               }
             />
           </div>
-          <div>
-            <h3>MachineRefTeams</h3>
-            <MachineRefTeamTableComponent
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Machines +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.MachineRefTeams
-              }
-            />
-          </div>
         </div>
       );
     } else {
@@ -174,5 +158,5 @@ export const WrappedMachineDetailComponent = Form.create({
 
 
 /*<Codenesium>
-    <Hash>e4476361c2727977d75d4b22a8ff1be4</Hash>
+    <Hash>16f88ccac3d8103cde2b0b7c167bcc7e</Hash>
 </Codenesium>*/

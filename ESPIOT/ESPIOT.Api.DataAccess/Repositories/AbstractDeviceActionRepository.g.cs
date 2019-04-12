@@ -36,7 +36,7 @@ namespace ESPIOTNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Action.StartsWith(query) ||
-				                  x.DeviceId == query.ToInt() ||
+				                  (x.DeviceIdNavigation == null || x.DeviceIdNavigation.Name == null?false : x.DeviceIdNavigation.Name.StartsWith(query)) ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -128,5 +128,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2a5c2a26e418a5b8ad009236f1daa9f8</Hash>
+    <Hash>142c727e763ea9b7098af1a363d63b31</Hash>
 </Codenesium>*/

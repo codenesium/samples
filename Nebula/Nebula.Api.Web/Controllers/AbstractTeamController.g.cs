@@ -252,23 +252,6 @@ namespace NebulaNS.Api.Web
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("{teamId}/MachineRefTeams")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiMachineRefTeamServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> MachineRefTeamsByTeamId(int teamId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiMachineRefTeamServerResponseModel> response = await this.TeamService.MachineRefTeamsByTeamId(teamId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiTeamServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeamServerRequestModel> patch)
 		{
 			var record = await this.TeamService.Get(id);
@@ -288,5 +271,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>579d9c6582a06019168ba53655fb1add</Hash>
+    <Hash>5d9d3fef83b9ffcfe9180847f20933b2</Hash>
 </Codenesium>*/

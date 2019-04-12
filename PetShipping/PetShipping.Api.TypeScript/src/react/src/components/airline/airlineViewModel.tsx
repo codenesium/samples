@@ -15,11 +15,11 @@ export default class AirlineViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>0bf922f607c4153ff716e157c70dc33e</Hash>
+    <Hash>dbf30ed7d7c5bea87416c879d66b5e74</Hash>
 </Codenesium>*/

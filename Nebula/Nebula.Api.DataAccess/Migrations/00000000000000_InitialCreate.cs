@@ -15,7 +15,9 @@ namespace NebulaNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -434,6 +436,262 @@ insert into machineRefTeam (machineId,teamId) values(2,2);
 insert into Chain(name,teamId,chainStatusId,externalId) Values('Deploy',1,1,'82378afb-a1f6-4c6f-a31a-7a7328c26f2e')
 insert into Chain(name,teamId,chainStatusId,externalId) Values('Execute',2,1,'c6865b56-a574-4986-b6f7-4a292adebdfe')
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+--ALTER TABLE ""dbo"".""Chain"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Chain"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Clasp"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Clasp"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Link"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Link"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Link"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""LinkLog"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""MachineRefTeam"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""MachineRefTeam"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Team"" DISABLE TRIGGER ALL;
+
+--DROP TABLE IF EXISTS ""dbo"".""Chain"";
+--DROP TABLE IF EXISTS ""dbo"".""ChainStatus"";
+--DROP TABLE IF EXISTS ""dbo"".""Clasp"";
+--DROP TABLE IF EXISTS ""dbo"".""Link"";
+--DROP TABLE IF EXISTS ""dbo"".""LinkLog"";
+--DROP TABLE IF EXISTS ""dbo"".""LinkStatus"";
+--DROP TABLE IF EXISTS ""dbo"".""Machine"";
+--DROP TABLE IF EXISTS ""dbo"".""MachineRefTeam"";
+--DROP TABLE IF EXISTS ""dbo"".""Organization"";
+--DROP TABLE IF EXISTS ""dbo"".""sysdiagrams"";
+--DROP TABLE IF EXISTS ""dbo"".""Team"";
+--DROP TABLE IF EXISTS ""dbo"".""VersionInfo"";
+
+CREATE TABLE ""dbo"".""Chain""(
+""id""  SERIAL ,
+""chainStatusId"" int    NOT NULL,
+""externalId"" uuid    NOT NULL,
+""name"" varchar  (128)  NOT NULL,
+""teamId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""ChainStatus""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Clasp""(
+""id""  SERIAL ,
+""nextChainId"" int    NOT NULL,
+""previousChainId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Link""(
+""id""  SERIAL ,
+""assignedMachineId"" int    NULL,
+""chainId"" int    NOT NULL,
+""dateCompleted"" timestamp    NULL,
+""dateStarted"" timestamp    NULL,
+""dynamicParameters"" text  (2147483647)  NULL,
+""externalId"" uuid    NOT NULL,
+""linkStatusId"" int    NOT NULL,
+""name"" varchar  (128)  NOT NULL,
+""order"" int    NOT NULL,
+""response"" text  (2147483647)  NULL,
+""staticParameters"" text  (2147483647)  NULL,
+""timeoutInSeconds"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""LinkLog""(
+""id""  SERIAL ,
+""dateEntered"" timestamp    NOT NULL,
+""linkId"" int    NOT NULL,
+""log"" text  (2147483647)  NOT NULL);
+
+CREATE TABLE ""dbo"".""LinkStatus""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Machine""(
+""id""  SERIAL ,
+""description"" text  (2147483647)  NOT NULL,
+""jwtKey"" varchar  (128)  NOT NULL,
+""lastIpAddress"" varchar  (128)  NOT NULL,
+""machineGuid"" uuid    NOT NULL,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""MachineRefTeam""(
+""id""  SERIAL ,
+""machineId"" int    NOT NULL,
+""teamId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Organization""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""sysdiagrams""(
+""diagram_id""  SERIAL ,
+""definition"" bytea  (1)  NULL,
+""name"" varchar  (128)  NOT NULL,
+""principal_id"" int    NOT NULL,
+""version"" int    NULL);
+
+CREATE TABLE ""dbo"".""Team""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL,
+""organizationId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""VersionInfo""(
+""Version"" bigint    NOT NULL,
+""AppliedOn"" timestamp    NULL,
+""Description"" varchar  (1024)  NULL);
+
+ALTER TABLE ""dbo"".""Chain""
+ADD CONSTRAINT ""PK_chain""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""AX_Chain_ExternalId"" ON ""dbo"".""Chain""
+(
+""externalId"" ASC);
+ALTER TABLE ""dbo"".""ChainStatus""
+ADD CONSTRAINT ""PK_chainStatus""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""AX_ChainStatus_Name"" ON ""dbo"".""ChainStatus""
+(
+""name"" ASC);
+ALTER TABLE ""dbo"".""Clasp""
+ADD CONSTRAINT ""PK_Clasp""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Link""
+ADD CONSTRAINT ""PK_link""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""AX_Link_ExternalId"" ON ""dbo"".""Link""
+(
+""externalId"" ASC);
+CREATE  INDEX ""AX_Link_ChainId"" ON ""dbo"".""Link""
+(
+""chainId"" ASC);
+ALTER TABLE ""dbo"".""LinkLog""
+ADD CONSTRAINT ""PK_linkLog""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""LinkStatus""
+ADD CONSTRAINT ""PK_linkStatus""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""AX_LinkStatus_Name"" ON ""dbo"".""LinkStatus""
+(
+""name"" ASC);
+ALTER TABLE ""dbo"".""Machine""
+ADD CONSTRAINT ""PK_machine""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""AX_Machine_MachineGuid"" ON ""dbo"".""Machine""
+(
+""machineGuid"" ASC);
+ALTER TABLE ""dbo"".""MachineRefTeam""
+ADD CONSTRAINT ""PK_MachineRefTeam""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Organization""
+ADD CONSTRAINT ""PK_organization""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""AX_organization_Name"" ON ""dbo"".""Organization""
+(
+""name"" ASC);
+ALTER TABLE ""dbo"".""sysdiagrams""
+ADD CONSTRAINT ""PK__sysdiagr__C2B05B61A233D1A5""
+PRIMARY KEY
+(
+""diagram_id""
+);
+CREATE UNIQUE INDEX ""UK_principal_name"" ON ""dbo"".""sysdiagrams""
+(
+""principal_id"" ASC,
+""name"" ASC);
+ALTER TABLE ""dbo"".""Team""
+ADD CONSTRAINT ""PK_team""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""AX_Team_Name"" ON ""dbo"".""Team""
+(
+""name"" ASC);
+ALTER TABLE ""dbo"".""VersionInfo""
+ADD CONSTRAINT ""UC_Version""
+PRIMARY KEY
+(
+""Version""
+);
+
+
+ALTER TABLE ""dbo"".""Chain"" ADD CONSTRAINT ""FK_Chain_teamId_Team_id"" FOREIGN KEY(""teamId"")
+REFERENCES ""dbo"".""Team"" (""id"");
+ALTER TABLE ""dbo"".""Chain"" ADD CONSTRAINT ""FK_Chain_chainStatusId_ChainStatus_id"" FOREIGN KEY(""chainStatusId"")
+REFERENCES ""dbo"".""ChainStatus"" (""id"");
+ALTER TABLE ""dbo"".""Clasp"" ADD CONSTRAINT ""FK_Clasp_nextChainId_Chain_id"" FOREIGN KEY(""nextChainId"")
+REFERENCES ""dbo"".""Chain"" (""id"");
+ALTER TABLE ""dbo"".""Clasp"" ADD CONSTRAINT ""FK_Clasp_previousChainId_Chain_id"" FOREIGN KEY(""previousChainId"")
+REFERENCES ""dbo"".""Chain"" (""id"");
+ALTER TABLE ""dbo"".""Link"" ADD CONSTRAINT ""FK_Link_chainId_Chain_id"" FOREIGN KEY(""chainId"")
+REFERENCES ""dbo"".""Chain"" (""id"");
+ALTER TABLE ""dbo"".""Link"" ADD CONSTRAINT ""FK_Link_linkStatusId_LinkStatus_id"" FOREIGN KEY(""linkStatusId"")
+REFERENCES ""dbo"".""LinkStatus"" (""id"");
+ALTER TABLE ""dbo"".""Link"" ADD CONSTRAINT ""FK_Link_assignedMachineId_Machine_id"" FOREIGN KEY(""assignedMachineId"")
+REFERENCES ""dbo"".""Machine"" (""id"");
+ALTER TABLE ""dbo"".""LinkLog"" ADD CONSTRAINT ""FK_LinkLog_linkId_Link_id"" FOREIGN KEY(""linkId"")
+REFERENCES ""dbo"".""Link"" (""id"");
+ALTER TABLE ""dbo"".""MachineRefTeam"" ADD CONSTRAINT ""FK_machineRefTeam_teamId_Team_id"" FOREIGN KEY(""teamId"")
+REFERENCES ""dbo"".""Team"" (""id"");
+ALTER TABLE ""dbo"".""MachineRefTeam"" ADD CONSTRAINT ""FK_MachineRefTeam_machineId_Machine_id"" FOREIGN KEY(""machineId"")
+REFERENCES ""dbo"".""Machine"" (""id"");
+ALTER TABLE ""dbo"".""Team"" ADD CONSTRAINT ""FK_Team_organizationId_Organization_id"" FOREIGN KEY(""organizationId"")
+REFERENCES ""dbo"".""Organization"" (""id"");
+
+insert into chainstatus(name) values('Running')
+insert into chainstatus(name) values('Completed')
+
+insert into linkstatus(name) values('Running')
+insert into linkstatus(name) values('Completed')
+
+insert into organization(name) values('Alpha')
+insert into organization(name) values('Beta')
+
+insert into team(name,organizationid) values('TeamA',1)
+insert into team(name,organizationid) values('TeamB',2)
+
+insert into machine(name,machineGuid,[description],jwtKey,lastIpAddress) values('machine1','938e50e5-8d19-440a-a81b-e11a131be358','a machine','Passw0rd','192.168.1.123')
+insert into machine(name,machineGuid,[description],jwtKey,lastIpAddress) values('machine2','bbf6e969-82b1-474a-9e01-56cde4a18cff','a machine','Passw0rd','192.168.1.124')
+
+insert into machineRefTeam (machineId,teamId) values(1,1);
+insert into machineRefTeam (machineId,teamId) values(2,2);
+
+insert into Chain(name,teamId,chainStatusId,externalId) Values('Deploy',1,1,'82378afb-a1f6-4c6f-a31a-7a7328c26f2e')
+insert into Chain(name,teamId,chainStatusId,externalId) Values('Execute',2,1,'c6865b56-a574-4986-b6f7-4a292adebdfe')
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

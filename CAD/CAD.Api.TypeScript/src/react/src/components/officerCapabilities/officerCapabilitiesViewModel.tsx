@@ -28,11 +28,11 @@ export default class OfficerCapabilitiesViewModel {
   }
 
   toDisplay(): string {
-    return String(this.capabilityId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>8110cf38032a8562fe191976bffcaef5</Hash>
+    <Hash>2e2c8084639706d7e03d1b904bce79ff</Hash>
 </Codenesium>*/

@@ -37,7 +37,7 @@ namespace TicketingCRMNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Address1.StartsWith(query) ||
 				                  x.Address2.StartsWith(query) ||
-				                  x.CityId == query.ToInt() ||
+				                  (x.CityIdNavigation == null || x.CityIdNavigation.Name == null?false : x.CityIdNavigation.Name.StartsWith(query)) ||
 				                  x.Date == query.ToDateTime() ||
 				                  x.Description.StartsWith(query) ||
 				                  x.EndDate == query.ToDateTime() ||
@@ -135,5 +135,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9db10f4ef477329cb776d2c7699f978f</Hash>
+    <Hash>eaa9812120867b26fbcf4c971f9462af</Hash>
 </Codenesium>*/

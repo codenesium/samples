@@ -164,6 +164,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.Sales}
           component={wrapperHeader(WrappedSaleSearchComponent, 'Sale Search')}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -171,5 +172,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>babd21e16a804c0a663ca42b15ee8e95</Hash>
+    <Hash>60972b73278a3a6383d3a200dbae1479</Hash>
 </Codenesium>*/

@@ -40,7 +40,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				                  x.FirstName.StartsWith(query) ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
-				                  x.UserId == query.ToInt(),
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.Username == null?false : x.UserIdNavigation.Username.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -125,5 +125,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed83929775601e66837ae8c5529f2c9f</Hash>
+    <Hash>be3793007f80ea3291a61c1996dd487c</Hash>
 </Codenesium>*/

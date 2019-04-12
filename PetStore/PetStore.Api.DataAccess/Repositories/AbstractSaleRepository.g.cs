@@ -38,8 +38,8 @@ namespace PetStoreNS.Api.DataAccess
 				                  x.Amount.ToDecimal() == query.ToDecimal() ||
 				                  x.FirstName.StartsWith(query) ||
 				                  x.LastName.StartsWith(query) ||
-				                  x.PaymentTypeId == query.ToInt() ||
-				                  x.PetId == query.ToInt() ||
+				                  (x.PaymentTypeIdNavigation == null || x.PaymentTypeIdNavigation.Name == null?false : x.PaymentTypeIdNavigation.Name.StartsWith(query)) ||
+				                  (x.PetIdNavigation == null || x.PetIdNavigation.Id == null?false : x.PetIdNavigation.Id == query.ToInt()) ||
 				                  x.Phone.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -133,5 +133,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d17accbfb043d33fe6680cd5f754fe8</Hash>
+    <Hash>7f7234a3c85553d21e7c4ba5243647ae</Hash>
 </Codenesium>*/

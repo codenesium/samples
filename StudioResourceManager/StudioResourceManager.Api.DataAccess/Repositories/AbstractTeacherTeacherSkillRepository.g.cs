@@ -35,8 +35,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.TeacherId == query.ToInt() ||
-				                  x.TeacherSkillId == query.ToInt(),
+				                  (x.TeacherIdNavigation == null || x.TeacherIdNavigation.LastName == null?false : x.TeacherIdNavigation.LastName.StartsWith(query)) ||
+				                  (x.TeacherSkillIdNavigation == null || x.TeacherSkillIdNavigation.Name == null?false : x.TeacherSkillIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -141,5 +141,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>646dd1e029742a6056b3d30b45dd3859</Hash>
+    <Hash>1f543dc9da6424d071a7f9ba85a956a2</Hash>
 </Codenesium>*/

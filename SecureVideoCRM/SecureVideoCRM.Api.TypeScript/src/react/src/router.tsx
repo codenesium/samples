@@ -164,6 +164,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'Subscriptions Search'
           )}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -171,5 +172,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>eb86a6bcb30cbb4b03b7af246620d696</Hash>
+    <Hash>3013bec2c9a29e77bd47de196c2fa11c</Hash>
 </Codenesium>*/

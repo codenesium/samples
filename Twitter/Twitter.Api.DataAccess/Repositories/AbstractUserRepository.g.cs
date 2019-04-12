@@ -42,7 +42,7 @@ namespace TwitterNS.Api.DataAccess
 				                  x.FullName.StartsWith(query) ||
 				                  x.HeaderImgUrl.StartsWith(query) ||
 				                  x.Interest.StartsWith(query) ||
-				                  x.LocationLocationId == query.ToInt() ||
+				                  (x.LocationLocationIdNavigation == null || x.LocationLocationIdNavigation.LocationName == null?false : x.LocationLocationIdNavigation.LocationName.StartsWith(query)) ||
 				                  x.Password.StartsWith(query) ||
 				                  x.PhoneNumber.StartsWith(query) ||
 				                  x.Privacy.StartsWith(query) ||
@@ -264,5 +264,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5c4bb45a675fc33390210329f480cc94</Hash>
+    <Hash>024586b9a5538d42eaf7b98decb48961</Hash>
 </Codenesium>*/

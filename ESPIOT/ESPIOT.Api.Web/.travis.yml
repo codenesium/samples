@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build ESPIOT.Api.Web.csproj
    -  dotnet test ESPIOT.Api.DataAccess.csproj
-   -  dotnet test ESPIOT.Api.Servicea.csproj
+   -  dotnet test ESPIOT.Api.Services.csproj
    -  dotnet test ESPIOT.Api.Client.csproj
    -  dotnet test ESPIOT.Api.Web.csproj

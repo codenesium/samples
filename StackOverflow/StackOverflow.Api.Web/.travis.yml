@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build StackOverflow.Api.Web.csproj
    -  dotnet test StackOverflow.Api.DataAccess.csproj
-   -  dotnet test StackOverflow.Api.Servicea.csproj
+   -  dotnet test StackOverflow.Api.Services.csproj
    -  dotnet test StackOverflow.Api.Client.csproj
    -  dotnet test StackOverflow.Api.Web.csproj

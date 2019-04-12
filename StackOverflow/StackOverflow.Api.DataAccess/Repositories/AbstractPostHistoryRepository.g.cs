@@ -37,12 +37,12 @@ namespace StackOverflowNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Comment.StartsWith(query) ||
 				                  x.CreationDate == query.ToDateTime() ||
-				                  x.PostHistoryTypeId == query.ToInt() ||
-				                  x.PostId == query.ToInt() ||
+				                  (x.PostHistoryTypeIdNavigation == null || x.PostHistoryTypeIdNavigation.RwType == null?false : x.PostHistoryTypeIdNavigation.RwType.StartsWith(query)) ||
+				                  (x.PostIdNavigation == null || x.PostIdNavigation.Id == null?false : x.PostIdNavigation.Id == query.ToInt()) ||
 				                  x.RevisionGUID.StartsWith(query) ||
 				                  x.Text.StartsWith(query) ||
 				                  x.UserDisplayName.StartsWith(query) ||
-				                  x.UserId == query.ToNullableInt(),
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.DisplayName == null?false : x.UserIdNavigation.DisplayName.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -161,5 +161,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aeedbe9d478a0eed3649412960688c21</Hash>
+    <Hash>a1542bf5f370975b1de0d035b2ec5ccd</Hash>
 </Codenesium>*/

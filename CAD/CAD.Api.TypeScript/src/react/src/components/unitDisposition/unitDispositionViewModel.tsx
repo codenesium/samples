@@ -15,11 +15,11 @@ export default class UnitDispositionViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>dcc7d2b019f0fc61c4ce418979081133</Hash>
+    <Hash>0197f93854a859e703f8bf90cce99ee3</Hash>
 </Codenesium>*/

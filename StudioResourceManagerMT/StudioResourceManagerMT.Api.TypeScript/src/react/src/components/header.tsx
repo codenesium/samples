@@ -134,8 +134,14 @@ export const wrapperHeader = (
                 <Link to={ClientRoutes.TeacherTeacherSkills} />
               </Menu.Item>
 
-              <Menu.Item key="user">
+              <Menu.Item key="tenant">
                 <Icon type="tool" />
+                <span>Tenant</span>
+                <Link to={ClientRoutes.Tenants} />
+              </Menu.Item>
+
+              <Menu.Item key="user">
+                <Icon type="coffee" />
                 <span>User</span>
                 <Link to={ClientRoutes.Users} />
               </Menu.Item>
@@ -188,5 +194,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>18fe2af95875572ba359b9ac6d38e736</Hash>
+    <Hash>1e47e8cb3d2299f951367a40cd54ca92</Hash>
 </Codenesium>*/

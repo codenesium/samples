@@ -5,14 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FileServiceNS.Api.DataAccess.Migrations
 {
-	[DbContext(typeof(ApplicationDbContext))]
+		[DbContext(typeof(ApplicationDbContext))]
 	[Migration("00000000000001_CreateIdentitySchema")]
 	public partial class CreateIdentitySchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "dbo");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -30,7 +28,7 @@ namespace FileServiceNS.Api.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
-                columns: table => new
+				columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
@@ -56,7 +54,7 @@ namespace FileServiceNS.Api.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
-                columns: table => new
+				columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -77,7 +75,7 @@ namespace FileServiceNS.Api.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
-                columns: table => new
+				columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -91,14 +89,14 @@ namespace FileServiceNS.Api.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+						principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
-                columns: table => new
+				columns: table => new
                 {
                     LoginProvider = table.Column<string>(maxLength: 256, nullable: false),
                     ProviderKey = table.Column<string>(maxLength: 256, nullable: false),
@@ -118,7 +116,7 @@ namespace FileServiceNS.Api.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
-                columns: table => new
+				columns: table => new
                 {
                     UserId = table.Column<string>(maxLength: 36, nullable: false),
                     RoleId = table.Column<string>(maxLength: 36, nullable: false)
@@ -142,7 +140,7 @@ namespace FileServiceNS.Api.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
-                columns: table => new
+				columns: table => new
                 {
                     UserId = table.Column<string>(maxLength: 36, nullable: false),
                     LoginProvider = table.Column<string>(maxLength: 256, nullable: false),
@@ -160,62 +158,49 @@ namespace FileServiceNS.Api.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"--Insert a default user with a username of test@test.com and pasword of Passw0rd$
+				INSERT into [AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'test@test.com', N'TEST@TEST.COM', N'test@test.com', N'TEST@TEST.COM', 0, N'AQAAAAEAACcQAAAAEPHgwwSOWc0RC+QoKECQI4uhmqAuU5WWlMzgdWfVzlVqvmlH1OP3VpaIQr1t/BfPOA==', N'LYDQKGGRKXO4QYYP5NCCCMWDLKOWGI45', N'f6fbabae-d7c6-4ffd-9f93-841fcaf20e99', NULL, 0, 0, NULL, 1, 0)
+				GO
+				-- Add User Role
+				INSERT into [AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES 
+				(N'225acd4b-5ec9-43e9-9fbe-9153033f45c9', N'User', N'USER', NULL)
+				GO
+				--Add Administrator Role
+				INSERT into [AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'55571210-c2b0-40e0-baf8-32882524bec8', N'Administrator', N'ADMINISTRATOR', N'')
+				GO
+				--Assign Admin user to User role
+				INSERT into [AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'225acd4b-5ec9-43e9-9fbe-9153033f45c9')
+				GO
+				--Assign Admin to Administrator Role
+				INSERT  into [AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'55571210-c2b0-40e0-baf8-32882524bec8')
+				GO
+				");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"--Insert a default user with a username of test@test.com and pasword of Passw0rd$
+				INSERT into ""AspNetUsers"" (""Id"", ""UserName"", ""NormalizedUserName"", ""Email"", ""NormalizedEmail"", ""EmailConfirmed"", ""PasswordHash"", ""SecurityStamp"", ""ConcurrencyStamp"", ""PhoneNumber"", ""PhoneNumberConfirmed"", ""TwoFactorEnabled"", ""LockoutEnd"", ""LockoutEnabled"",""AccessFailedCount"") VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'test@test.com', N'TEST@TEST.COM', N'test@test.com', N'TEST@TEST.COM',TRUE, N'AQAAAAEAACcQAAAAEPHgwwSOWc0RC+QoKECQI4uhmqAuU5WWlMzgdWfVzlVqvmlH1OP3VpaIQr1t/BfPOA==', N'LYDQKGGRKXO4QYYP5NCCCMWDLKOWGI45', N'f6fbabae-d7c6-4ffd-9f93-841fcaf20e99', NULL, FALSE, FALSE, NULL, TRUE, 0);
+			
+				-- Add User Role
+				INSERT into ""AspNetRoles"" (""Id"", ""Name"", ""NormalizedName"", ""ConcurrencyStamp"") VALUES 
+				(N'225acd4b-5ec9-43e9-9fbe-9153033f45c9', N'User', N'USER', NULL);
 
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+				--Add Administrator Role
+				INSERT into ""AspNetRoles"" (""Id"", ""Name"", ""NormalizedName"", ""ConcurrencyStamp"") VALUES (N'55571210-c2b0-40e0-baf8-32882524bec8', N'Administrator', N'ADMINISTRATOR', N'');
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId");
+				--Assign Admin user to User role
+				INSERT into ""AspNetUserRoles"" (""UserId"", ""RoleId"") VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'225acd4b-5ec9-43e9-9fbe-9153033f45c9');
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                table: "AspNetUserRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
-
-			migrationBuilder.Sql(@"--Insert a default user with a username of test@test.com and pasword of Passw0rd$
-			INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'test@test.com', N'TEST@TEST.COM', N'test@test.com', N'TEST@TEST.COM', 0, N'AQAAAAEAACcQAAAAEPHgwwSOWc0RC+QoKECQI4uhmqAuU5WWlMzgdWfVzlVqvmlH1OP3VpaIQr1t/BfPOA==', N'LYDQKGGRKXO4QYYP5NCCCMWDLKOWGI45', N'f6fbabae-d7c6-4ffd-9f93-841fcaf20e99', NULL, 0, 0, NULL, 1, 0)
-			GO
-			-- Add User Role
-			INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES 
-			(N'225acd4b-5ec9-43e9-9fbe-9153033f45c9', N'User', N'USER', NULL)
-			GO
-			--Add Administrator Role
-			INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'55571210-c2b0-40e0-baf8-32882524bec8', N'Administrator', N'ADMINISTRATOR', N'')
-			GO
-			--Assign Admin user to User role
-			INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'225acd4b-5ec9-43e9-9fbe-9153033f45c9')
-			GO
-			--Assign Admin to Administrator Role
-			INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'55571210-c2b0-40e0-baf8-32882524bec8')
-			GO
-			");
+				--Assign Admin to Administrator Role
+				INSERT into ""AspNetUserRoles"" (""UserId"", ""RoleId"") VALUES (N'cfc34544-c57e-47d1-bc30-355dcfb35f5a', N'55571210-c2b0-40e0-baf8-32882524bec8');
+				");
+			}
+			else
+			{
+				throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+			}
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

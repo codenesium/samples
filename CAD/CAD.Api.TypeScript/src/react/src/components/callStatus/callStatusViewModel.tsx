@@ -15,11 +15,11 @@ export default class CallStatusViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>3377318f450a19dfd350fcec2c738547</Hash>
+    <Hash>5b536f80965b53774c5058f4cc1fb978</Hash>
 </Codenesium>*/

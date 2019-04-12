@@ -37,9 +37,9 @@ namespace StackOverflowNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.BountyAmount == query.ToNullableInt() ||
 				                  x.CreationDate == query.ToDateTime() ||
-				                  x.PostId == query.ToInt() ||
-				                  x.UserId == query.ToNullableInt() ||
-				                  x.VoteTypeId == query.ToInt(),
+				                  (x.PostIdNavigation == null || x.PostIdNavigation.Id == null?false : x.PostIdNavigation.Id == query.ToInt()) ||
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.DisplayName == null?false : x.UserIdNavigation.DisplayName.StartsWith(query)) ||
+				                  (x.VoteTypeIdNavigation == null || x.VoteTypeIdNavigation.Name == null?false : x.VoteTypeIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -158,5 +158,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8bda3b450ca7f69d26ab9f214ff6a63</Hash>
+    <Hash>3f57e47501f3ba40a11575921eedeab3</Hash>
 </Codenesium>*/

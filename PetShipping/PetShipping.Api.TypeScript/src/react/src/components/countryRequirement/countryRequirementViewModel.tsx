@@ -23,11 +23,11 @@ export default class CountryRequirementViewModel {
   }
 
   toDisplay(): string {
-    return String(this.countryId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>927ba7a97821879aa94057a846b87758</Hash>
+    <Hash>3a557b1f48bb6a59d4a65f2351dfc162</Hash>
 </Codenesium>*/

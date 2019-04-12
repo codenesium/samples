@@ -38,7 +38,7 @@ namespace TicketingCRMNS.Api.DataAccess
 				                  x.IpAddress.StartsWith(query) ||
 				                  x.Notes.StartsWith(query) ||
 				                  x.SaleDate == query.ToDateTime() ||
-				                  x.TransactionId == query.ToInt(),
+				                  (x.TransactionIdNavigation == null || x.TransactionIdNavigation.Id == null?false : x.TransactionIdNavigation.Id == query.ToInt()),
 				                  limit,
 				                  offset);
 			}
@@ -139,5 +139,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2271ac0c19802c125ab81742e888cebf</Hash>
+    <Hash>9b91145ccf8f7d198f6d032468d5b486</Hash>
 </Codenesium>*/

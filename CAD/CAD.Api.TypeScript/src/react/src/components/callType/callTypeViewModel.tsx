@@ -15,11 +15,11 @@ export default class CallTypeViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>1e3e06e9f23401d59a47adb06939ac80</Hash>
+    <Hash>7adc26c094bad49e2fdae9addf38b940</Hash>
 </Codenesium>*/

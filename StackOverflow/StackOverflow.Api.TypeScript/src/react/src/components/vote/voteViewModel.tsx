@@ -49,11 +49,11 @@ export default class VoteViewModel {
   }
 
   toDisplay(): string {
-    return String(this.bountyAmount);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>6d8d2835f1b955c7b0ff46eed99b73ae</Hash>
+    <Hash>6517e27cb68c2359362f0c14b287d439</Hash>
 </Codenesium>*/

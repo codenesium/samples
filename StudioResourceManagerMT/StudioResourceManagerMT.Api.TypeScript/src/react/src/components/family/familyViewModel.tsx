@@ -34,11 +34,11 @@ export default class FamilyViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.primaryContactLastName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>5e7b0dd585f085854561b63e35d631f6</Hash>
+    <Hash>f53f3d24daa7f9f6117bbbaa0069e100</Hash>
 </Codenesium>*/

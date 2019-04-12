@@ -42,11 +42,11 @@ export default class StudioViewModel {
   }
 
   toDisplay(): string {
-    return String(this.address1);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>056dbd15f272ac433f89c6e51b3d7e12</Hash>
+    <Hash>c1ebf44334f454ce07717c8825a212c1</Hash>
 </Codenesium>*/

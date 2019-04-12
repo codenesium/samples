@@ -20,10 +20,8 @@ namespace NebulaNS.Api.Client
 			from.LinkLogs.ForEach(x => this.AddLinkLog(x));
 			from.LinkStatus.ForEach(x => this.AddLinkStatus(x));
 			from.Machines.ForEach(x => this.AddMachine(x));
-			from.MachineRefTeams.ForEach(x => this.AddMachineRefTeam(x));
 			from.Organizations.ForEach(x => this.AddOrganization(x));
 			from.Teams.ForEach(x => this.AddTeam(x));
-			from.VersionInfoes.ForEach(x => this.AddVersionInfo(x));
 		}
 
 		public List<ApiChainClientResponseModel> Chains { get; private set; } = new List<ApiChainClientResponseModel>();
@@ -40,13 +38,9 @@ namespace NebulaNS.Api.Client
 
 		public List<ApiMachineClientResponseModel> Machines { get; private set; } = new List<ApiMachineClientResponseModel>();
 
-		public List<ApiMachineRefTeamClientResponseModel> MachineRefTeams { get; private set; } = new List<ApiMachineRefTeamClientResponseModel>();
-
 		public List<ApiOrganizationClientResponseModel> Organizations { get; private set; } = new List<ApiOrganizationClientResponseModel>();
 
 		public List<ApiTeamClientResponseModel> Teams { get; private set; } = new List<ApiTeamClientResponseModel>();
-
-		public List<ApiVersionInfoClientResponseModel> VersionInfoes { get; private set; } = new List<ApiVersionInfoClientResponseModel>();
 
 		public void AddChain(ApiChainClientResponseModel item)
 		{
@@ -104,14 +98,6 @@ namespace NebulaNS.Api.Client
 			}
 		}
 
-		public void AddMachineRefTeam(ApiMachineRefTeamClientResponseModel item)
-		{
-			if (!this.MachineRefTeams.Any(x => x.Id == item.Id))
-			{
-				this.MachineRefTeams.Add(item);
-			}
-		}
-
 		public void AddOrganization(ApiOrganizationClientResponseModel item)
 		{
 			if (!this.Organizations.Any(x => x.Id == item.Id))
@@ -127,17 +113,9 @@ namespace NebulaNS.Api.Client
 				this.Teams.Add(item);
 			}
 		}
-
-		public void AddVersionInfo(ApiVersionInfoClientResponseModel item)
-		{
-			if (!this.VersionInfoes.Any(x => x.Version == item.Version))
-			{
-				this.VersionInfoes.Add(item);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b1e7686f23853d95452ddeda8576548</Hash>
+    <Hash>b6bbd018232d1e1369c2ed6b90dbbb2e</Hash>
 </Codenesium>*/

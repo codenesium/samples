@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build StudioResourceManagerMT.Api.Web.csproj
    -  dotnet test StudioResourceManagerMT.Api.DataAccess.csproj
-   -  dotnet test StudioResourceManagerMT.Api.Servicea.csproj
+   -  dotnet test StudioResourceManagerMT.Api.Services.csproj
    -  dotnet test StudioResourceManagerMT.Api.Client.csproj
    -  dotnet test StudioResourceManagerMT.Api.Web.csproj

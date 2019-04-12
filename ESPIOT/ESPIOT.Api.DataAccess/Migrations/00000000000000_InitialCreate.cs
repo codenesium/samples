@@ -15,7 +15,9 @@ namespace ESPIOTNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -91,6 +93,61 @@ ALTER TABLE[dbo].[DeviceAction] CHECK CONSTRAINT[FK_DeviceAction_Device]
 GO
 
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+--ALTER TABLE ""dbo"".""DeviceAction"" DISABLE TRIGGER ALL;
+
+--DROP TABLE IF EXISTS ""dbo"".""Device"";
+--DROP TABLE IF EXISTS ""dbo"".""DeviceAction"";
+
+CREATE TABLE ""dbo"".""Device""(
+""id""  SERIAL ,
+""dateOfLastPing"" timestamp    NOT NULL,
+""isActive"" boolean    NOT NULL,
+""name"" varchar  (90)  NOT NULL,
+""publicId"" uuid    NOT NULL);
+
+CREATE TABLE ""dbo"".""DeviceAction""(
+""id""  SERIAL ,
+""action"" varchar  (4000)  NOT NULL,
+""deviceId"" int    NOT NULL,
+""name"" varchar  (90)  NOT NULL);
+
+ALTER TABLE ""dbo"".""Device""
+ADD CONSTRAINT ""PK_Device""
+PRIMARY KEY
+(
+""id""
+);
+CREATE UNIQUE INDEX ""IX_Device"" ON ""dbo"".""Device""
+(
+""publicId"" ASC);
+ALTER TABLE ""dbo"".""DeviceAction""
+ADD CONSTRAINT ""PK_Action""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_DeviceAction_deviceActionId"" ON ""dbo"".""DeviceAction""
+(
+""id"" ASC);
+CREATE  INDEX ""IX_DeviceAction_DeviceId"" ON ""dbo"".""DeviceAction""
+(
+""deviceId"" ASC);
+
+
+ALTER TABLE ""dbo"".""DeviceAction"" ADD CONSTRAINT ""FK_DeviceAction_Device"" FOREIGN KEY(""deviceId"")
+REFERENCES ""dbo"".""Device"" (""id"");
+
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

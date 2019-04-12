@@ -1,40 +1,25 @@
 version: '2'
 
 services:
+
   app:
     container_name: 'stackoverflow-app'
     image: 'stackoverflow-app'
     build:
       context: .
-      dockerfile: DockerFileReact
-      args:
-      - REACT_APP_API_URL=http://192.168.99.100:81/
-      - REACT_APP_HOST_SUBDIRECTORY=/
+      dockerfile: DockerFile
     environment:
-       - REACT_APP_API_URL=http://192.168.99.100:81/
+       - ASPNETCORE_URLS=http://+:80
+       - ConnectionStrings__ApplicationDbContext=Host=stackoverflow-db;Persist Security Info=False;User ID=postgres;Password=test;Database=stackoverflow;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
+       - DebugSendAuthEmailsToClient=true
+       - REACT_APP_API_URL=${REACT_APP_API_URL}
        - REACT_APP_HOST_SUBDIRECTORY=/
     volumes:
       - .:/var/www/app
     ports:
      - "80:80"
-    networks:
-      - stackoverflow-network
-
-  api:
-    container_name: 'stackoverflow-api'
-    image: 'stackoverflow-api'
-    build:
-      context: .
-      dockerfile: DockerFile
-    environment:
-       - ASPNETCORE_URLS=http://+:81
-       - ConnectionStrings__ApplicationDbContext=Host=stackoverflow-db;Persist Security Info=False;User ID=postgres;Password=test;Database=stackoverflow;
-       - DatabaseProvider=POSTGRESQL
-       - MigrateDatabase=true
-    volumes:
-      - .:/var/www/api
-    ports:
-     - "81:81"
     depends_on:
      - "db"
     networks:

@@ -34,11 +34,11 @@ export default class OfficerViewModel {
   }
 
   toDisplay(): string {
-    return String(this.badge);
+    return String(this.lastName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>b141b3794de4e37cfaecacaea482cd36</Hash>
+    <Hash>d46f4b2ecbf3f0f7021e4fe7b18b3599</Hash>
 </Codenesium>*/

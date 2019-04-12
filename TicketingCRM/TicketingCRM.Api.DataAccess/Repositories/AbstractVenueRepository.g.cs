@@ -37,12 +37,12 @@ namespace TicketingCRMNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Address1.StartsWith(query) ||
 				                  x.Address2.StartsWith(query) ||
-				                  x.AdminId == query.ToInt() ||
+				                  (x.AdminIdNavigation == null || x.AdminIdNavigation.Email == null?false : x.AdminIdNavigation.Email.StartsWith(query)) ||
 				                  x.Email.StartsWith(query) ||
 				                  x.Facebook.StartsWith(query) ||
 				                  x.Name.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
-				                  x.ProvinceId == query.ToInt() ||
+				                  (x.ProvinceIdNavigation == null || x.ProvinceIdNavigation.Name == null?false : x.ProvinceIdNavigation.Name.StartsWith(query)) ||
 				                  x.Website.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -148,5 +148,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0c41aedf3cae995faf5a3fe63c875e2d</Hash>
+    <Hash>9940ce6773fc9da82b331c41d2ee95ac</Hash>
 </Codenesium>*/

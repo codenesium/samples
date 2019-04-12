@@ -739,6 +739,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'Species Search'
           )}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -746,5 +747,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>944234a3b6e47d726d6fe9e9ef5cc1c5</Hash>
+    <Hash>891368a85b940ef53bda875935554095</Hash>
 </Codenesium>*/

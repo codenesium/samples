@@ -35,11 +35,11 @@ export default class ReplyViewModel {
   }
 
   toDisplay(): string {
-    return String(this.date);
+    return String(this.replyId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>a3cb5209f386770ad133348db521d43f</Hash>
+    <Hash>50a3d7047059dd22e50271e29608de74</Hash>
 </Codenesium>*/

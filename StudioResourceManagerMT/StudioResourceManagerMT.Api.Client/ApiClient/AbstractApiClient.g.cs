@@ -1128,6 +1128,71 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
+		public virtual async Task<CreateResponse<List<ApiTenantClientResponseModel>>> TenantBulkInsertAsync(List<ApiTenantClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Tenants/BulkInsert", items, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTenantClientResponseModel>>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiTenantClientResponseModel>> TenantCreateAsync(ApiTenantClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Tenants", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiTenantClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiTenantClientResponseModel>> TenantUpdateAsync(int id, ApiTenantClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Tenants/{id}", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiTenantClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> TenantDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Tenants/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiTenantClientResponseModel> TenantGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Tenants/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiTenantClientResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiTenantClientResponseModel>> TenantAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		{
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiTenantClientResponseModel> response = new List<ApiTenantClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Tenants?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
+
+				this.HandleResponseCode(httpResponse);
+				List<ApiTenantClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiTenantClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
+		}
+
 		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>>> UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Users/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -1309,5 +1374,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>25f5f16f709157be979235db11eae175</Hash>
+    <Hash>c8adf979b63d043e86705ff0f3086b2c</Hash>
 </Codenesium>*/

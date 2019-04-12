@@ -3,21 +3,21 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
 	<RootNamespace>StackOverflowNS.Api.DataAccess</RootNamespace>
+	<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Codenesium.DataConversionExtensions" Version="2019.1.3" />
 	<PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.9" />
 	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4"  PrivateAssets="All" />
   </ItemGroup>
   
-    
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>StackOverflow.Api.DataAccess.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

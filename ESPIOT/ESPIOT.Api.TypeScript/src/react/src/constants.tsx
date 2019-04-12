@@ -1,8 +1,4 @@
 export class Constants {
-  static readonly BaseEndpoint = process.env.REACT_APP_API_URL;
-  static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
-  static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
-  static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
   static readonly HostedBaseUrl =
     window.location.protocol + '//' + window.location.host;
   static readonly HostedSubDirectory =
@@ -11,6 +7,13 @@ export class Constants {
       : '/' + process.env.REACT_APP_HOST_SUBDIRECTORY;
   static readonly HostedUrl =
     Constants.HostedBaseUrl + Constants.HostedSubDirectory;
+  static readonly BaseEndpoint =
+    process.env.REACT_APP_API_URL == ''
+      ? Constants.HostedUrl
+      : process.env.REACT_APP_API_URL;
+  static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
+  static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
+  static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
 }
 
 export class AuthClientRoutes {
@@ -48,5 +51,5 @@ export class ApiRoutes {
 
 
 /*<Codenesium>
-    <Hash>4dcfafa0086d5a63ed8f37a5e068c4de</Hash>
+    <Hash>76894c7e7f9d7ac80f8307dd926bde49</Hash>
 </Codenesium>*/

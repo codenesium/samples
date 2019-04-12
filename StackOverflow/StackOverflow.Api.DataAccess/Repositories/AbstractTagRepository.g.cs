@@ -36,9 +36,9 @@ namespace StackOverflowNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Count == query.ToInt() ||
-				                  x.ExcerptPostId == query.ToInt() ||
+				                  (x.ExcerptPostIdNavigation == null || x.ExcerptPostIdNavigation.Id == null?false : x.ExcerptPostIdNavigation.Id == query.ToInt()) ||
 				                  x.TagName.StartsWith(query) ||
-				                  x.WikiPostId == query.ToInt(),
+				                  (x.WikiPostIdNavigation == null || x.WikiPostIdNavigation.Id == null?false : x.WikiPostIdNavigation.Id == query.ToInt()),
 				                  limit,
 				                  offset);
 			}
@@ -143,5 +143,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>409f3305daa5bf8268028dd852270363</Hash>
+    <Hash>4ba1ded8cd530acfd50e5dad49c3640d</Hash>
 </Codenesium>*/

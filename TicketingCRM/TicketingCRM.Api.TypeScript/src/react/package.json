@@ -5,11 +5,11 @@
   "dependencies": {
     "@types/jest": "latest",
     "@types/node": "latest",
-    "@types/react": "latest",
+    "@types/react": "16.8.8",
     "@types/react-dom": "latest",
     "@types/react-router-dom": "latest",
     "@types/react-table": "latest",
-    "antd": "latest",
+    "antd": "3.13.2",
     "axios": "latest",
     "moment": "latest",
     "prop-types": "latest",

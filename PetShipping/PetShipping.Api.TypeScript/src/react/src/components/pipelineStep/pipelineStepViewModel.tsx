@@ -36,11 +36,11 @@ export default class PipelineStepViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>3fb0d0f726d04ced3fa750afd4f398b1</Hash>
+    <Hash>411d97ec2024fa0dbd075dccdc82fe1a</Hash>
 </Codenesium>*/

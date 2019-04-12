@@ -34,11 +34,11 @@ export default class ProductViewModel {
   }
 
   toDisplay(): string {
-    return String(this.active);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>20dfda5f517d0fc6041767d3f69dfaab</Hash>
+    <Hash>d57ef4b4e2d186395f1e828ed16b9f90</Hash>
 </Codenesium>*/

@@ -43,11 +43,11 @@ export default class AirTransportViewModel {
   }
 
   toDisplay(): string {
-    return String(this.airlineId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>1b0fcab9d9e75687a3391111ee80002e</Hash>
+    <Hash>ac8048bdc85b217653c1d9e28dca061f</Hash>
 </Codenesium>*/

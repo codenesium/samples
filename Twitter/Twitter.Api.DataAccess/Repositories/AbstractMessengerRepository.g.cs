@@ -37,10 +37,10 @@ namespace TwitterNS.Api.DataAccess
 				return this.Where(x =>
 				                  x.Date == query.ToNullableDateTime() ||
 				                  x.FromUserId == query.ToNullableInt() ||
-				                  x.MessageId == query.ToNullableInt() ||
+				                  (x.MessageIdNavigation == null || x.MessageIdNavigation.MessageId == null?false : x.MessageIdNavigation.MessageId == query.ToInt()) ||
 				                  x.Time == query.ToNullableTimespan() ||
-				                  x.ToUserId == query.ToInt() ||
-				                  x.UserId == query.ToNullableInt(),
+				                  (x.ToUserIdNavigation == null || x.ToUserIdNavigation.Username == null?false : x.ToUserIdNavigation.Username.StartsWith(query)) ||
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.Username == null?false : x.UserIdNavigation.Username.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -159,5 +159,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>113cce3146cad5b39fe118a5bd6d6e39</Hash>
+    <Hash>a6b846c1200b4f0d00d7ca4a87740984</Hash>
 </Codenesium>*/

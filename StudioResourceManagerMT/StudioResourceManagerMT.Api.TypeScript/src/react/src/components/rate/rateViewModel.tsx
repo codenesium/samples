@@ -36,11 +36,11 @@ export default class RateViewModel {
   }
 
   toDisplay(): string {
-    return String(this.amountPerMinute);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>8a89a4916657af45ca43083c2eb81605</Hash>
+    <Hash>7151e926a500016b40e704012d3f336c</Hash>
 </Codenesium>*/

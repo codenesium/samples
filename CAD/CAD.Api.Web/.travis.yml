@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build CAD.Api.Web.csproj
    -  dotnet test CAD.Api.DataAccess.csproj
-   -  dotnet test CAD.Api.Servicea.csproj
+   -  dotnet test CAD.Api.Services.csproj
    -  dotnet test CAD.Api.Client.csproj
    -  dotnet test CAD.Api.Web.csproj

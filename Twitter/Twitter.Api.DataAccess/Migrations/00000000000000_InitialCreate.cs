@@ -15,7 +15,9 @@ namespace TwitterNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -535,6 +537,303 @@ ALTER TABLE[dbo].[User] CHECK CONSTRAINT[FK_User_location_location_id_Location_l
 GO
 
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+--ALTER TABLE ""dbo"".""Direct_Tweets"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Follower"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Follower"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Like"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Like"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Message"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Messenger"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Messenger"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Messenger"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Quote_Tweet"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Quote_Tweet"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Reply"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Retweet"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Retweet"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Tweet"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Tweet"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""User"" DISABLE TRIGGER ALL;
+
+--DROP TABLE IF EXISTS ""dbo"".""Direct_Tweets"";
+--DROP TABLE IF EXISTS ""dbo"".""Follower"";
+--DROP TABLE IF EXISTS ""dbo"".""Following"";
+--DROP TABLE IF EXISTS ""dbo"".""Like"";
+--DROP TABLE IF EXISTS ""dbo"".""Location"";
+--DROP TABLE IF EXISTS ""dbo"".""Message"";
+--DROP TABLE IF EXISTS ""dbo"".""Messenger"";
+--DROP TABLE IF EXISTS ""dbo"".""Quote_Tweet"";
+--DROP TABLE IF EXISTS ""dbo"".""Reply"";
+--DROP TABLE IF EXISTS ""dbo"".""Retweet"";
+--DROP TABLE IF EXISTS ""dbo"".""Tweet"";
+--DROP TABLE IF EXISTS ""dbo"".""User"";
+
+CREATE TABLE ""dbo"".""Direct_Tweets""(
+""tweet_id"" int    NOT NULL,
+""content"" varchar  (140)  NOT NULL,
+""date"" date    NOT NULL,
+""tagged_user_id"" int    NOT NULL,
+""time"" time    NOT NULL);
+
+CREATE TABLE ""dbo"".""Follower""(
+""id"" int    NOT NULL,
+""blocked"" char  (1)  NOT NULL,
+""date_followed"" date    NOT NULL,
+""follow_request_status"" char  (1)  NOT NULL,
+""followed_user_id"" int    NOT NULL,
+""following_user_id"" int    NOT NULL,
+""muted"" char  (1)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Following""(
+""user_id""  SERIAL ,
+""date_followed"" date    NULL,
+""muted"" char  (1)  NULL);
+
+CREATE TABLE ""dbo"".""Like""(
+""liker_user_id"" int    NOT NULL,
+""tweet_id"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Location""(
+""location_id"" int    NOT NULL,
+""gps_lat"" int    NOT NULL,
+""gps_long"" int    NOT NULL,
+""location_name"" varchar  (64)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Message""(
+""message_id"" int    NOT NULL,
+""content"" varchar  (128)  NULL,
+""sender_user_id"" int    NULL);
+
+CREATE TABLE ""dbo"".""Messenger""(
+""id""  SERIAL ,
+""date"" date    NULL,
+""from_user_id"" int    NULL,
+""message_id"" int    NULL,
+""time"" time    NULL,
+""to_user_id"" int    NOT NULL,
+""user_id"" int    NULL);
+
+CREATE TABLE ""dbo"".""Quote_Tweet""(
+""quote_tweet_id"" int    NOT NULL,
+""content"" varchar  (140)  NOT NULL,
+""date"" date    NOT NULL,
+""retweeter_user_id"" int    NOT NULL,
+""source_tweet_id"" int    NOT NULL,
+""time"" time    NOT NULL);
+
+CREATE TABLE ""dbo"".""Reply""(
+""reply_id"" int    NOT NULL,
+""content"" varchar  (140)  NOT NULL,
+""date"" date    NOT NULL,
+""replier_user_id"" int    NOT NULL,
+""time"" time    NOT NULL);
+
+CREATE TABLE ""dbo"".""Retweet""(
+""id""  SERIAL ,
+""date"" date    NULL,
+""retwitter_user_id"" int    NULL,
+""time"" time    NULL,
+""tweet_tweet_id"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Tweet""(
+""tweet_id"" int    NOT NULL,
+""content"" varchar  (140)  NOT NULL,
+""date"" date    NOT NULL,
+""location_id"" int    NOT NULL,
+""time"" time    NOT NULL,
+""user_user_id"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""User""(
+""user_id"" int    NOT NULL,
+""bio_img_url"" varchar  (32)  NULL,
+""birthday"" date    NULL,
+""content_description"" varchar  (128)  NULL,
+""email"" varchar  (32)  NOT NULL,
+""full_name"" varchar  (64)  NOT NULL,
+""header_img_url"" varchar  (32)  NULL,
+""interest"" varchar  (128)  NULL,
+""location_location_id"" int    NOT NULL,
+""password"" varchar  (32)  NOT NULL,
+""phone_number"" varchar  (32)  NULL,
+""privacy"" char  (1)  NOT NULL,
+""username"" varchar  (64)  NOT NULL,
+""website"" varchar  (32)  NULL);
+
+ALTER TABLE ""dbo"".""Direct_Tweets""
+ADD CONSTRAINT ""PK__Direct_T__D29C7047218B8321""
+PRIMARY KEY
+(
+""tweet_id""
+);
+CREATE  INDEX ""IX_Direct_Tweets_tagged_user_id"" ON ""dbo"".""Direct_Tweets""
+(
+""tagged_user_id"" ASC);
+ALTER TABLE ""dbo"".""Follower""
+ADD CONSTRAINT ""PK_Follower""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_Follower_followed_user_id"" ON ""dbo"".""Follower""
+(
+""followed_user_id"" ASC);
+CREATE  INDEX ""IX_Follower_following_user_id"" ON ""dbo"".""Follower""
+(
+""following_user_id"" ASC);
+ALTER TABLE ""dbo"".""Following""
+ADD CONSTRAINT ""PK__Followin__B9BE370F248238E5""
+PRIMARY KEY
+(
+""user_id""
+);
+CREATE UNIQUE INDEX ""UQ__Followin__B9BE370E8C7103D9"" ON ""dbo"".""Following""
+(
+""user_id"" ASC);
+ALTER TABLE ""dbo"".""Like""
+ADD CONSTRAINT ""PK_Like""
+PRIMARY KEY
+(
+""liker_user_id""
+,""tweet_id""
+);
+CREATE  INDEX ""IX_Like_liker_user_id"" ON ""dbo"".""Like""
+(
+""liker_user_id"" ASC);
+CREATE  INDEX ""IX_Like_tweet_id"" ON ""dbo"".""Like""
+(
+""tweet_id"" ASC);
+ALTER TABLE ""dbo"".""Location""
+ADD CONSTRAINT ""PK__Location__771831EAADC27010""
+PRIMARY KEY
+(
+""location_id""
+);
+ALTER TABLE ""dbo"".""Message""
+ADD CONSTRAINT ""PK__Message__0BBF6EE6C0DC4E0B""
+PRIMARY KEY
+(
+""message_id""
+);
+CREATE  INDEX ""IX_Message_sender_user_id"" ON ""dbo"".""Message""
+(
+""sender_user_id"" ASC);
+ALTER TABLE ""dbo"".""Messenger""
+ADD CONSTRAINT ""PK_Messenger""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_Messenger_message_id"" ON ""dbo"".""Messenger""
+(
+""message_id"" ASC);
+CREATE  INDEX ""IX_Messenger_to_user_id"" ON ""dbo"".""Messenger""
+(
+""to_user_id"" ASC);
+CREATE  INDEX ""IX_Messenger_user_id"" ON ""dbo"".""Messenger""
+(
+""user_id"" ASC);
+ALTER TABLE ""dbo"".""Quote_Tweet""
+ADD CONSTRAINT ""PK_Quote_Tweet""
+PRIMARY KEY
+(
+""quote_tweet_id""
+);
+CREATE  INDEX ""IX_Quote_Tweet_retweeter_user_id"" ON ""dbo"".""Quote_Tweet""
+(
+""retweeter_user_id"" ASC);
+CREATE  INDEX ""IX_Quote_Tweet_source_tweet_id"" ON ""dbo"".""Quote_Tweet""
+(
+""source_tweet_id"" ASC);
+ALTER TABLE ""dbo"".""Reply""
+ADD CONSTRAINT ""PK_Reply""
+PRIMARY KEY
+(
+""reply_id""
+);
+CREATE  INDEX ""IX_Reply_replier_user_id"" ON ""dbo"".""Reply""
+(
+""replier_user_id"" ASC);
+ALTER TABLE ""dbo"".""Retweet""
+ADD CONSTRAINT ""PK_Retweet""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_Retweet_retwitter_user_id"" ON ""dbo"".""Retweet""
+(
+""retwitter_user_id"" ASC);
+CREATE  INDEX ""IX_Retweet_tweet_tweet_id"" ON ""dbo"".""Retweet""
+(
+""tweet_tweet_id"" ASC);
+ALTER TABLE ""dbo"".""Tweet""
+ADD CONSTRAINT ""PK__Tweet__D29C70471A55E959""
+PRIMARY KEY
+(
+""tweet_id""
+);
+CREATE  INDEX ""IX_Tweet_location_id"" ON ""dbo"".""Tweet""
+(
+""location_id"" ASC);
+CREATE  INDEX ""IX_Tweet_user_user_id"" ON ""dbo"".""Tweet""
+(
+""user_user_id"" ASC);
+ALTER TABLE ""dbo"".""User""
+ADD CONSTRAINT ""PK__User__B9BE370F81ECAF43""
+PRIMARY KEY
+(
+""user_id""
+);
+CREATE  INDEX ""IX_User_location_location_id"" ON ""dbo"".""User""
+(
+""location_location_id"" ASC);
+
+
+ALTER TABLE ""dbo"".""Direct_Tweets"" ADD CONSTRAINT ""FK_Direct_Tweets_tagged_user_id_User_user_id"" FOREIGN KEY(""tagged_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Follower"" ADD CONSTRAINT ""FK_Follower_followed_user_id_User_user_id"" FOREIGN KEY(""followed_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Follower"" ADD CONSTRAINT ""FK_Follower_following_user_id_User_user_id"" FOREIGN KEY(""following_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Like"" ADD CONSTRAINT ""FK_Like_liker_user_id_User_user_id"" FOREIGN KEY(""liker_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Like"" ADD CONSTRAINT ""FK_Like_tweet_id_Tweet_tweet_id"" FOREIGN KEY(""tweet_id"")
+REFERENCES ""dbo"".""Tweet"" (""tweet_id"");
+ALTER TABLE ""dbo"".""Message"" ADD CONSTRAINT ""FK_Message_sender_user_id_User_user_id"" FOREIGN KEY(""sender_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Messenger"" ADD CONSTRAINT ""FK_Messenger_to_user_id_User_user_id"" FOREIGN KEY(""to_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Messenger"" ADD CONSTRAINT ""FK_Messenger_user_id_User_user_id"" FOREIGN KEY(""user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Messenger"" ADD CONSTRAINT ""FK_Messenger_message_id_Message_message_id"" FOREIGN KEY(""message_id"")
+REFERENCES ""dbo"".""Message"" (""message_id"");
+ALTER TABLE ""dbo"".""Quote_Tweet"" ADD CONSTRAINT ""FK_Quote_Tweet_source_tweet_id_Tweet_tweet_id"" FOREIGN KEY(""source_tweet_id"")
+REFERENCES ""dbo"".""Tweet"" (""tweet_id"");
+ALTER TABLE ""dbo"".""Quote_Tweet"" ADD CONSTRAINT ""FK_Quote_Tweet_retweeter_user_id_User_user_id"" FOREIGN KEY(""retweeter_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Reply"" ADD CONSTRAINT ""FK_Reply_replier_user_id_User_user_id"" FOREIGN KEY(""replier_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Retweet"" ADD CONSTRAINT ""FK_Retweet_retwitter_user_id_User_user_id"" FOREIGN KEY(""retwitter_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""Retweet"" ADD CONSTRAINT ""FK_Retweet_tweet_tweet_id_Tweet_tweet_id"" FOREIGN KEY(""tweet_tweet_id"")
+REFERENCES ""dbo"".""Tweet"" (""tweet_id"");
+ALTER TABLE ""dbo"".""Tweet"" ADD CONSTRAINT ""FK_Tweet_location_id_Location_location_id"" FOREIGN KEY(""location_id"")
+REFERENCES ""dbo"".""Location"" (""location_id"");
+ALTER TABLE ""dbo"".""Tweet"" ADD CONSTRAINT ""FK_Tweet_user_user_id_User_user_id"" FOREIGN KEY(""user_user_id"")
+REFERENCES ""dbo"".""User"" (""user_id"");
+ALTER TABLE ""dbo"".""User"" ADD CONSTRAINT ""FK_User_location_location_id_Location_location_id"" FOREIGN KEY(""location_location_id"")
+REFERENCES ""dbo"".""Location"" (""location_id"");
+
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

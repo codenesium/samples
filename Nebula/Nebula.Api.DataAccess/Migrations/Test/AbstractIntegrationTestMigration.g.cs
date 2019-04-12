@@ -46,10 +46,6 @@ namespace NebulaNS.Api.DataAccess
 			machineItem1.SetProperties(1, "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 			this.Context.Machines.Add(machineItem1);
 
-			var machineRefTeamItem1 = new MachineRefTeam();
-			machineRefTeamItem1.SetProperties(1, 1, 1);
-			this.Context.MachineRefTeams.Add(machineRefTeamItem1);
-
 			var organizationItem1 = new Organization();
 			organizationItem1.SetProperties(1, "A");
 			this.Context.Organizations.Add(organizationItem1);
@@ -58,15 +54,11 @@ namespace NebulaNS.Api.DataAccess
 			teamItem1.SetProperties(1, "A", 1);
 			this.Context.Teams.Add(teamItem1);
 
-			var versionInfoItem1 = new VersionInfo();
-			versionInfoItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			this.Context.VersionInfoes.Add(versionInfoItem1);
-
 			await this.Context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3e6b7156137b903cad8992e797047094</Hash>
+    <Hash>05dd3e00ec69687bac14c32711259f38</Hash>
 </Codenesium>*/

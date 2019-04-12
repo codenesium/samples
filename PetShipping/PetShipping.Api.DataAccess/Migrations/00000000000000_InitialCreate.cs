@@ -15,7 +15,9 @@ namespace PetShippingNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -652,6 +654,371 @@ ALTER TABLE[dbo].[Sale] CHECK CONSTRAINT[FK_Sale_petId_Pet_id]
 GO
 
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+--ALTER TABLE ""dbo"".""AirTransport"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Breed"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""CountryRequirement"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""CustomerCommunication"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""CustomerCommunication"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Destination"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""HandlerPipelineStep"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""HandlerPipelineStep"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""OtherTransport"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""OtherTransport"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Pet"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Pipeline"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""PipelineStep"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""PipelineStep"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""PipelineStepDestination"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""PipelineStepDestination"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""PipelineStepNote"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""PipelineStepNote"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""PipelineStepStepRequirement"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Sale"" DISABLE TRIGGER ALL;
+
+--DROP TABLE IF EXISTS ""dbo"".""Airline"";
+--DROP TABLE IF EXISTS ""dbo"".""AirTransport"";
+--DROP TABLE IF EXISTS ""dbo"".""Breed"";
+--DROP TABLE IF EXISTS ""dbo"".""Country"";
+--DROP TABLE IF EXISTS ""dbo"".""CountryRequirement"";
+--DROP TABLE IF EXISTS ""dbo"".""Customer"";
+--DROP TABLE IF EXISTS ""dbo"".""CustomerCommunication"";
+--DROP TABLE IF EXISTS ""dbo"".""Destination"";
+--DROP TABLE IF EXISTS ""dbo"".""Employee"";
+--DROP TABLE IF EXISTS ""dbo"".""Handler"";
+--DROP TABLE IF EXISTS ""dbo"".""HandlerPipelineStep"";
+--DROP TABLE IF EXISTS ""dbo"".""OtherTransport"";
+--DROP TABLE IF EXISTS ""dbo"".""Pet"";
+--DROP TABLE IF EXISTS ""dbo"".""Pipeline"";
+--DROP TABLE IF EXISTS ""dbo"".""PipelineStatus"";
+--DROP TABLE IF EXISTS ""dbo"".""PipelineStep"";
+--DROP TABLE IF EXISTS ""dbo"".""PipelineStepDestination"";
+--DROP TABLE IF EXISTS ""dbo"".""PipelineStepNote"";
+--DROP TABLE IF EXISTS ""dbo"".""PipelineStepStatus"";
+--DROP TABLE IF EXISTS ""dbo"".""PipelineStepStepRequirement"";
+--DROP TABLE IF EXISTS ""dbo"".""Sale"";
+--DROP TABLE IF EXISTS ""dbo"".""Species"";
+
+CREATE TABLE ""dbo"".""Airline""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""AirTransport""(
+""id""  SERIAL ,
+""airlineId"" int    NOT NULL,
+""flightNumber"" varchar  (12)  NOT NULL,
+""handlerId"" int    NOT NULL,
+""landDate"" timestamp    NOT NULL,
+""pipelineStepId"" int    NOT NULL,
+""takeoffDate"" timestamp    NOT NULL);
+
+CREATE TABLE ""dbo"".""Breed""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL,
+""speciesId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Country""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""CountryRequirement""(
+""id""  SERIAL ,
+""countryId"" int    NOT NULL,
+""details"" text  (2147483647)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Customer""(
+""id"" int    NOT NULL,
+""email"" varchar  (128)  NOT NULL,
+""firstName"" varchar  (128)  NOT NULL,
+""lastName"" varchar  (128)  NOT NULL,
+""notes"" text  (2147483647)  NULL,
+""phone"" varchar  (10)  NOT NULL);
+
+CREATE TABLE ""dbo"".""CustomerCommunication""(
+""id"" int    NOT NULL,
+""customerId"" int    NOT NULL,
+""dateCreated"" timestamp    NOT NULL,
+""employeeId"" int    NOT NULL,
+""notes"" text  (2147483647)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Destination""(
+""id""  SERIAL ,
+""countryId"" int    NOT NULL,
+""name"" varchar  (128)  NOT NULL,
+""order"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Employee""(
+""id""  SERIAL ,
+""firstName"" varchar  (128)  NOT NULL,
+""isSalesPerson"" boolean    NOT NULL,
+""isShipper"" boolean    NOT NULL,
+""lastName"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Handler""(
+""id""  SERIAL ,
+""countryId"" int    NOT NULL,
+""email"" varchar  (128)  NOT NULL,
+""firstName"" varchar  (128)  NOT NULL,
+""lastName"" varchar  (128)  NOT NULL,
+""phone"" varchar  (10)  NOT NULL);
+
+CREATE TABLE ""dbo"".""HandlerPipelineStep""(
+""id""  SERIAL ,
+""handlerId"" int    NOT NULL,
+""pipelineStepId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""OtherTransport""(
+""id""  SERIAL ,
+""handlerId"" int    NOT NULL,
+""pipelineStepId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Pet""(
+""id""  SERIAL ,
+""breedId"" int    NOT NULL,
+""clientId"" int    NOT NULL,
+""name"" varchar  (128)  NOT NULL,
+""weight"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Pipeline""(
+""id""  SERIAL ,
+""pipelineStatusId"" int    NOT NULL,
+""saleId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""PipelineStatus""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""PipelineStep""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL,
+""pipelineStepStatusId"" int    NOT NULL,
+""shipperId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""PipelineStepDestination""(
+""id""  SERIAL ,
+""destinationId"" int    NOT NULL,
+""pipelineStepId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""PipelineStepNote""(
+""id""  SERIAL ,
+""employeeId"" int    NOT NULL,
+""note"" text  (2147483647)  NOT NULL,
+""pipelineStepId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""PipelineStepStatus""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""PipelineStepStepRequirement""(
+""id""  SERIAL ,
+""details"" text  (2147483647)  NOT NULL,
+""pipelineStepId"" int    NOT NULL,
+""requirementMet"" boolean    NOT NULL);
+
+CREATE TABLE ""dbo"".""Sale""(
+""id""  SERIAL ,
+""amount"" money    NOT NULL,
+""cutomerId"" int    NOT NULL,
+""note"" text  (2147483647)  NOT NULL,
+""petId"" int    NOT NULL,
+""saleDate"" timestamp    NOT NULL,
+""salesPersonId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Species""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+ALTER TABLE ""dbo"".""Airline""
+ADD CONSTRAINT ""PK_Airline""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""AirTransport""
+ADD CONSTRAINT ""PK_AirTransport""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Breed""
+ADD CONSTRAINT ""PK_Breed""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Country""
+ADD CONSTRAINT ""PK_Country""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""CountryRequirement""
+ADD CONSTRAINT ""PK_CountryRequirement""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Customer""
+ADD CONSTRAINT ""PK_Customer""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""CustomerCommunication""
+ADD CONSTRAINT ""PK_CustomerCommunication""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_CustomerCommunication_customerId"" ON ""dbo"".""CustomerCommunication""
+(
+""customerId"" ASC);
+CREATE  INDEX ""IX_CustomerCommunication_employeeId"" ON ""dbo"".""CustomerCommunication""
+(
+""employeeId"" ASC);
+ALTER TABLE ""dbo"".""Destination""
+ADD CONSTRAINT ""PK_Destination""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Employee""
+ADD CONSTRAINT ""PK_Employee""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Handler""
+ADD CONSTRAINT ""PK_Handler""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""HandlerPipelineStep""
+ADD CONSTRAINT ""PK_HandlerPipelineStep""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""OtherTransport""
+ADD CONSTRAINT ""PK_OtherTransport""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Pet""
+ADD CONSTRAINT ""PK_Pet""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Pipeline""
+ADD CONSTRAINT ""PK_Pipeline""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""PipelineStatus""
+ADD CONSTRAINT ""PK_PipelineStatus""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""PipelineStep""
+ADD CONSTRAINT ""PK_PipelineStep""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""PipelineStepDestination""
+ADD CONSTRAINT ""PK_PipelineStepDestination""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""PipelineStepNote""
+ADD CONSTRAINT ""PK_PipelineStepNote""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""PipelineStepStatus""
+ADD CONSTRAINT ""PK_PipelineStepStatus""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""PipelineStepStepRequirement""
+ADD CONSTRAINT ""PK_PipelineStepStepRequirement""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Sale""
+ADD CONSTRAINT ""PK_Sale""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Species""
+ADD CONSTRAINT ""PK_Species""
+PRIMARY KEY
+(
+""id""
+);
+
+
+ALTER TABLE ""dbo"".""AirTransport"" ADD CONSTRAINT ""FK_AirTransport_handlerId_Handler_id"" FOREIGN KEY(""handlerId"")
+REFERENCES ""dbo"".""Handler"" (""id"");
+ALTER TABLE ""dbo"".""Breed"" ADD CONSTRAINT ""FK_Breed_speciesId_Species_id"" FOREIGN KEY(""speciesId"")
+REFERENCES ""dbo"".""Species"" (""id"");
+ALTER TABLE ""dbo"".""CountryRequirement"" ADD CONSTRAINT ""FK_CountryRequirement_countryId_Country_id"" FOREIGN KEY(""countryId"")
+REFERENCES ""dbo"".""Country"" (""id"");
+ALTER TABLE ""dbo"".""CustomerCommunication"" ADD CONSTRAINT ""fk_customercommunication_customerid_customer_id"" FOREIGN KEY(""customerId"")
+REFERENCES ""dbo"".""Customer"" (""id"");
+ALTER TABLE ""dbo"".""CustomerCommunication"" ADD CONSTRAINT ""FK_CustomerCommunication_employeeId_Employee_id"" FOREIGN KEY(""employeeId"")
+REFERENCES ""dbo"".""Employee"" (""id"");
+ALTER TABLE ""dbo"".""Destination"" ADD CONSTRAINT ""FK_Destination_countryId_Country_id"" FOREIGN KEY(""countryId"")
+REFERENCES ""dbo"".""Country"" (""id"");
+ALTER TABLE ""dbo"".""HandlerPipelineStep"" ADD CONSTRAINT ""FK_HandlerPipelineStep_handlerId_Handler_id"" FOREIGN KEY(""handlerId"")
+REFERENCES ""dbo"".""Handler"" (""id"");
+ALTER TABLE ""dbo"".""HandlerPipelineStep"" ADD CONSTRAINT ""FK_HandlerPipelineStep_pipelineStepId_PipelineStep_id"" FOREIGN KEY(""pipelineStepId"")
+REFERENCES ""dbo"".""PipelineStep"" (""id"");
+ALTER TABLE ""dbo"".""OtherTransport"" ADD CONSTRAINT ""FK_OtherTransport_pipelineStepId_PipelineStep_id"" FOREIGN KEY(""pipelineStepId"")
+REFERENCES ""dbo"".""PipelineStep"" (""id"");
+ALTER TABLE ""dbo"".""OtherTransport"" ADD CONSTRAINT ""FK_OtherTransport_handlerId_Handler_id"" FOREIGN KEY(""handlerId"")
+REFERENCES ""dbo"".""Handler"" (""id"");
+ALTER TABLE ""dbo"".""Pet"" ADD CONSTRAINT ""FK_Pet_breedId_Breed_id"" FOREIGN KEY(""breedId"")
+REFERENCES ""dbo"".""Breed"" (""id"");
+ALTER TABLE ""dbo"".""Pipeline"" ADD CONSTRAINT ""FK_Pipeline_pipelineStatusId_PipelineStatus_id"" FOREIGN KEY(""pipelineStatusId"")
+REFERENCES ""dbo"".""PipelineStatus"" (""id"");
+ALTER TABLE ""dbo"".""PipelineStep"" ADD CONSTRAINT ""FK_PipelineStep_pipelineStepStatusId_PipelineStepStatus_id"" FOREIGN KEY(""pipelineStepStatusId"")
+REFERENCES ""dbo"".""PipelineStepStatus"" (""id"");
+ALTER TABLE ""dbo"".""PipelineStep"" ADD CONSTRAINT ""FK_PipelineStep_shipperId_Employee_id"" FOREIGN KEY(""shipperId"")
+REFERENCES ""dbo"".""Employee"" (""id"");
+ALTER TABLE ""dbo"".""PipelineStepDestination"" ADD CONSTRAINT ""FK_PipelineStepDestination_destinationId_Destination_id"" FOREIGN KEY(""destinationId"")
+REFERENCES ""dbo"".""Destination"" (""id"");
+ALTER TABLE ""dbo"".""PipelineStepDestination"" ADD CONSTRAINT ""FK_PipelineStepDestination_pipelineStepId_PipelineStep_id"" FOREIGN KEY(""pipelineStepId"")
+REFERENCES ""dbo"".""PipelineStep"" (""id"");
+ALTER TABLE ""dbo"".""PipelineStepNote"" ADD CONSTRAINT ""FK_PipelineStepNote_pipelineStepId_PipelineStep_id"" FOREIGN KEY(""pipelineStepId"")
+REFERENCES ""dbo"".""PipelineStep"" (""id"");
+ALTER TABLE ""dbo"".""PipelineStepNote"" ADD CONSTRAINT ""FK_PipelineStepNote_employeeId_Employee_id"" FOREIGN KEY(""employeeId"")
+REFERENCES ""dbo"".""Employee"" (""id"");
+ALTER TABLE ""dbo"".""PipelineStepStepRequirement"" ADD CONSTRAINT ""FK_PipelineStepStepRequirement_pipelineStepId_PipelineStep_id"" FOREIGN KEY(""pipelineStepId"")
+REFERENCES ""dbo"".""PipelineStep"" (""id"");
+ALTER TABLE ""dbo"".""Sale"" ADD CONSTRAINT ""FK_Sale_petId_Pet_id"" FOREIGN KEY(""petId"")
+REFERENCES ""dbo"".""Pet"" (""id"");
+
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

@@ -28,11 +28,11 @@ export default class VehicleOfficerViewModel {
   }
 
   toDisplay(): string {
-    return String(this.officerId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>bf8fb741fe3f6a5002a8b6e3bf84aec1</Hash>
+    <Hash>ddf42858d9c612f632e20df812fc4ed2</Hash>
 </Codenesium>*/

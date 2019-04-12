@@ -52,11 +52,11 @@ export default class MessengerViewModel {
   }
 
   toDisplay(): string {
-    return String(this.date);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>7f8e9fc6d054a2412337c7a48ec13cbe</Hash>
+    <Hash>695cdf674047753c91529710fb985c1b</Hash>
 </Codenesium>*/

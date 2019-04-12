@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Name.StartsWith(query) ||
-				                  x.SpeciesId == query.ToInt(),
+				                  (x.SpeciesIdNavigation == null || x.SpeciesIdNavigation.Name == null?false : x.SpeciesIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -130,5 +130,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d8a21c7cb19867bd22a0aefcea1a0b2</Hash>
+    <Hash>123dd37470aad1521b61dd275d8b157f</Hash>
 </Codenesium>*/

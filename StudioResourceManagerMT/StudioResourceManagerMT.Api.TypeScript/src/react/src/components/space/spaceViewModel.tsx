@@ -18,11 +18,11 @@ export default class SpaceViewModel {
   }
 
   toDisplay(): string {
-    return String(this.description);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>798b4b034cc942313cd57340eab627ff</Hash>
+    <Hash>e1deb76e3fca409b052b048de7a3643d</Hash>
 </Codenesium>*/

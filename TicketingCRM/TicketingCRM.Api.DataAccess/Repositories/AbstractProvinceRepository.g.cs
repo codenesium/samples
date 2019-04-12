@@ -35,7 +35,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.CountryId == query.ToInt() ||
+				                  (x.CountryIdNavigation == null || x.CountryIdNavigation.Name == null?false : x.CountryIdNavigation.Name.StartsWith(query)) ||
 				                  x.Name.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -146,5 +146,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5064d0d8314947fe9299099e8b5492c7</Hash>
+    <Hash>781318251c29b650397bdd19739ba43b</Hash>
 </Codenesium>*/

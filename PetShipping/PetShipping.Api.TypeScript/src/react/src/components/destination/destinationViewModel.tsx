@@ -31,11 +31,11 @@ export default class DestinationViewModel {
   }
 
   toDisplay(): string {
-    return String(this.countryId);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>124ffd13ab32b6a68daef079a2bb4d0e</Hash>
+    <Hash>0522a5eb41e96de5edc08757cce63217</Hash>
 </Codenesium>*/

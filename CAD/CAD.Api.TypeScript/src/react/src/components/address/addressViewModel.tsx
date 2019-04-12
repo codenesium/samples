@@ -34,11 +34,11 @@ export default class AddressViewModel {
   }
 
   toDisplay(): string {
-    return String(this.address1);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>336509f84f4354b09c7fb48eb907cd42</Hash>
+    <Hash>2312427619fbd349ccd12f56c48ca0f1</Hash>
 </Codenesium>*/

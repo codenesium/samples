@@ -44,11 +44,11 @@ export default class QuoteTweetViewModel {
   }
 
   toDisplay(): string {
-    return String(this.quoteTweetId);
+    return String(this.sourceTweetId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>d78ea96ecdf29a67acd19dcdb3ab2f8d</Hash>
+    <Hash>c6649e049910c04d117a14cc03dc3eb1</Hash>
 </Codenesium>*/

@@ -39,6 +39,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 
 		public Mock<IApiTeacherTeacherSkillServerRequestModelValidator> TeacherTeacherSkillModelValidatorMock { get; set; } = new Mock<IApiTeacherTeacherSkillServerRequestModelValidator>();
 
+		public Mock<IApiTenantServerRequestModelValidator> TenantModelValidatorMock { get; set; } = new Mock<IApiTenantServerRequestModelValidator>();
+
 		public Mock<IApiUserServerRequestModelValidator> UserModelValidatorMock { get; set; } = new Mock<IApiUserServerRequestModelValidator>();
 
 		public ModelValidatorMockFactory()
@@ -103,6 +105,10 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			this.TeacherTeacherSkillModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherTeacherSkillServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TeacherTeacherSkillModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
+			this.TenantModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTenantServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TenantModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTenantServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TenantModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.UserModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UserModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UserModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -111,5 +117,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b88e49db511815671b36e8004d7864ed</Hash>
+    <Hash>7cdfedaba5b41594c84a7d30c604e620</Hash>
 </Codenesium>*/

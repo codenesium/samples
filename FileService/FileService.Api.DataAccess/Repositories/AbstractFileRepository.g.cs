@@ -35,14 +35,14 @@ namespace FileServiceNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.BucketId == query.ToNullableInt() ||
+				                  (x.BucketIdNavigation == null || x.BucketIdNavigation.Name == null?false : x.BucketIdNavigation.Name.StartsWith(query)) ||
 				                  x.DateCreated == query.ToDateTime() ||
 				                  x.Description.StartsWith(query) ||
 				                  x.Expiration == query.ToDateTime() ||
 				                  x.Extension.StartsWith(query) ||
 				                  x.ExternalId == query.ToGuid() ||
 				                  x.FileSizeInByte.ToDecimal() == query.ToDecimal() ||
-				                  x.FileTypeId == query.ToInt() ||
+				                  (x.FileTypeIdNavigation == null || x.FileTypeIdNavigation.Name == null?false : x.FileTypeIdNavigation.Name.StartsWith(query)) ||
 				                  x.Location.StartsWith(query) ||
 				                  x.PrivateKey.StartsWith(query) ||
 				                  x.PublicKey.StartsWith(query),
@@ -138,5 +138,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>48e0ca7ebe3ea0f52ed6ce9a9d6900b8</Hash>
+    <Hash>5cd9fa0f6e9940c7403035b882d03d31</Hash>
 </Codenesium>*/

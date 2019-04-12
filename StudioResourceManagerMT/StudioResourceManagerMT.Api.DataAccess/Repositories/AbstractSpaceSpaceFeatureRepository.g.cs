@@ -35,8 +35,8 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.SpaceFeatureId == query.ToInt() ||
-				                  x.SpaceId == query.ToInt(),
+				                  (x.SpaceFeatureIdNavigation == null || x.SpaceFeatureIdNavigation.Name == null?false : x.SpaceFeatureIdNavigation.Name.StartsWith(query)) ||
+				                  (x.SpaceIdNavigation == null || x.SpaceIdNavigation.Name == null?false : x.SpaceIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -129,5 +129,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9caa5fd4e871a8bf84df6d4f072fc0ca</Hash>
+    <Hash>d2271beb53d5107a8fb483581d40f210</Hash>
 </Codenesium>*/

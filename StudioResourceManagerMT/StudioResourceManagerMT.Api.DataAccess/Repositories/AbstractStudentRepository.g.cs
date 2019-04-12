@@ -38,13 +38,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 				                  x.Birthday == query.ToDateTime() ||
 				                  x.Email.StartsWith(query) ||
 				                  x.EmailRemindersEnabled == query.ToBoolean() ||
-				                  x.FamilyId == query.ToInt() ||
+				                  (x.FamilyIdNavigation == null || x.FamilyIdNavigation.PrimaryContactLastName == null?false : x.FamilyIdNavigation.PrimaryContactLastName.StartsWith(query)) ||
 				                  x.FirstName.StartsWith(query) ||
 				                  x.IsAdult == query.ToBoolean() ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
 				                  x.SmsRemindersEnabled == query.ToBoolean() ||
-				                  x.UserId == query.ToInt(),
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.Username == null?false : x.UserIdNavigation.Username.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -147,5 +147,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6265db0602e4fc3d455fa51cc8ce7690</Hash>
+    <Hash>74ddf3e0decac8ce8c432e1eced12abd</Hash>
 </Codenesium>*/

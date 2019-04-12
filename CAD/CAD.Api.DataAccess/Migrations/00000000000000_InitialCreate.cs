@@ -15,7 +15,9 @@ namespace CADNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -591,6 +593,334 @@ ALTER TABLE[dbo].[VehicleOfficer] CHECK CONSTRAINT[FK_VehicleOfficer_officerId_O
 GO
 
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+--ALTER TABLE ""dbo"".""Call"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Call"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Call"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Call"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""CallAssignment"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""CallAssignment"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""CallPerson"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""CallPerson"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Note"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Note"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""OfficerCapabilities"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""OfficerCapabilities"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""UnitOfficer"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""UnitOfficer"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""VehicleCapabilities"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""VehicleCapabilities"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""VehicleOfficer"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""VehicleOfficer"" DISABLE TRIGGER ALL;
+
+--DROP TABLE IF EXISTS ""dbo"".""Address"";
+--DROP TABLE IF EXISTS ""dbo"".""Call"";
+--DROP TABLE IF EXISTS ""dbo"".""CallAssignment"";
+--DROP TABLE IF EXISTS ""dbo"".""CallDisposition"";
+--DROP TABLE IF EXISTS ""dbo"".""CallPerson"";
+--DROP TABLE IF EXISTS ""dbo"".""CallStatus"";
+--DROP TABLE IF EXISTS ""dbo"".""CallType"";
+--DROP TABLE IF EXISTS ""dbo"".""Note"";
+--DROP TABLE IF EXISTS ""dbo"".""OffCapability"";
+--DROP TABLE IF EXISTS ""dbo"".""Officer"";
+--DROP TABLE IF EXISTS ""dbo"".""OfficerCapabilities"";
+--DROP TABLE IF EXISTS ""dbo"".""Person"";
+--DROP TABLE IF EXISTS ""dbo"".""PersonType"";
+--DROP TABLE IF EXISTS ""dbo"".""Unit"";
+--DROP TABLE IF EXISTS ""dbo"".""UnitDisposition"";
+--DROP TABLE IF EXISTS ""dbo"".""UnitOfficer"";
+--DROP TABLE IF EXISTS ""dbo"".""VehCapability"";
+--DROP TABLE IF EXISTS ""dbo"".""Vehicle"";
+--DROP TABLE IF EXISTS ""dbo"".""VehicleCapabilities"";
+--DROP TABLE IF EXISTS ""dbo"".""VehicleOfficer"";
+
+CREATE TABLE ""dbo"".""Address""(
+""id""  SERIAL ,
+""address1"" varchar  (128)  NOT NULL,
+""address2"" varchar  (128)  NULL,
+""city"" varchar  (128)  NOT NULL,
+""state"" varchar  (2)  NOT NULL,
+""zip"" varchar  (12)  NULL);
+
+CREATE TABLE ""dbo"".""Call""(
+""id""  SERIAL ,
+""addressId"" int    NULL,
+""callDispositionId"" int    NULL,
+""callStatusId"" int    NULL,
+""callString"" varchar  (24)  NOT NULL,
+""callTypeId"" int    NULL,
+""dateCleared"" timestamp    NULL,
+""dateCreated"" timestamp    NOT NULL,
+""dateDispatched"" timestamp    NULL,
+""quickCallNumber"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""CallAssignment""(
+""id""  SERIAL ,
+""callId"" int    NOT NULL,
+""unitId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""CallDisposition""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""CallPerson""(
+""id""  SERIAL ,
+""note"" varchar  (8000)  NULL,
+""personId"" int    NOT NULL,
+""personTypeId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""CallStatus""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""CallType""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Note""(
+""id""  SERIAL ,
+""callId"" int    NOT NULL,
+""dateCreated"" timestamp    NOT NULL,
+""noteText"" varchar  (8000)  NOT NULL,
+""officerId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""OffCapability""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Officer""(
+""id""  SERIAL ,
+""badge"" varchar  (128)  NULL,
+""email"" varchar  (128)  NOT NULL,
+""firstName"" varchar  (128)  NOT NULL,
+""lastName"" varchar  (128)  NOT NULL,
+""password"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""OfficerCapabilities""(
+""id""  SERIAL ,
+""capabilityId"" int    NOT NULL,
+""officerId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Person""(
+""id""  SERIAL ,
+""firstName"" varchar  (128)  NULL,
+""lastName"" varchar  (128)  NULL,
+""phone"" varchar  (32)  NULL,
+""ssn"" varchar  (12)  NULL);
+
+CREATE TABLE ""dbo"".""PersonType""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Unit""(
+""id""  SERIAL ,
+""callSign"" varchar  (128)  NULL);
+
+CREATE TABLE ""dbo"".""UnitDisposition""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""UnitOfficer""(
+""id""  SERIAL ,
+""officerId"" int    NOT NULL,
+""unitId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""VehCapability""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Vehicle""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""VehicleCapabilities""(
+""id""  SERIAL ,
+""vehicleCapabilityId"" int    NOT NULL,
+""vehicleId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""VehicleOfficer""(
+""id""  SERIAL ,
+""officerId"" int    NOT NULL,
+""vehicleId"" int    NOT NULL);
+
+ALTER TABLE ""dbo"".""Address""
+ADD CONSTRAINT ""PK_Address""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Call""
+ADD CONSTRAINT ""PK_Call""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_CallAssignment_callId"" ON ""dbo"".""CallAssignment""
+(
+""callId"" ASC);
+CREATE  INDEX ""IX_CallAssignment_unitId"" ON ""dbo"".""CallAssignment""
+(
+""unitId"" ASC);
+ALTER TABLE ""dbo"".""CallAssignment""
+ADD CONSTRAINT ""PK_CallAssignment""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""CallDisposition""
+ADD CONSTRAINT ""PK_CallDisposition""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""CallPerson""
+ADD CONSTRAINT ""PK_CallPerson""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""CallStatus""
+ADD CONSTRAINT ""PK_CallStatus""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""CallType""
+ADD CONSTRAINT ""PK_CallType""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Note""
+ADD CONSTRAINT ""PK_Note""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""OffCapability""
+ADD CONSTRAINT ""PK_OfficerCapability""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Officer""
+ADD CONSTRAINT ""PK_Officer""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""OfficerCapabilities""
+ADD CONSTRAINT ""PK_OfficerCapabilities""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Person""
+ADD CONSTRAINT ""PK_Person""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""PersonType""
+ADD CONSTRAINT ""PK_PersonType""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Unit""
+ADD CONSTRAINT ""PK_Unit""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""UnitDisposition""
+ADD CONSTRAINT ""PK_UnitDisposition""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""UnitOfficer""
+ADD CONSTRAINT ""PK_UnitOfficer""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""VehCapability""
+ADD CONSTRAINT ""PK_VehicleCapability""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Vehicle""
+ADD CONSTRAINT ""PK_Vehicle""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""VehicleCapabilities""
+ADD CONSTRAINT ""PK_VehicleCapabilities""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_VehicleOfficer_officerId"" ON ""dbo"".""VehicleOfficer""
+(
+""officerId"" ASC);
+ALTER TABLE ""dbo"".""VehicleOfficer""
+ADD CONSTRAINT ""PK_VehicleOfficer""
+PRIMARY KEY
+(
+""id""
+);
+
+
+ALTER TABLE ""dbo"".""Call"" ADD CONSTRAINT ""FK_Call_callDispositionId_CallDisposition_id"" FOREIGN KEY(""callDispositionId"")
+REFERENCES ""dbo"".""CallDisposition"" (""id"");
+ALTER TABLE ""dbo"".""Call"" ADD CONSTRAINT ""FK_Call_callStatusId_CallStatus_id"" FOREIGN KEY(""callStatusId"")
+REFERENCES ""dbo"".""CallStatus"" (""id"");
+ALTER TABLE ""dbo"".""Call"" ADD CONSTRAINT ""FK_Call_callTypeId_CallType_id"" FOREIGN KEY(""callTypeId"")
+REFERENCES ""dbo"".""CallType"" (""id"");
+ALTER TABLE ""dbo"".""Call"" ADD CONSTRAINT ""FK_Call_addressId_Address_id"" FOREIGN KEY(""addressId"")
+REFERENCES ""dbo"".""Address"" (""id"");
+ALTER TABLE ""dbo"".""CallAssignment"" ADD CONSTRAINT ""fk_callassignment_callid_call_id"" FOREIGN KEY(""callId"")
+REFERENCES ""dbo"".""Call"" (""id"");
+ALTER TABLE ""dbo"".""CallAssignment"" ADD CONSTRAINT ""fk_callassignment_unitid_unit_id"" FOREIGN KEY(""unitId"")
+REFERENCES ""dbo"".""Unit"" (""id"");
+ALTER TABLE ""dbo"".""CallPerson"" ADD CONSTRAINT ""FK_CallPerson_personId_Person_id"" FOREIGN KEY(""personId"")
+REFERENCES ""dbo"".""Person"" (""id"");
+ALTER TABLE ""dbo"".""CallPerson"" ADD CONSTRAINT ""FK_CallPerson_personTypeId_PersonType_id"" FOREIGN KEY(""personTypeId"")
+REFERENCES ""dbo"".""PersonType"" (""id"");
+ALTER TABLE ""dbo"".""Note"" ADD CONSTRAINT ""FK_Note_callId_Call_id"" FOREIGN KEY(""callId"")
+REFERENCES ""dbo"".""Call"" (""id"");
+ALTER TABLE ""dbo"".""Note"" ADD CONSTRAINT ""FK_Note_officerId_Officer_id"" FOREIGN KEY(""officerId"")
+REFERENCES ""dbo"".""Officer"" (""id"");
+ALTER TABLE ""dbo"".""OfficerCapabilities"" ADD CONSTRAINT ""FK_OfficerRefCapability_officerId_Officer_id"" FOREIGN KEY(""officerId"")
+REFERENCES ""dbo"".""Officer"" (""id"");
+ALTER TABLE ""dbo"".""OfficerCapabilities"" ADD CONSTRAINT ""FK_OfficerRefCapability_capabilityId_OfficerCapability_id"" FOREIGN KEY(""capabilityId"")
+REFERENCES ""dbo"".""OffCapability"" (""id"");
+ALTER TABLE ""dbo"".""UnitOfficer"" ADD CONSTRAINT ""FK_UnitOfficer_unitId_Unit_id"" FOREIGN KEY(""unitId"")
+REFERENCES ""dbo"".""Unit"" (""id"");
+ALTER TABLE ""dbo"".""UnitOfficer"" ADD CONSTRAINT ""FK_UnitOfficer_officerId_Officer_id"" FOREIGN KEY(""officerId"")
+REFERENCES ""dbo"".""Officer"" (""id"");
+ALTER TABLE ""dbo"".""VehicleCapabilities"" ADD CONSTRAINT ""FK_VehicleRefCapability_vehicleId_Vehicle_id"" FOREIGN KEY(""vehicleId"")
+REFERENCES ""dbo"".""Vehicle"" (""id"");
+ALTER TABLE ""dbo"".""VehicleCapabilities"" ADD CONSTRAINT ""FK_VehicleRefCapability_vehicleCapabilityId_VehicleCapability_id"" FOREIGN KEY(""vehicleCapabilityId"")
+REFERENCES ""dbo"".""VehCapability"" (""id"");
+ALTER TABLE ""dbo"".""VehicleOfficer"" ADD CONSTRAINT ""FK_VehicleOfficer_vehicleId_Vehicle_id"" FOREIGN KEY(""vehicleId"")
+REFERENCES ""dbo"".""Vehicle"" (""id"");
+ALTER TABLE ""dbo"".""VehicleOfficer"" ADD CONSTRAINT ""FK_VehicleOfficer_officerId_Officer_id"" FOREIGN KEY(""officerId"")
+REFERENCES ""dbo"".""Officer"" (""id"");
+
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

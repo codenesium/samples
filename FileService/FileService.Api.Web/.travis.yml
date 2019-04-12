@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build FileService.Api.Web.csproj
    -  dotnet test FileService.Api.DataAccess.csproj
-   -  dotnet test FileService.Api.Servicea.csproj
+   -  dotnet test FileService.Api.Services.csproj
    -  dotnet test FileService.Api.Client.csproj
    -  dotnet test FileService.Api.Web.csproj

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target":"esnext",
     "allowJs": true,
     "skipLibCheck": false,
     "esModuleInterop": true,
@@ -13,7 +13,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "lib": [
+	"lib": [
       "dom",
       "dom.iterable",
       "esnext"

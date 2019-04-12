@@ -416,6 +416,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'Vote Types Search'
           )}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -423,5 +424,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>25f7992e2cbf41fd15f558a1e0777480</Hash>
+    <Hash>14e8c6409c0c71084a8bf5d5256d1141</Hash>
 </Codenesium>*/

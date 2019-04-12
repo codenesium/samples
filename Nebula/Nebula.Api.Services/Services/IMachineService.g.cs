@@ -23,11 +23,9 @@ namespace NebulaNS.Api.Services
 		Task<ApiMachineServerResponseModel> ByMachineGuid(Guid machineGuid);
 
 		Task<List<ApiLinkServerResponseModel>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiMachineRefTeamServerResponseModel>> MachineRefTeamsByMachineId(int machineId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1f7a5c701589158aed02f3621490230</Hash>
+    <Hash>9db2257f653cec06143353e034287cf1</Hash>
 </Codenesium>*/

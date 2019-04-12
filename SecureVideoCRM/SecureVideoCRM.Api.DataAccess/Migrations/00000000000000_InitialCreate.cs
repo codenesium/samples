@@ -15,7 +15,9 @@ namespace SecureVideoCRMNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -84,6 +86,61 @@ GO
 
 
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+
+--DROP TABLE IF EXISTS ""dbo"".""Video"";
+--DROP TABLE IF EXISTS ""dbo"".""User"";
+--DROP TABLE IF EXISTS ""dbo"".""Subscription"";
+
+CREATE TABLE ""dbo"".""Video""(
+""id""  SERIAL ,
+""title"" varchar  (128)  NOT NULL,
+""url"" varchar  (128)  NOT NULL,
+""description"" varchar  (4000)  NOT NULL);
+
+CREATE TABLE ""dbo"".""User""(
+""id""  SERIAL ,
+""email"" varchar  (128)  NOT NULL,
+""password"" varchar  (128)  NOT NULL,
+""subscriptionTypeId"" int    NOT NULL,
+""stripeCustomerId"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Subscription""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL,
+""stripePlanName"" varchar  (128)  NOT NULL);
+
+ALTER TABLE ""dbo"".""Video""
+ADD CONSTRAINT ""PK_Video""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""User""
+ADD CONSTRAINT ""PK_User""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Subscription""
+ADD CONSTRAINT ""PK_Subscription""
+PRIMARY KEY
+(
+""id""
+);
+
+
+
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

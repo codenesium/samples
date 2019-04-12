@@ -108,11 +108,11 @@ export default class PostViewModel {
   }
 
   toDisplay(): string {
-    return String(this.title);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>cfb5d714eb60810a3960055749dac205</Hash>
+    <Hash>7ef35eb45077a7d2fdeba5b2197de635</Hash>
 </Codenesium>*/

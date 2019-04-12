@@ -35,11 +35,11 @@ export default class DirectTweetViewModel {
   }
 
   toDisplay(): string {
-    return String(this.content);
+    return String(this.tweetId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>4aa7cfd892372e5548206ce43fd60adb</Hash>
+    <Hash>d211170fec2e1397c08a8f6a7c430787</Hash>
 </Codenesium>*/

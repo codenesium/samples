@@ -46,10 +46,10 @@ namespace StackOverflowNS.Api.DataAccess
 				                  x.LastActivityDate == query.ToDateTime() ||
 				                  x.LastEditDate == query.ToNullableDateTime() ||
 				                  x.LastEditorDisplayName.StartsWith(query) ||
-				                  x.LastEditorUserId == query.ToNullableInt() ||
-				                  x.OwnerUserId == query.ToNullableInt() ||
-				                  x.ParentId == query.ToNullableInt() ||
-				                  x.PostTypeId == query.ToInt() ||
+				                  (x.LastEditorUserIdNavigation == null || x.LastEditorUserIdNavigation.DisplayName == null?false : x.LastEditorUserIdNavigation.DisplayName.StartsWith(query)) ||
+				                  (x.OwnerUserIdNavigation == null || x.OwnerUserIdNavigation.DisplayName == null?false : x.OwnerUserIdNavigation.DisplayName.StartsWith(query)) ||
+				                  (x.ParentIdNavigation == null || x.ParentIdNavigation.Id == null?false : x.ParentIdNavigation.Id == query.ToInt()) ||
+				                  (x.PostTypeIdNavigation == null || x.PostTypeIdNavigation.RwType == null?false : x.PostTypeIdNavigation.RwType.StartsWith(query)) ||
 				                  x.Score == query.ToInt() ||
 				                  x.Tag.StartsWith(query) ||
 				                  x.Title.StartsWith(query) ||
@@ -272,5 +272,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>afc0e19bd2748e368705e6a9cf5b8d40</Hash>
+    <Hash>98907c63a7bd72f3167543b8454bc12d</Hash>
 </Codenesium>*/

@@ -77,11 +77,11 @@ export default class LinkViewModel {
   }
 
   toDisplay(): string {
-    return String(this.externalId);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>a95419780fd97e3a850962df29e7109e</Hash>
+    <Hash>194609f6b5b5ee89a883171d7e3e13ec</Hash>
 </Codenesium>*/

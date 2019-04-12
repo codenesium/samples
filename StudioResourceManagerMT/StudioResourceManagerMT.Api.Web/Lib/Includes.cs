@@ -48,7 +48,7 @@ namespace Codenesium.Foundation.CommonMVC
         public async virtual Task<IActionResult> Health()
         {
             await this.context.Database.OpenConnectionAsync();
-            await this.context.Database.ExecuteSqlCommandAsync(new RawSqlString("SELECT GETDATE()"));
+            await this.context.Database.ExecuteSqlCommandAsync(new RawSqlString("SELECT 1 as tmp"));
             this.context.Database.CloseConnection();
             return this.Ok("Api is healthy!");
         }
@@ -269,7 +269,7 @@ namespace Codenesium.Foundation.CommonMVC
 	}
 
     /// <summary>
-    /// ITransactionCoordinator is an interface that is injecteded into controllers and allows
+    /// ITransactionCoordinator is an interface that is injected into controllers and allows
     /// us to handle transactions on requests and enable and disable change tracking for entity framework
     /// </summary>
     public interface ITransactionCoordinator

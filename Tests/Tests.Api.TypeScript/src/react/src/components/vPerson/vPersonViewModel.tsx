@@ -15,11 +15,11 @@ export default class VPersonViewModel {
   }
 
   toDisplay(): string {
-    return String(this.personId);
+    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>79294abc85bd2d910ca613e3463d203d</Hash>
+    <Hash>2e5f20ed0412bd638247e6f762899a8b</Hash>
 </Codenesium>*/

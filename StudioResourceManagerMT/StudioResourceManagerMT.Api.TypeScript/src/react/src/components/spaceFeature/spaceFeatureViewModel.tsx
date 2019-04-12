@@ -15,11 +15,11 @@ export default class SpaceFeatureViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>a19d681c5a6ad0cc99c7231ee7eb9979</Hash>
+    <Hash>0dda4a5dda629177ed8d2a9fab33429e</Hash>
 </Codenesium>*/

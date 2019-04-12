@@ -30,11 +30,11 @@ export default class DeviceViewModel {
   }
 
   toDisplay(): string {
-    return String(this.publicId);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>934cc57b888fd0278d754615d3f5fee6</Hash>
+    <Hash>18e6bc7543fd9787f7ce397bbe620a57</Hash>
 </Codenesium>*/

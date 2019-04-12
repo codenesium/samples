@@ -15,11 +15,11 @@ export default class VehicleViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>dddfd85d303cedbe4e14d7dd36aa2349</Hash>
+    <Hash>f73c984fb364954768f1f6f7d8f06e98</Hash>
 </Codenesium>*/

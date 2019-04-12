@@ -30,11 +30,11 @@ export default class PersonViewModel {
   }
 
   toDisplay(): string {
-    return String(this.firstName);
+    return String(this.lastName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>962fb9aa92fec2c2548ad8df81c30ae8</Hash>
+    <Hash>5daa843b7aad537c36e2a52710b5aae4</Hash>
 </Codenesium>*/

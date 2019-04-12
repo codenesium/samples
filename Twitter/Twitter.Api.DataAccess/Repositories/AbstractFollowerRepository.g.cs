@@ -38,8 +38,8 @@ namespace TwitterNS.Api.DataAccess
 				                  x.Blocked.StartsWith(query) ||
 				                  x.DateFollowed == query.ToDateTime() ||
 				                  x.FollowRequestStatu.StartsWith(query) ||
-				                  x.FollowedUserId == query.ToInt() ||
-				                  x.FollowingUserId == query.ToInt() ||
+				                  (x.FollowedUserIdNavigation == null || x.FollowedUserIdNavigation.Username == null?false : x.FollowedUserIdNavigation.Username.StartsWith(query)) ||
+				                  (x.FollowingUserIdNavigation == null || x.FollowingUserIdNavigation.Username == null?false : x.FollowingUserIdNavigation.Username.StartsWith(query)) ||
 				                  x.Muted.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -145,5 +145,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>840ea488e7d6a8571ac083a7b9cc37fc</Hash>
+    <Hash>46686dd30bc2b2b562d5399ebb1d20fb</Hash>
 </Codenesium>*/

@@ -35,11 +35,11 @@ namespace CADNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.AddressId == query.ToNullableInt() ||
-				                  x.CallDispositionId == query.ToNullableInt() ||
-				                  x.CallStatusId == query.ToNullableInt() ||
+				                  (x.AddressIdNavigation == null || x.AddressIdNavigation.Id == null?false : x.AddressIdNavigation.Id == query.ToInt()) ||
+				                  (x.CallDispositionIdNavigation == null || x.CallDispositionIdNavigation.Name == null?false : x.CallDispositionIdNavigation.Name.StartsWith(query)) ||
+				                  (x.CallStatusIdNavigation == null || x.CallStatusIdNavigation.Name == null?false : x.CallStatusIdNavigation.Name.StartsWith(query)) ||
 				                  x.CallString.StartsWith(query) ||
-				                  x.CallTypeId == query.ToNullableInt() ||
+				                  (x.CallTypeIdNavigation == null || x.CallTypeIdNavigation.Name == null?false : x.CallTypeIdNavigation.Name.StartsWith(query)) ||
 				                  x.DateCleared == query.ToNullableDateTime() ||
 				                  x.DateCreated == query.ToDateTime() ||
 				                  x.DateDispatched == query.ToNullableDateTime() ||
@@ -172,5 +172,5 @@ namespace CADNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cc43f96a39fddff28ef33bbb0a46e022</Hash>
+    <Hash>e4d59fd50d014d6418c44e56486427a3</Hash>
 </Codenesium>*/

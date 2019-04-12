@@ -36,9 +36,9 @@ namespace PetStoreNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.AcquiredDate == query.ToDateTime() ||
-				                  x.BreedId == query.ToInt() ||
+				                  (x.BreedIdNavigation == null || x.BreedIdNavigation.Name == null?false : x.BreedIdNavigation.Name.StartsWith(query)) ||
 				                  x.Description.StartsWith(query) ||
-				                  x.PenId == query.ToInt() ||
+				                  (x.PenIdNavigation == null || x.PenIdNavigation.Name == null?false : x.PenIdNavigation.Name.StartsWith(query)) ||
 				                  x.Price.ToDecimal() == query.ToDecimal(),
 				                  limit,
 				                  offset);
@@ -142,5 +142,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e3a836e013b9e15729a14e9ec211d46</Hash>
+    <Hash>326954d9e15b8a16bf3242b640970429</Hash>
 </Codenesium>*/

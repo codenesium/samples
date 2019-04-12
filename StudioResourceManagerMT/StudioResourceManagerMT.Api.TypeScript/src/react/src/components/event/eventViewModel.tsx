@@ -51,11 +51,11 @@ export default class EventViewModel {
   }
 
   toDisplay(): string {
-    return String(this.actualEndDate);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>32cc11f68d79dc0513932f0a5881602c</Hash>
+    <Hash>9bf4e9889ef4e08b069e513f76a48ec4</Hash>
 </Codenesium>*/

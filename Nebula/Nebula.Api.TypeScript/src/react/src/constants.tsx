@@ -1,16 +1,19 @@
 export class Constants {
-  static readonly BaseEndpoint = process.env.REACT_APP_API_URL;
-  static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
-  static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
-  static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
   static readonly HostedBaseUrl =
     window.location.protocol + '//' + window.location.host;
   static readonly HostedSubDirectory =
-    process.env.REACT_APP_HOST_SUBDIRECTORY == '/'
+    process.env.REACT_APP_HOST_SUBDIRECTORY === '/'
       ? ''
       : '/' + process.env.REACT_APP_HOST_SUBDIRECTORY;
   static readonly HostedUrl =
     Constants.HostedBaseUrl + Constants.HostedSubDirectory;
+  static readonly BaseEndpoint =
+    process.env.REACT_APP_API_URL == ''
+      ? Constants.HostedUrl
+      : process.env.REACT_APP_API_URL;
+  static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
+  static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
+  static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
 }
 
 export class AuthClientRoutes {
@@ -44,10 +47,8 @@ export class ClientRoutes {
   static readonly LinkLogs = '/linklogs';
   static readonly LinkStatus = '/linkstatus';
   static readonly Machines = '/machines';
-  static readonly MachineRefTeams = '/machinerefteams';
   static readonly Organizations = '/organizations';
   static readonly Teams = '/teams';
-  static readonly VersionInfoes = '/versioninfoes';
 }
 
 export class ApiRoutes {
@@ -58,13 +59,11 @@ export class ApiRoutes {
   static readonly LinkLogs = 'linklogs';
   static readonly LinkStatus = 'linkstatus';
   static readonly Machines = 'machines';
-  static readonly MachineRefTeams = 'machinerefteams';
   static readonly Organizations = 'organizations';
   static readonly Teams = 'teams';
-  static readonly VersionInfoes = 'versioninfoes';
 }
 
 
 /*<Codenesium>
-    <Hash>1790a5717c6c032b04d2dc3454958ce0</Hash>
+    <Hash>8e9228b07db0e901bcb7ff525b69158a</Hash>
 </Codenesium>*/

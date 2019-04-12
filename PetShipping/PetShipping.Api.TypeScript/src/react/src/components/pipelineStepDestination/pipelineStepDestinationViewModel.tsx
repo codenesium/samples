@@ -32,11 +32,11 @@ export default class PipelineStepDestinationViewModel {
   }
 
   toDisplay(): string {
-    return String(this.destinationId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>82835080ee8adea4221d863152922f9d</Hash>
+    <Hash>e4afc68d00752072cbce9cca0e191ae1</Hash>
 </Codenesium>*/

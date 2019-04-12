@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build PetShipping.Api.Web.csproj
    -  dotnet test PetShipping.Api.DataAccess.csproj
-   -  dotnet test PetShipping.Api.Servicea.csproj
+   -  dotnet test PetShipping.Api.Services.csproj
    -  dotnet test PetShipping.Api.Client.csproj
    -  dotnet test PetShipping.Api.Web.csproj

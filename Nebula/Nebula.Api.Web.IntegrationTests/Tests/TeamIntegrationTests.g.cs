@@ -254,36 +254,6 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyMachineRefTeamsByTeamIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
-			List<ApiMachineRefTeamClientResponseModel> response = await client.MachineRefTeamsByTeamId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyMachineRefTeamsByTeamIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			client.SetBearerToken(JWTTestHelper.GenerateBearerToken());
-			List<ApiMachineRefTeamClientResponseModel> response = await client.MachineRefTeamsByTeamId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -306,5 +276,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c48bc23f356e00de84c3580841fd87bd</Hash>
+    <Hash>0b6f896950ad49b9b20f6e0301a2ee72</Hash>
 </Codenesium>*/

@@ -144,7 +144,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'Device Actions Search'
           )}
         />
-      <Route render={() => <div>No handler for route found...</div>}/>
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -152,5 +152,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>eadf684f1fdb5185cece3eb5b14a7f1b</Hash>
+    <Hash>84d37ca40f03a9e883b8b323c6f2c42f</Hash>
 </Codenesium>*/

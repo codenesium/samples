@@ -78,6 +78,10 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			teacherTeacherSkillItem1.SetProperties(1, 1, 1);
 			this.Context.TeacherTeacherSkills.Add(teacherTeacherSkillItem1);
 
+			var tenantItem1 = new Tenant();
+			tenantItem1.SetProperties(1, "A");
+			this.Context.Tenants.Add(tenantItem1);
+
 			var userItem1 = new User();
 			userItem1.SetProperties(1, "A", "A");
 			this.Context.Users.Add(userItem1);
@@ -88,5 +92,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2edbb91a6fc6b4f0297e3654fab4b499</Hash>
+    <Hash>e226d90fdaa93c1d69f47c2709271a41</Hash>
 </Codenesium>*/

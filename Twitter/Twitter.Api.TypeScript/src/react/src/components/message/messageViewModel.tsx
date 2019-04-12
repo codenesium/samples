@@ -23,11 +23,11 @@ export default class MessageViewModel {
   }
 
   toDisplay(): string {
-    return String(this.content);
+    return String(this.messageId);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>3965b281553a1581a659fde01a11283b</Hash>
+    <Hash>6f3c04e96032683b408e65d58f17a6d9</Hash>
 </Codenesium>*/

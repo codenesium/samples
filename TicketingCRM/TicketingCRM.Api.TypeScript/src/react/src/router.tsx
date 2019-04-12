@@ -433,6 +433,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.Venues}
           component={wrapperHeader(WrappedVenueSearchComponent, 'Venue Search')}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -440,5 +441,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>0266001dfbcc8634e3e8a75fa9cc0224</Hash>
+    <Hash>294e566b35161b74e6cb9ada0ac5f936</Hash>
 </Codenesium>*/

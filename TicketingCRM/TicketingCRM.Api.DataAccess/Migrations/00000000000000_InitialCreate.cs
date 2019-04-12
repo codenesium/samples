@@ -15,7 +15,9 @@ namespace TicketingCRMNS.Api.DataAccess.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
+				if (this.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
+				{
+					migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -432,6 +434,259 @@ ALTER TABLE[dbo].[Venue] CHECK CONSTRAINT[fk_venue_provinceid_province_id]
 GO
 
 ");
+				}
+				else if (this.ActiveProvider == "Npgsql.EntityFrameworkCore.PostgreSQL")
+				{
+					migrationBuilder.Sql(@"CREATE SCHEMA IF NOT EXISTS ""dbo"";
+
+--ALTER TABLE ""dbo"".""City"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Event"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Province"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Sale"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""SaleTickets"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""SaleTickets"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Ticket"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Transaction"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Venue"" DISABLE TRIGGER ALL;
+--ALTER TABLE ""dbo"".""Venue"" DISABLE TRIGGER ALL;
+
+--DROP TABLE IF EXISTS ""dbo"".""Admin"";
+--DROP TABLE IF EXISTS ""dbo"".""City"";
+--DROP TABLE IF EXISTS ""dbo"".""Country"";
+--DROP TABLE IF EXISTS ""dbo"".""Customer"";
+--DROP TABLE IF EXISTS ""dbo"".""Event"";
+--DROP TABLE IF EXISTS ""dbo"".""Province"";
+--DROP TABLE IF EXISTS ""dbo"".""Sale"";
+--DROP TABLE IF EXISTS ""dbo"".""SaleTickets"";
+--DROP TABLE IF EXISTS ""dbo"".""Ticket"";
+--DROP TABLE IF EXISTS ""dbo"".""TicketStatus"";
+--DROP TABLE IF EXISTS ""dbo"".""Transaction"";
+--DROP TABLE IF EXISTS ""dbo"".""TransactionStatus"";
+--DROP TABLE IF EXISTS ""dbo"".""Venue"";
+
+CREATE TABLE ""dbo"".""Admin""(
+""id""  SERIAL ,
+""email"" varchar  (128)  NOT NULL,
+""firstName"" varchar  (128)  NOT NULL,
+""lastName"" varchar  (128)  NOT NULL,
+""password"" varchar  (128)  NOT NULL,
+""phone"" varchar  (128)  NOT NULL,
+""username"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""City""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL,
+""provinceId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Country""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Customer""(
+""id""  SERIAL ,
+""email"" varchar  (128)  NOT NULL,
+""firstName"" varchar  (128)  NOT NULL,
+""lastName"" varchar  (128)  NOT NULL,
+""phone"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Event""(
+""id""  SERIAL ,
+""address1"" varchar  (128)  NOT NULL,
+""address2"" varchar  (128)  NOT NULL,
+""cityId"" int    NOT NULL,
+""date"" timestamp    NOT NULL,
+""description"" text  (2147483647)  NOT NULL,
+""endDate"" timestamp    NOT NULL,
+""facebook"" varchar  (128)  NOT NULL,
+""name"" varchar  (128)  NOT NULL,
+""startDate"" timestamp    NOT NULL,
+""website"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Province""(
+""id""  SERIAL ,
+""countryId"" int    NOT NULL,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Sale""(
+""id""  SERIAL ,
+""ipAddress"" varchar  (128)  NOT NULL,
+""notes"" text  (2147483647)  NOT NULL,
+""saleDate"" timestamp    NOT NULL,
+""transactionId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""SaleTickets""(
+""id""  SERIAL ,
+""saleId"" int    NOT NULL,
+""ticketId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""Ticket""(
+""id""  SERIAL ,
+""publicId"" varchar  (8)  NOT NULL,
+""ticketStatusId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""TicketStatus""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Transaction""(
+""id""  SERIAL ,
+""amount"" money    NOT NULL,
+""gatewayConfirmationNumber"" varchar  (1)  NOT NULL,
+""transactionStatusId"" int    NOT NULL);
+
+CREATE TABLE ""dbo"".""TransactionStatus""(
+""id""  SERIAL ,
+""name"" varchar  (128)  NOT NULL);
+
+CREATE TABLE ""dbo"".""Venue""(
+""id""  SERIAL ,
+""address1"" varchar  (128)  NOT NULL,
+""address2"" varchar  (128)  NOT NULL,
+""adminId"" int    NOT NULL,
+""email"" varchar  (128)  NOT NULL,
+""facebook"" varchar  (128)  NOT NULL,
+""name"" varchar  (128)  NOT NULL,
+""phone"" varchar  (128)  NOT NULL,
+""provinceId"" int    NOT NULL,
+""website"" varchar  (128)  NOT NULL);
+
+ALTER TABLE ""dbo"".""Admin""
+ADD CONSTRAINT ""PK_admin""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""City""
+ADD CONSTRAINT ""PK_city""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_city_provinceId"" ON ""dbo"".""City""
+(
+""provinceId"" ASC);
+ALTER TABLE ""dbo"".""Country""
+ADD CONSTRAINT ""PK_country""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Customer""
+ADD CONSTRAINT ""PK_customer""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Event""
+ADD CONSTRAINT ""PK_Event""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_event_cityId"" ON ""dbo"".""Event""
+(
+""cityId"" ASC);
+ALTER TABLE ""dbo"".""Province""
+ADD CONSTRAINT ""PK_province""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_province_countryId"" ON ""dbo"".""Province""
+(
+""countryId"" ASC);
+ALTER TABLE ""dbo"".""Sale""
+ADD CONSTRAINT ""PK_sale""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_sale_id"" ON ""dbo"".""Sale""
+(
+""id"" ASC);
+CREATE  INDEX ""IX_sale_transactionId"" ON ""dbo"".""Sale""
+(
+""transactionId"" ASC);
+ALTER TABLE ""dbo"".""SaleTickets""
+ADD CONSTRAINT ""PK_saleTickets""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_saleTickets_ticketId"" ON ""dbo"".""SaleTickets""
+(
+""ticketId"" ASC);
+ALTER TABLE ""dbo"".""Ticket""
+ADD CONSTRAINT ""PK_ticket""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_ticket_ticketStatusId"" ON ""dbo"".""Ticket""
+(
+""ticketStatusId"" ASC);
+ALTER TABLE ""dbo"".""TicketStatus""
+ADD CONSTRAINT ""PK_ticketStatus""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Transaction""
+ADD CONSTRAINT ""PK_transaction""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_transaction_transactionStatusId"" ON ""dbo"".""Transaction""
+(
+""transactionStatusId"" ASC);
+ALTER TABLE ""dbo"".""TransactionStatus""
+ADD CONSTRAINT ""PK_transactionStatus""
+PRIMARY KEY
+(
+""id""
+);
+ALTER TABLE ""dbo"".""Venue""
+ADD CONSTRAINT ""PK_venue""
+PRIMARY KEY
+(
+""id""
+);
+CREATE  INDEX ""IX_venue_adminId"" ON ""dbo"".""Venue""
+(
+""adminId"" ASC);
+CREATE  INDEX ""IX_venue_provinceId"" ON ""dbo"".""Venue""
+(
+""provinceId"" ASC);
+
+
+ALTER TABLE ""dbo"".""City"" ADD CONSTRAINT ""fk_city_provinceid_province_id"" FOREIGN KEY(""provinceId"")
+REFERENCES ""dbo"".""Province"" (""id"");
+ALTER TABLE ""dbo"".""Event"" ADD CONSTRAINT ""fk_event_cityid_city_id"" FOREIGN KEY(""cityId"")
+REFERENCES ""dbo"".""City"" (""id"");
+ALTER TABLE ""dbo"".""Province"" ADD CONSTRAINT ""fk_province_countryid_country_id"" FOREIGN KEY(""countryId"")
+REFERENCES ""dbo"".""Country"" (""id"");
+ALTER TABLE ""dbo"".""Sale"" ADD CONSTRAINT ""fk_sale_transactionid_transaction_id"" FOREIGN KEY(""transactionId"")
+REFERENCES ""dbo"".""Transaction"" (""id"");
+ALTER TABLE ""dbo"".""SaleTickets"" ADD CONSTRAINT ""FK_saleTickets_saleId_sale_id"" FOREIGN KEY(""saleId"")
+REFERENCES ""dbo"".""Sale"" (""id"");
+ALTER TABLE ""dbo"".""SaleTickets"" ADD CONSTRAINT ""fk_saletickets_ticketid_ticket_id"" FOREIGN KEY(""ticketId"")
+REFERENCES ""dbo"".""Ticket"" (""id"");
+ALTER TABLE ""dbo"".""Ticket"" ADD CONSTRAINT ""fk_ticket_ticketstatusid_ticketstatus_id"" FOREIGN KEY(""ticketStatusId"")
+REFERENCES ""dbo"".""TicketStatus"" (""id"");
+ALTER TABLE ""dbo"".""Transaction"" ADD CONSTRAINT ""fk_transaction_transactionstatusid_transactionstatus_id"" FOREIGN KEY(""transactionStatusId"")
+REFERENCES ""dbo"".""TransactionStatus"" (""id"");
+ALTER TABLE ""dbo"".""Venue"" ADD CONSTRAINT ""fk_venue_adminid_admin_id"" FOREIGN KEY(""adminId"")
+REFERENCES ""dbo"".""Admin"" (""id"");
+ALTER TABLE ""dbo"".""Venue"" ADD CONSTRAINT ""fk_venue_provinceid_province_id"" FOREIGN KEY(""provinceId"")
+REFERENCES ""dbo"".""Province"" (""id"");
+
+");
+				}
+				else
+				{
+					throw new NotImplementedException($"Unknown database provider. ActiveProvider={this.ActiveProvider}");
+				}
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)

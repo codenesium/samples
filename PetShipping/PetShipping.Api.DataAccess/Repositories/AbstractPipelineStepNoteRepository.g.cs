@@ -35,9 +35,9 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.EmployeeId == query.ToInt() ||
+				                  (x.EmployeeIdNavigation == null || x.EmployeeIdNavigation.LastName == null?false : x.EmployeeIdNavigation.LastName.StartsWith(query)) ||
 				                  x.Note.StartsWith(query) ||
-				                  x.PipelineStepId == query.ToInt(),
+				                  (x.PipelineStepIdNavigation == null || x.PipelineStepIdNavigation.Name == null?false : x.PipelineStepIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -130,5 +130,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c0c499454d165bac76cad19b5caf8ac</Hash>
+    <Hash>b6b916a38a555855af4589e13d178091</Hash>
 </Codenesium>*/

@@ -126,11 +126,11 @@ export default class TestAllFieldTypesNullableViewModel {
   }
 
   toDisplay(): string {
-    return String(this.fieldBigInt);
+    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>70d4afd9c230c345f681b7f7ee9f8984</Hash>
+    <Hash>d9621e5e89fbf3b7bd579948d5a755cf</Hash>
 </Codenesium>*/

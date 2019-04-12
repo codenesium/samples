@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build Tests.Api.Web.csproj
    -  dotnet test Tests.Api.DataAccess.csproj
-   -  dotnet test Tests.Api.Servicea.csproj
+   -  dotnet test Tests.Api.Services.csproj
    -  dotnet test Tests.Api.Client.csproj
    -  dotnet test Tests.Api.Web.csproj

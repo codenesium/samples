@@ -28,11 +28,11 @@ export default class TeacherTeacherSkillViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>dd46232e096c72a3cb80e86ae2181ee3</Hash>
+    <Hash>e9a90949f03b6a7d4179d3ff05ab32f1</Hash>
 </Codenesium>*/

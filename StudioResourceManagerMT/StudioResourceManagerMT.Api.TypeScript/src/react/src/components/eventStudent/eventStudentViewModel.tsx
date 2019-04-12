@@ -28,11 +28,11 @@ export default class EventStudentViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>df56fbbfe5975caa4bc8449044a50800</Hash>
+    <Hash>58895a38398d964899c3d6286f106269</Hash>
 </Codenesium>*/

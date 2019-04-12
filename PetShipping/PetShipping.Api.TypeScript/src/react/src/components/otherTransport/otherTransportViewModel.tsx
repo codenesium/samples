@@ -28,11 +28,11 @@ export default class OtherTransportViewModel {
   }
 
   toDisplay(): string {
-    return String(this.handlerId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>4b7becace9c1407e6931adc5ebd72235</Hash>
+    <Hash>de88a6a7aa6dc9ea7f86bc889825f3f3</Hash>
 </Codenesium>*/

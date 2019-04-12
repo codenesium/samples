@@ -30,11 +30,11 @@ export default class SelfReferenceViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>0697c5f114c07dc903c74f4bd752b0ba</Hash>
+    <Hash>37806e09d92ac0c9f72566aebd652f53</Hash>
 </Codenesium>*/

@@ -35,8 +35,8 @@ namespace TicketingCRMNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.SaleId == query.ToInt() ||
-				                  x.TicketId == query.ToInt(),
+				                  (x.SaleIdNavigation == null || x.SaleIdNavigation.Id == null?false : x.SaleIdNavigation.Id == query.ToInt()) ||
+				                  (x.TicketIdNavigation == null || x.TicketIdNavigation.Id == null?false : x.TicketIdNavigation.Id == query.ToInt()),
 				                  limit,
 				                  offset);
 			}
@@ -135,5 +135,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bde46e7d1ede96ead68fc5aaf4120b39</Hash>
+    <Hash>e93e6b01571439b78a94b1e66cf5b38d</Hash>
 </Codenesium>*/

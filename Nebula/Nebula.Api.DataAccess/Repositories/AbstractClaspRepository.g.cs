@@ -35,8 +35,8 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.NextChainId == query.ToInt() ||
-				                  x.PreviousChainId == query.ToInt(),
+				                  (x.NextChainIdNavigation == null || x.NextChainIdNavigation.Name == null?false : x.NextChainIdNavigation.Name.StartsWith(query)) ||
+				                  (x.PreviousChainIdNavigation == null || x.PreviousChainIdNavigation.Name == null?false : x.PreviousChainIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -129,5 +129,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>343e5624bd4937ab811130fb1461ecc0</Hash>
+    <Hash>61ed1e09a4edf2f0086d716cf4f191f9</Hash>
 </Codenesium>*/

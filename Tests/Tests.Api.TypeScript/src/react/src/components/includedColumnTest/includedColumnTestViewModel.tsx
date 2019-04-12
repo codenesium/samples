@@ -18,11 +18,11 @@ export default class IncludedColumnTestViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>c8592720288e80fa0c3995678493de82</Hash>
+    <Hash>a5aba1fd9c00353bea80578916a35f70</Hash>
 </Codenesium>*/

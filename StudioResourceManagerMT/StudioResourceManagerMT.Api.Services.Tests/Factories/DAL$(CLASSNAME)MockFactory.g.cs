@@ -38,6 +38,8 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 
 		public IDALTeacherTeacherSkillMapper DALTeacherTeacherSkillMapperMock { get; set; } = new DALTeacherTeacherSkillMapper();
 
+		public IDALTenantMapper DALTenantMapperMock { get; set; } = new DALTenantMapper();
+
 		public IDALUserMapper DALUserMapperMock { get; set; } = new DALUserMapper();
 
 		public DALMapperMockFactory()
@@ -47,5 +49,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b6128a87a716378472bff4cddf654d48</Hash>
+    <Hash>833baf8919f9a7e21ba3c02ff70d8a94</Hash>
 </Codenesium>*/

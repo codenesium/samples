@@ -23,13 +23,9 @@ namespace NebulaNS.Api.Services.Tests
 
 		public Mock<IApiMachineServerRequestModelValidator> MachineModelValidatorMock { get; set; } = new Mock<IApiMachineServerRequestModelValidator>();
 
-		public Mock<IApiMachineRefTeamServerRequestModelValidator> MachineRefTeamModelValidatorMock { get; set; } = new Mock<IApiMachineRefTeamServerRequestModelValidator>();
-
 		public Mock<IApiOrganizationServerRequestModelValidator> OrganizationModelValidatorMock { get; set; } = new Mock<IApiOrganizationServerRequestModelValidator>();
 
 		public Mock<IApiTeamServerRequestModelValidator> TeamModelValidatorMock { get; set; } = new Mock<IApiTeamServerRequestModelValidator>();
-
-		public Mock<IApiVersionInfoServerRequestModelValidator> VersionInfoModelValidatorMock { get; set; } = new Mock<IApiVersionInfoServerRequestModelValidator>();
 
 		public ModelValidatorMockFactory()
 		{
@@ -61,10 +57,6 @@ namespace NebulaNS.Api.Services.Tests
 			this.MachineModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.MachineModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.MachineRefTeamModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMachineRefTeamServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.MachineRefTeamModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineRefTeamServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.MachineRefTeamModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.OrganizationModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.OrganizationModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.OrganizationModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -72,14 +64,10 @@ namespace NebulaNS.Api.Services.Tests
 			this.TeamModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TeamModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TeamModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.VersionInfoModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VersionInfoModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VersionInfoModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<long>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>70c4fb91035af6fd1212e3c8e5960737</Hash>
+    <Hash>ce2527891588a65a3ba395ca8fb8c19f</Hash>
 </Codenesium>*/

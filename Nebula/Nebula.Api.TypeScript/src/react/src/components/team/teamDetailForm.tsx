@@ -8,7 +8,6 @@ import { Form, Input, Button, Spin, Alert } from 'antd';
 import { WrappedFormUtils } from 'antd/es/form/Form';
 import * as GlobalUtilities from '../../lib/globalUtilities';
 import { ChainTableComponent } from '../shared/chainTable';
-import { MachineRefTeamTableComponent } from '../shared/machineRefTeamTable';
 
 interface TeamDetailComponentProps {
   form: WrappedFormUtils;
@@ -138,21 +137,6 @@ class TeamDetailComponent extends React.Component<
               }
             />
           </div>
-          <div>
-            <h3>MachineRefTeams</h3>
-            <MachineRefTeamTableComponent
-              history={this.props.history}
-              match={this.props.match}
-              apiRoute={
-                Constants.ApiEndpoint +
-                ApiRoutes.Teams +
-                '/' +
-                this.state.model!.id +
-                '/' +
-                ApiRoutes.MachineRefTeams
-              }
-            />
-          </div>
         </div>
       );
     } else {
@@ -167,5 +151,5 @@ export const WrappedTeamDetailComponent = Form.create({ name: 'Team Detail' })(
 
 
 /*<Codenesium>
-    <Hash>0ccae403160c80573cf01dad28366a3d</Hash>
+    <Hash>b584c14d69f28eb04251f4b8000c1df8</Hash>
 </Codenesium>*/

@@ -70,11 +70,11 @@ export default class CallViewModel {
   }
 
   toDisplay(): string {
-    return String(this.addressId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>7ff9c834577b7b557bebdbd07b9d22c1</Hash>
+    <Hash>3fd010b819070e1a4a0992315a5b20e0</Hash>
 </Codenesium>*/

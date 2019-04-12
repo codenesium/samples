@@ -616,79 +616,6 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMachineRefTeamClientResponseModel>> MachineRefTeamsByMachineId(int machineId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Machines/{machineId}/MachineRefTeams", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiMachineRefTeamClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<List<ApiMachineRefTeamClientResponseModel>>> MachineRefTeamBulkInsertAsync(List<ApiMachineRefTeamClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/MachineRefTeams/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMachineRefTeamClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiMachineRefTeamClientResponseModel>> MachineRefTeamCreateAsync(ApiMachineRefTeamClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/MachineRefTeams", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiMachineRefTeamClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiMachineRefTeamClientResponseModel>> MachineRefTeamUpdateAsync(int id, ApiMachineRefTeamClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/MachineRefTeams/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiMachineRefTeamClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> MachineRefTeamDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/MachineRefTeams/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiMachineRefTeamClientResponseModel> MachineRefTeamGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/MachineRefTeams/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiMachineRefTeamClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiMachineRefTeamClientResponseModel>> MachineRefTeamAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiMachineRefTeamClientResponseModel> response = new List<ApiMachineRefTeamClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/MachineRefTeams?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiMachineRefTeamClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiMachineRefTeamClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
 		public virtual async Task<CreateResponse<List<ApiOrganizationClientResponseModel>>> OrganizationBulkInsertAsync(List<ApiOrganizationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Organizations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -851,79 +778,6 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiChainClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMachineRefTeamClientResponseModel>> MachineRefTeamsByTeamId(int teamId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Teams/{teamId}/MachineRefTeams", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiMachineRefTeamClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<List<ApiVersionInfoClientResponseModel>>> VersionInfoBulkInsertAsync(List<ApiVersionInfoClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVersionInfoClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiVersionInfoClientResponseModel>> VersionInfoCreateAsync(ApiVersionInfoClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VersionInfoes", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiVersionInfoClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiVersionInfoClientResponseModel>> VersionInfoUpdateAsync(long id, ApiVersionInfoClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/VersionInfoes/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiVersionInfoClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> VersionInfoDeleteAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/VersionInfoes/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiVersionInfoClientResponseModel> VersionInfoGetAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/VersionInfoes/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiVersionInfoClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiVersionInfoClientResponseModel>> VersionInfoAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiVersionInfoClientResponseModel> response = new List<ApiVersionInfoClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/VersionInfoes?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiVersionInfoClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiVersionInfoClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
 		public virtual async Task<AuthResponse> Login(LoginRequestModel model, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/auth/login", model, cancellationToken).ConfigureAwait(false);
@@ -1016,5 +870,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>e9d8edffa5a520f3118547465ba72870</Hash>
+    <Hash>8cfcb336a9a637fcb99dea90f3034f91</Hash>
 </Codenesium>*/

@@ -28,11 +28,11 @@ export default class CallAssignmentViewModel {
   }
 
   toDisplay(): string {
-    return String(this.callId);
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>edf8403e8e48a1227364913f164e2b95</Hash>
+    <Hash>8ef5bf9ad0d659d215db00d66b0799c2</Hash>
 </Codenesium>*/

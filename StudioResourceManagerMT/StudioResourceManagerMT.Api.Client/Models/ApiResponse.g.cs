@@ -28,6 +28,7 @@ namespace StudioResourceManagerMTNS.Api.Client
 			from.Teachers.ForEach(x => this.AddTeacher(x));
 			from.TeacherSkills.ForEach(x => this.AddTeacherSkill(x));
 			from.TeacherTeacherSkills.ForEach(x => this.AddTeacherTeacherSkill(x));
+			from.Tenants.ForEach(x => this.AddTenant(x));
 			from.Users.ForEach(x => this.AddUser(x));
 		}
 
@@ -60,6 +61,8 @@ namespace StudioResourceManagerMTNS.Api.Client
 		public List<ApiTeacherSkillClientResponseModel> TeacherSkills { get; private set; } = new List<ApiTeacherSkillClientResponseModel>();
 
 		public List<ApiTeacherTeacherSkillClientResponseModel> TeacherTeacherSkills { get; private set; } = new List<ApiTeacherTeacherSkillClientResponseModel>();
+
+		public List<ApiTenantClientResponseModel> Tenants { get; private set; } = new List<ApiTenantClientResponseModel>();
 
 		public List<ApiUserClientResponseModel> Users { get; private set; } = new List<ApiUserClientResponseModel>();
 
@@ -183,6 +186,14 @@ namespace StudioResourceManagerMTNS.Api.Client
 			}
 		}
 
+		public void AddTenant(ApiTenantClientResponseModel item)
+		{
+			if (!this.Tenants.Any(x => x.Id == item.Id))
+			{
+				this.Tenants.Add(item);
+			}
+		}
+
 		public void AddUser(ApiUserClientResponseModel item)
 		{
 			if (!this.Users.Any(x => x.Id == item.Id))
@@ -194,5 +205,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>5472bcb88b4c4e8404cb73e0f8b7c07e</Hash>
+    <Hash>0c6b043085794b85bce9cf9ca6c6e3b5</Hash>
 </Codenesium>*/

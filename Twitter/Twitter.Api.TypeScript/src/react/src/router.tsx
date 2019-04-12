@@ -417,6 +417,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
           path={ClientRoutes.Users}
           component={wrapperHeader(WrappedUserSearchComponent, 'Users Search')}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -424,5 +425,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>e4355127551773f98dc2160a5bd56a67</Hash>
+    <Hash>1138b5a817836c5a040e607b0188b1ad</Hash>
 </Codenesium>*/

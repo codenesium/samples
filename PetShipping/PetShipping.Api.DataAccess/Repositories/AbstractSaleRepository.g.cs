@@ -38,7 +38,7 @@ namespace PetShippingNS.Api.DataAccess
 				                  x.Amount.ToDecimal() == query.ToDecimal() ||
 				                  x.CutomerId == query.ToInt() ||
 				                  x.Note.StartsWith(query) ||
-				                  x.PetId == query.ToInt() ||
+				                  (x.PetIdNavigation == null || x.PetIdNavigation.Name == null?false : x.PetIdNavigation.Name.StartsWith(query)) ||
 				                  x.SaleDate == query.ToDateTime() ||
 				                  x.SalesPersonId == query.ToInt(),
 				                  limit,
@@ -125,5 +125,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c9915e2a48ff588902074592182b1ad</Hash>
+    <Hash>b0215518459263e215cf31978884ebf7</Hash>
 </Codenesium>*/

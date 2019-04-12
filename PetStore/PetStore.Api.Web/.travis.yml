@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build PetStore.Api.Web.csproj
    -  dotnet test PetStore.Api.DataAccess.csproj
-   -  dotnet test PetStore.Api.Servicea.csproj
+   -  dotnet test PetStore.Api.Services.csproj
    -  dotnet test PetStore.Api.Client.csproj
    -  dotnet test PetStore.Api.Web.csproj

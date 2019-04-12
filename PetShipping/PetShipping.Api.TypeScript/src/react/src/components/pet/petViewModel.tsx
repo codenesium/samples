@@ -35,11 +35,11 @@ export default class PetViewModel {
   }
 
   toDisplay(): string {
-    return String(this.breedId);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>6ae95cda9921f13ca0534bc9895f174d</Hash>
+    <Hash>5e7dbabf97dbfa33f2b1dbfd8017794b</Hash>
 </Codenesium>*/

@@ -463,57 +463,6 @@ export class MachineClientResponseModel {
     this.name = name;
   }
 }
-export class MachineRefTeamClientRequestModel {
-  id: number;
-  machineId: number;
-  machineIdEntity: string;
-  machineIdNavigation?: MachineClientResponseModel;
-  teamId: number;
-  teamIdEntity: string;
-  teamIdNavigation?: TeamClientResponseModel;
-
-  constructor() {
-    this.id = 0;
-    this.machineId = 0;
-    this.machineIdEntity = '';
-    this.machineIdNavigation = undefined;
-    this.teamId = 0;
-    this.teamIdEntity = '';
-    this.teamIdNavigation = undefined;
-  }
-
-  setProperties(id: number, machineId: number, teamId: number): void {
-    this.id = id;
-    this.machineId = machineId;
-    this.teamId = teamId;
-  }
-}
-
-export class MachineRefTeamClientResponseModel {
-  id: number;
-  machineId: number;
-  machineIdEntity: string;
-  machineIdNavigation?: MachineClientResponseModel;
-  teamId: number;
-  teamIdEntity: string;
-  teamIdNavigation?: TeamClientResponseModel;
-
-  constructor() {
-    this.id = 0;
-    this.machineId = 0;
-    this.machineIdEntity = '';
-    this.machineIdNavigation = undefined;
-    this.teamId = 0;
-    this.teamIdEntity = '';
-    this.teamIdNavigation = undefined;
-  }
-
-  setProperties(id: number, machineId: number, teamId: number): void {
-    this.id = id;
-    this.machineId = machineId;
-    this.teamId = teamId;
-  }
-}
 export class OrganizationClientRequestModel {
   id: number;
   name: string;
@@ -586,43 +535,8 @@ export class TeamClientResponseModel {
     this.organizationId = organizationId;
   }
 }
-export class VersionInfoClientRequestModel {
-  appliedOn: any;
-  description: string;
-  version: number;
-
-  constructor() {
-    this.appliedOn = undefined;
-    this.description = '';
-    this.version = 0;
-  }
-
-  setProperties(appliedOn: any, description: string, version: number): void {
-    this.appliedOn = appliedOn;
-    this.description = description;
-    this.version = version;
-  }
-}
-
-export class VersionInfoClientResponseModel {
-  appliedOn: any;
-  description: string;
-  version: number;
-
-  constructor() {
-    this.appliedOn = undefined;
-    this.description = '';
-    this.version = 0;
-  }
-
-  setProperties(appliedOn: any, description: string, version: number): void {
-    this.appliedOn = appliedOn;
-    this.description = description;
-    this.version = version;
-  }
-}
 
 
 /*<Codenesium>
-    <Hash>6969deba43b6f73f8b4f3daec1460259</Hash>
+    <Hash>26391585ec163f699e55695ce7413f44</Hash>
 </Codenesium>*/

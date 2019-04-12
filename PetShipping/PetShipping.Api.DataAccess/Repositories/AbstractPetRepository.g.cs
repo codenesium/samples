@@ -35,7 +35,7 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.BreedId == query.ToInt() ||
+				                  (x.BreedIdNavigation == null || x.BreedIdNavigation.Name == null?false : x.BreedIdNavigation.Name.StartsWith(query)) ||
 				                  x.ClientId == query.ToInt() ||
 				                  x.Name.StartsWith(query) ||
 				                  x.Weight == query.ToInt(),
@@ -132,5 +132,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a5a0fafb6e84252a83df6a9125d6628a</Hash>
+    <Hash>5bc378679c21f260f89b2244665f65be</Hash>
 </Codenesium>*/

@@ -164,6 +164,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             'File Types Search'
           )}
         />
+        <Route render={() => <div>No handler for route found...</div>} />
       </Switch>
     </BrowserRouter>
   );
@@ -171,5 +172,5 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 
 /*<Codenesium>
-    <Hash>20a69dde9cf500266ee58b4a532545bd</Hash>
+    <Hash>44f8f22a24cae89df4755928c25f89cb</Hash>
 </Codenesium>*/

@@ -40,7 +40,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				                  x.FirstName.StartsWith(query) ||
 				                  x.LastName.StartsWith(query) ||
 				                  x.Phone.StartsWith(query) ||
-				                  x.UserId == query.ToInt(),
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.Username == null?false : x.UserIdNavigation.Username.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -161,5 +161,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f4e6e30fcdc4f43d1cc431921f8e8052</Hash>
+    <Hash>53501fbfb2b8ce413afc7d240b330f8b</Hash>
 </Codenesium>*/

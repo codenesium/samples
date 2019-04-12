@@ -36,10 +36,10 @@ namespace StackOverflowNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.CreationDate == query.ToDateTime() ||
-				                  x.PostId == query.ToInt() ||
+				                  (x.PostIdNavigation == null || x.PostIdNavigation.Id == null?false : x.PostIdNavigation.Id == query.ToInt()) ||
 				                  x.Score == query.ToNullableInt() ||
 				                  x.Text.StartsWith(query) ||
-				                  x.UserId == query.ToNullableInt(),
+				                  (x.UserIdNavigation == null || x.UserIdNavigation.DisplayName == null?false : x.UserIdNavigation.DisplayName.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -144,5 +144,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f6fce9920ccb71a47ab0f397309f5718</Hash>
+    <Hash>e3fb16b057a42c9684b90ce7fbfb8330</Hash>
 </Codenesium>*/

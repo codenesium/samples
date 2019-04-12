@@ -64,11 +64,11 @@ export default class StudentViewModel {
   }
 
   toDisplay(): string {
-    return String(this.birthday);
+    return String(this.lastName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>e47366bc40942d3e1adce0f759042f52</Hash>
+    <Hash>05a34b1406cb6f69fba94fc2221e4069</Hash>
 </Codenesium>*/

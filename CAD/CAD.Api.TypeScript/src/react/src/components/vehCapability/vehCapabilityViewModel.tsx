@@ -15,11 +15,11 @@ export default class VehCapabilityViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>ece1ea69652790da4198dafd28c015f8</Hash>
+    <Hash>e465707873ec9e64829b20e72089c1ce</Hash>
 </Codenesium>*/

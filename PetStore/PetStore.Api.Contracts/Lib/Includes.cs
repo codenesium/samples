@@ -138,7 +138,6 @@ namespace PetStoreNS.Api.Contracts
 			this.LinkValue = linkValue;
 		}
 
-
 		public virtual void SetToken(string token)
 		{
 			this.Token = token;

@@ -86,28 +86,16 @@ export const wrapperHeader = (
                 <Link to={ClientRoutes.Machines} />
               </Menu.Item>
 
-              <Menu.Item key="machineRefTeam">
-                <Icon type="mobile" />
-                <span>Machine Ref Team</span>
-                <Link to={ClientRoutes.MachineRefTeams} />
-              </Menu.Item>
-
               <Menu.Item key="organization">
-                <Icon type="paper-clip" />
+                <Icon type="mobile" />
                 <span>Organization</span>
                 <Link to={ClientRoutes.Organizations} />
               </Menu.Item>
 
               <Menu.Item key="team">
-                <Icon type="setting" />
+                <Icon type="paper-clip" />
                 <span>Team</span>
                 <Link to={ClientRoutes.Teams} />
-              </Menu.Item>
-
-              <Menu.Item key="versionInfo">
-                <Icon type="user" />
-                <span>Version Info</span>
-                <Link to={ClientRoutes.VersionInfoes} />
               </Menu.Item>
 
               <Menu.SubMenu
@@ -158,5 +146,5 @@ export const wrapperHeader = (
 
 
 /*<Codenesium>
-    <Hash>516712c5241057659b41b75756bc63f4</Hash>
+    <Hash>1358de3765201816a2947fb4ae766afc</Hash>
 </Codenesium>*/

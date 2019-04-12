@@ -421,10 +421,18 @@ namespace StudioResourceManagerMTNS.Api.Web
 
             app.UseMvc();
 
-			string appDirectory = Path.Combine(Directory.GetCurrentDirectory(), "app");
+			string appDirectory = Path.Combine(env.ContentRootPath, "app");
 
 		    if (Directory.Exists(appDirectory))
 			{
+			    PhysicalFileProvider fileProvider = new PhysicalFileProvider(appDirectory);
+				DefaultFilesOptions defoptions = new DefaultFilesOptions();
+				defoptions.DefaultFileNames.Clear();
+				defoptions.FileProvider = fileProvider;
+				defoptions.DefaultFileNames.Add("index.html");
+				
+				app.UseDefaultFiles(defoptions);
+				
 				app.UseStaticFiles(new StaticFileOptions
 				{
 					FileProvider = new PhysicalFileProvider(appDirectory),

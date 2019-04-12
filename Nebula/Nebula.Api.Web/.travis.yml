@@ -4,6 +4,6 @@ dotnet: 2.2
 script:
    -  dotnet build Nebula.Api.Web.csproj
    -  dotnet test Nebula.Api.DataAccess.csproj
-   -  dotnet test Nebula.Api.Servicea.csproj
+   -  dotnet test Nebula.Api.Services.csproj
    -  dotnet test Nebula.Api.Client.csproj
    -  dotnet test Nebula.Api.Web.csproj

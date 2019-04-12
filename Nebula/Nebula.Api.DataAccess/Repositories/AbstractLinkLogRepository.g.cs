@@ -36,7 +36,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.DateEntered == query.ToDateTime() ||
-				                  x.LinkId == query.ToInt() ||
+				                  (x.LinkIdNavigation == null || x.LinkIdNavigation.Name == null?false : x.LinkIdNavigation.Name.StartsWith(query)) ||
 				                  x.Log.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -122,5 +122,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>875ea8d406fd5698ccbbd9b7b530db31</Hash>
+    <Hash>6ea6b043cc6489dcafde5677972f38c0</Hash>
 </Codenesium>*/

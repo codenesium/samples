@@ -15,11 +15,11 @@ export default class TeacherSkillViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>8b09ed4dea66d88de83ef707a305b83e</Hash>
+    <Hash>34268fb95d260abae838a07c01288c5a</Hash>
 </Codenesium>*/

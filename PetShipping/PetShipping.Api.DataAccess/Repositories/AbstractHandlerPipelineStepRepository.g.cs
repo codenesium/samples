@@ -35,8 +35,8 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.HandlerId == query.ToInt() ||
-				                  x.PipelineStepId == query.ToInt(),
+				                  (x.HandlerIdNavigation == null || x.HandlerIdNavigation.Email == null?false : x.HandlerIdNavigation.Email.StartsWith(query)) ||
+				                  (x.PipelineStepIdNavigation == null || x.PipelineStepIdNavigation.Name == null?false : x.PipelineStepIdNavigation.Name.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -129,5 +129,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3bf0b8ece247b4bb45cf6ebda3f68de2</Hash>
+    <Hash>7f71a3f24506571cdf38a90694799c62</Hash>
 </Codenesium>*/

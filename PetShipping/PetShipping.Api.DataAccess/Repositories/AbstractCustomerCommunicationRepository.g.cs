@@ -35,9 +35,9 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				return this.Where(x =>
-				                  x.CustomerId == query.ToInt() ||
+				                  (x.CustomerIdNavigation == null || x.CustomerIdNavigation.Email == null?false : x.CustomerIdNavigation.Email.StartsWith(query)) ||
 				                  x.DateCreated == query.ToDateTime() ||
-				                  x.EmployeeId == query.ToInt() ||
+				                  (x.EmployeeIdNavigation == null || x.EmployeeIdNavigation.LastName == null?false : x.EmployeeIdNavigation.LastName.StartsWith(query)) ||
 				                  x.Notes.StartsWith(query),
 				                  limit,
 				                  offset);
@@ -143,5 +143,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54f3a9a69a4cb0cd013e9f0e31ef0fe2</Hash>
+    <Hash>333e5ad225e34bb9ff824897a086f32d</Hash>
 </Codenesium>*/

@@ -18,11 +18,11 @@ export default class UserViewModel {
   }
 
   toDisplay(): string {
-    return String(this.id);
+    return String(this.username);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>870fe3114aa03314688c49a7ce00b2ab</Hash>
+    <Hash>200831dd610af90fc4cffeb7eaf8819d</Hash>
 </Codenesium>*/

@@ -36,7 +36,7 @@ namespace TwitterNS.Api.DataAccess
 			{
 				return this.Where(x =>
 				                  x.Content.StartsWith(query) ||
-				                  x.SenderUserId == query.ToNullableInt(),
+				                  (x.SenderUserIdNavigation == null || x.SenderUserIdNavigation.Username == null?false : x.SenderUserIdNavigation.Username.StartsWith(query)),
 				                  limit,
 				                  offset);
 			}
@@ -138,5 +138,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cfad4354a20d6dd1224b9a59daa3e5ae</Hash>
+    <Hash>387efbd46c560cbcd74745d93946e2bb</Hash>
 </Codenesium>*/

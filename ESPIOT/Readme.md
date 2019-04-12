@@ -1,6 +1,11 @@
 This readme will help you get your generated project running on your machine. If you have any questions please 
-see https://www.codenesium.com/documentation for the documentation or feel free to email support@codenesium.com.
+see https://www.codenesium.com/documentation for documentation or email support@codenesium.com.
 
+# Prereqs
+You need the .NET Core SDK(https://dotnet.microsoft.com/download) to run the API.
+You need an editor. You can use VS Code(https://code.visualstudio.com/download) which is free but you're probably going to 
+want the full Visual Studio(https://visualstudio.microsoft.com/vs)
+You need a SQL server database. This can be on a full instance or the express edition(https://www.microsoft.com/en-us/sql-server/sql-server-editions-express).
 
 # Running the API project
 To run the API project you should set the <Project_Name>.Api.Web project to be the default startup project.
@@ -18,9 +23,9 @@ and you should be able to hit your API methods.
 
 # Running the React App
 Using VS Code open the <Project_Name>.Api.TypeScript\src\react folder and run "npm install" from a terminal.
-This will install all of the node packages you need to run the React app. This assumes you have node
-installed. If you do not you will need to install it from https://nodejs.org/en/download. If you don't have 
-VS Code you can get it from https://code.visualstudio.com/download.
+This will install all of the node packages you need to run the React app. This assumes you have node(https://nodejs.org/en/download)
+installed. If you don't have 
+VS Code(https://code.visualstudio.com/download).
 
 Although technically you can build Typescript in Visual Studio it is much easier to use VS Code and I encourage you to do so.
 
