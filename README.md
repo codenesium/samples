@@ -4,11 +4,6 @@ Generated sample .NET Core REST APIs using the Codenesium platform
 
 https://www.codenesium.com
 
-[![Build Status](https://travis-ci.org/codenesium/samples.svg?branch=master)](https://travis-ci.org/codenesium/samples)
-
-![Build Status](https://dev.azure.com/codenesium0978/Samples/_apis/build/status/Samples-ASP.NET%20Core-CI)
-
-
 #### StudioResourceManager
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1bd2ac54-b1ae-46e9-b487-25ce0c3565ef/deploy-status)](https://app.netlify.com/sites/studioresourcemanagercodenesium/deploys)
 CRM for a a music or dance studio.
