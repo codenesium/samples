@@ -131,4 +131,7 @@ export const WrappedFollowingDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>547c59273c79a1026dbcd0d3b5ce1401</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

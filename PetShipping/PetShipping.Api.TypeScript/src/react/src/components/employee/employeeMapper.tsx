@@ -34,4 +34,7 @@ export default class EmployeeMapper {
 
 /*<Codenesium>
     <Hash>6a4c7668ffcdfef40a0dc6216f67bf50</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

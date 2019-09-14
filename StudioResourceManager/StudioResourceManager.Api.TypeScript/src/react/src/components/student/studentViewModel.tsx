@@ -71,4 +71,7 @@ export default class StudentViewModel {
 
 /*<Codenesium>
     <Hash>05a34b1406cb6f69fba94fc2221e4069</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

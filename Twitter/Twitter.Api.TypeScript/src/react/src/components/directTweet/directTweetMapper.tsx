@@ -55,4 +55,7 @@ export default class DirectTweetMapper {
 
 /*<Codenesium>
     <Hash>4d512b155adc56d82eea86f723a66b2c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

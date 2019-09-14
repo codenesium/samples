@@ -191,4 +191,7 @@ export class PipelineTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>167f7dac6c383b267658baeadfbabf37</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

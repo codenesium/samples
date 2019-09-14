@@ -7,9 +7,21 @@ namespace TestsNS.Api.DataAccess
 {
 	public partial interface ITimestampCheckRepository
 	{
+		Task<TimestampCheck> Create(TimestampCheck item);
+
+		Task Update(TimestampCheck item);
+
+		Task Delete(int id);
+
+		Task<TimestampCheck> Get(int id);
+
+		Task<List<TimestampCheck>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c656b22ceb71f73bc3e392e7b80ddea</Hash>
+    <Hash>a52a195c55a55b36fb00705d597bcac8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

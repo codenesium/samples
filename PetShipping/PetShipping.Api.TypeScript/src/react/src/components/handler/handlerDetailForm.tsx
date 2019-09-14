@@ -191,4 +191,7 @@ export const WrappedHandlerDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>6012216034818428ca718e6c47b6f7c1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

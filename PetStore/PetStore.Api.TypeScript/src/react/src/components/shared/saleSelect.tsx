@@ -123,4 +123,7 @@ export class SaleSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>bbb478db4a0fd2bcc2d3d794f3af6942</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

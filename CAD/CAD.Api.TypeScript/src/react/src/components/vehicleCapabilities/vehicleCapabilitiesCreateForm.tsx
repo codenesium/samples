@@ -182,4 +182,7 @@ export const WrappedVehicleCapabilitiesCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>4f642246a399e9d9ba0c6f1150e86e23</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

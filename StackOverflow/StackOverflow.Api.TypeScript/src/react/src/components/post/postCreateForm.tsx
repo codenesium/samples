@@ -344,4 +344,7 @@ export const WrappedPostCreateComponent = Form.create({ name: 'Post Create' })(
 
 /*<Codenesium>
     <Hash>10de8004f5db57bfd5daf684f0b779a9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

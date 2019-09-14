@@ -123,4 +123,7 @@ export class EventSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>9ff3e09be1b7c440920c9a14243b4bfe</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

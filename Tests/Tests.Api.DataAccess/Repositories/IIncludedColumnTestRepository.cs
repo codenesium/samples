@@ -7,9 +7,21 @@ namespace TestsNS.Api.DataAccess
 {
 	public partial interface IIncludedColumnTestRepository
 	{
+		Task<IncludedColumnTest> Create(IncludedColumnTest item);
+
+		Task Update(IncludedColumnTest item);
+
+		Task Delete(int id);
+
+		Task<IncludedColumnTest> Get(int id);
+
+		Task<List<IncludedColumnTest>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>a7aca23666aa75c37b908ba589bce35b</Hash>
+    <Hash>1e4389fdb3e20e3423dddf8511bde8fa</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

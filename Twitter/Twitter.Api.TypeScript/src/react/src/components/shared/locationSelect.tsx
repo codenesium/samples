@@ -127,4 +127,7 @@ export class LocationSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>0cc3e53d0bd1985d40c1489d30f99ad2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -1456,4 +1456,7 @@ namespace SecureVideoCRMNS.Api.Services.Tests.Tests
 
 /*<Codenesium>
     <Hash>29f4ae88a3bee6d492f34d733699bfb9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -70,4 +70,7 @@ namespace NebulaNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>ce2527891588a65a3ba395ca8fb8c19f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

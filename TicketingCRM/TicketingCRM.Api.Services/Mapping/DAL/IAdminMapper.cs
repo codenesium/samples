@@ -7,9 +7,21 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IDALAdminMapper
 	{
+		Admin MapModelToEntity(
+			int id,
+			ApiAdminServerRequestModel model);
+
+		ApiAdminServerResponseModel MapEntityToModel(
+			Admin item);
+
+		List<ApiAdminServerResponseModel> MapEntityToModel(
+			List<Admin> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff43d6ce8a12be4ef2e0a8d79205aac4</Hash>
+    <Hash>a86d5b51b653f8628fadba54de04f85e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

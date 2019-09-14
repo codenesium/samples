@@ -35,4 +35,7 @@ export default class UnitOfficerViewModel {
 
 /*<Codenesium>
     <Hash>5f8d5d1049e8da1f108fe31583935c60</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

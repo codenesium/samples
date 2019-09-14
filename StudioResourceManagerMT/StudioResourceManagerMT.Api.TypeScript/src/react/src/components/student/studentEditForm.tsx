@@ -317,4 +317,7 @@ export const WrappedStudentEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>982769de101831e10fd5d196773d91ca</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

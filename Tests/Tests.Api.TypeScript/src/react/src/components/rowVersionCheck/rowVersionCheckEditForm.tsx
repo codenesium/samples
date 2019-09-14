@@ -238,4 +238,7 @@ export const WrappedRowVersionCheckEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>3c6adb0befb1721a1b7a5d2e29d724ca</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

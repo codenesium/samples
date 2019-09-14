@@ -18,11 +18,14 @@ export default class IncludedColumnTestViewModel {
   }
 
   toDisplay(): string {
-    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>a5aba1fd9c00353bea80578916a35f70</Hash>
+    <Hash>8fdfb6d476ec697e449319ff2d910dc1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

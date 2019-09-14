@@ -62,4 +62,7 @@ namespace PetStoreNS.Api.Services
 
 /*<Codenesium>
     <Hash>7f6f214792ffc874e842ca05658d0ae7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

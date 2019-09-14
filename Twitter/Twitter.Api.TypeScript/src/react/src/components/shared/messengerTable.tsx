@@ -249,4 +249,7 @@ export class MessengerTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>9cc0c567a660c1ef750e58fa87253d7d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

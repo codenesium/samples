@@ -34,4 +34,7 @@ namespace SecureVideoCRMNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>8d13b4ed406ecd97cfd71d058e9f917d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

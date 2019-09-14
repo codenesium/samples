@@ -213,4 +213,7 @@ export const WrappedMachineCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>3609c89bcd76964ec315dbd36eaa1abe</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

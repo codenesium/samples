@@ -5195,12 +5195,66 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "AppForeignKeyDisplayColumn": "",
+        "AppForeignKeyDisplayColumn": "PersonName",
         "AppViewLabel": "P E R S O N",
         "AppViewIcon": ""
       },
       {
         "$id": "280",
+        "Table": "RowVersionCheck",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "RowVersionCheck",
+        "AppTableNamePlural": "RowVersionChecks",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Row Version Check",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "281",
+        "Table": "Table",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "Table",
+        "AppTableNamePlural": "Tables",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Tables",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "282",
         "Table": "VPerson",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -5222,14 +5276,203 @@
         "AppAllMethodAttribute": "",
         "AppGetMethodAttribute": "",
         "AppPatchMethodAttribute": "",
-        "AppForeignKeyDisplayColumn": "",
+        "AppForeignKeyDisplayColumn": "PersonName",
         "AppViewLabel": "V Person",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "283",
+        "Table": "ColumnSameAsFKTable",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "ColumnSameAsFKTable",
+        "AppTableNamePlural": "ColumnSameAsFKTables",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Id",
+        "AppViewLabel": "Column Same As F K Table",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "284",
+        "Table": "IncludedColumnTest",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "IncludedColumnTest",
+        "AppTableNamePlural": "IncludedColumnTests",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Included Column Test",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "285",
+        "Table": "SelfReference",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "SelfReference",
+        "AppTableNamePlural": "SelfReferences",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Id",
+        "AppViewLabel": "Self Reference",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "286",
+        "Table": "TestAllFieldType",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "TestAllFieldType",
+        "AppTableNamePlural": "TestAllFieldTypes",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "FieldBigInt",
+        "AppViewLabel": "Test All Field Types",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "287",
+        "Table": "TestAllFieldTypesNullable",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "TestAllFieldTypesNullable",
+        "AppTableNamePlural": "TestAllFieldTypesNullables",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "FieldBigInt",
+        "AppViewLabel": "Test All Field Types Nullable",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "288",
+        "Table": "TimestampCheck",
+        "Schema": "dbo",
+        "AppDoNotProcess": false,
+        "AppTableName": "TimestampCheck",
+        "AppTableNamePlural": "TimestampChecks",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Name",
+        "AppViewLabel": "Timestamp Check",
+        "AppViewIcon": ""
+      },
+      {
+        "$id": "289",
+        "Table": "CompositePrimaryKey",
+        "Schema": "dbo",
+        "AppDoNotProcess": true,
+        "AppTableName": "CompositePrimaryKey",
+        "AppTableNamePlural": "CompositePrimaryKeys",
+        "AppReferenceTable": false,
+        "AppControllerAttribute": "",
+        "AppGenerateBulkInsertMethod": true,
+        "AppGenerateCreateMethod": true,
+        "AppGenerateUpdateMethod": true,
+        "AppGenerateDeleteMethod": true,
+        "AppGenerateAllMethod": true,
+        "AppGenerateGetMethod": true,
+        "AppGeneratePatchMethod": true,
+        "AppBulkInsertMethodAttribute": "",
+        "AppCreateMethodAttribute": "",
+        "AppUpdateMethodAttribute": "",
+        "AppDeleteMethodAttribute": "",
+        "AppAllMethodAttribute": "",
+        "AppGetMethodAttribute": "",
+        "AppPatchMethodAttribute": "",
+        "AppForeignKeyDisplayColumn": "Id",
+        "AppViewLabel": "Composite Primary Key",
         "AppViewIcon": ""
       }
     ],
     "ColumnParameterSettings": [
       {
-        "$id": "281",
+        "$id": "290",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldDecimal",
@@ -5249,7 +5492,7 @@
         "AppNamePlural": "FieldDecimals"
       },
       {
-        "$id": "282",
+        "$id": "291",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldBit",
@@ -5269,7 +5512,7 @@
         "AppNamePlural": "FieldBits"
       },
       {
-        "$id": "283",
+        "$id": "292",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldBigInt",
@@ -5289,7 +5532,7 @@
         "AppNamePlural": "FieldBigInts"
       },
       {
-        "$id": "284",
+        "$id": "293",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldBinary",
@@ -5309,7 +5552,7 @@
         "AppNamePlural": "FieldBinaries"
       },
       {
-        "$id": "285",
+        "$id": "294",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldBit",
@@ -5329,7 +5572,7 @@
         "AppNamePlural": "FieldBits"
       },
       {
-        "$id": "286",
+        "$id": "295",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldChar",
@@ -5349,7 +5592,7 @@
         "AppNamePlural": "FieldChars"
       },
       {
-        "$id": "287",
+        "$id": "296",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldDate",
@@ -5369,7 +5612,7 @@
         "AppNamePlural": "FieldDates"
       },
       {
-        "$id": "288",
+        "$id": "297",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldDateTime",
@@ -5389,7 +5632,7 @@
         "AppNamePlural": "FieldDateTimes"
       },
       {
-        "$id": "289",
+        "$id": "298",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldDateTime2",
@@ -5409,7 +5652,7 @@
         "AppNamePlural": "FieldDateTime2"
       },
       {
-        "$id": "290",
+        "$id": "299",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldDateTimeOffset",
@@ -5429,7 +5672,7 @@
         "AppNamePlural": "FieldDateTimeOffsets"
       },
       {
-        "$id": "291",
+        "$id": "300",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldDecimal",
@@ -5449,7 +5692,7 @@
         "AppNamePlural": "FieldDecimals"
       },
       {
-        "$id": "292",
+        "$id": "301",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldFloat",
@@ -5469,7 +5712,7 @@
         "AppNamePlural": "FieldFloats"
       },
       {
-        "$id": "293",
+        "$id": "302",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldImage",
@@ -5489,7 +5732,7 @@
         "AppNamePlural": "FieldImages"
       },
       {
-        "$id": "294",
+        "$id": "303",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldMoney",
@@ -5509,7 +5752,7 @@
         "AppNamePlural": "FieldMoneys"
       },
       {
-        "$id": "295",
+        "$id": "304",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldNChar",
@@ -5529,7 +5772,7 @@
         "AppNamePlural": "FieldNChars"
       },
       {
-        "$id": "296",
+        "$id": "305",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldNText",
@@ -5549,7 +5792,7 @@
         "AppNamePlural": "FieldNTexts"
       },
       {
-        "$id": "297",
+        "$id": "306",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldNumeric",
@@ -5569,7 +5812,7 @@
         "AppNamePlural": "FieldNumerics"
       },
       {
-        "$id": "298",
+        "$id": "307",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldNVarchar",
@@ -5589,7 +5832,7 @@
         "AppNamePlural": "FieldNVarchars"
       },
       {
-        "$id": "299",
+        "$id": "308",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldReal",
@@ -5609,7 +5852,7 @@
         "AppNamePlural": "FieldReals"
       },
       {
-        "$id": "300",
+        "$id": "309",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldSmallDateTime",
@@ -5629,7 +5872,7 @@
         "AppNamePlural": "FieldSmallDateTimes"
       },
       {
-        "$id": "301",
+        "$id": "310",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldSmallInt",
@@ -5649,7 +5892,7 @@
         "AppNamePlural": "FieldSmallInts"
       },
       {
-        "$id": "302",
+        "$id": "311",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldSmallMoney",
@@ -5669,7 +5912,7 @@
         "AppNamePlural": "FieldSmallMoneys"
       },
       {
-        "$id": "303",
+        "$id": "312",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldText",
@@ -5689,7 +5932,7 @@
         "AppNamePlural": "FieldTexts"
       },
       {
-        "$id": "304",
+        "$id": "313",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldTime",
@@ -5709,7 +5952,7 @@
         "AppNamePlural": "FieldTimes"
       },
       {
-        "$id": "305",
+        "$id": "314",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldTimestamp",
@@ -5729,7 +5972,7 @@
         "AppNamePlural": "FieldTimestamps"
       },
       {
-        "$id": "306",
+        "$id": "315",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldTinyInt",
@@ -5749,7 +5992,7 @@
         "AppNamePlural": "FieldTinyInts"
       },
       {
-        "$id": "307",
+        "$id": "316",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldUniqueIdentifier",
@@ -5769,7 +6012,7 @@
         "AppNamePlural": "FieldUniqueIdentifiers"
       },
       {
-        "$id": "308",
+        "$id": "317",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldVarBinary",
@@ -5789,7 +6032,7 @@
         "AppNamePlural": "FieldVarBinaries"
       },
       {
-        "$id": "309",
+        "$id": "318",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldVarchar",
@@ -5809,7 +6052,7 @@
         "AppNamePlural": "FieldVarchars"
       },
       {
-        "$id": "310",
+        "$id": "319",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldXML",
@@ -5829,7 +6072,7 @@
         "AppNamePlural": "FieldXMLs"
       },
       {
-        "$id": "311",
+        "$id": "320",
         "Table": "ColumnSameAsFKTable",
         "Schema": "dbo",
         "Column": "Id",
@@ -5849,7 +6092,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "312",
+        "$id": "321",
         "Table": "ColumnSameAsFKTable",
         "Schema": "dbo",
         "Column": "Person",
@@ -5869,7 +6112,7 @@
         "AppNamePlural": "People"
       },
       {
-        "$id": "313",
+        "$id": "322",
         "Table": "ColumnSameAsFKTable",
         "Schema": "dbo",
         "Column": "PersonId",
@@ -5889,7 +6132,7 @@
         "AppNamePlural": "PersonIds"
       },
       {
-        "$id": "314",
+        "$id": "323",
         "Table": "CompositePrimaryKey",
         "Schema": "dbo",
         "Column": "Id",
@@ -5909,7 +6152,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "315",
+        "$id": "324",
         "Table": "CompositePrimaryKey",
         "Schema": "dbo",
         "Column": "Id2",
@@ -5929,7 +6172,7 @@
         "AppNamePlural": "Id2"
       },
       {
-        "$id": "316",
+        "$id": "325",
         "Table": "IncludedColumnTest",
         "Schema": "dbo",
         "Column": "Id",
@@ -5949,7 +6192,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "317",
+        "$id": "326",
         "Table": "IncludedColumnTest",
         "Schema": "dbo",
         "Column": "Name",
@@ -5969,7 +6212,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "318",
+        "$id": "327",
         "Table": "IncludedColumnTest",
         "Schema": "dbo",
         "Column": "Name2",
@@ -5989,7 +6232,7 @@
         "AppNamePlural": "Name2"
       },
       {
-        "$id": "319",
+        "$id": "328",
         "Table": "Person",
         "Schema": "dbo",
         "Column": "PersonId",
@@ -6009,7 +6252,7 @@
         "AppNamePlural": "PersonIds"
       },
       {
-        "$id": "320",
+        "$id": "329",
         "Table": "Person",
         "Schema": "dbo",
         "Column": "PersonName",
@@ -6029,7 +6272,7 @@
         "AppNamePlural": "PersonNames"
       },
       {
-        "$id": "321",
+        "$id": "330",
         "Table": "RowVersionCheck",
         "Schema": "dbo",
         "Column": "Id",
@@ -6049,7 +6292,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "322",
+        "$id": "331",
         "Table": "RowVersionCheck",
         "Schema": "dbo",
         "Column": "Name",
@@ -6069,7 +6312,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "323",
+        "$id": "332",
         "Table": "RowVersionCheck",
         "Schema": "dbo",
         "Column": "RowVersion",
@@ -6089,7 +6332,7 @@
         "AppNamePlural": "RowVersions"
       },
       {
-        "$id": "324",
+        "$id": "333",
         "Table": "SelfReference",
         "Schema": "dbo",
         "Column": "Id",
@@ -6109,7 +6352,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "325",
+        "$id": "334",
         "Table": "SelfReference",
         "Schema": "dbo",
         "Column": "SelfReferenceId",
@@ -6129,7 +6372,7 @@
         "AppNamePlural": "SelfReferenceIds"
       },
       {
-        "$id": "326",
+        "$id": "335",
         "Table": "SelfReference",
         "Schema": "dbo",
         "Column": "SelfReferenceId2",
@@ -6149,7 +6392,7 @@
         "AppNamePlural": "SelfReferenceId2"
       },
       {
-        "$id": "327",
+        "$id": "336",
         "Table": "Table",
         "Schema": "dbo",
         "Column": "Id",
@@ -6169,7 +6412,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "328",
+        "$id": "337",
         "Table": "Table",
         "Schema": "dbo",
         "Column": "Name",
@@ -6189,7 +6432,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "329",
+        "$id": "338",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "Id",
@@ -6209,7 +6452,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "330",
+        "$id": "339",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldBigInt",
@@ -6229,7 +6472,7 @@
         "AppNamePlural": "FieldBigInts"
       },
       {
-        "$id": "331",
+        "$id": "340",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldBinary",
@@ -6249,7 +6492,7 @@
         "AppNamePlural": "FieldBinaries"
       },
       {
-        "$id": "332",
+        "$id": "341",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldChar",
@@ -6269,7 +6512,7 @@
         "AppNamePlural": "FieldChars"
       },
       {
-        "$id": "333",
+        "$id": "342",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldDate",
@@ -6289,7 +6532,7 @@
         "AppNamePlural": "FieldDates"
       },
       {
-        "$id": "334",
+        "$id": "343",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldDateTime",
@@ -6309,7 +6552,7 @@
         "AppNamePlural": "FieldDateTimes"
       },
       {
-        "$id": "335",
+        "$id": "344",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldDateTime2",
@@ -6329,7 +6572,7 @@
         "AppNamePlural": "FieldDateTime2"
       },
       {
-        "$id": "336",
+        "$id": "345",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldDateTimeOffset",
@@ -6349,7 +6592,7 @@
         "AppNamePlural": "FieldDateTimeOffsets"
       },
       {
-        "$id": "337",
+        "$id": "346",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldFloat",
@@ -6369,7 +6612,7 @@
         "AppNamePlural": "FieldFloats"
       },
       {
-        "$id": "338",
+        "$id": "347",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldImage",
@@ -6389,7 +6632,7 @@
         "AppNamePlural": "FieldImages"
       },
       {
-        "$id": "339",
+        "$id": "348",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldMoney",
@@ -6409,7 +6652,7 @@
         "AppNamePlural": "FieldMoneys"
       },
       {
-        "$id": "340",
+        "$id": "349",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldNChar",
@@ -6429,7 +6672,7 @@
         "AppNamePlural": "FieldNChars"
       },
       {
-        "$id": "341",
+        "$id": "350",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldNText",
@@ -6449,7 +6692,7 @@
         "AppNamePlural": "FieldNTexts"
       },
       {
-        "$id": "342",
+        "$id": "351",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldNumeric",
@@ -6469,7 +6712,7 @@
         "AppNamePlural": "FieldNumerics"
       },
       {
-        "$id": "343",
+        "$id": "352",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldNVarchar",
@@ -6489,7 +6732,7 @@
         "AppNamePlural": "FieldNVarchars"
       },
       {
-        "$id": "344",
+        "$id": "353",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldReal",
@@ -6509,7 +6752,7 @@
         "AppNamePlural": "FieldReals"
       },
       {
-        "$id": "345",
+        "$id": "354",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldSmallDateTime",
@@ -6529,7 +6772,7 @@
         "AppNamePlural": "FieldSmallDateTimes"
       },
       {
-        "$id": "346",
+        "$id": "355",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldSmallInt",
@@ -6549,7 +6792,7 @@
         "AppNamePlural": "FieldSmallInts"
       },
       {
-        "$id": "347",
+        "$id": "356",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldSmallMoney",
@@ -6569,7 +6812,7 @@
         "AppNamePlural": "FieldSmallMoneys"
       },
       {
-        "$id": "348",
+        "$id": "357",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldText",
@@ -6589,7 +6832,7 @@
         "AppNamePlural": "FieldTexts"
       },
       {
-        "$id": "349",
+        "$id": "358",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldTime",
@@ -6609,7 +6852,7 @@
         "AppNamePlural": "FieldTimes"
       },
       {
-        "$id": "350",
+        "$id": "359",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldTimestamp",
@@ -6629,7 +6872,7 @@
         "AppNamePlural": "FieldTimestamps"
       },
       {
-        "$id": "351",
+        "$id": "360",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldTinyInt",
@@ -6649,7 +6892,7 @@
         "AppNamePlural": "FieldTinyInts"
       },
       {
-        "$id": "352",
+        "$id": "361",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldUniqueIdentifier",
@@ -6669,7 +6912,7 @@
         "AppNamePlural": "FieldUniqueIdentifiers"
       },
       {
-        "$id": "353",
+        "$id": "362",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldVarBinary",
@@ -6689,7 +6932,7 @@
         "AppNamePlural": "FieldVarBinaries"
       },
       {
-        "$id": "354",
+        "$id": "363",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldVarchar",
@@ -6709,7 +6952,7 @@
         "AppNamePlural": "FieldVarchars"
       },
       {
-        "$id": "355",
+        "$id": "364",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldXML",
@@ -6729,7 +6972,7 @@
         "AppNamePlural": "FieldXMLs"
       },
       {
-        "$id": "356",
+        "$id": "365",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "Id",
@@ -6749,7 +6992,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "357",
+        "$id": "366",
         "Table": "TimestampCheck",
         "Schema": "dbo",
         "Column": "Id",
@@ -6769,7 +7012,7 @@
         "AppNamePlural": "Ids"
       },
       {
-        "$id": "358",
+        "$id": "367",
         "Table": "TimestampCheck",
         "Schema": "dbo",
         "Column": "Name",
@@ -6789,7 +7032,7 @@
         "AppNamePlural": "Names"
       },
       {
-        "$id": "359",
+        "$id": "368",
         "Table": "TimestampCheck",
         "Schema": "dbo",
         "Column": "Timestamp",
@@ -6809,7 +7052,7 @@
         "AppNamePlural": "Timestamps"
       },
       {
-        "$id": "360",
+        "$id": "369",
         "Table": "VPerson",
         "Schema": "dbo",
         "Column": "PersonId",
@@ -6829,7 +7072,7 @@
         "AppNamePlural": "PersonIds"
       },
       {
-        "$id": "361",
+        "$id": "370",
         "Table": "VPerson",
         "Schema": "dbo",
         "Column": "PersonName",
@@ -6849,7 +7092,7 @@
         "AppNamePlural": "PersonNames"
       },
       {
-        "$id": "362",
+        "$id": "371",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldHierarchyId",
@@ -6869,7 +7112,7 @@
         "AppNamePlural": "FieldHierarchyIds"
       },
       {
-        "$id": "363",
+        "$id": "372",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldGeography",
@@ -6889,7 +7132,7 @@
         "AppNamePlural": "FieldGeographies"
       },
       {
-        "$id": "364",
+        "$id": "373",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldGeometry",
@@ -6909,7 +7152,7 @@
         "AppNamePlural": "FieldGeometries"
       },
       {
-        "$id": "365",
+        "$id": "374",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldGeography",
@@ -6929,7 +7172,7 @@
         "AppNamePlural": "FieldGeographies"
       },
       {
-        "$id": "366",
+        "$id": "375",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldGeometry",
@@ -6949,7 +7192,7 @@
         "AppNamePlural": "FieldGeometries"
       },
       {
-        "$id": "367",
+        "$id": "376",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldHierarchyId",
@@ -6969,7 +7212,7 @@
         "AppNamePlural": "FieldHierarchyIds"
       },
       {
-        "$id": "368",
+        "$id": "377",
         "Table": "TestAllFieldType",
         "Schema": "dbo",
         "Column": "FieldVariant",
@@ -6989,7 +7232,7 @@
         "AppNamePlural": "FieldVariants"
       },
       {
-        "$id": "369",
+        "$id": "378",
         "Table": "TestAllFieldTypesNullable",
         "Schema": "dbo",
         "Column": "FieldVariant",

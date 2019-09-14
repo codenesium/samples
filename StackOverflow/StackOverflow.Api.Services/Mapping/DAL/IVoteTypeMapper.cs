@@ -7,9 +7,21 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IDALVoteTypeMapper
 	{
+		VoteType MapModelToEntity(
+			int id,
+			ApiVoteTypeServerRequestModel model);
+
+		ApiVoteTypeServerResponseModel MapEntityToModel(
+			VoteType item);
+
+		List<ApiVoteTypeServerResponseModel> MapEntityToModel(
+			List<VoteType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>eecd2f854e5876502188a021f5d29661</Hash>
+    <Hash>3439a0b4b1aa14b85496db01371f6bc3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

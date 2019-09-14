@@ -31,4 +31,7 @@ export default class DestinationMapper {
 
 /*<Codenesium>
     <Hash>c46cecabb3bfea879110f783df3973f3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

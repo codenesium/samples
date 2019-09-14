@@ -262,4 +262,7 @@ export const WrappedProductEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>37e40293587aa7c9711a758c013e0538</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

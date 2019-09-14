@@ -181,4 +181,7 @@ export class LocationTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>c2359f44fb25d73ed2f9d94787708960</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

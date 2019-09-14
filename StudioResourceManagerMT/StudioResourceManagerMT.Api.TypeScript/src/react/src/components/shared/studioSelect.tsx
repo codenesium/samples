@@ -123,4 +123,7 @@ export class StudioSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f229d12f1a26dd64b7a66dd2829be3bd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

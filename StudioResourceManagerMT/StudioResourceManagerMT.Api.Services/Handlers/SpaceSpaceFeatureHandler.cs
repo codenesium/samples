@@ -62,4 +62,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 /*<Codenesium>
     <Hash>a5c7729237f9cd84d2c472b328ef4e52</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

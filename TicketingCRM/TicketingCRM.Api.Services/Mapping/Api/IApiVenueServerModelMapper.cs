@@ -2,14 +2,29 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TicketingCRMNS.Api.Client;
 
 namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IApiVenueServerModelMapper
 	{
+		ApiVenueServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiVenueServerRequestModel request);
+
+		ApiVenueServerRequestModel MapServerResponseToRequest(
+			ApiVenueServerResponseModel response);
+
+		ApiVenueClientRequestModel MapServerResponseToClientRequest(
+			ApiVenueServerResponseModel response);
+
+		JsonPatchDocument<ApiVenueServerRequestModel> CreatePatch(ApiVenueServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c9eab0b0cbbb4413e93fc897c0a6190</Hash>
+    <Hash>ae3a09a902938e60b4cced09176e7ec1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace CADNS.Api.Services
 {
 	public partial interface IDALOffCapabilityMapper
 	{
+		OffCapability MapModelToEntity(
+			int id,
+			ApiOffCapabilityServerRequestModel model);
+
+		ApiOffCapabilityServerResponseModel MapEntityToModel(
+			OffCapability item);
+
+		List<ApiOffCapabilityServerResponseModel> MapEntityToModel(
+			List<OffCapability> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>74f2bf545bdee23b5267bd9dffd0c386</Hash>
+    <Hash>1d7a93f254fcd59bceb08e56ddc840a6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

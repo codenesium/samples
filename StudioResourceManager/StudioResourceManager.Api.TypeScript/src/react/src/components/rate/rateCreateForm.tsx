@@ -192,4 +192,7 @@ export const WrappedRateCreateComponent = Form.create({ name: 'Rate Create' })(
 
 /*<Codenesium>
     <Hash>c39c2dbda220b149447fc3051dca4b31</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -78,4 +78,7 @@ export default class LinkMapper {
 
 /*<Codenesium>
     <Hash>957db97cc901ca1f9a86f0130cf611dd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -168,4 +168,7 @@ export const WrappedProvinceDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>f3c306f7351069abe1c07d2e8b3c30ea</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

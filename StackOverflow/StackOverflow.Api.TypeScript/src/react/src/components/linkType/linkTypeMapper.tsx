@@ -22,4 +22,7 @@ export default class LinkTypeMapper {
 
 /*<Codenesium>
     <Hash>176f25ccf73f3fb79ea4f474849585cb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -152,4 +152,7 @@ export const WrappedTeamDetailComponent = Form.create({ name: 'Team Detail' })(
 
 /*<Codenesium>
     <Hash>b584c14d69f28eb04251f4b8000c1df8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

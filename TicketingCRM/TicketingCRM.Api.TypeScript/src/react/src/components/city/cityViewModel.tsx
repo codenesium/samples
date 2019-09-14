@@ -30,4 +30,7 @@ export default class CityViewModel {
 
 /*<Codenesium>
     <Hash>c7e0719cec49108812d609c108dd3c23</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

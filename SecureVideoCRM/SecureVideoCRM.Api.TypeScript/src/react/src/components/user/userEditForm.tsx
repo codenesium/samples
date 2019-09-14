@@ -261,4 +261,7 @@ export const WrappedUserEditComponent = Form.create({ name: 'User Edit' })(
 
 /*<Codenesium>
     <Hash>d2fb355fba05cc55f0ee7de87d6564ac</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

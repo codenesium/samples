@@ -41,4 +41,7 @@ export default class ProductViewModel {
 
 /*<Codenesium>
     <Hash>d57ef4b4e2d186395f1e828ed16b9f90</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

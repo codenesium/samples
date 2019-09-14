@@ -37,4 +37,7 @@ export default class CustomerViewModel {
 
 /*<Codenesium>
     <Hash>02229d04e28ed4136a5cd112b6060818</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

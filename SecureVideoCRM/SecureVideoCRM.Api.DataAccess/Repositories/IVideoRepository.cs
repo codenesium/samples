@@ -7,9 +7,21 @@ namespace SecureVideoCRMNS.Api.DataAccess
 {
 	public partial interface IVideoRepository
 	{
+		Task<Video> Create(Video item);
+
+		Task Update(Video item);
+
+		Task Delete(int id);
+
+		Task<Video> Get(int id);
+
+		Task<List<Video>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab16612d293ab3ecd6c9d36a3eb304d0</Hash>
+    <Hash>dc4139ee8143a58aaa05a41c7a512808</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

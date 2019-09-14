@@ -88,4 +88,7 @@ namespace StackOverflowNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>187c113cc071d9ede5d645762f2d129e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

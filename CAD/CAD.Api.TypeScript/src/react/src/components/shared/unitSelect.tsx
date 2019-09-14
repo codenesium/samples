@@ -123,4 +123,7 @@ export class UnitSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>d1a0d394940099ca61216f4cc5bb35d5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IDALVPersonMapper
 	{
+		VPerson MapModelToEntity(
+			int personId,
+			ApiVPersonServerRequestModel model);
+
+		ApiVPersonServerResponseModel MapEntityToModel(
+			VPerson item);
+
+		List<ApiVPersonServerResponseModel> MapEntityToModel(
+			List<VPerson> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>126ba8c3ba8a7bbbeff14be8da39b713</Hash>
+    <Hash>397021e264217500b44f37604e9412c8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

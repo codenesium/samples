@@ -7,9 +7,33 @@ namespace NebulaNS.Api.DataAccess
 {
 	public partial interface IChainRepository
 	{
+		Task<Chain> Create(Chain item);
+
+		Task Update(Chain item);
+
+		Task Delete(int id);
+
+		Task<Chain> Get(int id);
+
+		Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<Chain> ByExternalId(Guid externalId);
+
+		Task<List<Clasp>> ClaspsByNextChainId(int nextChainId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Clasp>> ClaspsByPreviousChainId(int previousChainId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Link>> LinksByChainId(int chainId, int limit = int.MaxValue, int offset = 0);
+
+		Task<ChainStatus> ChainStatusByChainStatusId(int chainStatusId);
+
+		Task<Team> TeamByTeamId(int teamId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4262ef30a766a5ffaadb17e1228849b</Hash>
+    <Hash>8dc0c571510d0e2b5748b83a4c5e7eb1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

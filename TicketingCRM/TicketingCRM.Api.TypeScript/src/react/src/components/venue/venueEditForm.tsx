@@ -311,4 +311,7 @@ export const WrappedVenueEditComponent = Form.create({ name: 'Venue Edit' })(
 
 /*<Codenesium>
     <Hash>7d19a3f1326407a75ae330b0f4aac46e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

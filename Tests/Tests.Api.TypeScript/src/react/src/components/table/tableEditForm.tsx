@@ -227,4 +227,7 @@ export const WrappedTableEditComponent = Form.create({ name: 'Table Edit' })(
 
 /*<Codenesium>
     <Hash>4f29fc9460d6310cb82a1045c8b88900</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

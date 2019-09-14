@@ -167,4 +167,7 @@ export class OffCapabilityTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>76bd6a127f8427aa690ccfd03a761c7b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

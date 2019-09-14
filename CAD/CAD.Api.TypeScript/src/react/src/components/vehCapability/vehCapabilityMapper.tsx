@@ -22,4 +22,7 @@ export default class VehCapabilityMapper {
 
 /*<Codenesium>
     <Hash>7c64d767a7646a171cbaa76c37a2b387</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

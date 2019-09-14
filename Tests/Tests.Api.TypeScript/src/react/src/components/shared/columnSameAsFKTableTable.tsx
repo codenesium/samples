@@ -211,4 +211,7 @@ export class ColumnSameAsFKTableTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>eacfdde90cceb8e8a3cb2db7e78d3acd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

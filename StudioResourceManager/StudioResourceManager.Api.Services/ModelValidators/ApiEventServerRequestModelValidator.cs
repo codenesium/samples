@@ -1,16 +1,29 @@
+using Codenesium.DataConversionExtensions;
+using FluentValidation;
 using FluentValidation.Results;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
-	public class ApiEventServerRequestModelValidator : AbstractApiEventServerRequestModelValidator, IApiEventServerRequestModelValidator
+	public class ApiEventServerRequestModelValidator : AbstractValidator<ApiEventServerRequestModel>, IApiEventServerRequestModelValidator
 	{
+		private int existingRecordId;
+
+		protected IEventRepository EventRepository { get; private set; }
+
 		public ApiEventServerRequestModelValidator(IEventRepository eventRepository)
-			: base(eventRepository)
 		{
+			this.EventRepository = eventRepository;
+		}
+
+		public async Task<ValidationResult> ValidateAsync(ApiEventServerRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiEventServerRequestModel model)
@@ -43,9 +56,54 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			return await Task.FromResult<ValidationResult>(new ValidationResult());
 		}
+
+		public virtual void ActualEndDateRules()
+		{
+		}
+
+		public virtual void ActualStartDateRules()
+		{
+		}
+
+		public virtual void BillAmountRules()
+		{
+		}
+
+		public virtual void EventStatusIdRules()
+		{
+			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatusByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		public virtual void ScheduledEndDateRules()
+		{
+		}
+
+		public virtual void ScheduledStartDateRules()
+		{
+		}
+
+		public virtual void StudentNotesRules()
+		{
+			this.RuleFor(x => x.StudentNotes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		public virtual void TeacherNotesRules()
+		{
+			this.RuleFor(x => x.TeacherNotes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		protected async Task<bool> BeValidEventStatusByEventStatusId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.EventRepository.EventStatusByEventStatusId(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>24b256f592594df7ff10a1c29d5e9c91</Hash>
+    <Hash>1b569a1251da4747ab1a1a7a9bb283ef</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

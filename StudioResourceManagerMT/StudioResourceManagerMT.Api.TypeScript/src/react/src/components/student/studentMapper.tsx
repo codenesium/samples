@@ -68,4 +68,7 @@ export default class StudentMapper {
 
 /*<Codenesium>
     <Hash>e752fcfe7d02a5666b9bc54a0904c989</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

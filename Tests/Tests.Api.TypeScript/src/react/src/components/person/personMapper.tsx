@@ -22,4 +22,7 @@ export default class PersonMapper {
 
 /*<Codenesium>
     <Hash>e7173a9c25828b512f2175f8fb223f18</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -123,4 +123,7 @@ export class VenueSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>4dc77df3f2db23e0fd251a4dbdc85fe5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -1,14 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace CADNS.Api.Client
 {
-	public partial class ApiCallStatusModelMapper : AbstractApiCallStatusModelMapper, IApiCallStatusModelMapper
+	public class ApiCallStatusModelMapper : IApiCallStatusModelMapper
 	{
-		public ApiCallStatusModelMapper()
-			: base()
+		public virtual ApiCallStatusClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiCallStatusClientRequestModel request)
 		{
+			var response = new ApiCallStatusClientResponseModel();
+			response.SetProperties(id,
+			                       request.Name);
+			return response;
+		}
+
+		public virtual ApiCallStatusClientRequestModel MapClientResponseToRequest(
+			ApiCallStatusClientResponseModel response)
+		{
+			var request = new ApiCallStatusClientRequestModel();
+			request.SetProperties(
+				response.Name);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9b7995be3f60e8d0d6e059fe606e1f6</Hash>
+    <Hash>67cc141516df95aae9f583c3f1433a6d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

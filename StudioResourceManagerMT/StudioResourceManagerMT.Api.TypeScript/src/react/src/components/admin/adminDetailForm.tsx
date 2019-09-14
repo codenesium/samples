@@ -152,4 +152,7 @@ export const WrappedAdminDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>0bb3d9050cf679e572986b9cf0b8fcec</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -238,4 +238,7 @@ export const WrappedSpaceEditComponent = Form.create({ name: 'Space Edit' })(
 
 /*<Codenesium>
     <Hash>1dbd1f9b28e31f2ff7101380edc78137</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

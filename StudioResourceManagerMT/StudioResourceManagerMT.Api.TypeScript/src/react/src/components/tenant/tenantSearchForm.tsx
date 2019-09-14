@@ -275,4 +275,7 @@ export const WrappedTenantSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>df080eb9b7d29705defb4f560d62dab8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

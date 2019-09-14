@@ -35,4 +35,7 @@ export default class VehicleOfficerViewModel {
 
 /*<Codenesium>
     <Hash>ddf42858d9c612f632e20df812fc4ed2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

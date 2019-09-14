@@ -37,4 +37,7 @@ export default class DeviceViewModel {
 
 /*<Codenesium>
     <Hash>18e6bc7543fd9787f7ce397bbe620a57</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

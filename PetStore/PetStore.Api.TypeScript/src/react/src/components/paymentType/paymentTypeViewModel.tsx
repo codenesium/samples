@@ -22,4 +22,7 @@ export default class PaymentTypeViewModel {
 
 /*<Codenesium>
     <Hash>b76ef22c704648201efd32d69e951de6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -25,4 +25,7 @@ export default class SubscriptionViewModel {
 
 /*<Codenesium>
     <Hash>439db26c8a98161de8f4c13fdd8b14df</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

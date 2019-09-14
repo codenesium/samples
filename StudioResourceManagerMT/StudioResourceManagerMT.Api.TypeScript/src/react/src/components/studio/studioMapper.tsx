@@ -40,4 +40,7 @@ export default class StudioMapper {
 
 /*<Codenesium>
     <Hash>ffa6a14c98c093cdf515cb95401d300c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

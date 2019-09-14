@@ -22,4 +22,7 @@ export default class VoteTypeViewModel {
 
 /*<Codenesium>
     <Hash>b18945341a738a17c26eaeac76b0e8d1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

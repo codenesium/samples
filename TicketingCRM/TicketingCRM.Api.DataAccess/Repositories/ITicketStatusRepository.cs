@@ -7,9 +7,23 @@ namespace TicketingCRMNS.Api.DataAccess
 {
 	public partial interface ITicketStatusRepository
 	{
+		Task<TicketStatus> Create(TicketStatus item);
+
+		Task Update(TicketStatus item);
+
+		Task Delete(int id);
+
+		Task<TicketStatus> Get(int id);
+
+		Task<List<TicketStatus>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Ticket>> TicketsByTicketStatusId(int ticketStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>17b6812c5fb2ed95277d7dff48ac6e3a</Hash>
+    <Hash>0fd74e1511e36fb761c2934690ef2411</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -1,14 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace CADNS.Api.Client
 {
-	public partial class ApiVehicleCapabilitiesModelMapper : AbstractApiVehicleCapabilitiesModelMapper, IApiVehicleCapabilitiesModelMapper
+	public class ApiVehicleCapabilitiesModelMapper : IApiVehicleCapabilitiesModelMapper
 	{
-		public ApiVehicleCapabilitiesModelMapper()
-			: base()
+		public virtual ApiVehicleCapabilitiesClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiVehicleCapabilitiesClientRequestModel request)
 		{
+			var response = new ApiVehicleCapabilitiesClientResponseModel();
+			response.SetProperties(id,
+			                       request.VehicleCapabilityId,
+			                       request.VehicleId);
+			return response;
+		}
+
+		public virtual ApiVehicleCapabilitiesClientRequestModel MapClientResponseToRequest(
+			ApiVehicleCapabilitiesClientResponseModel response)
+		{
+			var request = new ApiVehicleCapabilitiesClientRequestModel();
+			request.SetProperties(
+				response.VehicleCapabilityId,
+				response.VehicleId);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3dd2a73f107d5a36aa61e3cc63c3bcf0</Hash>
+    <Hash>4651c2d31bce89cbf10296176e537460</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

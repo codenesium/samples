@@ -141,4 +141,7 @@ export const WrappedClaspDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>156b12be1c92c2cd8f124d07c02ed4dd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

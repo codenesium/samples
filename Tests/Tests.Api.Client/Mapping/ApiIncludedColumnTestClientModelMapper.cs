@@ -1,14 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace TestsNS.Api.Client
 {
-	public partial class ApiIncludedColumnTestModelMapper : AbstractApiIncludedColumnTestModelMapper, IApiIncludedColumnTestModelMapper
+	public class ApiIncludedColumnTestModelMapper : IApiIncludedColumnTestModelMapper
 	{
-		public ApiIncludedColumnTestModelMapper()
-			: base()
+		public virtual ApiIncludedColumnTestClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiIncludedColumnTestClientRequestModel request)
 		{
+			var response = new ApiIncludedColumnTestClientResponseModel();
+			response.SetProperties(id,
+			                       request.Name,
+			                       request.Name2);
+			return response;
+		}
+
+		public virtual ApiIncludedColumnTestClientRequestModel MapClientResponseToRequest(
+			ApiIncludedColumnTestClientResponseModel response)
+		{
+			var request = new ApiIncludedColumnTestClientRequestModel();
+			request.SetProperties(
+				response.Name,
+				response.Name2);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f57595df7d58fa2dede855a93393aab1</Hash>
+    <Hash>fb6bf9d7490391ae6bf6ac742a77d591</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

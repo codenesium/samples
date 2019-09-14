@@ -1,14 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Client
 {
 	public partial interface IApiPersonModelMapper
 	{
+		ApiPersonClientResponseModel MapClientRequestToResponse(
+			int personId,
+			ApiPersonClientRequestModel request);
+
+		ApiPersonClientRequestModel MapClientResponseToRequest(
+			ApiPersonClientResponseModel response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5df5a961f2d1e0a5d530f51a7c68d7c2</Hash>
+    <Hash>86a9e74e641a46218e7e73da1a91bcc2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

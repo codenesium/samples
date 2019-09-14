@@ -7,9 +7,21 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IDALStudioMapper
 	{
+		Studio MapModelToEntity(
+			int id,
+			ApiStudioServerRequestModel model);
+
+		ApiStudioServerResponseModel MapEntityToModel(
+			Studio item);
+
+		List<ApiStudioServerResponseModel> MapEntityToModel(
+			List<Studio> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f16e957e8d87c1eb9d6d414fb038dab8</Hash>
+    <Hash>d0b000552003d6879652e66fef371977</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -22,4 +22,7 @@ export default class LinkStatusMapper {
 
 /*<Codenesium>
     <Hash>dc091b5826fe7ab9250ac96515d53edd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

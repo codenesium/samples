@@ -25,4 +25,7 @@ export default class FollowingViewModel {
 
 /*<Codenesium>
     <Hash>d24b7eb342d3b74fd0fbf6561b8fc250</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

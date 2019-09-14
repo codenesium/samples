@@ -47,4 +47,7 @@ export default class CallAssignmentMapper {
 
 /*<Codenesium>
     <Hash>086fa84f477561fa29baf9d9f17d8343</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

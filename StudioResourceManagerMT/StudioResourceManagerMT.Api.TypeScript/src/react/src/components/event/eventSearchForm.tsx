@@ -342,4 +342,7 @@ export const WrappedEventSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>baa7f4ecef767335518971d45894b709</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

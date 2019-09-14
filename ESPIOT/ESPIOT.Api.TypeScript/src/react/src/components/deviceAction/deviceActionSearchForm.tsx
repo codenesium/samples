@@ -299,4 +299,7 @@ export const WrappedDeviceActionSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>a871f97f0ebc80ef8c012ef3c1f78cfa</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

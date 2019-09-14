@@ -36,4 +36,7 @@ export default class AddressMapper {
 
 /*<Codenesium>
     <Hash>5d0b531748d9c40c2c15e0ccc6495836</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

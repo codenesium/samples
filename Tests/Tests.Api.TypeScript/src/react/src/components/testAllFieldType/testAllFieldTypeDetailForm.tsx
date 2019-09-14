@@ -235,4 +235,7 @@ export const WrappedTestAllFieldTypeDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>dcd5e2e06be5376316ed72feb4644098</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

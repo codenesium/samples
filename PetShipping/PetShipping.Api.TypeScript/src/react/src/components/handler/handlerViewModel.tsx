@@ -41,4 +41,7 @@ export default class HandlerViewModel {
 
 /*<Codenesium>
     <Hash>9c1f018280c704b4b5175e7da002799e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -167,4 +167,7 @@ export class VPersonTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>56e25f8ff224e9288b26eef251ae5cf7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

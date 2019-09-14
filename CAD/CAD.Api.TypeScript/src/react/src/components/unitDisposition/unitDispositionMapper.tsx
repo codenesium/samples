@@ -22,4 +22,7 @@ export default class UnitDispositionMapper {
 
 /*<Codenesium>
     <Hash>485dd48ae763a8212c09bc500e1a264a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

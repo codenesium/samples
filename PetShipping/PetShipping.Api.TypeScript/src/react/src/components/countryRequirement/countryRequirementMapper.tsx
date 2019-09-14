@@ -31,4 +31,7 @@ export default class CountryRequirementMapper {
 
 /*<Codenesium>
     <Hash>f6ffc8eac744d4f95356084937cc178e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

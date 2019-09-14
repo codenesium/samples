@@ -20,7 +20,7 @@
     "react-scripts": "next",
     "react-table": "latest",
     "typescript": "latest",
-    "babel-loader": "^8.0.5"
+    "babel-loader": "8.0.5"
   },
   "homepage": "http://localhost",
   "scripts": {

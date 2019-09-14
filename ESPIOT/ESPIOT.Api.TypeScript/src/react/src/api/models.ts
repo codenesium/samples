@@ -120,4 +120,7 @@ export class DeviceActionClientResponseModel {
 
 /*<Codenesium>
     <Hash>54f92f98355b863248807b0a6041d247</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

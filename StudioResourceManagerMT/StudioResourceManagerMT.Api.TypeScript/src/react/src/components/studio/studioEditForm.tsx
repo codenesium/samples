@@ -290,4 +290,7 @@ export const WrappedStudioEditComponent = Form.create({ name: 'Studio Edit' })(
 
 /*<Codenesium>
     <Hash>666b2928681d2fdfd4b7591cfb11ba80</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,25 @@ namespace StudioResourceManagerNS.Api.DataAccess
 {
 	public partial interface ITeacherSkillRepository
 	{
+		Task<TeacherSkill> Create(TeacherSkill item);
+
+		Task Update(TeacherSkill item);
+
+		Task Delete(int id);
+
+		Task<TeacherSkill> Get(int id);
+
+		Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Rate>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<TeacherTeacherSkill>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5405f7db4589ea6fbe820a181a98061b</Hash>
+    <Hash>c75f79faa30996d31a522c3135321f6c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

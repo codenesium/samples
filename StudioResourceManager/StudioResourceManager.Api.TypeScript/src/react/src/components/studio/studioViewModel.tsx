@@ -49,4 +49,7 @@ export default class StudioViewModel {
 
 /*<Codenesium>
     <Hash>c1ebf44334f454ce07717c8825a212c1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -50,4 +50,7 @@ export default class AirTransportViewModel {
 
 /*<Codenesium>
     <Hash>ac8048bdc85b217653c1d9e28dca061f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

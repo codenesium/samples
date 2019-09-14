@@ -1,8 +1,10 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -18,8 +20,18 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 
-	public class TestAllFieldTypesNullableController : AbstractTestAllFieldTypesNullableController
+	public class TestAllFieldTypesNullableController : AbstractApiController
 	{
+		protected ITestAllFieldTypesNullableService TestAllFieldTypesNullableService { get; private set; }
+
+		protected IApiTestAllFieldTypesNullableServerModelMapper TestAllFieldTypesNullableModelMapper { get; private set; }
+
+		protected int BulkInsertLimit { get; set; }
+
+		protected int MaxLimit { get; set; }
+
+		protected int DefaultLimit { get; set; }
+
 		public TestAllFieldTypesNullableController(
 			ApiSettings settings,
 			ILogger<TestAllFieldTypesNullableController> logger,
@@ -27,19 +39,211 @@ namespace TestsNS.Api.Web
 			ITestAllFieldTypesNullableService testAllFieldTypesNullableService,
 			IApiTestAllFieldTypesNullableServerModelMapper testAllFieldTypesNullableModelMapper
 			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       testAllFieldTypesNullableService,
-			       testAllFieldTypesNullableModelMapper)
+			: base(settings, logger, transactionCoordinator)
 		{
+			this.TestAllFieldTypesNullableService = testAllFieldTypesNullableService;
+			this.TestAllFieldTypesNullableModelMapper = testAllFieldTypesNullableModelMapper;
 			this.BulkInsertLimit = 250;
 			this.MaxLimit = 1000;
 			this.DefaultLimit = 250;
+		}
+
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableServerResponseModel>), 200)]
+
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
+		{
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
+			}
+
+			List<ApiTestAllFieldTypesNullableServerResponseModel> response = await this.TestAllFieldTypesNullableService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiTestAllFieldTypesNullableServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiTestAllFieldTypesNullableServerResponseModel response = await this.TestAllFieldTypesNullableService.Get(id);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTestAllFieldTypesNullableServerResponseModel>>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTestAllFieldTypesNullableServerRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
+
+			List<ApiTestAllFieldTypesNullableServerResponseModel> records = new List<ApiTestAllFieldTypesNullableServerResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
+
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+
+			var response = new CreateResponse<List<ApiTestAllFieldTypesNullableServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
+		}
+
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTestAllFieldTypesNullableServerRequestModel model)
+		{
+			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
+
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/TestAllFieldTypesNullables/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTestAllFieldTypesNullableServerRequestModel> patch)
+		{
+			ApiTestAllFieldTypesNullableServerResponseModel record = await this.TestAllFieldTypesNullableService.Get(id);
+
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiTestAllFieldTypesNullableServerRequestModel model = await this.PatchModel(id, patch) as ApiTestAllFieldTypesNullableServerRequestModel;
+
+				UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, model);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTestAllFieldTypesNullableServerRequestModel model)
+		{
+			ApiTestAllFieldTypesNullableServerRequestModel request = await this.PatchModel(id, this.TestAllFieldTypesNullableModelMapper.CreatePatch(model)) as ApiTestAllFieldTypesNullableServerRequestModel;
+
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, request);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.TestAllFieldTypesNullableService.Delete(id);
+
+			if (result.Success)
+			{
+				return this.StatusCode(StatusCodes.Status200OK, result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
+		private async Task<ApiTestAllFieldTypesNullableServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTestAllFieldTypesNullableServerRequestModel> patch)
+		{
+			var record = await this.TestAllFieldTypesNullableService.Get(id);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiTestAllFieldTypesNullableServerRequestModel request = this.TestAllFieldTypesNullableModelMapper.MapServerResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ba3a662d634c80db2a83ce8e31d167a</Hash>
+    <Hash>d07161795af993e18994c9d784921d56</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -143,4 +143,7 @@ export const WrappedTransactionStatusDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>22a0a70b8b493a88bdc108b8bd404977</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

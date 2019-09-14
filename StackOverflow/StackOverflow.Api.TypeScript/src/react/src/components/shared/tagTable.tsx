@@ -222,4 +222,7 @@ export class TagTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f805b7fe50754b605ba2fa26937a65bd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

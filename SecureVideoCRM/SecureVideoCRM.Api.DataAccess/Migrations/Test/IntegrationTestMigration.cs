@@ -23,4 +23,7 @@ namespace SecureVideoCRMNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>d2eda869442c4dbdd666ff2b01e59e63</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

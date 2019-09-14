@@ -2,14 +2,29 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TestsNS.Api.Client;
 
 namespace TestsNS.Api.Services
 {
 	public partial interface IApiRowVersionCheckServerModelMapper
 	{
+		ApiRowVersionCheckServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiRowVersionCheckServerRequestModel request);
+
+		ApiRowVersionCheckServerRequestModel MapServerResponseToRequest(
+			ApiRowVersionCheckServerResponseModel response);
+
+		ApiRowVersionCheckClientRequestModel MapServerResponseToClientRequest(
+			ApiRowVersionCheckServerResponseModel response);
+
+		JsonPatchDocument<ApiRowVersionCheckServerRequestModel> CreatePatch(ApiRowVersionCheckServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>93760a74f9ad22315e6ab0f35ae4eabc</Hash>
+    <Hash>ea7740292f21ea91ad057b1de73c4065</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

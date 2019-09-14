@@ -197,4 +197,7 @@ export class FileTypeClientResponseModel {
 
 /*<Codenesium>
     <Hash>ade7887d6c1fb7447552c08e74efe908</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

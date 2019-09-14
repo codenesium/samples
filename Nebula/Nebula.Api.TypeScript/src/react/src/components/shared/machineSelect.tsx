@@ -123,4 +123,7 @@ export class MachineSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>bb9acdff765c12acf500a431eaf74165</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

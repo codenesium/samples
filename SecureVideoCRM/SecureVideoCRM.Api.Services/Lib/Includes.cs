@@ -550,4 +550,7 @@ namespace SecureVideoCRMNS.Api.Services
 
 /*<Codenesium>
     <Hash>67d1eabb887a4d15d0a9f51422f4db1d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

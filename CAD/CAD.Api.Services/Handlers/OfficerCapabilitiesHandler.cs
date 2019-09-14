@@ -62,4 +62,7 @@ namespace CADNS.Api.Services
 
 /*<Codenesium>
     <Hash>affd30e35553b7a28a84569eb3b0c3a2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

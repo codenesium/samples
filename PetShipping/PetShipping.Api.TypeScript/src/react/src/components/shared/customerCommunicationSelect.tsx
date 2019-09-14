@@ -129,4 +129,7 @@ export class CustomerCommunicationSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>8e242aa9e09223639cc50450de8f2ddb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

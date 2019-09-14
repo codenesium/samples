@@ -7,9 +7,17 @@ namespace CADNS.Api.Services
 {
 	public partial interface IApiCallAssignmentServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiCallAssignmentServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiCallAssignmentServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a6aa8e201870b23bc99a90f939171a3</Hash>
+    <Hash>9385b4d64d51eea567af2bb5eeaa1308</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

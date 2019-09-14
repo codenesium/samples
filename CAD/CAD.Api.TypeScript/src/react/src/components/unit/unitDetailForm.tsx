@@ -159,4 +159,7 @@ export const WrappedUnitDetailComponent = Form.create({ name: 'Unit Detail' })(
 
 /*<Codenesium>
     <Hash>a7a9745cab443044575edf5ff72ef619</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

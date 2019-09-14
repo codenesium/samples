@@ -22,4 +22,7 @@ export default class TenantMapper {
 
 /*<Codenesium>
     <Hash>cbbfee84737c32e88674466562a19bc0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -43,4 +43,7 @@ export default class OfficerCapabilitiesMapper {
 
 /*<Codenesium>
     <Hash>41b1adf9f6cee42c21b09f4022d6ad74</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -30,4 +30,7 @@ export default class CountryRequirementViewModel {
 
 /*<Codenesium>
     <Hash>3a557b1f48bb6a59d4a65f2351dfc162</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

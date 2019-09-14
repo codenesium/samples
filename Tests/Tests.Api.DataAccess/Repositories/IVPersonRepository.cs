@@ -7,9 +7,21 @@ namespace TestsNS.Api.DataAccess
 {
 	public partial interface IVPersonRepository
 	{
+		Task<VPerson> Create(VPerson item);
+
+		Task Update(VPerson item);
+
+		Task Delete(int personId);
+
+		Task<VPerson> Get(int personId);
+
+		Task<List<VPerson>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3e04f2e35c6bf393b97306d42cbc5cd1</Hash>
+    <Hash>99ebeb40400562340c44d43bc337774b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

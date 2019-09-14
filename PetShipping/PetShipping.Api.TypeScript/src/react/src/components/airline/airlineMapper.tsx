@@ -22,4 +22,7 @@ export default class AirlineMapper {
 
 /*<Codenesium>
     <Hash>db8a229c1cf8d514c63639b379ae43e1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -257,4 +257,7 @@ export const WrappedDeviceEditComponent = Form.create({ name: 'Device Edit' })(
 
 /*<Codenesium>
     <Hash>9b274c6860048a2fcca9743cf3e0888a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -66,4 +66,7 @@ export default class EventViewModel {
 
 /*<Codenesium>
     <Hash>459fbcdc5a2b23606d320d263d718b6d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

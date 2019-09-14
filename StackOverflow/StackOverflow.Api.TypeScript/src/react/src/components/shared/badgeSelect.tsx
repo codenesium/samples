@@ -123,4 +123,7 @@ export class BadgeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>af634692c04a38bee73d52700885df34</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

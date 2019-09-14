@@ -30,4 +30,7 @@ export default class MessageViewModel {
 
 /*<Codenesium>
     <Hash>6f3c04e96032683b408e65d58f17a6d9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

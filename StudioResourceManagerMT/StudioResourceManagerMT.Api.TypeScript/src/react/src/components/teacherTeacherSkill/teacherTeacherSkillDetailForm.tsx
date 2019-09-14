@@ -141,4 +141,7 @@ export const WrappedTeacherTeacherSkillDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>b48381a629d1357a42f3ef390a6cb828</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

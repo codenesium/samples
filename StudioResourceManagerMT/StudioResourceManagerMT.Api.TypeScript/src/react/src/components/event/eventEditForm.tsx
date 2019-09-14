@@ -307,4 +307,7 @@ export const WrappedEventEditComponent = Form.create({ name: 'Event Edit' })(
 
 /*<Codenesium>
     <Hash>b4559b864bfed96f4fe2fc9287e5bc5c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

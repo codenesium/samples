@@ -32,4 +32,7 @@ export default class LocationMapper {
 
 /*<Codenesium>
     <Hash>21cc77e29ac2e7605a4b76e4326a43c2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

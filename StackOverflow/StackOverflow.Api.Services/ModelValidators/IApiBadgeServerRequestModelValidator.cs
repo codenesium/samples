@@ -7,9 +7,17 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IApiBadgeServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiBadgeServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiBadgeServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2c3f5ec01697b70e1e44a495aa24fd98</Hash>
+    <Hash>d701dc0b120b7c62adc8be96b489b7af</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

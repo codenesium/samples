@@ -27,4 +27,7 @@ export default class BreedMapper {
 
 /*<Codenesium>
     <Hash>0e6e08a7b4e4f74c8868d8560b93d83e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

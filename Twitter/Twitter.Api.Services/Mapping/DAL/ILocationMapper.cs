@@ -7,9 +7,21 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IDALLocationMapper
 	{
+		Location MapModelToEntity(
+			int locationId,
+			ApiLocationServerRequestModel model);
+
+		ApiLocationServerResponseModel MapEntityToModel(
+			Location item);
+
+		List<ApiLocationServerResponseModel> MapEntityToModel(
+			List<Location> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6fd7170e060c8f2b06f9c6f5da1a1b81</Hash>
+    <Hash>7ed723c053758f9af853edc5fbff41eb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

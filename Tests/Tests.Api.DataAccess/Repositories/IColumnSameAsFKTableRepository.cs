@@ -7,9 +7,25 @@ namespace TestsNS.Api.DataAccess
 {
 	public partial interface IColumnSameAsFKTableRepository
 	{
+		Task<ColumnSameAsFKTable> Create(ColumnSameAsFKTable item);
+
+		Task Update(ColumnSameAsFKTable item);
+
+		Task Delete(int id);
+
+		Task<ColumnSameAsFKTable> Get(int id);
+
+		Task<List<ColumnSameAsFKTable>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<Person> PersonByPerson(int person);
+
+		Task<Person> PersonByPersonId(int personId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>13ef9525999e90c18ffad268d9d57c3f</Hash>
+    <Hash>c85d2bdd472e269c93445ea6ca2ee438</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

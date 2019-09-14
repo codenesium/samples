@@ -237,4 +237,7 @@ export const WrappedCallAssignmentEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>b19a6b69b484eb2ef36eb12fbdadf9d5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -22,4 +22,7 @@ export default class VehicleViewModel {
 
 /*<Codenesium>
     <Hash>f73c984fb364954768f1f6f7d8f06e98</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

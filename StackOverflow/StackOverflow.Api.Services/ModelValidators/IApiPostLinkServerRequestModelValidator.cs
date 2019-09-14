@@ -7,9 +7,17 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IApiPostLinkServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiPostLinkServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPostLinkServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b8190ba5e091b47c019b88570f8ccc6b</Hash>
+    <Hash>a21fc47881cffc9701ee54e255f59a6c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

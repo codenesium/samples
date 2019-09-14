@@ -1,3 +1,4 @@
+using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,9 +7,18 @@ namespace StackOverflowNS.Api.Client
 {
 	public partial interface IApiLinkTypeModelMapper
 	{
+		ApiLinkTypeClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiLinkTypeClientRequestModel request);
+
+		ApiLinkTypeClientRequestModel MapClientResponseToRequest(
+			ApiLinkTypeClientResponseModel response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd2e9023417f9a189d4517cc32129215</Hash>
+    <Hash>11919534e261174e13411f6564b7b246</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

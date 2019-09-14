@@ -198,4 +198,7 @@ export class DeviceActionTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>91c21f7e2c3e722c402e4e674edc6629</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

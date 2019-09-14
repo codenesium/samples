@@ -47,4 +47,7 @@ export default class CallPersonMapper {
 
 /*<Codenesium>
     <Hash>bdb8aaba9ed4e1e190e6d93bc8651d6c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IDALBreedMapper
 	{
+		Breed MapModelToEntity(
+			int id,
+			ApiBreedServerRequestModel model);
+
+		ApiBreedServerResponseModel MapEntityToModel(
+			Breed item);
+
+		List<ApiBreedServerResponseModel> MapEntityToModel(
+			List<Breed> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>868f95ce36cc51f9983d854b85bbd816</Hash>
+    <Hash>a0e2383defbc0f81dfb857f54c353af0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

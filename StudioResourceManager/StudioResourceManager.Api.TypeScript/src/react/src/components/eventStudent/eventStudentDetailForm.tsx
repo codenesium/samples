@@ -141,4 +141,7 @@ export const WrappedEventStudentDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>9972323e7cce082de57e65c7a764e758</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

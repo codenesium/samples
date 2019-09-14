@@ -123,4 +123,7 @@ export class SelfReferenceSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f577438c2a2f6ece5dc366095e086511</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

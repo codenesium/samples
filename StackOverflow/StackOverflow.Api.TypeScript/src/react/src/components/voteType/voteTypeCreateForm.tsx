@@ -175,4 +175,7 @@ export const WrappedVoteTypeCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>cf0ffc68c4074452c1e4ba33f6016ccb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

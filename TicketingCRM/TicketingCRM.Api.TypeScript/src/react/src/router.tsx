@@ -442,4 +442,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 /*<Codenesium>
     <Hash>294e566b35161b74e6cb9ada0ac5f936</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

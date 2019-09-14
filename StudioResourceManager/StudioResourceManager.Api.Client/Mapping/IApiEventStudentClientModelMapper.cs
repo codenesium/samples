@@ -1,3 +1,4 @@
+using StudioResourceManagerNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,9 +7,18 @@ namespace StudioResourceManagerNS.Api.Client
 {
 	public partial interface IApiEventStudentModelMapper
 	{
+		ApiEventStudentClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiEventStudentClientRequestModel request);
+
+		ApiEventStudentClientRequestModel MapClientResponseToRequest(
+			ApiEventStudentClientResponseModel response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d8ab7d7b63b580437df65a8507f7b234</Hash>
+    <Hash>dbbb118f87372ea82e6c880ab2a501d6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

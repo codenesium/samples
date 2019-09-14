@@ -7,9 +7,17 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IApiFamilyServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiFamilyServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiFamilyServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4550ca9d9e43a7c3b8e9508c334f3166</Hash>
+    <Hash>557490fa455c885c1811d6460ea5ee3d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

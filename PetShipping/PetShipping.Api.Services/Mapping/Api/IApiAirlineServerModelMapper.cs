@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using PetShippingNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IApiAirlineServerModelMapper
 	{
+		ApiAirlineServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiAirlineServerRequestModel request);
+
+		ApiAirlineServerRequestModel MapServerResponseToRequest(
+			ApiAirlineServerResponseModel response);
+
+		ApiAirlineClientRequestModel MapServerResponseToClientRequest(
+			ApiAirlineServerResponseModel response);
+
+		JsonPatchDocument<ApiAirlineServerRequestModel> CreatePatch(ApiAirlineServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>74e04aeaa66a29d6e0087d65196ea829</Hash>
+    <Hash>b99dd9db313238bc54d5e3d16e058e0b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -318,4 +318,7 @@ export const WrappedAdminSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>585c6bdb5418dd126f4813c1ff0c4640</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

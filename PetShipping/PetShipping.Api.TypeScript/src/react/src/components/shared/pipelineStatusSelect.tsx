@@ -124,4 +124,7 @@ export class PipelineStatusSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>3862f57c792f71a72c9dfd318d2ebe60</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

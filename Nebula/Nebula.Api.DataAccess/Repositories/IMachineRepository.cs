@@ -7,9 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public partial interface IMachineRepository
 	{
+		Task<Machine> Create(Machine item);
+
+		Task Update(Machine item);
+
+		Task Delete(int id);
+
+		Task<Machine> Get(int id);
+
+		Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<Machine> ByMachineGuid(Guid machineGuid);
+
+		Task<List<Link>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e16c9395e3c6f9df7e678ed3fa43ec13</Hash>
+    <Hash>75bc4d75d49b03f2c030dd7a4b0d11da</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

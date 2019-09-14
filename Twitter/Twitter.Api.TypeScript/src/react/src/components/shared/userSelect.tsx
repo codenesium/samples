@@ -124,4 +124,7 @@ export class UserSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>a102691c18833c3e3a6d20c9499a4767</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

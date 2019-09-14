@@ -188,4 +188,7 @@ export class CustomerTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>0ccab078c01fe4b1f88d1770896abfbf</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

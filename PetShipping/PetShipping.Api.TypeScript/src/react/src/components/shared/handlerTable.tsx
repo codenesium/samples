@@ -195,4 +195,7 @@ export class HandlerTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>425549b8d496f5acb406071c53f6d146</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

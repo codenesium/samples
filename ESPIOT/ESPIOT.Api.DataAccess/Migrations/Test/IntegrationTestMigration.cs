@@ -23,4 +23,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>551aa670bd2e55a076b55c7929c5f122</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

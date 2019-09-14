@@ -1,8 +1,10 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetShippingNS.Api.Contracts;
@@ -18,8 +20,18 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 
-	public class PipelineStepDestinationController : AbstractPipelineStepDestinationController
+	public class PipelineStepDestinationController : AbstractApiController
 	{
+		protected IPipelineStepDestinationService PipelineStepDestinationService { get; private set; }
+
+		protected IApiPipelineStepDestinationServerModelMapper PipelineStepDestinationModelMapper { get; private set; }
+
+		protected int BulkInsertLimit { get; set; }
+
+		protected int MaxLimit { get; set; }
+
+		protected int DefaultLimit { get; set; }
+
 		public PipelineStepDestinationController(
 			ApiSettings settings,
 			ILogger<PipelineStepDestinationController> logger,
@@ -27,19 +39,211 @@ namespace PetShippingNS.Api.Web
 			IPipelineStepDestinationService pipelineStepDestinationService,
 			IApiPipelineStepDestinationServerModelMapper pipelineStepDestinationModelMapper
 			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       pipelineStepDestinationService,
-			       pipelineStepDestinationModelMapper)
+			: base(settings, logger, transactionCoordinator)
 		{
+			this.PipelineStepDestinationService = pipelineStepDestinationService;
+			this.PipelineStepDestinationModelMapper = pipelineStepDestinationModelMapper;
 			this.BulkInsertLimit = 250;
 			this.MaxLimit = 1000;
 			this.DefaultLimit = 250;
+		}
+
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPipelineStepDestinationServerResponseModel>), 200)]
+
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
+		{
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
+			}
+
+			List<ApiPipelineStepDestinationServerResponseModel> response = await this.PipelineStepDestinationService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiPipelineStepDestinationServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiPipelineStepDestinationServerResponseModel response = await this.PipelineStepDestinationService.Get(id);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPipelineStepDestinationServerResponseModel>>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPipelineStepDestinationServerRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
+
+			List<ApiPipelineStepDestinationServerResponseModel> records = new List<ApiPipelineStepDestinationServerResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiPipelineStepDestinationServerResponseModel> result = await this.PipelineStepDestinationService.Create(model);
+
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+
+			var response = new CreateResponse<List<ApiPipelineStepDestinationServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
+		}
+
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiPipelineStepDestinationServerResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepDestinationServerRequestModel model)
+		{
+			CreateResponse<ApiPipelineStepDestinationServerResponseModel> result = await this.PipelineStepDestinationService.Create(model);
+
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/PipelineStepDestinations/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepDestinationServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPipelineStepDestinationServerRequestModel> patch)
+		{
+			ApiPipelineStepDestinationServerResponseModel record = await this.PipelineStepDestinationService.Get(id);
+
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiPipelineStepDestinationServerRequestModel model = await this.PatchModel(id, patch) as ApiPipelineStepDestinationServerRequestModel;
+
+				UpdateResponse<ApiPipelineStepDestinationServerResponseModel> result = await this.PipelineStepDestinationService.Update(id, model);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepDestinationServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepDestinationServerRequestModel model)
+		{
+			ApiPipelineStepDestinationServerRequestModel request = await this.PatchModel(id, this.PipelineStepDestinationModelMapper.CreatePatch(model)) as ApiPipelineStepDestinationServerRequestModel;
+
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiPipelineStepDestinationServerResponseModel> result = await this.PipelineStepDestinationService.Update(id, request);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.PipelineStepDestinationService.Delete(id);
+
+			if (result.Success)
+			{
+				return this.StatusCode(StatusCodes.Status200OK, result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
+		private async Task<ApiPipelineStepDestinationServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPipelineStepDestinationServerRequestModel> patch)
+		{
+			var record = await this.PipelineStepDestinationService.Get(id);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiPipelineStepDestinationServerRequestModel request = this.PipelineStepDestinationModelMapper.MapServerResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97b2614f9386c972836b600d69231937</Hash>
+    <Hash>7483da59a352c615d3663af9b4875a05</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

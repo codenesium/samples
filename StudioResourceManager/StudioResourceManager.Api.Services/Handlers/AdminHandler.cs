@@ -62,4 +62,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 /*<Codenesium>
     <Hash>6b2004adb360c59bd89e67b2d6505c6f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

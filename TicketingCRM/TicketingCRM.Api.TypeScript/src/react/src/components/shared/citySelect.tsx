@@ -123,4 +123,7 @@ export class CitySelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>2ec9a22f111d2ca024a36b1fb65d05bb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

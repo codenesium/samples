@@ -22,4 +22,7 @@ export default class PenViewModel {
 
 /*<Codenesium>
     <Hash>00fbb4650fbfdfae53f510dc92cab850</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

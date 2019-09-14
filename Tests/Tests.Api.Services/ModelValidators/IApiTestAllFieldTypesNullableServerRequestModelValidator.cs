@@ -7,9 +7,17 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IApiTestAllFieldTypesNullableServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiTestAllFieldTypesNullableServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiTestAllFieldTypesNullableServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5cb5467bbebf595fbb4f9194c4d3631a</Hash>
+    <Hash>e8eef36a704f5e914ffcc9f7ec7974bc</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

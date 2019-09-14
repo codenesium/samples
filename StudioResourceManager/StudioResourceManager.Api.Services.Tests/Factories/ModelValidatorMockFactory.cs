@@ -112,4 +112,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>002a15b0a1f1bdbb32f0554cc20cdcba</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

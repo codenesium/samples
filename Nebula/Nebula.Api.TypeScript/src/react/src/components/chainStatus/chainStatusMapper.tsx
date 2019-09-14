@@ -22,4 +22,7 @@ export default class ChainStatusMapper {
 
 /*<Codenesium>
     <Hash>dbde6914a4a581a0f4ba6eae610e55f2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

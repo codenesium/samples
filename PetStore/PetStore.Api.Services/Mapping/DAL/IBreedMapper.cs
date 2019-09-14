@@ -7,9 +7,21 @@ namespace PetStoreNS.Api.Services
 {
 	public partial interface IDALBreedMapper
 	{
+		Breed MapModelToEntity(
+			int id,
+			ApiBreedServerRequestModel model);
+
+		ApiBreedServerResponseModel MapEntityToModel(
+			Breed item);
+
+		List<ApiBreedServerResponseModel> MapEntityToModel(
+			List<Breed> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d9bc257e9b78cbbaf9b0f965661541a</Hash>
+    <Hash>b45216d8014a618c9ad6ebd86b1004a3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -22,4 +22,7 @@ export default class SpeciesMapper {
 
 /*<Codenesium>
     <Hash>c3eadfbe65e07a5a3b70af9eed03110a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

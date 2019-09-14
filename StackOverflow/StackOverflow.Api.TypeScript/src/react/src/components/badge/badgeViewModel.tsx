@@ -33,4 +33,7 @@ export default class BadgeViewModel {
 
 /*<Codenesium>
     <Hash>18f1409ed8143dd8f79511709d7c0898</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

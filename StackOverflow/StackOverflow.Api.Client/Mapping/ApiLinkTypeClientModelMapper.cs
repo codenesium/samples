@@ -1,14 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace StackOverflowNS.Api.Client
 {
-	public partial class ApiLinkTypeModelMapper : AbstractApiLinkTypeModelMapper, IApiLinkTypeModelMapper
+	public class ApiLinkTypeModelMapper : IApiLinkTypeModelMapper
 	{
-		public ApiLinkTypeModelMapper()
-			: base()
+		public virtual ApiLinkTypeClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiLinkTypeClientRequestModel request)
 		{
+			var response = new ApiLinkTypeClientResponseModel();
+			response.SetProperties(id,
+			                       request.RwType);
+			return response;
+		}
+
+		public virtual ApiLinkTypeClientRequestModel MapClientResponseToRequest(
+			ApiLinkTypeClientResponseModel response)
+		{
+			var request = new ApiLinkTypeClientRequestModel();
+			request.SetProperties(
+				response.RwType);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35a4f6125785661da2237340b6674491</Hash>
+    <Hash>740a2cfb1f02f10c1b9beb39b29c6f49</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

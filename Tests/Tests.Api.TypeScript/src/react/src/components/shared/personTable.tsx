@@ -167,4 +167,7 @@ export class PersonTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>ae5bfae479d774f50e2fe198940da5bb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

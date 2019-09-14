@@ -143,4 +143,7 @@ export const WrappedEventStatusDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>e27ea7ec96a427518ff1142b0d46e5a0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

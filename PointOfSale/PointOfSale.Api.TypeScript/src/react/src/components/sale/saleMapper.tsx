@@ -18,4 +18,7 @@ export default class SaleMapper {
 
 /*<Codenesium>
     <Hash>7a82f609d55b8345b1b016c76f592f47</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

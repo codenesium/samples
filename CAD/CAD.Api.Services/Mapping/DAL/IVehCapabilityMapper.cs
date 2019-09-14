@@ -7,9 +7,21 @@ namespace CADNS.Api.Services
 {
 	public partial interface IDALVehCapabilityMapper
 	{
+		VehCapability MapModelToEntity(
+			int id,
+			ApiVehCapabilityServerRequestModel model);
+
+		ApiVehCapabilityServerResponseModel MapEntityToModel(
+			VehCapability item);
+
+		List<ApiVehCapabilityServerResponseModel> MapEntityToModel(
+			List<VehCapability> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c51c1a0b5d775ed19cfadeae3e9d52fd</Hash>
+    <Hash>a04eb380b080aa8b4dce5e2b0820e6b7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

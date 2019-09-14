@@ -271,4 +271,7 @@ export const WrappedOffCapabilitySearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>686037e56f0c9fae9bced89784dffa1c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

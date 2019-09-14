@@ -34,4 +34,7 @@ namespace PointOfSaleNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>16aa5bf02c7de99b60cb081b777dfa13</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

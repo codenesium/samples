@@ -123,4 +123,7 @@ export class TransactionSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>bb3df6d17f0668141b4a0b787fbf2c02</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -48,4 +48,7 @@ export default class TeacherMapper {
 
 /*<Codenesium>
     <Hash>7a75fa95cdd6ad020c2bc2e732e45a68</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

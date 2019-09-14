@@ -7,9 +7,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IApiSpaceFeatureServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiSpaceFeatureServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceFeatureServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5ad1532e8bef4c71c5e98b3f4cdf268</Hash>
+    <Hash>d005c73cc63270f317ff28c98956ee45</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

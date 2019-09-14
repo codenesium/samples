@@ -82,4 +82,7 @@ namespace TwitterNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>5943eb7d9df766146b8658861e0aa8f3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -22,4 +22,7 @@ export default class CallDispositionMapper {
 
 /*<Codenesium>
     <Hash>1c0d59d5b2820b5fee28c76966131ba9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -23,4 +23,7 @@ namespace TwitterNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>4d5c146efb96df2b115ad19923a0dbd4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

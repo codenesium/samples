@@ -167,4 +167,7 @@ export class CountryTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>6850f0c105554c3d79a244fa06eb780e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

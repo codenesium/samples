@@ -7,9 +7,21 @@ namespace FileServiceNS.Api.Services
 {
 	public partial interface IDALFileMapper
 	{
+		File MapModelToEntity(
+			int id,
+			ApiFileServerRequestModel model);
+
+		ApiFileServerResponseModel MapEntityToModel(
+			File item);
+
+		List<ApiFileServerResponseModel> MapEntityToModel(
+			List<File> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>169d7eb3fdb29b7a9d26b0eb3bb37bcf</Hash>
+    <Hash>f6121e03f7d9b5a1c79de684663484e9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

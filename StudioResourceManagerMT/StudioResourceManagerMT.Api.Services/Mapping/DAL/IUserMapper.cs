@@ -7,9 +7,21 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IDALUserMapper
 	{
+		User MapModelToEntity(
+			int id,
+			ApiUserServerRequestModel model);
+
+		ApiUserServerResponseModel MapEntityToModel(
+			User item);
+
+		List<ApiUserServerResponseModel> MapEntityToModel(
+			List<User> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>88d9c2815f3f06dc5f087dcf37c338c4</Hash>
+    <Hash>558599f34f02f04e5a2660aec945bdc7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

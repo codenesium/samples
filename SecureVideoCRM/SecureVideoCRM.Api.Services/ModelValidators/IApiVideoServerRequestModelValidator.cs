@@ -7,9 +7,17 @@ namespace SecureVideoCRMNS.Api.Services
 {
 	public partial interface IApiVideoServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiVideoServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiVideoServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c6d47f99dfc1e13bf692b59481250d5</Hash>
+    <Hash>b8792df9da6fbe90eedcf8f3a7f5c18c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

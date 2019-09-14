@@ -36,4 +36,7 @@ export default class CustomerMapper {
 
 /*<Codenesium>
     <Hash>e4b6f760901d04c93eae741790534d39</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

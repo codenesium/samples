@@ -242,4 +242,7 @@ export class VoteTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f8a8595dc18ada116bd01cac75050c05</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

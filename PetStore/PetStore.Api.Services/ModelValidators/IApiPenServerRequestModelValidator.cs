@@ -7,9 +7,17 @@ namespace PetStoreNS.Api.Services
 {
 	public partial interface IApiPenServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiPenServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPenServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef310fac021453970ab25f7a147be7d5</Hash>
+    <Hash>bd7b2d7440e1791977134116e519a7c8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

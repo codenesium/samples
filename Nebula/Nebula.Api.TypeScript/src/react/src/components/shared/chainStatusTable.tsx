@@ -167,4 +167,7 @@ export class ChainStatusTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>1596d77eeb6bb1d97eefb44436ad541a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -33,4 +33,7 @@ export default class LocationViewModel {
 
 /*<Codenesium>
     <Hash>e6430b600d15aa58639d6291dd7dae70</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

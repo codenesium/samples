@@ -123,4 +123,7 @@ export class OffCapabilitySelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>6af8aba1102d895243e998a0da43863b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

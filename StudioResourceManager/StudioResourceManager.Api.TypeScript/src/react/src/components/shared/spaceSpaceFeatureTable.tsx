@@ -211,4 +211,7 @@ export class SpaceSpaceFeatureTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>dc80527cf46de52cd679c762d99c554a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

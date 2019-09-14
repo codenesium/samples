@@ -63,4 +63,7 @@ export default class VenueMapper {
 
 /*<Codenesium>
     <Hash>9226d1da69e393e4c34a35cae5459746</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

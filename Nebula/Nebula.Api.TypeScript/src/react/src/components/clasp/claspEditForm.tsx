@@ -233,4 +233,7 @@ export const WrappedClaspEditComponent = Form.create({ name: 'Clasp Edit' })(
 
 /*<Codenesium>
     <Hash>b36b57b98053f5308cd5700e2ace9367</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

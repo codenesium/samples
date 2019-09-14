@@ -141,4 +141,7 @@ export const WrappedSelfReferenceDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>f944af693caa0f5ac62f49640d6af2da</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

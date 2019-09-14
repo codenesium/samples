@@ -170,4 +170,7 @@ export class TransactionStatusTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>47905d3ff124f5d3dcb6e1705d9f1091</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -22,4 +22,7 @@ export default class TenantViewModel {
 
 /*<Codenesium>
     <Hash>ea21579a6d4a84cd8d9b73e10dcfd10f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

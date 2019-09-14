@@ -7,9 +7,27 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public partial interface IEmployeeRepository
 	{
+		Task<Employee> Create(Employee item);
+
+		Task Update(Employee item);
+
+		Task Delete(int id);
+
+		Task<Employee> Get(int id);
+
+		Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<CustomerCommunication>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<PipelineStep>> PipelineStepsByShipperId(int shipperId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<PipelineStepNote>> PipelineStepNotesByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>248ce54cf105e65af6b40180253c4dc6</Hash>
+    <Hash>81dbe33cd5db45f7bf13a8ac29c48e0b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

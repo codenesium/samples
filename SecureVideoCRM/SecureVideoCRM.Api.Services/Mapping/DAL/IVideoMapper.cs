@@ -7,9 +7,21 @@ namespace SecureVideoCRMNS.Api.Services
 {
 	public partial interface IDALVideoMapper
 	{
+		Video MapModelToEntity(
+			int id,
+			ApiVideoServerRequestModel model);
+
+		ApiVideoServerResponseModel MapEntityToModel(
+			Video item);
+
+		List<ApiVideoServerResponseModel> MapEntityToModel(
+			List<Video> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>08584f3f3767177541abe106fd6e349e</Hash>
+    <Hash>bc11ad46d837ba8c1b945a36e006647f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

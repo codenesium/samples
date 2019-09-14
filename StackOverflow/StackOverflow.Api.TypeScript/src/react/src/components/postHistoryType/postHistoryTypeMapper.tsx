@@ -22,4 +22,7 @@ export default class PostHistoryTypeMapper {
 
 /*<Codenesium>
     <Hash>684acde4f7bf1b50390f658d966631cd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

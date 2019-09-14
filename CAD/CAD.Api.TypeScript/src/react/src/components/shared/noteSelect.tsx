@@ -123,4 +123,7 @@ export class NoteSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>078daae895af87dc5f6a7fbcbc39e3ba</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -149,4 +149,7 @@ export const WrappedNoteDetailComponent = Form.create({ name: 'Note Detail' })(
 
 /*<Codenesium>
     <Hash>6e5465d918f5bcc10c653624dfbc886f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

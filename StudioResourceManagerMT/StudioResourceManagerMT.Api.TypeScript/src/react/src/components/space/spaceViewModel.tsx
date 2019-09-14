@@ -25,4 +25,7 @@ export default class SpaceViewModel {
 
 /*<Codenesium>
     <Hash>e1deb76e3fca409b052b048de7a3643d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

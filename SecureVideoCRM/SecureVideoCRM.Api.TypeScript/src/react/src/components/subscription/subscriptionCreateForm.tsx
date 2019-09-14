@@ -186,4 +186,7 @@ export const WrappedSubscriptionCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>2ad022305e2a0f2ff1ebc18ee311dba7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

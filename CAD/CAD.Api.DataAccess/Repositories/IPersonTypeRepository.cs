@@ -7,9 +7,23 @@ namespace CADNS.Api.DataAccess
 {
 	public partial interface IPersonTypeRepository
 	{
+		Task<PersonType> Create(PersonType item);
+
+		Task Update(PersonType item);
+
+		Task Delete(int id);
+
+		Task<PersonType> Get(int id);
+
+		Task<List<PersonType>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<CallPerson>> CallPersonsByPersonTypeId(int personTypeId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>eefdf8b01fdf1c2a471c3912cc5adbee</Hash>
+    <Hash>d42f76fcea411131b0dbb67fe982f42b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

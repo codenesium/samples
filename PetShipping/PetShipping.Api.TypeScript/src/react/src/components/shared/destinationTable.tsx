@@ -198,4 +198,7 @@ export class DestinationTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>88a049b5d675a11a3924122e1fa6a21c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

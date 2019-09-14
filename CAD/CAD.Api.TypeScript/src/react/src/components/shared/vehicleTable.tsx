@@ -167,4 +167,7 @@ export class VehicleTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>0c15abffc829dd56b8effb17f4a72343</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using ESPIOTNS.Api.Client;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,23 @@ namespace ESPIOTNS.Api.Services
 {
 	public partial interface IApiDeviceServerModelMapper
 	{
+		ApiDeviceServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiDeviceServerRequestModel request);
+
+		ApiDeviceServerRequestModel MapServerResponseToRequest(
+			ApiDeviceServerResponseModel response);
+
+		ApiDeviceClientRequestModel MapServerResponseToClientRequest(
+			ApiDeviceServerResponseModel response);
+
+		JsonPatchDocument<ApiDeviceServerRequestModel> CreatePatch(ApiDeviceServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5f5e4ebc94e7dc7b58d23b53c3e8d13</Hash>
+    <Hash>dee5a6582b022248ba06b055e09486c3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

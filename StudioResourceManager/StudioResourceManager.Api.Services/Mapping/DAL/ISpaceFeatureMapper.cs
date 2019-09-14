@@ -7,9 +7,21 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IDALSpaceFeatureMapper
 	{
+		SpaceFeature MapModelToEntity(
+			int id,
+			ApiSpaceFeatureServerRequestModel model);
+
+		ApiSpaceFeatureServerResponseModel MapEntityToModel(
+			SpaceFeature item);
+
+		List<ApiSpaceFeatureServerResponseModel> MapEntityToModel(
+			List<SpaceFeature> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2aa5825d081b33184e81bacd85685d1b</Hash>
+    <Hash>fc2942ed81bfa9942bfa43b1ea60e846</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

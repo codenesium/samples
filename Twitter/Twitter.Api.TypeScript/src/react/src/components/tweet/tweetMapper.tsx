@@ -63,4 +63,7 @@ export default class TweetMapper {
 
 /*<Codenesium>
     <Hash>2cb52520727da459c3738eeaebdc7317</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

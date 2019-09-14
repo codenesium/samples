@@ -123,4 +123,7 @@ export class VehCapabilitySelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>80f442d10fa20321000b6bf7dd0d9cdd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

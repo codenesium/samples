@@ -1,28 +1,129 @@
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
-	public partial class DeviceActionService : AbstractDeviceActionService, IDeviceActionService
+	public class DeviceActionService : AbstractService, IDeviceActionService
 	{
+		private MediatR.IMediator mediator;
+
+		protected IDeviceActionRepository DeviceActionRepository { get; private set; }
+
+		protected IApiDeviceActionServerRequestModelValidator DeviceActionModelValidator { get; private set; }
+
+		protected IDALDeviceActionMapper DalDeviceActionMapper { get; private set; }
+
+		private ILogger logger;
+
 		public DeviceActionService(
-			ILogger<IDeviceActionRepository> logger,
-			IMediator mediator,
+			ILogger<IDeviceActionService> logger,
+			MediatR.IMediator mediator,
 			IDeviceActionRepository deviceActionRepository,
 			IApiDeviceActionServerRequestModelValidator deviceActionModelValidator,
 			IDALDeviceActionMapper dalDeviceActionMapper)
-			: base(logger,
-			       mediator,
-			       deviceActionRepository,
-			       deviceActionModelValidator,
-			       dalDeviceActionMapper)
+			: base()
 		{
+			this.DeviceActionRepository = deviceActionRepository;
+			this.DeviceActionModelValidator = deviceActionModelValidator;
+			this.DalDeviceActionMapper = dalDeviceActionMapper;
+			this.logger = logger;
+
+			this.mediator = mediator;
+		}
+
+		public virtual async Task<List<ApiDeviceActionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
+		{
+			List<DeviceAction> records = await this.DeviceActionRepository.All(limit, offset, query);
+
+			return this.DalDeviceActionMapper.MapEntityToModel(records);
+		}
+
+		public virtual async Task<ApiDeviceActionServerResponseModel> Get(int id)
+		{
+			DeviceAction record = await this.DeviceActionRepository.Get(id);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.DalDeviceActionMapper.MapEntityToModel(record);
+			}
+		}
+
+		public virtual async Task<CreateResponse<ApiDeviceActionServerResponseModel>> Create(
+			ApiDeviceActionServerRequestModel model)
+		{
+			CreateResponse<ApiDeviceActionServerResponseModel> response = ValidationResponseFactory<ApiDeviceActionServerResponseModel>.CreateResponse(await this.DeviceActionModelValidator.ValidateCreateAsync(model));
+
+			if (response.Success)
+			{
+				DeviceAction record = this.DalDeviceActionMapper.MapModelToEntity(default(int), model);
+				record = await this.DeviceActionRepository.Create(record);
+
+				response.SetRecord(this.DalDeviceActionMapper.MapEntityToModel(record));
+				await this.mediator.Publish(new DeviceActionCreatedNotification(response.Record));
+			}
+
+			return response;
+		}
+
+		public virtual async Task<UpdateResponse<ApiDeviceActionServerResponseModel>> Update(
+			int id,
+			ApiDeviceActionServerRequestModel model)
+		{
+			var validationResult = await this.DeviceActionModelValidator.ValidateUpdateAsync(id, model);
+
+			if (validationResult.IsValid)
+			{
+				DeviceAction record = this.DalDeviceActionMapper.MapModelToEntity(id, model);
+				await this.DeviceActionRepository.Update(record);
+
+				record = await this.DeviceActionRepository.Get(id);
+
+				ApiDeviceActionServerResponseModel apiModel = this.DalDeviceActionMapper.MapEntityToModel(record);
+				await this.mediator.Publish(new DeviceActionUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiDeviceActionServerResponseModel>.UpdateResponse(apiModel);
+			}
+			else
+			{
+				return ValidationResponseFactory<ApiDeviceActionServerResponseModel>.UpdateResponse(validationResult);
+			}
+		}
+
+		public virtual async Task<ActionResponse> Delete(
+			int id)
+		{
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.DeviceActionModelValidator.ValidateDeleteAsync(id));
+
+			if (response.Success)
+			{
+				await this.DeviceActionRepository.Delete(id);
+
+				await this.mediator.Publish(new DeviceActionDeletedNotification(id));
+			}
+
+			return response;
+		}
+
+		public async virtual Task<List<ApiDeviceActionServerResponseModel>> ByDeviceId(int deviceId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<DeviceAction> records = await this.DeviceActionRepository.ByDeviceId(deviceId, limit, offset);
+
+			return this.DalDeviceActionMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d46c89c18f006e389a7c29c26735922</Hash>
+    <Hash>6265b1e85942cee15481000ef0120299</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -23,4 +23,7 @@ namespace FileServiceNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>1e03f023e48b0e79d48562bdb6cd32e0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

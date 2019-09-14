@@ -167,4 +167,7 @@ export class TableTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>1e42a11526707365498e25a266d55981</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

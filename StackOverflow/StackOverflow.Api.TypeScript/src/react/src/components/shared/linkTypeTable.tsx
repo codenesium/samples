@@ -167,4 +167,7 @@ export class LinkTypeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>7025d50ad359340b2bd4340542eee492</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

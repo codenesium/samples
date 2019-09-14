@@ -196,4 +196,7 @@ export class LinkLogTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f867b606015844adb39d50b47eec857d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

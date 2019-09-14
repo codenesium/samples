@@ -1,14 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace PetStoreNS.Api.Client
 {
-	public partial class ApiPaymentTypeModelMapper : AbstractApiPaymentTypeModelMapper, IApiPaymentTypeModelMapper
+	public class ApiPaymentTypeModelMapper : IApiPaymentTypeModelMapper
 	{
-		public ApiPaymentTypeModelMapper()
-			: base()
+		public virtual ApiPaymentTypeClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiPaymentTypeClientRequestModel request)
 		{
+			var response = new ApiPaymentTypeClientResponseModel();
+			response.SetProperties(id,
+			                       request.Name);
+			return response;
+		}
+
+		public virtual ApiPaymentTypeClientRequestModel MapClientResponseToRequest(
+			ApiPaymentTypeClientResponseModel response)
+		{
+			var request = new ApiPaymentTypeClientRequestModel();
+			request.SetProperties(
+				response.Name);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0744da9cd1f316d853f50ab0d49ae83d</Hash>
+    <Hash>fe111d761869e5266fecfba14358e5a6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

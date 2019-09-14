@@ -43,4 +43,7 @@ export default class RateViewModel {
 
 /*<Codenesium>
     <Hash>7151e926a500016b40e704012d3f336c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

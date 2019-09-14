@@ -191,4 +191,7 @@ export class MessageTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>04de5f3e9b3fffea1e33d0c1f374753a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

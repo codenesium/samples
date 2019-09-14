@@ -195,4 +195,7 @@ export class ProductTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>d30ded5f363eb9ab77bf848674736455</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

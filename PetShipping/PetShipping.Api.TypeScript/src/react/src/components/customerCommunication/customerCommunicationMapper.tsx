@@ -58,4 +58,7 @@ export default class CustomerCommunicationMapper {
 
 /*<Codenesium>
     <Hash>47b2281fded8ca90889efbb88e31ef36</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

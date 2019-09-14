@@ -43,4 +43,7 @@ export default class PipelineStepStepRequirementMapper {
 
 /*<Codenesium>
     <Hash>b2e0d1c1093750b8c0cfd7ac48413965</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

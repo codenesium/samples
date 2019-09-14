@@ -35,4 +35,7 @@ export default class HandlerPipelineStepViewModel {
 
 /*<Codenesium>
     <Hash>a501b616e32f5bbd4a2258b8fa21b98c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

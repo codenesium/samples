@@ -956,4 +956,7 @@ export class VoteTypeClientResponseModel {
 
 /*<Codenesium>
     <Hash>e1db345907c96b0e0367b866245b01f4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

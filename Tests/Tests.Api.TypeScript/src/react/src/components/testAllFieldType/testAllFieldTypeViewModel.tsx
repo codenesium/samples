@@ -126,11 +126,14 @@ export default class TestAllFieldTypeViewModel {
   }
 
   toDisplay(): string {
-    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String(this.fieldBigInt);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>b3a016a4c957b4d44071797660aeeac1</Hash>
+    <Hash>f31612ea4638fd2b37e318c5d707c8e5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

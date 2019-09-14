@@ -123,4 +123,7 @@ export class RateSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>eee5a2e17490fc41a10e6656eb6daa09</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

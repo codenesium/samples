@@ -1,14 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace NebulaNS.Api.Client
 {
-	public partial class ApiOrganizationModelMapper : AbstractApiOrganizationModelMapper, IApiOrganizationModelMapper
+	public class ApiOrganizationModelMapper : IApiOrganizationModelMapper
 	{
-		public ApiOrganizationModelMapper()
-			: base()
+		public virtual ApiOrganizationClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiOrganizationClientRequestModel request)
 		{
+			var response = new ApiOrganizationClientResponseModel();
+			response.SetProperties(id,
+			                       request.Name);
+			return response;
+		}
+
+		public virtual ApiOrganizationClientRequestModel MapClientResponseToRequest(
+			ApiOrganizationClientResponseModel response)
+		{
+			var request = new ApiOrganizationClientRequestModel();
+			request.SetProperties(
+				response.Name);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>72457ff52c78979a5bda0a1016ea2480</Hash>
+    <Hash>13eebed41716f11224a4946f9dca4ea6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

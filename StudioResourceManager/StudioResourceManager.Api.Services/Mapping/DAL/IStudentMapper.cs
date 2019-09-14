@@ -7,9 +7,21 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IDALStudentMapper
 	{
+		Student MapModelToEntity(
+			int id,
+			ApiStudentServerRequestModel model);
+
+		ApiStudentServerResponseModel MapEntityToModel(
+			Student item);
+
+		List<ApiStudentServerResponseModel> MapEntityToModel(
+			List<Student> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>57ac9b0120f15bc0d512927edf283a13</Hash>
+    <Hash>525d92df44c722a88bc8d80f7a2eb65b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

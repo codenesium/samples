@@ -7,9 +7,23 @@ namespace CADNS.Api.DataAccess
 {
 	public partial interface ICallDispositionRepository
 	{
+		Task<CallDisposition> Create(CallDisposition item);
+
+		Task Update(CallDisposition item);
+
+		Task Delete(int id);
+
+		Task<CallDisposition> Get(int id);
+
+		Task<List<CallDisposition>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Call>> CallsByCallDispositionId(int callDispositionId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>89ceeecef8b18c647f032b3a377540c5</Hash>
+    <Hash>ecb4a80ba48dbf4dcaf90076f9103de2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

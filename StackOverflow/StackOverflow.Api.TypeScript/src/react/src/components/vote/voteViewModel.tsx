@@ -56,4 +56,7 @@ export default class VoteViewModel {
 
 /*<Codenesium>
     <Hash>6517e27cb68c2359362f0c14b287d439</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

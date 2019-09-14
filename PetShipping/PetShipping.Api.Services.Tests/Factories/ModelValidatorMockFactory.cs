@@ -148,4 +148,7 @@ namespace PetShippingNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>51202c1ee0829e22d8424dfae6e088a5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

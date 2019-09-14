@@ -7,9 +7,21 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IDALDirectTweetMapper
 	{
+		DirectTweet MapModelToEntity(
+			int tweetId,
+			ApiDirectTweetServerRequestModel model);
+
+		ApiDirectTweetServerResponseModel MapEntityToModel(
+			DirectTweet item);
+
+		List<ApiDirectTweetServerResponseModel> MapEntityToModel(
+			List<DirectTweet> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bea528d2067c2bb94d7fabdae6e71a44</Hash>
+    <Hash>10e3b6363672ac75873249180d39f660</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

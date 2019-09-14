@@ -7,9 +7,21 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IDALRetweetMapper
 	{
+		Retweet MapModelToEntity(
+			int id,
+			ApiRetweetServerRequestModel model);
+
+		ApiRetweetServerResponseModel MapEntityToModel(
+			Retweet item);
+
+		List<ApiRetweetServerResponseModel> MapEntityToModel(
+			List<Retweet> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0abbff59372287226cfd00ccdaadaa83</Hash>
+    <Hash>195dde8ea655bc9b3703f7552551d414</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

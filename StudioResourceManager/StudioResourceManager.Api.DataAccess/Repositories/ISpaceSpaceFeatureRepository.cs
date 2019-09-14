@@ -7,9 +7,29 @@ namespace StudioResourceManagerNS.Api.DataAccess
 {
 	public partial interface ISpaceSpaceFeatureRepository
 	{
+		Task<SpaceSpaceFeature> Create(SpaceSpaceFeature item);
+
+		Task Update(SpaceSpaceFeature item);
+
+		Task Delete(int id);
+
+		Task<SpaceSpaceFeature> Get(int id);
+
+		Task<List<SpaceSpaceFeature>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<SpaceSpaceFeature>> BySpaceFeatureId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<SpaceSpaceFeature>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0);
+
+		Task<SpaceFeature> SpaceFeatureBySpaceFeatureId(int spaceFeatureId);
+
+		Task<Space> SpaceBySpaceId(int spaceId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b307a5e3ce71e56ab7ed565d0576f248</Hash>
+    <Hash>8d942a35fb9cbce23b9e99f70988c234</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

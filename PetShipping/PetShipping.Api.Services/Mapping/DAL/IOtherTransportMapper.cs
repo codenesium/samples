@@ -7,9 +7,21 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IDALOtherTransportMapper
 	{
+		OtherTransport MapModelToEntity(
+			int id,
+			ApiOtherTransportServerRequestModel model);
+
+		ApiOtherTransportServerResponseModel MapEntityToModel(
+			OtherTransport item);
+
+		List<ApiOtherTransportServerResponseModel> MapEntityToModel(
+			List<OtherTransport> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3981d2edc5982601ed6f31c9b7adbadd</Hash>
+    <Hash>f9085f6a08325c49eea1e289e8b2ce47</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

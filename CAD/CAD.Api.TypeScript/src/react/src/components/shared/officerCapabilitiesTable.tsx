@@ -213,4 +213,7 @@ export class OfficerCapabilitiesTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>54704ff6a5d9d98bfbd1428f94cc56ec</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

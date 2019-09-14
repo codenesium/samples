@@ -2,14 +2,29 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TwitterNS.Api.Client;
 
 namespace TwitterNS.Api.Services
 {
 	public partial interface IApiMessengerServerModelMapper
 	{
+		ApiMessengerServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiMessengerServerRequestModel request);
+
+		ApiMessengerServerRequestModel MapServerResponseToRequest(
+			ApiMessengerServerResponseModel response);
+
+		ApiMessengerClientRequestModel MapServerResponseToClientRequest(
+			ApiMessengerServerResponseModel response);
+
+		JsonPatchDocument<ApiMessengerServerRequestModel> CreatePatch(ApiMessengerServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e44cacbffb932b046ff3af5dbf5fa5aa</Hash>
+    <Hash>ec90a441998589811d6700ec2ee6877d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

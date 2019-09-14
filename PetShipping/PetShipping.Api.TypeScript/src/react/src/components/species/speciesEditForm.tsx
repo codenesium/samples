@@ -227,4 +227,7 @@ export const WrappedSpeciesEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>50c9dd023e87e9d119b58eee4d420c15</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

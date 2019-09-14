@@ -334,4 +334,7 @@ export const WrappedSaleSearchComponent = Form.create({ name: 'Sale Search' })(
 
 /*<Codenesium>
     <Hash>02dbfb3f5b2b1d6405b1e9f7d3c05021</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

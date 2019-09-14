@@ -1,16 +1,29 @@
+using Codenesium.DataConversionExtensions;
+using FluentValidation;
 using FluentValidation.Results;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
-	public class ApiFamilyServerRequestModelValidator : AbstractApiFamilyServerRequestModelValidator, IApiFamilyServerRequestModelValidator
+	public class ApiFamilyServerRequestModelValidator : AbstractValidator<ApiFamilyServerRequestModel>, IApiFamilyServerRequestModelValidator
 	{
+		private int existingRecordId;
+
+		protected IFamilyRepository FamilyRepository { get; private set; }
+
 		public ApiFamilyServerRequestModelValidator(IFamilyRepository familyRepository)
-			: base(familyRepository)
 		{
+			this.FamilyRepository = familyRepository;
+		}
+
+		public async Task<ValidationResult> ValidateAsync(ApiFamilyServerRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiFamilyServerRequestModel model)
@@ -37,9 +50,38 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			return await Task.FromResult<ValidationResult>(new ValidationResult());
 		}
+
+		public virtual void NotesRules()
+		{
+			this.RuleFor(x => x.Notes).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		public virtual void PrimaryContactEmailRules()
+		{
+			this.RuleFor(x => x.PrimaryContactEmail).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		public virtual void PrimaryContactFirstNameRules()
+		{
+			this.RuleFor(x => x.PrimaryContactFirstName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		public virtual void PrimaryContactLastNameRules()
+		{
+			this.RuleFor(x => x.PrimaryContactLastName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		public virtual void PrimaryContactPhoneRules()
+		{
+			this.RuleFor(x => x.PrimaryContactPhone).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PrimaryContactPhone).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>938e55d2d678a7dcaf10ca01379e021a</Hash>
+    <Hash>97d4258fd0c4a68a61f0f8d2b796e032</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

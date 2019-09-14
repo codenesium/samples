@@ -127,4 +127,7 @@ export const WrappedAirlineDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>8a5cc9ef6b03c572dbb8c25c1265dd72</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

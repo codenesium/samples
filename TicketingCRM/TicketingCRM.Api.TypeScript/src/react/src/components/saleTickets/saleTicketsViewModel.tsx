@@ -35,4 +35,7 @@ export default class SaleTicketsViewModel {
 
 /*<Codenesium>
     <Hash>05657fc913f28207daa4bc0a18694f35</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

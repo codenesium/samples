@@ -153,4 +153,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
 
 /*<Codenesium>
     <Hash>84d37ca40f03a9e883b8b323c6f2c42f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

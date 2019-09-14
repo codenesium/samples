@@ -82,4 +82,7 @@ export default class TestAllFieldTypeMapper {
 
 /*<Codenesium>
     <Hash>3c6ea17c566becebdba6873e09e081f3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

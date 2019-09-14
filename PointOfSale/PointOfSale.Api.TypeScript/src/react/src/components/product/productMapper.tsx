@@ -36,4 +36,7 @@ export default class ProductMapper {
 
 /*<Codenesium>
     <Hash>2d5f215638e78235f73137d6492bdc5f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

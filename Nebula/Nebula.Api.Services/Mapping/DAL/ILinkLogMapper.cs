@@ -7,9 +7,21 @@ namespace NebulaNS.Api.Services
 {
 	public partial interface IDALLinkLogMapper
 	{
+		LinkLog MapModelToEntity(
+			int id,
+			ApiLinkLogServerRequestModel model);
+
+		ApiLinkLogServerResponseModel MapEntityToModel(
+			LinkLog item);
+
+		List<ApiLinkLogServerResponseModel> MapEntityToModel(
+			List<LinkLog> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3d9f423859691380b067a6bfdf24f4e2</Hash>
+    <Hash>d8fb26f9878633e9d87afdeb4c6b7698</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

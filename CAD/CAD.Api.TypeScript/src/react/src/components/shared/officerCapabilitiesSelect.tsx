@@ -129,4 +129,7 @@ export class OfficerCapabilitiesSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>d1db503d4142f0e0e3ed2e6d95712965</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

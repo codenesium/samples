@@ -34,4 +34,7 @@ export default class DeviceMapper {
 
 /*<Codenesium>
     <Hash>b5f1682d2affcb125e56c5c34220d67f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

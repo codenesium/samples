@@ -123,4 +123,7 @@ export class OrganizationSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>203e04191bf4d6fd4fecf3830bb6008a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -175,4 +175,7 @@ export const WrappedOffCapabilityCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>e8c31a15559eefe066bfcae916d3c28f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

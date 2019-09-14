@@ -7,9 +7,21 @@ namespace StudioResourceManagerNS.Api.DataAccess
 {
 	public partial interface IStudioRepository
 	{
+		Task<Studio> Create(Studio item);
+
+		Task Update(Studio item);
+
+		Task Delete(int id);
+
+		Task<Studio> Get(int id);
+
+		Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec5981e15cb068fcaf84eef711fe6070</Hash>
+    <Hash>25393779b41abcabcb4c9c74afc92409</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

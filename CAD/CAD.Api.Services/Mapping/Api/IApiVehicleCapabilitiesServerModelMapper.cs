@@ -1,3 +1,4 @@
+using CADNS.Api.Client;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,23 @@ namespace CADNS.Api.Services
 {
 	public partial interface IApiVehicleCapabilitiesServerModelMapper
 	{
+		ApiVehicleCapabilitiesServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiVehicleCapabilitiesServerRequestModel request);
+
+		ApiVehicleCapabilitiesServerRequestModel MapServerResponseToRequest(
+			ApiVehicleCapabilitiesServerResponseModel response);
+
+		ApiVehicleCapabilitiesClientRequestModel MapServerResponseToClientRequest(
+			ApiVehicleCapabilitiesServerResponseModel response);
+
+		JsonPatchDocument<ApiVehicleCapabilitiesServerRequestModel> CreatePatch(ApiVehicleCapabilitiesServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>93b58eee85f7149cce3d07d844abf985</Hash>
+    <Hash>f94cc6c545b1e4720ae012af0d06babf</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

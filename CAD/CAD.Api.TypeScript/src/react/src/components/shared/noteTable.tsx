@@ -220,4 +220,7 @@ export class NoteTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>c1eea9269aaf9f8e9b73269cdb430431</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

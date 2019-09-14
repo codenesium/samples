@@ -23,4 +23,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>fd8e8514fb9acf9040688e6049f5e97d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

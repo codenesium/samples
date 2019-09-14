@@ -174,4 +174,7 @@ export class TenantTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>b23548455bb7906458845166d06f7178</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

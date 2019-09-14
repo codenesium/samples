@@ -1,16 +1,29 @@
+using Codenesium.DataConversionExtensions;
+using FluentValidation;
 using FluentValidation.Results;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
-	public class ApiPenServerRequestModelValidator : AbstractApiPenServerRequestModelValidator, IApiPenServerRequestModelValidator
+	public class ApiPenServerRequestModelValidator : AbstractValidator<ApiPenServerRequestModel>, IApiPenServerRequestModelValidator
 	{
+		private int existingRecordId;
+
+		protected IPenRepository PenRepository { get; private set; }
+
 		public ApiPenServerRequestModelValidator(IPenRepository penRepository)
-			: base(penRepository)
 		{
+			this.PenRepository = penRepository;
+		}
+
+		public async Task<ValidationResult> ValidateAsync(ApiPenServerRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiPenServerRequestModel model)
@@ -29,9 +42,18 @@ namespace PetStoreNS.Api.Services
 		{
 			return await Task.FromResult<ValidationResult>(new ValidationResult());
 		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>515540d8678278ee75a6189ea88864f5</Hash>
+    <Hash>6520a2fd2c0a69d8d0457e56d61d951f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

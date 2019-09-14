@@ -43,4 +43,7 @@ export default class SaleTicketsMapper {
 
 /*<Codenesium>
     <Hash>00c55b8f7471fbcce683b68735d325ac</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

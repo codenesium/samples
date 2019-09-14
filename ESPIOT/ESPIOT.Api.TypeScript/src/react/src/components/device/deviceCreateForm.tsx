@@ -205,4 +205,7 @@ export const WrappedDeviceCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>6e20c952423c510bb9c3066fe968a5ca</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

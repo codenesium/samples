@@ -7,9 +7,21 @@ namespace NebulaNS.Api.Services
 {
 	public partial interface IDALOrganizationMapper
 	{
+		Organization MapModelToEntity(
+			int id,
+			ApiOrganizationServerRequestModel model);
+
+		ApiOrganizationServerResponseModel MapEntityToModel(
+			Organization item);
+
+		List<ApiOrganizationServerResponseModel> MapEntityToModel(
+			List<Organization> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbcaf1d159476e8c90a48949225b09ad</Hash>
+    <Hash>2663e9323bc2ad0f32cc7c4775979ab1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

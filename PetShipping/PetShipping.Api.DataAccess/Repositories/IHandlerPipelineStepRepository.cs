@@ -7,9 +7,25 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public partial interface IHandlerPipelineStepRepository
 	{
+		Task<HandlerPipelineStep> Create(HandlerPipelineStep item);
+
+		Task Update(HandlerPipelineStep item);
+
+		Task Delete(int id);
+
+		Task<HandlerPipelineStep> Get(int id);
+
+		Task<List<HandlerPipelineStep>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<Handler> HandlerByHandlerId(int handlerId);
+
+		Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>101b7b10caf12426e213cd6194dbc012</Hash>
+    <Hash>39d2a72464e937781f35274dc6b8b06d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

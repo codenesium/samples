@@ -38,4 +38,7 @@ export default class PipelineStepStepRequirementViewModel {
 
 /*<Codenesium>
     <Hash>7c2fa399379b257e211c2833f996b70f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -2,14 +2,29 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TicketingCRMNS.Api.Client;
 
 namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IApiCountryServerModelMapper
 	{
+		ApiCountryServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiCountryServerRequestModel request);
+
+		ApiCountryServerRequestModel MapServerResponseToRequest(
+			ApiCountryServerResponseModel response);
+
+		ApiCountryClientRequestModel MapServerResponseToClientRequest(
+			ApiCountryServerResponseModel response);
+
+		JsonPatchDocument<ApiCountryServerRequestModel> CreatePatch(ApiCountryServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d1b39b15a55ebf44d7228e070447e4a</Hash>
+    <Hash>faa91138bf34687a1fe6e9288b5dd974</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

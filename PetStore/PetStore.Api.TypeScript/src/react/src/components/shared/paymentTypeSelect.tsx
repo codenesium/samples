@@ -123,4 +123,7 @@ export class PaymentTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f57b93c32c91b351fea8b4704ef36d02</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

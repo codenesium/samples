@@ -1456,4 +1456,7 @@ namespace PointOfSaleNS.Api.Services.Tests.Tests
 
 /*<Codenesium>
     <Hash>4ddd14a14340e12858e1f439b17932d9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

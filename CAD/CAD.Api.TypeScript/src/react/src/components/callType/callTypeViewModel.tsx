@@ -22,4 +22,7 @@ export default class CallTypeViewModel {
 
 /*<Codenesium>
     <Hash>7adc26c094bad49e2fdae9addf38b940</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

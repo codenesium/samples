@@ -42,4 +42,7 @@ export default class SaleViewModel {
 
 /*<Codenesium>
     <Hash>adb54dfdba87732d7f07f11b97a41868</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

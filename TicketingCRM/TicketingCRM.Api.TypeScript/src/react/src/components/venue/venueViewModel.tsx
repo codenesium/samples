@@ -67,4 +67,7 @@ export default class VenueViewModel {
 
 /*<Codenesium>
     <Hash>acc70077726e96b303a386e00fcc9b24</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -158,4 +158,7 @@ export const WrappedVoteDetailComponent = Form.create({ name: 'Vote Detail' })(
 
 /*<Codenesium>
     <Hash>076ac9818712c69586171fd28a1a7b27</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

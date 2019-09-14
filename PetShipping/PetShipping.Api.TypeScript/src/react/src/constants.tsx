@@ -12,7 +12,7 @@ export class Constants {
       ? Constants.HostedUrl
       : process.env.REACT_APP_API_URL;
   static readonly ApiEndpoint = Constants.BaseEndpoint + 'api/';
-  static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'apiHealth';
+  static readonly ApiHealthEndpoint = Constants.ApiEndpoint + 'health';
   static readonly SwaggerEndpoint = Constants.BaseEndpoint + 'swagger';
 }
 
@@ -92,5 +92,8 @@ export class ApiRoutes {
 
 
 /*<Codenesium>
-    <Hash>4105a8f118326d53240bfec36b9919fd</Hash>
+    <Hash>aaaf59ebf243fea356876c6f4c9a12ce</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

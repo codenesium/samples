@@ -7,9 +7,21 @@ namespace FileServiceNS.Api.Services
 {
 	public partial interface IDALBucketMapper
 	{
+		Bucket MapModelToEntity(
+			int id,
+			ApiBucketServerRequestModel model);
+
+		ApiBucketServerResponseModel MapEntityToModel(
+			Bucket item);
+
+		List<ApiBucketServerResponseModel> MapEntityToModel(
+			List<Bucket> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f8473c3c84663a8f6c81c36bbf8744f</Hash>
+    <Hash>382f0a350dd1b28dee5d66199fb026f3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

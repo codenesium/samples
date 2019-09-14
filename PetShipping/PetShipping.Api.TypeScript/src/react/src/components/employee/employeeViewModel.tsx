@@ -37,4 +37,7 @@ export default class EmployeeViewModel {
 
 /*<Codenesium>
     <Hash>74b02d1294d01f99c6445a7825bc1770</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

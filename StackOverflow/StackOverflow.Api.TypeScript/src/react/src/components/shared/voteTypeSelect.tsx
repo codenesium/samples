@@ -123,4 +123,7 @@ export class VoteTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>bc685771dd2323a4237dda8ed78efd17</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

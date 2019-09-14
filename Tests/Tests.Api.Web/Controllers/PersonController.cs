@@ -1,8 +1,10 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -18,8 +20,18 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 
-	public class PersonController : AbstractPersonController
+	public class PersonController : AbstractApiController
 	{
+		protected IPersonService PersonService { get; private set; }
+
+		protected IApiPersonServerModelMapper PersonModelMapper { get; private set; }
+
+		protected int BulkInsertLimit { get; set; }
+
+		protected int MaxLimit { get; set; }
+
+		protected int DefaultLimit { get; set; }
+
 		public PersonController(
 			ApiSettings settings,
 			ILogger<PersonController> logger,
@@ -27,19 +39,245 @@ namespace TestsNS.Api.Web
 			IPersonService personService,
 			IApiPersonServerModelMapper personModelMapper
 			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       personService,
-			       personModelMapper)
+			: base(settings, logger, transactionCoordinator)
 		{
+			this.PersonService = personService;
+			this.PersonModelMapper = personModelMapper;
 			this.BulkInsertLimit = 250;
 			this.MaxLimit = 1000;
 			this.DefaultLimit = 250;
+		}
+
+		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPersonServerResponseModel>), 200)]
+
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
+		{
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
+			}
+
+			List<ApiPersonServerResponseModel> response = await this.PersonService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{id}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiPersonServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+
+		public async virtual Task<IActionResult> Get(int id)
+		{
+			ApiPersonServerResponseModel response = await this.PersonService.Get(id);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPersonServerResponseModel>>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPersonServerRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
+
+			List<ApiPersonServerResponseModel> records = new List<ApiPersonServerResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiPersonServerResponseModel> result = await this.PersonService.Create(model);
+
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+
+			var response = new CreateResponse<List<ApiPersonServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
+		}
+
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiPersonServerResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPersonServerRequestModel model)
+		{
+			CreateResponse<ApiPersonServerResponseModel> result = await this.PersonService.Create(model);
+
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/People/{result.Record.PersonId}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPersonServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPersonServerRequestModel> patch)
+		{
+			ApiPersonServerResponseModel record = await this.PersonService.Get(id);
+
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiPersonServerRequestModel model = await this.PatchModel(id, patch) as ApiPersonServerRequestModel;
+
+				UpdateResponse<ApiPersonServerResponseModel> result = await this.PersonService.Update(id, model);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPersonServerResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonServerRequestModel model)
+		{
+			ApiPersonServerRequestModel request = await this.PatchModel(id, this.PersonModelMapper.CreatePatch(model)) as ApiPersonServerRequestModel;
+
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiPersonServerResponseModel> result = await this.PersonService.Update(id, request);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.PersonService.Delete(id);
+
+			if (result.Success)
+			{
+				return this.StatusCode(StatusCodes.Status200OK, result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
+		[HttpGet]
+		[Route("{person}/ColumnSameAsFKTables")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiColumnSameAsFKTableServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ColumnSameAsFKTablesByPerson(int person, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiColumnSameAsFKTableServerResponseModel> response = await this.PersonService.ColumnSameAsFKTablesByPerson(person, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{personId}/ColumnSameAsFKTablesByPersonId")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiColumnSameAsFKTableServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ColumnSameAsFKTablesByPersonId(int personId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiColumnSameAsFKTableServerResponseModel> response = await this.PersonService.ColumnSameAsFKTablesByPersonId(personId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		private async Task<ApiPersonServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPersonServerRequestModel> patch)
+		{
+			var record = await this.PersonService.Get(id);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				ApiPersonServerRequestModel request = this.PersonModelMapper.MapServerResponseToRequest(record);
+				patch.ApplyTo(request);
+				return request;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f90a082ad8ad55f19ea898b7938a3507</Hash>
+    <Hash>dcd24a49e2937612e420391ce9063db1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -123,4 +123,7 @@ export class LinkLogSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>80e078afc18602fa499323a9287dfffb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

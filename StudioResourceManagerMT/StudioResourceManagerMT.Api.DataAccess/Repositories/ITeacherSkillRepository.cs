@@ -7,9 +7,25 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 {
 	public partial interface ITeacherSkillRepository
 	{
+		Task<TeacherSkill> Create(TeacherSkill item);
+
+		Task Update(TeacherSkill item);
+
+		Task Delete(int id);
+
+		Task<TeacherSkill> Get(int id);
+
+		Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Rate>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<TeacherTeacherSkill>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>37eb47df60c7990e2a6805c5e6631148</Hash>
+    <Hash>d0e1e8ed54390f79058cf9a31080b47d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

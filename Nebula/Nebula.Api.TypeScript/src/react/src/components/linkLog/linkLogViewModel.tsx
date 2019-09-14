@@ -38,4 +38,7 @@ export default class LinkLogViewModel {
 
 /*<Codenesium>
     <Hash>fea07ab02d3d4971ab1b03b4fd7c6ee5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

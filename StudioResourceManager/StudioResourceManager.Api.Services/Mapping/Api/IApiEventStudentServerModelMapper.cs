@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using StudioResourceManagerNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IApiEventStudentServerModelMapper
 	{
+		ApiEventStudentServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiEventStudentServerRequestModel request);
+
+		ApiEventStudentServerRequestModel MapServerResponseToRequest(
+			ApiEventStudentServerResponseModel response);
+
+		ApiEventStudentClientRequestModel MapServerResponseToClientRequest(
+			ApiEventStudentServerResponseModel response);
+
+		JsonPatchDocument<ApiEventStudentServerRequestModel> CreatePatch(ApiEventStudentServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>66dbbb32f20b1de71f7f22381583cee1</Hash>
+    <Hash>dcc5b11dc5a4a3bdfb3166a3de464366</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

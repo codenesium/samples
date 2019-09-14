@@ -7,9 +7,21 @@ namespace CADNS.Api.Services
 {
 	public partial interface IDALOfficerMapper
 	{
+		Officer MapModelToEntity(
+			int id,
+			ApiOfficerServerRequestModel model);
+
+		ApiOfficerServerResponseModel MapEntityToModel(
+			Officer item);
+
+		List<ApiOfficerServerResponseModel> MapEntityToModel(
+			List<Officer> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f7f991014e5064a590270e30e37fe50</Hash>
+    <Hash>9efdaeb5375cc62c26f04f4826ae05e1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace TwitterNS.Api.DataAccess
 {
 	public partial interface IFollowingRepository
 	{
+		Task<Following> Create(Following item);
+
+		Task Update(Following item);
+
+		Task Delete(int userId);
+
+		Task<Following> Get(int userId);
+
+		Task<List<Following>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>532828fab8e27c0d77d34838ad3ef80d</Hash>
+    <Hash>4e4f59971eba7136260cbd043f63148e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

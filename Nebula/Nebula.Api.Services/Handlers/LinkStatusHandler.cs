@@ -62,4 +62,7 @@ namespace NebulaNS.Api.Services
 
 /*<Codenesium>
     <Hash>1c428cc24a788eb894b5f5be0921a29c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

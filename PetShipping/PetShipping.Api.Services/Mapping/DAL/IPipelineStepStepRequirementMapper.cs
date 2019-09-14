@@ -7,9 +7,21 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IDALPipelineStepStepRequirementMapper
 	{
+		PipelineStepStepRequirement MapModelToEntity(
+			int id,
+			ApiPipelineStepStepRequirementServerRequestModel model);
+
+		ApiPipelineStepStepRequirementServerResponseModel MapEntityToModel(
+			PipelineStepStepRequirement item);
+
+		List<ApiPipelineStepStepRequirementServerResponseModel> MapEntityToModel(
+			List<PipelineStepStepRequirement> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6cf7409a1278408307fdc06fe5b7ff65</Hash>
+    <Hash>4c4f832b300ffe4331d008db74052444</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

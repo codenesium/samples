@@ -87,4 +87,7 @@ export default class MessengerMapper {
 
 /*<Codenesium>
     <Hash>1043902d481aa85cf90a487378b76c4b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

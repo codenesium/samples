@@ -190,4 +190,7 @@ export class EmployeeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>dd6041105744a47632c18db97c0d4c4c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

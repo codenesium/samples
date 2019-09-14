@@ -227,4 +227,7 @@ export const WrappedPenEditComponent = Form.create({ name: 'Pen Edit' })(
 
 /*<Codenesium>
     <Hash>41f412b7d4c881069dcaedca694ddcaa</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

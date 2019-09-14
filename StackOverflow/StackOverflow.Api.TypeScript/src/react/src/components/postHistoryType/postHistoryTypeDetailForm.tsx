@@ -143,4 +143,7 @@ export const WrappedPostHistoryTypeDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>acfce5428e98e16e385ad6e48be7bb65</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -22,4 +22,7 @@ export default class EventStatusViewModel {
 
 /*<Codenesium>
     <Hash>e90e24eb9460753d2ff7de44147d3365</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

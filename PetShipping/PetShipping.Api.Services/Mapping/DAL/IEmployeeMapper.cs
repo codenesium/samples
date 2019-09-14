@@ -7,9 +7,21 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IDALEmployeeMapper
 	{
+		Employee MapModelToEntity(
+			int id,
+			ApiEmployeeServerRequestModel model);
+
+		ApiEmployeeServerResponseModel MapEntityToModel(
+			Employee item);
+
+		List<ApiEmployeeServerResponseModel> MapEntityToModel(
+			List<Employee> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d69313d0263e98adfdcf2ea2d6da3cd5</Hash>
+    <Hash>e77646771e562df464b4e44da84725ae</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

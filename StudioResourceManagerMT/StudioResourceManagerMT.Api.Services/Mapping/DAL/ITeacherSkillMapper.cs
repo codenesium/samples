@@ -7,9 +7,21 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IDALTeacherSkillMapper
 	{
+		TeacherSkill MapModelToEntity(
+			int id,
+			ApiTeacherSkillServerRequestModel model);
+
+		ApiTeacherSkillServerResponseModel MapEntityToModel(
+			TeacherSkill item);
+
+		List<ApiTeacherSkillServerResponseModel> MapEntityToModel(
+			List<TeacherSkill> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>389e685db7334bd1dfaab93e0a530053</Hash>
+    <Hash>1f82d57d68fcd3ef1974ea134c25ca28</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

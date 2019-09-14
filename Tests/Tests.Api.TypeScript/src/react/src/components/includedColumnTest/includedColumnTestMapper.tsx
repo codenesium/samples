@@ -22,4 +22,7 @@ export default class IncludedColumnTestMapper {
 
 /*<Codenesium>
     <Hash>b18d96f2d429ad3f0240aeefaa8a3a1c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

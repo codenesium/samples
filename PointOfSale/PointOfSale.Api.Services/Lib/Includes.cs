@@ -550,4 +550,7 @@ namespace PointOfSaleNS.Api.Services
 
 /*<Codenesium>
     <Hash>4591ebdcc8491dad1687eb852d48d150</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

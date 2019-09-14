@@ -1,3 +1,4 @@
+using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,9 +7,18 @@ namespace NebulaNS.Api.Client
 {
 	public partial interface IApiChainStatusModelMapper
 	{
+		ApiChainStatusClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiChainStatusClientRequestModel request);
+
+		ApiChainStatusClientRequestModel MapClientResponseToRequest(
+			ApiChainStatusClientResponseModel response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d08d49ba1b3d2d5b10801b8486f8f7c</Hash>
+    <Hash>bde9002802be08db9367c6041d0300f4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

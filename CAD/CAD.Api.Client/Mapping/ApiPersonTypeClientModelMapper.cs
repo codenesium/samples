@@ -1,14 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace CADNS.Api.Client
 {
-	public partial class ApiPersonTypeModelMapper : AbstractApiPersonTypeModelMapper, IApiPersonTypeModelMapper
+	public class ApiPersonTypeModelMapper : IApiPersonTypeModelMapper
 	{
-		public ApiPersonTypeModelMapper()
-			: base()
+		public virtual ApiPersonTypeClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiPersonTypeClientRequestModel request)
 		{
+			var response = new ApiPersonTypeClientResponseModel();
+			response.SetProperties(id,
+			                       request.Name);
+			return response;
+		}
+
+		public virtual ApiPersonTypeClientRequestModel MapClientResponseToRequest(
+			ApiPersonTypeClientResponseModel response)
+		{
+			var request = new ApiPersonTypeClientRequestModel();
+			request.SetProperties(
+				response.Name);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cc18925f9b386ab7bc6f7cb6fc045120</Hash>
+    <Hash>cd5560930b3f6efaf2fdc25101de359f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

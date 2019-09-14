@@ -140,4 +140,7 @@ export const WrappedLinkLogDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>4361e57d63cadc1dd6876e7c606cd2b2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

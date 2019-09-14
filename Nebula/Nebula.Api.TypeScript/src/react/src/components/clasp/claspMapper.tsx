@@ -40,4 +40,7 @@ export default class ClaspMapper {
 
 /*<Codenesium>
     <Hash>da0a26615c19913bb6637d0d78b95280</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

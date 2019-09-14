@@ -36,4 +36,7 @@ export default class HandlerMapper {
 
 /*<Codenesium>
     <Hash>1e899c240fe0557fcc47ff7aa292c957</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

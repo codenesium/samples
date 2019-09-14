@@ -123,4 +123,7 @@ export class TenantSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>48a8409ba5d3b261a02790bcec74dd9c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

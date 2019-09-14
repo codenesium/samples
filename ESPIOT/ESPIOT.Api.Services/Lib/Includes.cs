@@ -550,4 +550,7 @@ namespace ESPIOTNS.Api.Services
 
 /*<Codenesium>
     <Hash>286b3fded4510067721f350b01fb59c0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

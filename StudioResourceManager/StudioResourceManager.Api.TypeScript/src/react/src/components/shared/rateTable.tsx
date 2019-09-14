@@ -217,4 +217,7 @@ export class RateTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>13777af680df366ab8e18afd4aa52dc2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

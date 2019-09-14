@@ -471,4 +471,7 @@ export const WrappedPostSearchComponent = Form.create({ name: 'Post Search' })(
 
 /*<Codenesium>
     <Hash>81555dbf3ea74e8d39d28eace287c30a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public partial interface IAirlineRepository
 	{
+		Task<Airline> Create(Airline item);
+
+		Task Update(Airline item);
+
+		Task Delete(int id);
+
+		Task<Airline> Get(int id);
+
+		Task<List<Airline>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce7a7b1d96b87ef4274e55bc2b0127ee</Hash>
+    <Hash>ba6e58bcd06bd97e560b2643f6b7c4c2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

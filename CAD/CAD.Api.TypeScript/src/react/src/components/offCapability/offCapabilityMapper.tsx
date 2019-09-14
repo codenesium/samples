@@ -22,4 +22,7 @@ export default class OffCapabilityMapper {
 
 /*<Codenesium>
     <Hash>3df06d8395855a46ea69b7605eeb22ed</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

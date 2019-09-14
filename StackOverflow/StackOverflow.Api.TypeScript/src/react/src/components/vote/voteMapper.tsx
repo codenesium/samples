@@ -87,4 +87,7 @@ export default class VoteMapper {
 
 /*<Codenesium>
     <Hash>b65d39541e8faefe9868b61acdd874d5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

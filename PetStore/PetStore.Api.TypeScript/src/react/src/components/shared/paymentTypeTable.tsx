@@ -167,4 +167,7 @@ export class PaymentTypeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>9ee33c1da6fe04edea8b855a17dbcb3e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

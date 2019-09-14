@@ -22,4 +22,7 @@ export default class RowVersionCheckMapper {
 
 /*<Codenesium>
     <Hash>5bdc8f83955675c2db7c47c596644b0c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

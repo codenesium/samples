@@ -7,9 +7,17 @@ namespace PointOfSaleNS.Api.Services
 {
 	public partial interface IApiCustomerServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiCustomerServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiCustomerServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6982628e052aa690dd314d1224e40b3</Hash>
+    <Hash>81680613167e69d16cf11645a60ee297</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

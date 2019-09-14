@@ -51,4 +51,7 @@ export default class QuoteTweetViewModel {
 
 /*<Codenesium>
     <Hash>c6649e049910c04d117a14cc03dc3eb1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

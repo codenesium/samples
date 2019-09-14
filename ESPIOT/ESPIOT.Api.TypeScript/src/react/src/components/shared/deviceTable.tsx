@@ -190,4 +190,7 @@ export class DeviceTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f6ee02732170099e2dd6ed21ae93ca6b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

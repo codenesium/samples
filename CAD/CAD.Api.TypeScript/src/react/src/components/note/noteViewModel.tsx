@@ -47,4 +47,7 @@ export default class NoteViewModel {
 
 /*<Codenesium>
     <Hash>96f18a58210c13d412457a29d9efbca2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

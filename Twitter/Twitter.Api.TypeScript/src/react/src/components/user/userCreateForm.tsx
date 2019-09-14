@@ -288,4 +288,7 @@ export const WrappedUserCreateComponent = Form.create({ name: 'User Create' })(
 
 /*<Codenesium>
     <Hash>d25c0250536f2b9c81d0d8d13d273c87</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

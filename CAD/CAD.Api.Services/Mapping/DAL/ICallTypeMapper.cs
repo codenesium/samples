@@ -7,9 +7,21 @@ namespace CADNS.Api.Services
 {
 	public partial interface IDALCallTypeMapper
 	{
+		CallType MapModelToEntity(
+			int id,
+			ApiCallTypeServerRequestModel model);
+
+		ApiCallTypeServerResponseModel MapEntityToModel(
+			CallType item);
+
+		List<ApiCallTypeServerResponseModel> MapEntityToModel(
+			List<CallType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d59da0da8918d7805500858a6d7cc2c</Hash>
+    <Hash>099cfdbe8ebe1e693301ff58e2133989</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

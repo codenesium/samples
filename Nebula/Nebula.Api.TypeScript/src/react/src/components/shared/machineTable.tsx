@@ -197,4 +197,7 @@ export class MachineTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>21a262d707dfbb61ce9379a3977fb016</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

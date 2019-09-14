@@ -43,4 +43,7 @@ export default class PipelineStepNoteViewModel {
 
 /*<Codenesium>
     <Hash>5a65ee744aa2542ddff36f84f8b27b2f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

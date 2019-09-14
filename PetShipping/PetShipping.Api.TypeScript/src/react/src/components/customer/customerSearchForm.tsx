@@ -296,4 +296,7 @@ export const WrappedCustomerSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>2d1da9d5888835c0136b478b80bfc1d5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

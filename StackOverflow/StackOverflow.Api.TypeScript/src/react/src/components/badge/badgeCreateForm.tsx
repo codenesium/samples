@@ -192,4 +192,7 @@ export const WrappedBadgeCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>d6fc251c662b9ace45ce4eab370efa65</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

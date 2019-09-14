@@ -237,4 +237,7 @@ export class PostLinkTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>b97c4f656d41c1480967578841fdac52</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

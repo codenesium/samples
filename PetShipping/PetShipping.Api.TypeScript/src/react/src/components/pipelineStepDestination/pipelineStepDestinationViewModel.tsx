@@ -39,4 +39,7 @@ export default class PipelineStepDestinationViewModel {
 
 /*<Codenesium>
     <Hash>e4afc68d00752072cbce9cca0e191ae1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

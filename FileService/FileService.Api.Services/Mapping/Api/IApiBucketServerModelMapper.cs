@@ -1,3 +1,4 @@
+using FileServiceNS.Api.Client;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,23 @@ namespace FileServiceNS.Api.Services
 {
 	public partial interface IApiBucketServerModelMapper
 	{
+		ApiBucketServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiBucketServerRequestModel request);
+
+		ApiBucketServerRequestModel MapServerResponseToRequest(
+			ApiBucketServerResponseModel response);
+
+		ApiBucketClientRequestModel MapServerResponseToClientRequest(
+			ApiBucketServerResponseModel response);
+
+		JsonPatchDocument<ApiBucketServerRequestModel> CreatePatch(ApiBucketServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e245d144cc10ba8c363e102be907acf8</Hash>
+    <Hash>4fa8ccfa59570eb981649e54f564d487</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

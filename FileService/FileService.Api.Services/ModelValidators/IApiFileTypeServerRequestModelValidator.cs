@@ -7,9 +7,17 @@ namespace FileServiceNS.Api.Services
 {
 	public partial interface IApiFileTypeServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiFileTypeServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiFileTypeServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b6d050ade57092a06548b33cef9cf9e</Hash>
+    <Hash>76e13a62d6d1c317a3565325e46670e2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

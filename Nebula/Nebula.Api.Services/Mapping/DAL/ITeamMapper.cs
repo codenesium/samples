@@ -7,9 +7,21 @@ namespace NebulaNS.Api.Services
 {
 	public partial interface IDALTeamMapper
 	{
+		Team MapModelToEntity(
+			int id,
+			ApiTeamServerRequestModel model);
+
+		ApiTeamServerResponseModel MapEntityToModel(
+			Team item);
+
+		List<ApiTeamServerResponseModel> MapEntityToModel(
+			List<Team> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>41f7e2a1321659f85a53d5fe3b9025a8</Hash>
+    <Hash>e66169a289b2c0240034e366b12e491e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

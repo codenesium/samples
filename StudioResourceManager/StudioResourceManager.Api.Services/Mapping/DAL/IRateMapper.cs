@@ -7,9 +7,21 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IDALRateMapper
 	{
+		Rate MapModelToEntity(
+			int id,
+			ApiRateServerRequestModel model);
+
+		ApiRateServerResponseModel MapEntityToModel(
+			Rate item);
+
+		List<ApiRateServerResponseModel> MapEntityToModel(
+			List<Rate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>404670cfc911db18857a7879d5ef422c</Hash>
+    <Hash>f53d2dd851d930b1300580b42f2b4849</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

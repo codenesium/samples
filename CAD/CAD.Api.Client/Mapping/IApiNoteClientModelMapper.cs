@@ -1,3 +1,4 @@
+using CADNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,9 +7,18 @@ namespace CADNS.Api.Client
 {
 	public partial interface IApiNoteModelMapper
 	{
+		ApiNoteClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiNoteClientRequestModel request);
+
+		ApiNoteClientRequestModel MapClientResponseToRequest(
+			ApiNoteClientResponseModel response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f452cbc0ef038a2aa0c201106a3fbe58</Hash>
+    <Hash>2d7746deb20b373023e2b8fe4b5c8940</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

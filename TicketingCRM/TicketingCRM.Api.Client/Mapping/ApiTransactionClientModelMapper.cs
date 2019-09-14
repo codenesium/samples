@@ -1,14 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace TicketingCRMNS.Api.Client
 {
-	public partial class ApiTransactionModelMapper : AbstractApiTransactionModelMapper, IApiTransactionModelMapper
+	public class ApiTransactionModelMapper : IApiTransactionModelMapper
 	{
-		public ApiTransactionModelMapper()
-			: base()
+		public virtual ApiTransactionClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiTransactionClientRequestModel request)
 		{
+			var response = new ApiTransactionClientResponseModel();
+			response.SetProperties(id,
+			                       request.Amount,
+			                       request.GatewayConfirmationNumber,
+			                       request.TransactionStatusId);
+			return response;
+		}
+
+		public virtual ApiTransactionClientRequestModel MapClientResponseToRequest(
+			ApiTransactionClientResponseModel response)
+		{
+			var request = new ApiTransactionClientRequestModel();
+			request.SetProperties(
+				response.Amount,
+				response.GatewayConfirmationNumber,
+				response.TransactionStatusId);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b29383c76eca0cb8c13c56c8e1fc8de</Hash>
+    <Hash>a3e349870b1808b5e580ca4e1f46cf08</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

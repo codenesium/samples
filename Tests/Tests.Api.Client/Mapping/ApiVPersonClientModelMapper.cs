@@ -1,14 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace TestsNS.Api.Client
 {
-	public partial class ApiVPersonModelMapper : AbstractApiVPersonModelMapper, IApiVPersonModelMapper
+	public class ApiVPersonModelMapper : IApiVPersonModelMapper
 	{
-		public ApiVPersonModelMapper()
-			: base()
+		public virtual ApiVPersonClientResponseModel MapClientRequestToResponse(
+			int personId,
+			ApiVPersonClientRequestModel request)
 		{
+			var response = new ApiVPersonClientResponseModel();
+			response.SetProperties(personId,
+			                       request.PersonName);
+			return response;
+		}
+
+		public virtual ApiVPersonClientRequestModel MapClientResponseToRequest(
+			ApiVPersonClientResponseModel response)
+		{
+			var request = new ApiVPersonClientRequestModel();
+			request.SetProperties(
+				response.PersonName);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>596fe3dd8f6f63a52a2f30b92aca831c</Hash>
+    <Hash>e25fd3d0ff293129cec35f24fb4099fa</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

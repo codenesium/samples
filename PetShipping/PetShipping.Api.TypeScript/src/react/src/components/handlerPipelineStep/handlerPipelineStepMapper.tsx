@@ -45,4 +45,7 @@ export default class HandlerPipelineStepMapper {
 
 /*<Codenesium>
     <Hash>e7532bc9742a6b78ae39319c4a51875a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

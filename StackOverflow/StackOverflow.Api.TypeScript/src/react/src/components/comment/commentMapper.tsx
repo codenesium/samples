@@ -83,4 +83,7 @@ export default class CommentMapper {
 
 /*<Codenesium>
     <Hash>3d932f621928a3ed444196ceda77e388</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

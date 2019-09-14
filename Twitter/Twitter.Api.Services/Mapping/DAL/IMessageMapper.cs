@@ -7,9 +7,21 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IDALMessageMapper
 	{
+		Message MapModelToEntity(
+			int messageId,
+			ApiMessageServerRequestModel model);
+
+		ApiMessageServerResponseModel MapEntityToModel(
+			Message item);
+
+		List<ApiMessageServerResponseModel> MapEntityToModel(
+			List<Message> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf0ca8968d9896d88dbd1d349150c349</Hash>
+    <Hash>851242e9d0c9bf63ee5efd8c18c0dea8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -270,4 +270,7 @@ export class StudentTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>8c44bd2e0a2fe116883cbd474da95f68</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

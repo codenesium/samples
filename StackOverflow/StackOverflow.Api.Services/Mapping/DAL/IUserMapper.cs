@@ -7,9 +7,21 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IDALUserMapper
 	{
+		User MapModelToEntity(
+			int id,
+			ApiUserServerRequestModel model);
+
+		ApiUserServerResponseModel MapEntityToModel(
+			User item);
+
+		List<ApiUserServerResponseModel> MapEntityToModel(
+			List<User> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb069257709fba9651750db5cf20304a</Hash>
+    <Hash>f30f3edc1d2510ae1ff45f7fd56861e7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

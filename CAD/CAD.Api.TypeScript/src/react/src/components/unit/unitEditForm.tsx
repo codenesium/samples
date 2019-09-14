@@ -224,4 +224,7 @@ export const WrappedUnitEditComponent = Form.create({ name: 'Unit Edit' })(
 
 /*<Codenesium>
     <Hash>8890a53bc9e7fccfcaf41b276d57c751</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

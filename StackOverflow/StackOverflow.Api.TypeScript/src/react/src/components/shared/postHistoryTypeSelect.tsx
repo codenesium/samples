@@ -124,4 +124,7 @@ export class PostHistoryTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>1f55a9c7b291901aa9cff685ceca5868</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

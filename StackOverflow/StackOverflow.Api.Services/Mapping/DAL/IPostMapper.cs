@@ -7,9 +7,21 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IDALPostMapper
 	{
+		Post MapModelToEntity(
+			int id,
+			ApiPostServerRequestModel model);
+
+		ApiPostServerResponseModel MapEntityToModel(
+			Post item);
+
+		List<ApiPostServerResponseModel> MapEntityToModel(
+			List<Post> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f982e5f248120031de952b3a2a06d88</Hash>
+    <Hash>6b77fe7ededb76c21e8a21fee8e5792c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

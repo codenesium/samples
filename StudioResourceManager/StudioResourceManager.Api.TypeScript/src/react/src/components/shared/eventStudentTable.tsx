@@ -206,4 +206,7 @@ export class EventStudentTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>52b529ae1e3d0608e72c864e04ab0eca</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

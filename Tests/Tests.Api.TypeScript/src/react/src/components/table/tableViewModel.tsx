@@ -15,11 +15,14 @@ export default class TableViewModel {
   }
 
   toDisplay(): string {
-    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>869f9884d069ca3934b760356393bbcd</Hash>
+    <Hash>cc57040553359e6101106c93dc9ca4f6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

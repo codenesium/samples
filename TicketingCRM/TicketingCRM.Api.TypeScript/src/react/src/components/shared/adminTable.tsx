@@ -202,4 +202,7 @@ export class AdminTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>d7da27cbb7f60bbcfc8f72a2397474cc</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

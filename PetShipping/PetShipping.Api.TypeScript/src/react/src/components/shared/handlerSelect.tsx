@@ -123,4 +123,7 @@ export class HandlerSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>6502e64d3563fe0c15c15d48fac95ac9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

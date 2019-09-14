@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using PetShippingNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IApiPipelineStatusServerModelMapper
 	{
+		ApiPipelineStatusServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiPipelineStatusServerRequestModel request);
+
+		ApiPipelineStatusServerRequestModel MapServerResponseToRequest(
+			ApiPipelineStatusServerResponseModel response);
+
+		ApiPipelineStatusClientRequestModel MapServerResponseToClientRequest(
+			ApiPipelineStatusServerResponseModel response);
+
+		JsonPatchDocument<ApiPipelineStatusServerRequestModel> CreatePatch(ApiPipelineStatusServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>82c7f7886c13a1f43c94d1d855e0aeb6</Hash>
+    <Hash>be80947722aaaa9f231eb2649471e116</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

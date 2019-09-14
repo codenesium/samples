@@ -129,4 +129,7 @@ export class TestAllFieldTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>e60340c931072382538011b10dc1fc6a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

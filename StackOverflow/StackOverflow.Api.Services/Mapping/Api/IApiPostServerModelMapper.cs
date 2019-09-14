@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using StackOverflowNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IApiPostServerModelMapper
 	{
+		ApiPostServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiPostServerRequestModel request);
+
+		ApiPostServerRequestModel MapServerResponseToRequest(
+			ApiPostServerResponseModel response);
+
+		ApiPostClientRequestModel MapServerResponseToClientRequest(
+			ApiPostServerResponseModel response);
+
+		JsonPatchDocument<ApiPostServerRequestModel> CreatePatch(ApiPostServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>428b5bea9c3ea472003a43e151e50be8</Hash>
+    <Hash>f3521769e988d43dcab0d5fc3d9326e2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

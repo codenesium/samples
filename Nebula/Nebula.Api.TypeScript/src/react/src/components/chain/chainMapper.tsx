@@ -48,4 +48,7 @@ export default class ChainMapper {
 
 /*<Codenesium>
     <Hash>6299c70097ee3eea4dbd540e76861571</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

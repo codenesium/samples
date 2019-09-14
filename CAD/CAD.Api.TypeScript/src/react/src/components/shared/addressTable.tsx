@@ -195,4 +195,7 @@ export class AddressTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>7aa2d006b6d53e07542f16d9bf13345f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

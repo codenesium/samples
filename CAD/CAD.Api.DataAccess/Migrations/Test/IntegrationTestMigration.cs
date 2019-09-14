@@ -23,4 +23,7 @@ namespace CADNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>d416c862b61adbc414c7bffc49e39bde</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

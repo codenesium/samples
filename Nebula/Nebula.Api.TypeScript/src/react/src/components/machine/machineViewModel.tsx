@@ -41,4 +41,7 @@ export default class MachineViewModel {
 
 /*<Codenesium>
     <Hash>af3aa2b199974cc2b99ebd097b55ae65</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

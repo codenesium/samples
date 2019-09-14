@@ -22,4 +22,7 @@ export default class CountryMapper {
 
 /*<Codenesium>
     <Hash>5920496c85f48426a084955246b14241</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

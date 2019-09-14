@@ -230,4 +230,7 @@ export const WrappedOffCapabilityEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>3f96fb0190eb7070a27cb661ab0d5a9e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

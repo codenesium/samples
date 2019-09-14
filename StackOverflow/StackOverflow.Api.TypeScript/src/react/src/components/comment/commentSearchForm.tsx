@@ -326,4 +326,7 @@ export const WrappedCommentSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>047b4c7e6a487be0f7dc060fb6299578</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

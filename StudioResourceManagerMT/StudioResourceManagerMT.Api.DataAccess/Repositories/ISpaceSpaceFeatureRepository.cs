@@ -7,9 +7,25 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 {
 	public partial interface ISpaceSpaceFeatureRepository
 	{
+		Task<SpaceSpaceFeature> Create(SpaceSpaceFeature item);
+
+		Task Update(SpaceSpaceFeature item);
+
+		Task Delete(int id);
+
+		Task<SpaceSpaceFeature> Get(int id);
+
+		Task<List<SpaceSpaceFeature>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<SpaceFeature> SpaceFeatureBySpaceFeatureId(int spaceFeatureId);
+
+		Task<Space> SpaceBySpaceId(int spaceId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b1369c98cc2d54b26fa5b6ef6e79c180</Hash>
+    <Hash>f174a39c6bc029297fd7b7ba48c4eea4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -268,4 +268,7 @@ export const WrappedVoteTypeSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>46b8ff0fe2b9b677a394a3d9e203315c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

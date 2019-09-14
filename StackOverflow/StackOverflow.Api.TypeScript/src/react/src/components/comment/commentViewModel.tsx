@@ -51,4 +51,7 @@ export default class CommentViewModel {
 
 /*<Codenesium>
     <Hash>ae7fc856ec08c799e3c16f1ecdaafc82</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

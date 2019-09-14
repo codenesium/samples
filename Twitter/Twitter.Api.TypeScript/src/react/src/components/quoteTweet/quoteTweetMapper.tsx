@@ -69,4 +69,7 @@ export default class QuoteTweetMapper {
 
 /*<Codenesium>
     <Hash>7f973d8da620b11f3e500c8fe2ebce6b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

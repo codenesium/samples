@@ -30,4 +30,7 @@ namespace PetStoreNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>a3733444103c09d7f205add6401fe71f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -249,4 +249,7 @@ export const WrappedTransactionEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>d06c83dd502f412116d5660f5a401b8a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -123,4 +123,7 @@ export class DeviceSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>74f445581d19041bfcd52aeb3182f7e1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

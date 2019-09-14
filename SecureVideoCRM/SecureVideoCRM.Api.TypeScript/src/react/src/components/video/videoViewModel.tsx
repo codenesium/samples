@@ -33,4 +33,7 @@ export default class VideoViewModel {
 
 /*<Codenesium>
     <Hash>878ae2dcea64a553cddff3d92e3b65c9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

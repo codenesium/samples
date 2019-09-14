@@ -43,4 +43,7 @@ export default class PipelineStepDestinationMapper {
 
 /*<Codenesium>
     <Hash>5b15eb9743cac12a24297b90874c519a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

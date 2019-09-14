@@ -18,4 +18,7 @@ export default class UnitMapper {
 
 /*<Codenesium>
     <Hash>08df7223c1eb1f3378cd221c27955d70</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

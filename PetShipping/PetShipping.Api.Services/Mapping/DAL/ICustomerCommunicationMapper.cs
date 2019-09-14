@@ -7,9 +7,21 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IDALCustomerCommunicationMapper
 	{
+		CustomerCommunication MapModelToEntity(
+			int id,
+			ApiCustomerCommunicationServerRequestModel model);
+
+		ApiCustomerCommunicationServerResponseModel MapEntityToModel(
+			CustomerCommunication item);
+
+		List<ApiCustomerCommunicationServerResponseModel> MapEntityToModel(
+			List<CustomerCommunication> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4576c4c3fcb791419367983f8f544aab</Hash>
+    <Hash>2f8ebf5ebca4dae1bb3796e19d846bc4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

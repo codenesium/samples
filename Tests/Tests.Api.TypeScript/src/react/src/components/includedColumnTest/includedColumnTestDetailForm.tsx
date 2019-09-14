@@ -131,4 +131,7 @@ export const WrappedIncludedColumnTestDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>cb3d3e93df427f88f19a8e9578b69ee5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

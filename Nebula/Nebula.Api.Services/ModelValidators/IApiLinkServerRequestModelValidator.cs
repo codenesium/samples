@@ -7,9 +7,17 @@ namespace NebulaNS.Api.Services
 {
 	public partial interface IApiLinkServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiLinkServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe9660b853191164a2ca8ea0816f60bb</Hash>
+    <Hash>6ae97ed319363893729171c83891b295</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

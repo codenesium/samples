@@ -141,4 +141,7 @@ export const WrappedOfficerCapabilitiesDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>2227a2dbe77fbf88aa8f447e99ba8b58</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

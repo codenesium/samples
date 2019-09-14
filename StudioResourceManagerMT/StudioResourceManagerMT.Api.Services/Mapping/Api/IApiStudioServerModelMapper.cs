@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using StudioResourceManagerMTNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IApiStudioServerModelMapper
 	{
+		ApiStudioServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiStudioServerRequestModel request);
+
+		ApiStudioServerRequestModel MapServerResponseToRequest(
+			ApiStudioServerResponseModel response);
+
+		ApiStudioClientRequestModel MapServerResponseToClientRequest(
+			ApiStudioServerResponseModel response);
+
+		JsonPatchDocument<ApiStudioServerRequestModel> CreatePatch(ApiStudioServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>adb8e7a95b4d9e12b8a27e1bd5ffda99</Hash>
+    <Hash>3a1a389e04ee22ff843d84735d339408</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

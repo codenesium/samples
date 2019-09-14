@@ -2,14 +2,29 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TestsNS.Api.Client;
 
 namespace TestsNS.Api.Services
 {
 	public partial interface IApiPersonServerModelMapper
 	{
+		ApiPersonServerResponseModel MapServerRequestToResponse(
+			int personId,
+			ApiPersonServerRequestModel request);
+
+		ApiPersonServerRequestModel MapServerResponseToRequest(
+			ApiPersonServerResponseModel response);
+
+		ApiPersonClientRequestModel MapServerResponseToClientRequest(
+			ApiPersonServerResponseModel response);
+
+		JsonPatchDocument<ApiPersonServerRequestModel> CreatePatch(ApiPersonServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b3858ca4ab5067df1f7806a3f47da22</Hash>
+    <Hash>f75d9bd7b4325689d7328dd663e88440</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

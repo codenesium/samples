@@ -22,4 +22,7 @@ export default class CountryViewModel {
 
 /*<Codenesium>
     <Hash>f65c1f21e3d16ef26777dbb164eb5e9f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

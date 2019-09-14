@@ -275,4 +275,7 @@ export const WrappedSaleEditComponent = Form.create({ name: 'Sale Edit' })(
 
 /*<Codenesium>
     <Hash>06b9f8243869bc931b12baab62b37c9b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

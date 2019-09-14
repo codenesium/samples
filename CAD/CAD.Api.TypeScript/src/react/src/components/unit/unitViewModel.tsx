@@ -22,4 +22,7 @@ export default class UnitViewModel {
 
 /*<Codenesium>
     <Hash>5067c2abf68bb8ba07e4628e27cdc68a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

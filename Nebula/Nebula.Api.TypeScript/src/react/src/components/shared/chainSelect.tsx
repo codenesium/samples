@@ -123,4 +123,7 @@ export class ChainSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>37562f011d700808bd43d534d27a5d55</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

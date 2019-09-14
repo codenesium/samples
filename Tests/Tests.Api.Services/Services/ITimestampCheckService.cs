@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
@@ -5,9 +8,23 @@ namespace TestsNS.Api.Services
 {
 	public partial interface ITimestampCheckService
 	{
+		Task<CreateResponse<ApiTimestampCheckServerResponseModel>> Create(
+			ApiTimestampCheckServerRequestModel model);
+
+		Task<UpdateResponse<ApiTimestampCheckServerResponseModel>> Update(int id,
+		                                                                   ApiTimestampCheckServerRequestModel model);
+
+		Task<ActionResponse> Delete(int id);
+
+		Task<ApiTimestampCheckServerResponseModel> Get(int id);
+
+		Task<List<ApiTimestampCheckServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>8263df06af5665118b7b18050da646cc</Hash>
+    <Hash>cdb652e6bbfcf6f5817ec7a54ce88bfa</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

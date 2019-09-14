@@ -213,4 +213,7 @@ export class TeacherTeacherSkillTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>faa7ac6df4fb3db988b67d9405a894b1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

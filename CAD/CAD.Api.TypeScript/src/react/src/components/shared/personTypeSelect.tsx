@@ -123,4 +123,7 @@ export class PersonTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>a5a11a4c006ebf70637c8c494c497a18</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

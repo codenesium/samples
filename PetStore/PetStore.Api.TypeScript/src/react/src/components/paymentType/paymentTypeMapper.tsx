@@ -22,4 +22,7 @@ export default class PaymentTypeMapper {
 
 /*<Codenesium>
     <Hash>feabac69328f5b8a7be4f9f63a20d489</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

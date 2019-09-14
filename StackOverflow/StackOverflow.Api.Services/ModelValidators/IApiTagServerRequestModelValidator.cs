@@ -7,9 +7,17 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IApiTagServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiTagServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiTagServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>14771bf9ae9d635120540759973245dd</Hash>
+    <Hash>35296ce7fc07bf0207156fd30eb7c89e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

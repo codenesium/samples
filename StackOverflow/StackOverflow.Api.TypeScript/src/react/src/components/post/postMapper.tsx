@@ -133,4 +133,7 @@ export default class PostMapper {
 
 /*<Codenesium>
     <Hash>badaa92199d18989bf92f2ec9d7a0c9c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

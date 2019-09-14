@@ -255,4 +255,7 @@ export class VenueTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>a8a473722e90df759997478a324dafde</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -383,4 +383,7 @@ export class TestAllFieldTypeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>68719cf50a2aa30d85b9f85f6e2eb077</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

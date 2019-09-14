@@ -1,13 +1,32 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
 	public partial interface IFileTypeService
 	{
+		Task<CreateResponse<ApiFileTypeServerResponseModel>> Create(
+			ApiFileTypeServerRequestModel model);
+
+		Task<UpdateResponse<ApiFileTypeServerResponseModel>> Update(int id,
+		                                                             ApiFileTypeServerRequestModel model);
+
+		Task<ActionResponse> Delete(int id);
+
+		Task<ApiFileTypeServerResponseModel> Get(int id);
+
+		Task<List<ApiFileTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<ApiFileServerResponseModel>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f287a9969fa4a2a6d066aedf64489630</Hash>
+    <Hash>3cadff27a8c1315c19d604818d526da7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

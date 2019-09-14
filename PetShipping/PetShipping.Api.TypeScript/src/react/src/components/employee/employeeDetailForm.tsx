@@ -187,4 +187,7 @@ export const WrappedEmployeeDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>fbc3522dd2c0e6f9db8058a94888daff</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

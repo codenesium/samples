@@ -1,14 +1,53 @@
+using CADNS.Api.Client;
+using Microsoft.AspNetCore.JsonPatch;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace CADNS.Api.Services
 {
-	public partial class ApiCallTypeServerModelMapper : AbstractApiCallTypeServerModelMapper, IApiCallTypeServerModelMapper
+	public class ApiCallTypeServerModelMapper : IApiCallTypeServerModelMapper
 	{
-		public ApiCallTypeServerModelMapper()
-			: base()
+		public virtual ApiCallTypeServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiCallTypeServerRequestModel request)
 		{
+			var response = new ApiCallTypeServerResponseModel();
+			response.SetProperties(id,
+			                       request.Name);
+			return response;
+		}
+
+		public virtual ApiCallTypeServerRequestModel MapServerResponseToRequest(
+			ApiCallTypeServerResponseModel response)
+		{
+			var request = new ApiCallTypeServerRequestModel();
+			request.SetProperties(
+				response.Name);
+			return request;
+		}
+
+		public virtual ApiCallTypeClientRequestModel MapServerResponseToClientRequest(
+			ApiCallTypeServerResponseModel response)
+		{
+			var request = new ApiCallTypeClientRequestModel();
+			request.SetProperties(
+				response.Name);
+			return request;
+		}
+
+		public JsonPatchDocument<ApiCallTypeServerRequestModel> CreatePatch(ApiCallTypeServerRequestModel model)
+		{
+			var patch = new JsonPatchDocument<ApiCallTypeServerRequestModel>();
+			patch.Replace(x => x.Name, model.Name);
+			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4c46fd75cf07be3eb3643b0e56bbc9c</Hash>
+    <Hash>830e69d152d3cb4ca8cdde7af2cfb1e7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

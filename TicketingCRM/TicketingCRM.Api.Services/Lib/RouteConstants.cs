@@ -26,4 +26,7 @@ namespace TicketingCRMNS.Api.Services
 
 /*<Codenesium>
     <Hash>fde88a46ff8e2307bbfc13623abfc32b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

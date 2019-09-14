@@ -268,4 +268,7 @@ export const WrappedChainStatusSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>456237f7f8fd7f807e29b9eca3d32cb2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

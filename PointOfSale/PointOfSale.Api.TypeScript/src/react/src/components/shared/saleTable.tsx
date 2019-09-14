@@ -174,4 +174,7 @@ export class SaleTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>a683c0f4c695e1213461c29dc2f4dedb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

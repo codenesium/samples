@@ -7,9 +7,17 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IApiCustomerServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiCustomerServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiCustomerServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>caf29bb050e9dad3b85c3b155a55ad65</Hash>
+    <Hash>5b2cd69a91e6b8bcf874436f6509f16e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

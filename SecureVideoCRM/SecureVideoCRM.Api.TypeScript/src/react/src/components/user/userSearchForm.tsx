@@ -292,4 +292,7 @@ export const WrappedUserSearchComponent = Form.create({ name: 'User Search' })(
 
 /*<Codenesium>
     <Hash>3f613f1fb9b71954780e111dc8ed4137</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

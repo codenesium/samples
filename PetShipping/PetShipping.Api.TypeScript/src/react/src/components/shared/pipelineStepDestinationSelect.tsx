@@ -129,4 +129,7 @@ export class PipelineStepDestinationSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>384f6eb1267fef317f3e23d8976647c9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

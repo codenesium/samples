@@ -7,9 +7,17 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IApiQuoteTweetServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiQuoteTweetServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiQuoteTweetServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce5310a1fa66f17aaef075731143e446</Hash>
+    <Hash>9fd8f6987bc7d51263ede48b90f381e3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

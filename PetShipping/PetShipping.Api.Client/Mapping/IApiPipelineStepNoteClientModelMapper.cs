@@ -1,3 +1,4 @@
+using PetShippingNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,9 +7,18 @@ namespace PetShippingNS.Api.Client
 {
 	public partial interface IApiPipelineStepNoteModelMapper
 	{
+		ApiPipelineStepNoteClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiPipelineStepNoteClientRequestModel request);
+
+		ApiPipelineStepNoteClientRequestModel MapClientResponseToRequest(
+			ApiPipelineStepNoteClientResponseModel response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e707802ba8186bdfcc0a9b170ca66284</Hash>
+    <Hash>0b9f45ea305e102d0d3423c9b25e6cdc</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

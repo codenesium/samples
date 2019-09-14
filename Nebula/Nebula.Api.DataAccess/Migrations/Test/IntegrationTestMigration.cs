@@ -23,4 +23,7 @@ namespace NebulaNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>3696c5ff6f1e5057a1868019a62edfca</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

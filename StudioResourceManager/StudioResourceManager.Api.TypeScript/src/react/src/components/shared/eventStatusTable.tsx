@@ -167,4 +167,7 @@ export class EventStatusTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>c82766f668f20115ca82ca28f4721783</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

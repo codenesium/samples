@@ -227,4 +227,7 @@ export class CustomerCommunicationTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>4d6dd6d8a958a3561ae1950d1d91b974</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

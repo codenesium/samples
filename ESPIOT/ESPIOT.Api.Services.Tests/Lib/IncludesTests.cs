@@ -1456,4 +1456,7 @@ namespace ESPIOTNS.Api.Services.Tests.Tests
 
 /*<Codenesium>
     <Hash>8c7c7a839500e22e9a5709f3e654ad4e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

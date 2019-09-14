@@ -1,13 +1,30 @@
 using CADNS.Api.Contracts;
 using CADNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CADNS.Api.Services
 {
 	public partial interface IVehicleCapabilitiesService
 	{
+		Task<CreateResponse<ApiVehicleCapabilitiesServerResponseModel>> Create(
+			ApiVehicleCapabilitiesServerRequestModel model);
+
+		Task<UpdateResponse<ApiVehicleCapabilitiesServerResponseModel>> Update(int id,
+		                                                                        ApiVehicleCapabilitiesServerRequestModel model);
+
+		Task<ActionResponse> Delete(int id);
+
+		Task<ApiVehicleCapabilitiesServerResponseModel> Get(int id);
+
+		Task<List<ApiVehicleCapabilitiesServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>97d9fa4d5e65917b24b026e63c12d17e</Hash>
+    <Hash>000a60917742ff19f0aba8bc61026c20</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

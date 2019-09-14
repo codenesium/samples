@@ -47,4 +47,7 @@ export default class ChainViewModel {
 
 /*<Codenesium>
     <Hash>d4d421b43ce4e7bbd84cf93fcb2ebceb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

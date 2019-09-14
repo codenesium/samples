@@ -38,4 +38,7 @@ export default class ColumnSameAsFKTableMapper {
 
 /*<Codenesium>
     <Hash>49ba0cc9f679668aea5ef6311c66de2b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

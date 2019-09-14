@@ -225,4 +225,7 @@ export const WrappedPipelineStepDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>ffb86ec640d05994f950976edb7e5f7f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

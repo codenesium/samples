@@ -7,9 +7,29 @@ namespace StudioResourceManagerNS.Api.DataAccess
 {
 	public partial interface IEventRepository
 	{
+		Task<Event> Create(Event item);
+
+		Task Update(Event item);
+
+		Task Delete(int id);
+
+		Task<Event> Get(int id);
+
+		Task<List<Event>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Event>> ByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<EventStudent>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<EventTeacher>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+
+		Task<EventStatus> EventStatusByEventStatusId(int eventStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>34c8134bb4b016aee9976f459519f7c6</Hash>
+    <Hash>b139b8376e432a4b7800f3a019204842</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

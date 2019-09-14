@@ -297,4 +297,7 @@ export const WrappedBadgeSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>75760af4e227ef2f822ed111e72f6047</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

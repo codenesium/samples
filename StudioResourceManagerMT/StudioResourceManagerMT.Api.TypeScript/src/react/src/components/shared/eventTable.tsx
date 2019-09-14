@@ -241,4 +241,7 @@ export class EventTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>6742407cd5d22f69fbee8b3c59d043f0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

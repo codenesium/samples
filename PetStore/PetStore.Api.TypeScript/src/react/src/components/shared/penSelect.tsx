@@ -123,4 +123,7 @@ export class PenSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>0484e4c60f82d06c27470e4cb14a7975</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

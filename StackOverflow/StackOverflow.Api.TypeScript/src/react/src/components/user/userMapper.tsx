@@ -48,4 +48,7 @@ export default class UserMapper {
 
 /*<Codenesium>
     <Hash>381456e33bb3d8e7ca63cd296cdc4efa</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

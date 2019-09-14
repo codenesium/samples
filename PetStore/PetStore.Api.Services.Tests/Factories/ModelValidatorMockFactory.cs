@@ -52,4 +52,7 @@ namespace PetStoreNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>5492dee27c08c3e0861f9f840b25c48f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

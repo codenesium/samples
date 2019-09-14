@@ -1,16 +1,29 @@
+using Codenesium.DataConversionExtensions;
+using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public class ApiVPersonServerRequestModelValidator : AbstractApiVPersonServerRequestModelValidator, IApiVPersonServerRequestModelValidator
+	public class ApiVPersonServerRequestModelValidator : AbstractValidator<ApiVPersonServerRequestModel>, IApiVPersonServerRequestModelValidator
 	{
+		private int existingRecordId;
+
+		protected IVPersonRepository VPersonRepository { get; private set; }
+
 		public ApiVPersonServerRequestModelValidator(IVPersonRepository vPersonRepository)
-			: base(vPersonRepository)
 		{
+			this.VPersonRepository = vPersonRepository;
+		}
+
+		public async Task<ValidationResult> ValidateAsync(ApiVPersonServerRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiVPersonServerRequestModel model)
@@ -29,9 +42,18 @@ namespace TestsNS.Api.Services
 		{
 			return await Task.FromResult<ValidationResult>(new ValidationResult());
 		}
+
+		public virtual void PersonNameRules()
+		{
+			this.RuleFor(x => x.PersonName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PersonName).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0814d9cb05c04b6c719f6c64cc925a7a</Hash>
+    <Hash>4e71468becf570e689e398a28e9573a7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

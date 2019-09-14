@@ -192,4 +192,7 @@ export class UserTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>58e55179e8cfb400e3ab7f79b2dab88e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

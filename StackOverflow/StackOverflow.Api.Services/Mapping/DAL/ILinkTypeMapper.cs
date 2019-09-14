@@ -7,9 +7,21 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IDALLinkTypeMapper
 	{
+		LinkType MapModelToEntity(
+			int id,
+			ApiLinkTypeServerRequestModel model);
+
+		ApiLinkTypeServerResponseModel MapEntityToModel(
+			LinkType item);
+
+		List<ApiLinkTypeServerResponseModel> MapEntityToModel(
+			List<LinkType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fd4b71bbf32f8894bf82f6b87c1f74e4</Hash>
+    <Hash>163b1b37b2f4fd8d2ec7ff37818ec337</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IDALEventMapper
 	{
+		Event MapModelToEntity(
+			int id,
+			ApiEventServerRequestModel model);
+
+		ApiEventServerResponseModel MapEntityToModel(
+			Event item);
+
+		List<ApiEventServerResponseModel> MapEntityToModel(
+			List<Event> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c49ac3fc8e95d80ab58f1d96370a5145</Hash>
+    <Hash>09122f569bdd7f64d80d4168cd1f4631</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

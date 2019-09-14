@@ -41,4 +41,7 @@ export default class FamilyViewModel {
 
 /*<Codenesium>
     <Hash>f53f3d24daa7f9f6117bbbaa0069e100</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -27,4 +27,7 @@ export default class TeamMapper {
 
 /*<Codenesium>
     <Hash>b2b93b054ce9755f33e5c31522466ccb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

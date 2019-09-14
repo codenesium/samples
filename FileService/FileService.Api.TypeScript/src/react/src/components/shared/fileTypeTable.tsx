@@ -167,4 +167,7 @@ export class FileTypeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>3987b6c72446658470044850c87f9d77</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

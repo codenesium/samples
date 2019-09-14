@@ -43,4 +43,7 @@ export default class UnitOfficerMapper {
 
 /*<Codenesium>
     <Hash>468604b0fcf64cacb795693b52973219</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

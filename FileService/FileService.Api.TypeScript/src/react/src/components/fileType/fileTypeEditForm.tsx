@@ -230,4 +230,7 @@ export const WrappedFileTypeEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>42bbfd109572130f4f7942b18a3b3430</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

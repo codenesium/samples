@@ -7,9 +7,21 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IDALAdminMapper
 	{
+		Admin MapModelToEntity(
+			int id,
+			ApiAdminServerRequestModel model);
+
+		ApiAdminServerResponseModel MapEntityToModel(
+			Admin item);
+
+		List<ApiAdminServerResponseModel> MapEntityToModel(
+			List<Admin> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>472ab38e551c34a5b03512afe91b437b</Hash>
+    <Hash>806b37eae74cd25243795f333b766e74</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

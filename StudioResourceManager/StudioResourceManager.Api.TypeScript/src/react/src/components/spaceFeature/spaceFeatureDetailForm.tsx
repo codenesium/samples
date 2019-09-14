@@ -143,4 +143,7 @@ export const WrappedSpaceFeatureDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>957d53968bccfe483e818596bcd896b9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

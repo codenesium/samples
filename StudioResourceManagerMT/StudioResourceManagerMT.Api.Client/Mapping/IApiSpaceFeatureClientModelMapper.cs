@@ -1,3 +1,4 @@
+using StudioResourceManagerMTNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,9 +7,18 @@ namespace StudioResourceManagerMTNS.Api.Client
 {
 	public partial interface IApiSpaceFeatureModelMapper
 	{
+		ApiSpaceFeatureClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiSpaceFeatureClientRequestModel request);
+
+		ApiSpaceFeatureClientRequestModel MapClientResponseToRequest(
+			ApiSpaceFeatureClientResponseModel response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4723340edb54ed629c7ed85788d9d512</Hash>
+    <Hash>2c8366fbb341837eb224ca478656cadb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -278,4 +278,7 @@ export const WrappedRowVersionCheckSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>eeafcdb76ddad767bc4afe68b5e89769</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -200,4 +200,7 @@ export const WrappedTagCreateComponent = Form.create({ name: 'Tag Create' })(
 
 /*<Codenesium>
     <Hash>05f44d677d98f7cb8e91795c2f6c5304</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

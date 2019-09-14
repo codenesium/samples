@@ -123,4 +123,7 @@ export class PetSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>509fc768dfe5306568195dd6753639e8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

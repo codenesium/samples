@@ -123,4 +123,7 @@ export class ProvinceSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>82c9d2173cc5eb138246880333e9e67e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

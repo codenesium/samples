@@ -7,9 +7,21 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IDALBadgeMapper
 	{
+		Badge MapModelToEntity(
+			int id,
+			ApiBadgeServerRequestModel model);
+
+		ApiBadgeServerResponseModel MapEntityToModel(
+			Badge item);
+
+		List<ApiBadgeServerResponseModel> MapEntityToModel(
+			List<Badge> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f2ed61b6608ea427f7c1f3d0f6936684</Hash>
+    <Hash>d325f06b2b4888eedc5ac49fd3d47101</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -177,4 +177,7 @@ export const WrappedFileDetailComponent = Form.create({ name: 'File Detail' })(
 
 /*<Codenesium>
     <Hash>f8d9d6076d79683870cd9fa43e1e1ff1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

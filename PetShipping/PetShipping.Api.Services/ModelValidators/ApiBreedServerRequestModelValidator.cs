@@ -1,16 +1,29 @@
+using Codenesium.DataConversionExtensions;
+using FluentValidation;
 using FluentValidation.Results;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-	public class ApiBreedServerRequestModelValidator : AbstractApiBreedServerRequestModelValidator, IApiBreedServerRequestModelValidator
+	public class ApiBreedServerRequestModelValidator : AbstractValidator<ApiBreedServerRequestModel>, IApiBreedServerRequestModelValidator
 	{
+		private int existingRecordId;
+
+		protected IBreedRepository BreedRepository { get; private set; }
+
 		public ApiBreedServerRequestModelValidator(IBreedRepository breedRepository)
-			: base(breedRepository)
 		{
+			this.BreedRepository = breedRepository;
+		}
+
+		public async Task<ValidationResult> ValidateAsync(ApiBreedServerRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiBreedServerRequestModel model)
@@ -31,9 +44,30 @@ namespace PetShippingNS.Api.Services
 		{
 			return await Task.FromResult<ValidationResult>(new ValidationResult());
 		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		public virtual void SpeciesIdRules()
+		{
+			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => !x?.SpeciesId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+		}
+
+		protected async Task<bool> BeValidSpeciesBySpeciesId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.BreedRepository.SpeciesBySpeciesId(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20834fac45a7d3b9a4d59ed702e3ca54</Hash>
+    <Hash>02990358004c81e749fa2835afa2c434</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

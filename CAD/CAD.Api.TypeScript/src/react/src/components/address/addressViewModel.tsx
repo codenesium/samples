@@ -41,4 +41,7 @@ export default class AddressViewModel {
 
 /*<Codenesium>
     <Hash>2312427619fbd349ccd12f56c48ca0f1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

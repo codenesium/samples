@@ -184,4 +184,7 @@ export const WrappedCityCreateComponent = Form.create({ name: 'City Create' })(
 
 /*<Codenesium>
     <Hash>b98129ae9113671f65e5608e702d0bdc</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

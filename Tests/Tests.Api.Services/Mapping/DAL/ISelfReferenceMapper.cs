@@ -7,9 +7,21 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IDALSelfReferenceMapper
 	{
+		SelfReference MapModelToEntity(
+			int id,
+			ApiSelfReferenceServerRequestModel model);
+
+		ApiSelfReferenceServerResponseModel MapEntityToModel(
+			SelfReference item);
+
+		List<ApiSelfReferenceServerResponseModel> MapEntityToModel(
+			List<SelfReference> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bba5cab38a7a9c9dc2058df67a53544c</Hash>
+    <Hash>0a5b092c293d25574ed8e867697890d6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

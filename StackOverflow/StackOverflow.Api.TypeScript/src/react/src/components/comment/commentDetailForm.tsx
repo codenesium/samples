@@ -153,4 +153,7 @@ export const WrappedCommentDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>bf2595a5ce80a1fa2e08d63158feecea</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

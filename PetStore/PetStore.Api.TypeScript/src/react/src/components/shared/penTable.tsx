@@ -167,4 +167,7 @@ export class PenTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>2851a7d48e56bed35fce0a7478c14224</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

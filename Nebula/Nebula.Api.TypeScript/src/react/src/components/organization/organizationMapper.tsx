@@ -22,4 +22,7 @@ export default class OrganizationMapper {
 
 /*<Codenesium>
     <Hash>636a1674c9868b3d374e32b466b771ee</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -51,4 +51,7 @@ export default class ReplyMapper {
 
 /*<Codenesium>
     <Hash>a377d6590efa66b10d46d4333a1f811a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

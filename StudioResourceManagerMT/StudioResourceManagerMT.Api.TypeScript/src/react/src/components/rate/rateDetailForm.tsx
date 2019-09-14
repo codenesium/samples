@@ -145,4 +145,7 @@ export const WrappedRateDetailComponent = Form.create({ name: 'Rate Detail' })(
 
 /*<Codenesium>
     <Hash>b7ad0056611ddfc80804d2f1622fbe72</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

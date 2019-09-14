@@ -7,9 +7,21 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IDALTestAllFieldTypeMapper
 	{
+		TestAllFieldType MapModelToEntity(
+			int id,
+			ApiTestAllFieldTypeServerRequestModel model);
+
+		ApiTestAllFieldTypeServerResponseModel MapEntityToModel(
+			TestAllFieldType item);
+
+		List<ApiTestAllFieldTypeServerResponseModel> MapEntityToModel(
+			List<TestAllFieldType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>827206e930fd0780c08fb1aaa851cc6b</Hash>
+    <Hash>9cc0af8f853d788031173d655dda8a01</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

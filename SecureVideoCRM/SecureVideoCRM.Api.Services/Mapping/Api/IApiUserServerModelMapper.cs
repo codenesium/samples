@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using SecureVideoCRMNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace SecureVideoCRMNS.Api.Services
 {
 	public partial interface IApiUserServerModelMapper
 	{
+		ApiUserServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiUserServerRequestModel request);
+
+		ApiUserServerRequestModel MapServerResponseToRequest(
+			ApiUserServerResponseModel response);
+
+		ApiUserClientRequestModel MapServerResponseToClientRequest(
+			ApiUserServerResponseModel response);
+
+		JsonPatchDocument<ApiUserServerRequestModel> CreatePatch(ApiUserServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cfa7ea968ae5926bb27c6291f3bdf35c</Hash>
+    <Hash>e81f7148bf80da4b5c8bc4afef0c282b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

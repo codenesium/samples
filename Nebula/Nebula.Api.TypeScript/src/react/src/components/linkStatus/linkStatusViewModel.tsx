@@ -22,4 +22,7 @@ export default class LinkStatusViewModel {
 
 /*<Codenesium>
     <Hash>d484e3e2d9f674ac748ee03c9c52b68a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

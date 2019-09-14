@@ -175,4 +175,7 @@ export const WrappedPaymentTypeCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>5abede63e984c63ec885e7fb1c23a411</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

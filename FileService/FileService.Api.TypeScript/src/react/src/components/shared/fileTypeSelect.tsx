@@ -123,4 +123,7 @@ export class FileTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>3879acd6ec45e2d1f4a78ce70ff2ebd1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

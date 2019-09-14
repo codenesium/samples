@@ -141,4 +141,7 @@ export const WrappedColumnSameAsFKTableDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>ad0129fff5974609fc8aee0831f999c1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

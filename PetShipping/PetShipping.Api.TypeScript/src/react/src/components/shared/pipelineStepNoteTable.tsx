@@ -218,4 +218,7 @@ export class PipelineStepNoteTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>a53176e52ce3c5f0ac081e3ec90c4376</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

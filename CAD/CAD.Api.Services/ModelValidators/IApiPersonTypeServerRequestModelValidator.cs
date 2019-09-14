@@ -7,9 +7,17 @@ namespace CADNS.Api.Services
 {
 	public partial interface IApiPersonTypeServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiPersonTypeServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonTypeServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>26957f1e8c33f0095be983f21fc4a75d</Hash>
+    <Hash>455328f78ca62306e82bcdce841f7f97</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -123,4 +123,7 @@ export class LinkTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>9290f18142fe81872db91e852408c5f5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

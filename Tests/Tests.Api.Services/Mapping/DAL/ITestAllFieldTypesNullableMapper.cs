@@ -7,9 +7,21 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IDALTestAllFieldTypesNullableMapper
 	{
+		TestAllFieldTypesNullable MapModelToEntity(
+			int id,
+			ApiTestAllFieldTypesNullableServerRequestModel model);
+
+		ApiTestAllFieldTypesNullableServerResponseModel MapEntityToModel(
+			TestAllFieldTypesNullable item);
+
+		List<ApiTestAllFieldTypesNullableServerResponseModel> MapEntityToModel(
+			List<TestAllFieldTypesNullable> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>98c767a688fe2547d10af3bef113f49d</Hash>
+    <Hash>b735ded3840ff35dafb2ef0ae62c2958</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

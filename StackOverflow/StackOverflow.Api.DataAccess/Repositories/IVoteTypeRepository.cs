@@ -7,9 +7,23 @@ namespace StackOverflowNS.Api.DataAccess
 {
 	public partial interface IVoteTypeRepository
 	{
+		Task<VoteType> Create(VoteType item);
+
+		Task Update(VoteType item);
+
+		Task Delete(int id);
+
+		Task<VoteType> Get(int id);
+
+		Task<List<VoteType>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Vote>> VotesByVoteTypeId(int voteTypeId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3fc1e57050c1c59d334d9586d888f14d</Hash>
+    <Hash>29369f6973b3056051e29a6513601cfb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

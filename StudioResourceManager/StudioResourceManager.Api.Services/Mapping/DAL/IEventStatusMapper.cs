@@ -7,9 +7,21 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IDALEventStatusMapper
 	{
+		EventStatus MapModelToEntity(
+			int id,
+			ApiEventStatusServerRequestModel model);
+
+		ApiEventStatusServerResponseModel MapEntityToModel(
+			EventStatus item);
+
+		List<ApiEventStatusServerResponseModel> MapEntityToModel(
+			List<EventStatus> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>559daa9585955413780b6c5037eca001</Hash>
+    <Hash>eb41370c90f9abb71c09e9e933c86554</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

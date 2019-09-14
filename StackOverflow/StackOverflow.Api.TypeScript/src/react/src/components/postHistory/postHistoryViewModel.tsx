@@ -68,4 +68,7 @@ export default class PostHistoryViewModel {
 
 /*<Codenesium>
     <Hash>527a84b586e0c8f057bf082b4ec36cd2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

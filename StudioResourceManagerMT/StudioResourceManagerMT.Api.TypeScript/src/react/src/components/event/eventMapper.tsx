@@ -47,4 +47,7 @@ export default class EventMapper {
 
 /*<Codenesium>
     <Hash>b6db3b131602c89e143bf3364c38002e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

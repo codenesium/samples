@@ -31,4 +31,7 @@ export default class PipelineMapper {
 
 /*<Codenesium>
     <Hash>36233f33e283a8d69b4c1233bfafef45</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

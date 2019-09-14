@@ -211,4 +211,7 @@ export class FamilyTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>6fc03ec975fef721183f22ddbbdc40b4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

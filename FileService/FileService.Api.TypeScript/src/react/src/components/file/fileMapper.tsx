@@ -62,4 +62,7 @@ export default class FileMapper {
 
 /*<Codenesium>
     <Hash>2e625f899931460927f27cf2ee2a9467</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

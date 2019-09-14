@@ -22,4 +22,7 @@ export default class ChainStatusViewModel {
 
 /*<Codenesium>
     <Hash>5adee926b1b4d2fe7f092ecb3ed9df03</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -41,4 +41,7 @@ export default class TransactionMapper {
 
 /*<Codenesium>
     <Hash>8fd8ebde15c3a7a3bd4fdfeb052e3c70</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

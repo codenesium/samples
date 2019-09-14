@@ -249,4 +249,7 @@ export const WrappedVideoEditComponent = Form.create({ name: 'Video Edit' })(
 
 /*<Codenesium>
     <Hash>c6e1d2d32789e7e2dde7517592f9d4b0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

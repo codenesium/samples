@@ -167,4 +167,7 @@ export class PostTypeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>1d4470f8cef37bfa444c560bae56f8b0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

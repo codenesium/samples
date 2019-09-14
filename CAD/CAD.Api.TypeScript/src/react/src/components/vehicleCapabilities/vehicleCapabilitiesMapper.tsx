@@ -43,4 +43,7 @@ export default class VehicleCapabilitiesMapper {
 
 /*<Codenesium>
     <Hash>9abc027f84c96167f891ee11102d654d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

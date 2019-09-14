@@ -1,14 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace SecureVideoCRMNS.Api.Client
 {
-	public partial class ApiSubscriptionModelMapper : AbstractApiSubscriptionModelMapper, IApiSubscriptionModelMapper
+	public class ApiSubscriptionModelMapper : IApiSubscriptionModelMapper
 	{
-		public ApiSubscriptionModelMapper()
-			: base()
+		public virtual ApiSubscriptionClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiSubscriptionClientRequestModel request)
 		{
+			var response = new ApiSubscriptionClientResponseModel();
+			response.SetProperties(id,
+			                       request.Name,
+			                       request.StripePlanName);
+			return response;
+		}
+
+		public virtual ApiSubscriptionClientRequestModel MapClientResponseToRequest(
+			ApiSubscriptionClientResponseModel response)
+		{
+			var request = new ApiSubscriptionClientRequestModel();
+			request.SetProperties(
+				response.Name,
+				response.StripePlanName);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2e02e8d0b161e9ad35b68548b10d53b</Hash>
+    <Hash>4f01e1f3796769b616f3e80dbb31c57a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

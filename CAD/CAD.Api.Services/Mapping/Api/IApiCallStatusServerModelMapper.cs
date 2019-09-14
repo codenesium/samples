@@ -1,3 +1,4 @@
+using CADNS.Api.Client;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,23 @@ namespace CADNS.Api.Services
 {
 	public partial interface IApiCallStatusServerModelMapper
 	{
+		ApiCallStatusServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiCallStatusServerRequestModel request);
+
+		ApiCallStatusServerRequestModel MapServerResponseToRequest(
+			ApiCallStatusServerResponseModel response);
+
+		ApiCallStatusClientRequestModel MapServerResponseToClientRequest(
+			ApiCallStatusServerResponseModel response);
+
+		JsonPatchDocument<ApiCallStatusServerRequestModel> CreatePatch(ApiCallStatusServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>daeab3aecdd5f039d58a538e4ef0dec8</Hash>
+    <Hash>5fdf3195b562b8208faf3263f5b15220</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

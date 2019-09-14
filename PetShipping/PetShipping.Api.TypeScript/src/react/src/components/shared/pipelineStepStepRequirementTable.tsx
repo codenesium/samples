@@ -211,4 +211,7 @@ export class PipelineStepStepRequirementTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>8f3ec1bfcf78e3cb8abacf7a58259e7a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

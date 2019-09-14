@@ -309,4 +309,7 @@ export const WrappedClaspSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>ff2870f7bd9523e03d7720b1de9abcd4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,25 @@ namespace StudioResourceManagerNS.Api.DataAccess
 {
 	public partial interface IAdminRepository
 	{
+		Task<Admin> Create(Admin item);
+
+		Task Update(Admin item);
+
+		Task Delete(int id);
+
+		Task<Admin> Get(int id);
+
+		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Admin>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
+
+		Task<User> UserByUserId(int userId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b46ed22e2bdd301a0ee5b21e8d25cfc7</Hash>
+    <Hash>548be6ef40f82537ce1388234ed261f3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

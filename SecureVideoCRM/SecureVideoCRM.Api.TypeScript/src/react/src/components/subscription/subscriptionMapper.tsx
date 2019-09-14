@@ -22,4 +22,7 @@ export default class SubscriptionMapper {
 
 /*<Codenesium>
     <Hash>3cf9c404571552dc6e14f831efbc32e1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IDALTicketStatusMapper
 	{
+		TicketStatus MapModelToEntity(
+			int id,
+			ApiTicketStatusServerRequestModel model);
+
+		ApiTicketStatusServerResponseModel MapEntityToModel(
+			TicketStatus item);
+
+		List<ApiTicketStatusServerResponseModel> MapEntityToModel(
+			List<TicketStatus> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a81418fa5df0c08b8fb13c382246f72</Hash>
+    <Hash>38df4a6be42edf8034ddb495c48b694a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

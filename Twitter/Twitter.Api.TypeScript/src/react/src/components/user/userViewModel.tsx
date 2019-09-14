@@ -78,4 +78,7 @@ export default class UserViewModel {
 
 /*<Codenesium>
     <Hash>265b8ec8dda0f0bee44e098cd1db28b3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

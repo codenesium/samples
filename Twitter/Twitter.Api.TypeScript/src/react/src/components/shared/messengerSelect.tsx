@@ -124,4 +124,7 @@ export class MessengerSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>7870affcbcdd1377b05135b5df72c4df</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

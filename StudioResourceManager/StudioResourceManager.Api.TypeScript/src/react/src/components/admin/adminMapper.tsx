@@ -44,4 +44,7 @@ export default class AdminMapper {
 
 /*<Codenesium>
     <Hash>ff9069af82d706941dfd6ee76073b092</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

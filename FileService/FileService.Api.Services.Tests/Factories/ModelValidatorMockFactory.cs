@@ -34,4 +34,7 @@ namespace FileServiceNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>8b88e90ac9eaffabf2df1b59d0e258a0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

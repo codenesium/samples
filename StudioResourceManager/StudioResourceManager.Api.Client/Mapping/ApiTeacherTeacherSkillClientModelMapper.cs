@@ -1,14 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace StudioResourceManagerNS.Api.Client
 {
-	public partial class ApiTeacherTeacherSkillModelMapper : AbstractApiTeacherTeacherSkillModelMapper, IApiTeacherTeacherSkillModelMapper
+	public class ApiTeacherTeacherSkillModelMapper : IApiTeacherTeacherSkillModelMapper
 	{
-		public ApiTeacherTeacherSkillModelMapper()
-			: base()
+		public virtual ApiTeacherTeacherSkillClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiTeacherTeacherSkillClientRequestModel request)
 		{
+			var response = new ApiTeacherTeacherSkillClientResponseModel();
+			response.SetProperties(id,
+			                       request.TeacherId,
+			                       request.TeacherSkillId);
+			return response;
+		}
+
+		public virtual ApiTeacherTeacherSkillClientRequestModel MapClientResponseToRequest(
+			ApiTeacherTeacherSkillClientResponseModel response)
+		{
+			var request = new ApiTeacherTeacherSkillClientRequestModel();
+			request.SetProperties(
+				response.TeacherId,
+				response.TeacherSkillId);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b95a96d2290772e553ec0995c5b1c1b</Hash>
+    <Hash>225a53a5af07effeacd7c88b587c06ec</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

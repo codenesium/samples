@@ -167,4 +167,7 @@ export class SpeciesTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>6885b27d0b7c7bfde11eeadc61a2af9f</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

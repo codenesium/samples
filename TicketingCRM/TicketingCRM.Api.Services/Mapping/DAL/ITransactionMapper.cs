@@ -7,9 +7,21 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IDALTransactionMapper
 	{
+		Transaction MapModelToEntity(
+			int id,
+			ApiTransactionServerRequestModel model);
+
+		ApiTransactionServerResponseModel MapEntityToModel(
+			Transaction item);
+
+		List<ApiTransactionServerResponseModel> MapEntityToModel(
+			List<Transaction> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>55a39fc7a52eb00a5b309ee2a65b9520</Hash>
+    <Hash>2a94c264d4873f1711790a4663e4c1a0</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

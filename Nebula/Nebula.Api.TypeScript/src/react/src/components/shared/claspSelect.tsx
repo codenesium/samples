@@ -123,4 +123,7 @@ export class ClaspSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>0fa9464e00e1ca11b2c97aa1bca624a4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

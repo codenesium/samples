@@ -160,4 +160,7 @@ export const WrappedPetDetailComponent = Form.create({ name: 'Pet Detail' })(
 
 /*<Codenesium>
     <Hash>80ad519b7aa2947c8a29e8138546436e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -28,4 +28,7 @@ export default class CityMapper {
 
 /*<Codenesium>
     <Hash>d34e456e38becfe86aab842c25d8633b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

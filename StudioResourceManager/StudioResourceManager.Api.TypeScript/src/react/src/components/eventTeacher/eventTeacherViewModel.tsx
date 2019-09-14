@@ -35,4 +35,7 @@ export default class EventTeacherViewModel {
 
 /*<Codenesium>
     <Hash>4904c9269921a946c6cf456d5c5fb0c6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

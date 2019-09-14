@@ -123,4 +123,7 @@ export class AdminSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>f293691451c84eda1137d8f8d87ebcc9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

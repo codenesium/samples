@@ -1,16 +1,29 @@
+using Codenesium.DataConversionExtensions;
+using FluentValidation;
 using FluentValidation.Results;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-	public class ApiPipelineStatusServerRequestModelValidator : AbstractApiPipelineStatusServerRequestModelValidator, IApiPipelineStatusServerRequestModelValidator
+	public class ApiPipelineStatusServerRequestModelValidator : AbstractValidator<ApiPipelineStatusServerRequestModel>, IApiPipelineStatusServerRequestModelValidator
 	{
+		private int existingRecordId;
+
+		protected IPipelineStatusRepository PipelineStatusRepository { get; private set; }
+
 		public ApiPipelineStatusServerRequestModelValidator(IPipelineStatusRepository pipelineStatusRepository)
-			: base(pipelineStatusRepository)
 		{
+			this.PipelineStatusRepository = pipelineStatusRepository;
+		}
+
+		public async Task<ValidationResult> ValidateAsync(ApiPipelineStatusServerRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiPipelineStatusServerRequestModel model)
@@ -29,9 +42,18 @@ namespace PetShippingNS.Api.Services
 		{
 			return await Task.FromResult<ValidationResult>(new ValidationResult());
 		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae5b631286bd5107c872bf0f132f28e8</Hash>
+    <Hash>e67e9e19720ce000f4ca7e5758973f86</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

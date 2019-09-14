@@ -7,9 +7,21 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IDALFollowingMapper
 	{
+		Following MapModelToEntity(
+			int userId,
+			ApiFollowingServerRequestModel model);
+
+		ApiFollowingServerResponseModel MapEntityToModel(
+			Following item);
+
+		List<ApiFollowingServerResponseModel> MapEntityToModel(
+			List<Following> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>98176e29b33b49f200156fcf61fd00ca</Hash>
+    <Hash>d27cf6afacc4e02a5ce5ef94b2f6bc2b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

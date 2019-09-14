@@ -312,4 +312,7 @@ export const WrappedColumnSameAsFKTableSearchComponent = Form.create({
 
 /*<Codenesium>
     <Hash>8e7780d30c27bccd27571a2986ea1053</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

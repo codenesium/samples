@@ -7,9 +7,21 @@ namespace CADNS.Api.Services
 {
 	public partial interface IDALUnitDispositionMapper
 	{
+		UnitDisposition MapModelToEntity(
+			int id,
+			ApiUnitDispositionServerRequestModel model);
+
+		ApiUnitDispositionServerResponseModel MapEntityToModel(
+			UnitDisposition item);
+
+		List<ApiUnitDispositionServerResponseModel> MapEntityToModel(
+			List<UnitDisposition> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbc40a00721bea065987ec20b6910e8c</Hash>
+    <Hash>ce1855d229eeb72c4b590faa67d114c2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

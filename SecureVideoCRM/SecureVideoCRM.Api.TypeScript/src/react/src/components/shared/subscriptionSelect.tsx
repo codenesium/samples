@@ -124,4 +124,7 @@ export class SubscriptionSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>7f59ad4190e02d95a36dd691c463bfc2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

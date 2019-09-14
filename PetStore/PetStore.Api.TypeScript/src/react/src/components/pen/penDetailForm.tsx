@@ -143,4 +143,7 @@ export const WrappedPenDetailComponent = Form.create({ name: 'Pen Detail' })(
 
 /*<Codenesium>
     <Hash>13ec35136f94d090127f5a79ce9d85c1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

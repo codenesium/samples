@@ -22,4 +22,7 @@ export default class TransactionStatusViewModel {
 
 /*<Codenesium>
     <Hash>929e06e15660e0c4697969f554934762</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

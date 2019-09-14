@@ -17,4 +17,7 @@ namespace FileServiceNS.Api.Services
 
 /*<Codenesium>
     <Hash>16fbad815d6c599c2146038232126cf2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

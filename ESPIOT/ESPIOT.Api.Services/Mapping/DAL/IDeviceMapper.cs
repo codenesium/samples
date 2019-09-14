@@ -7,9 +7,21 @@ namespace ESPIOTNS.Api.Services
 {
 	public partial interface IDALDeviceMapper
 	{
+		Device MapModelToEntity(
+			int id,
+			ApiDeviceServerRequestModel model);
+
+		ApiDeviceServerResponseModel MapEntityToModel(
+			Device item);
+
+		List<ApiDeviceServerResponseModel> MapEntityToModel(
+			List<Device> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a5b747c3d9484a0ad4275a16ac7bae0</Hash>
+    <Hash>611b7b7b1d68e55bb62dcb34da703708</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

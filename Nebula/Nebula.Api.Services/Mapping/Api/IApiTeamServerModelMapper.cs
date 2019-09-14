@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using NebulaNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace NebulaNS.Api.Services
 {
 	public partial interface IApiTeamServerModelMapper
 	{
+		ApiTeamServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiTeamServerRequestModel request);
+
+		ApiTeamServerRequestModel MapServerResponseToRequest(
+			ApiTeamServerResponseModel response);
+
+		ApiTeamClientRequestModel MapServerResponseToClientRequest(
+			ApiTeamServerResponseModel response);
+
+		JsonPatchDocument<ApiTeamServerRequestModel> CreatePatch(ApiTeamServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f70acd6da967b55b2c048594243a8a0d</Hash>
+    <Hash>8c331c06c5d466d8ea2ba75db5a9f19a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

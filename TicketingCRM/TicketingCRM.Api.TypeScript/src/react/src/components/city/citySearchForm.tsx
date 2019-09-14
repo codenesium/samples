@@ -292,4 +292,7 @@ export const WrappedCitySearchComponent = Form.create({ name: 'City Search' })(
 
 /*<Codenesium>
     <Hash>f381c679b6b00be3824d793513c0bb90</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -317,4 +317,7 @@ export const WrappedRateSearchComponent = Form.create({ name: 'Rate Search' })(
 
 /*<Codenesium>
     <Hash>85b674a6a7b141cbb7604a65731c80f4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

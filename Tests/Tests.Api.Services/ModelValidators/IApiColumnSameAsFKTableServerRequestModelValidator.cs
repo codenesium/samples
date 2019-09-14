@@ -7,9 +7,17 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IApiColumnSameAsFKTableServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiColumnSameAsFKTableServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiColumnSameAsFKTableServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0dd78c43104103e6e6dbdbf997129d9c</Hash>
+    <Hash>08f7c53f492cc81e955b1e7d7f514925</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -40,4 +40,7 @@ export default class PetMapper {
 
 /*<Codenesium>
     <Hash>5aca30b8f0ae43480bbb12700f03ef35</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

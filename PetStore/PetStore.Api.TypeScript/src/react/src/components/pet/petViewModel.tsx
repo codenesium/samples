@@ -51,4 +51,7 @@ export default class PetViewModel {
 
 /*<Codenesium>
     <Hash>e684d363dfb4a69d8fa227da2e6f7df4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

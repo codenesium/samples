@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using NebulaNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace NebulaNS.Api.Services
 {
 	public partial interface IApiMachineServerModelMapper
 	{
+		ApiMachineServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiMachineServerRequestModel request);
+
+		ApiMachineServerRequestModel MapServerResponseToRequest(
+			ApiMachineServerResponseModel response);
+
+		ApiMachineClientRequestModel MapServerResponseToClientRequest(
+			ApiMachineServerResponseModel response);
+
+		JsonPatchDocument<ApiMachineServerRequestModel> CreatePatch(ApiMachineServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ce6eef6c4e06eb0206a63d0137ec889</Hash>
+    <Hash>d3a2b6bb18417ac3b5f28a93724cac82</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

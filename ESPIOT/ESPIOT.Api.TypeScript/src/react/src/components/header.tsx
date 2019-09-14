@@ -105,4 +105,7 @@ export const wrapperHeader = (
 
 /*<Codenesium>
     <Hash>a0504cbef41a90c3053189b7179efc02</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -123,4 +123,7 @@ export class CommentSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>db203948239591c50298e731cfcc5942</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

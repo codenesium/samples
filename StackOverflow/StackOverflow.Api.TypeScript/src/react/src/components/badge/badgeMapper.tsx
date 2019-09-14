@@ -39,4 +39,7 @@ export default class BadgeMapper {
 
 /*<Codenesium>
     <Hash>6b804aeda952d57e244f4bcea79be467</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

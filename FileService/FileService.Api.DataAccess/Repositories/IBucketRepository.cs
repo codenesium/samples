@@ -7,9 +7,27 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public partial interface IBucketRepository
 	{
+		Task<Bucket> Create(Bucket item);
+
+		Task Update(Bucket item);
+
+		Task Delete(int id);
+
+		Task<Bucket> Get(int id);
+
+		Task<List<Bucket>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<Bucket> ByExternalId(Guid externalId);
+
+		Task<Bucket> ByName(string name);
+
+		Task<List<File>> FilesByBucketId(int bucketId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad1a1287cb8b8bb0f148bf94037c461d</Hash>
+    <Hash>83db570ce889fd9a38a749e1dc7c3c37</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

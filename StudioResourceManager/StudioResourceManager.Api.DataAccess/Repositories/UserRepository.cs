@@ -1,7 +1,9 @@
 using Codenesium.DataConversionExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -9,17 +11,137 @@ using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.DataAccess
 {
-	public partial class UserRepository : AbstractUserRepository, IUserRepository
+	public class UserRepository : AbstractRepository, IUserRepository
 	{
+		protected ApplicationDbContext Context { get; }
+
+		protected ILogger Logger { get; }
+
 		public UserRepository(
-			ILogger<UserRepository> logger,
+			ILogger<IUserRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
 		{
+			this.Logger = logger;
+			this.Context = context;
+		}
+
+		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0, string query = "")
+		{
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  (x.Password == null?false : x.Password.StartsWith(query)) ||
+				                  (x.Username == null?false : x.Username.StartsWith(query)),
+				                  limit,
+				                  offset);
+			}
+		}
+
+		public async virtual Task<User> Get(int id)
+		{
+			return await this.GetById(id);
+		}
+
+		public async virtual Task<User> Create(User item)
+		{
+			this.Context.Set<User>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task Update(User item)
+		{
+			var entity = this.Context.Set<User>().Local.FirstOrDefault(x => x.Id == item.Id);
+			if (entity == null)
+			{
+				this.Context.Set<User>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
+
+			await this.Context.SaveChangesAsync();
+		}
+
+		public async virtual Task Delete(
+			int id)
+		{
+			User record = await this.GetById(id);
+
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<User>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
+
+		// Foreign key reference to this table Admin via userId.
+		public async virtual Task<List<Admin>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Admin>()
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
+		}
+
+		// Foreign key reference to this table Student via userId.
+		public async virtual Task<List<Student>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Student>()
+			       .Include(x => x.FamilyIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+		}
+
+		// Foreign key reference to this table Teacher via userId.
+		public async virtual Task<List<Teacher>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Teacher>()
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
+		}
+
+		protected async Task<List<User>> Where(
+			Expression<Func<User, bool>> predicate,
+			int limit = int.MaxValue,
+			int offset = 0,
+			Expression<Func<User, dynamic>> orderBy = null)
+		{
+			if (orderBy == null)
+			{
+				orderBy = x => x.Id;
+			}
+
+			return await this.Context.Set<User>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
+		}
+
+		private async Task<User> GetById(int id)
+		{
+			List<User> records = await this.Where(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>904aa91b88d4e6dd79f7c74c2abb88a9</Hash>
+    <Hash>c1dd19aa135cb8eff5f24dcc1a0a0d24</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,17 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IApiEventStatusServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiEventStatusServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiEventStatusServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fea59e74ca72f45d93e586d1a4187289</Hash>
+    <Hash>928205f71b94704f53b734e66425f180</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

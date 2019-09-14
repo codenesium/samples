@@ -123,4 +123,7 @@ export class PostTypeSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>b157854c8fdf8ba74e9698f420c938dd</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -15,11 +15,14 @@ export default class VPersonViewModel {
   }
 
   toDisplay(): string {
-    return String(this.NULL_STRING_PASSED_ToLowerCaseFirstLetter);
+    return String(this.personName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>2e5f20ed0412bd638247e6f762899a8b</Hash>
+    <Hash>4ec19415cfc2ffcf3331a81a0b02c121</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

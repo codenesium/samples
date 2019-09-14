@@ -7,9 +7,17 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IApiSelfReferenceServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiSelfReferenceServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSelfReferenceServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6ffae3d9f7ed2aeb93ed8714f84ead7</Hash>
+    <Hash>9314adbd8655e98b707c030248aea4c1</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -23,4 +23,7 @@ namespace TestsNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>4d32b4f199cf87536b6f9a878657f6b4</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

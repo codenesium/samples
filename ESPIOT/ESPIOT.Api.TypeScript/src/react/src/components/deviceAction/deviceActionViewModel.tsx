@@ -38,4 +38,7 @@ export default class DeviceActionViewModel {
 
 /*<Codenesium>
     <Hash>07d7ff010a5668fe4c9564056ff40153</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -129,4 +129,7 @@ export class IncludedColumnTestSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>5b5559b5a949a92178f31f444d43a2d2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

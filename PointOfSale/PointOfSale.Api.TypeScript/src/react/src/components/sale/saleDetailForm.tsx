@@ -131,4 +131,7 @@ export const WrappedSaleDetailComponent = Form.create({ name: 'Sale Detail' })(
 
 /*<Codenesium>
     <Hash>b8500f655aa237bad526b4e0569b6970</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

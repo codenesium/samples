@@ -7,9 +7,21 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IDALSpaceMapper
 	{
+		Space MapModelToEntity(
+			int id,
+			ApiSpaceServerRequestModel model);
+
+		ApiSpaceServerResponseModel MapEntityToModel(
+			Space item);
+
+		List<ApiSpaceServerResponseModel> MapEntityToModel(
+			List<Space> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3d8894dcc6acf7828e408f771781aeec</Hash>
+    <Hash>dda63aebc3495f2409507be8fdb57fbb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

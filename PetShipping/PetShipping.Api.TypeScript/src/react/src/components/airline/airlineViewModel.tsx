@@ -22,4 +22,7 @@ export default class AirlineViewModel {
 
 /*<Codenesium>
     <Hash>dbf30ed7d7c5bea87416c879d66b5e74</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

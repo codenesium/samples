@@ -1,13 +1,30 @@
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StudioResourceManagerMTNS.Api.Services
 {
 	public partial interface IEventStudentService
 	{
+		Task<CreateResponse<ApiEventStudentServerResponseModel>> Create(
+			ApiEventStudentServerRequestModel model);
+
+		Task<UpdateResponse<ApiEventStudentServerResponseModel>> Update(int id,
+		                                                                 ApiEventStudentServerRequestModel model);
+
+		Task<ActionResponse> Delete(int id);
+
+		Task<ApiEventStudentServerResponseModel> Get(int id);
+
+		Task<List<ApiEventStudentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>94979e61941c3dcb3177a7ddd2ded4ce</Hash>
+    <Hash>a5fda2d63dec0e2c7b856b1fe8eac5d6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

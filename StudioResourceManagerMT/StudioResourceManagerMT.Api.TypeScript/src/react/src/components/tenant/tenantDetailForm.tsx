@@ -131,4 +131,7 @@ export const WrappedTenantDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>e1ea7103f4f0f1e8838fcb75b7e16c11</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

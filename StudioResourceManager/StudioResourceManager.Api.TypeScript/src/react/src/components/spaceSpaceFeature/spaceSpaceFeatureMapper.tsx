@@ -40,4 +40,7 @@ export default class SpaceSpaceFeatureMapper {
 
 /*<Codenesium>
     <Hash>a29ea04403c4b05185e81fbc687df360</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

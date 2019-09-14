@@ -22,4 +22,7 @@ export default class FollowingMapper {
 
 /*<Codenesium>
     <Hash>606e2c13755179c6d05a613704b98498</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

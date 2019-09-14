@@ -208,4 +208,7 @@ export class SelfReferenceTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>2a263cf9e3eb126e5c973f054069dcfc</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

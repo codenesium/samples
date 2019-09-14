@@ -136,4 +136,7 @@ namespace CADNS.Api.Services.Tests
 
 /*<Codenesium>
     <Hash>549a242b4ec924c3b5da63dfb187952e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

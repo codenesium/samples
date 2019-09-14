@@ -62,4 +62,7 @@ namespace TestsNS.Api.Services
 
 /*<Codenesium>
     <Hash>88394b6ff4205548912569e0891fd5e6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -1,14 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace PetShippingNS.Api.Client
 {
-	public partial class ApiPipelineStepStepRequirementModelMapper : AbstractApiPipelineStepStepRequirementModelMapper, IApiPipelineStepStepRequirementModelMapper
+	public class ApiPipelineStepStepRequirementModelMapper : IApiPipelineStepStepRequirementModelMapper
 	{
-		public ApiPipelineStepStepRequirementModelMapper()
-			: base()
+		public virtual ApiPipelineStepStepRequirementClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiPipelineStepStepRequirementClientRequestModel request)
 		{
+			var response = new ApiPipelineStepStepRequirementClientResponseModel();
+			response.SetProperties(id,
+			                       request.Details,
+			                       request.PipelineStepId,
+			                       request.RequirementMet);
+			return response;
+		}
+
+		public virtual ApiPipelineStepStepRequirementClientRequestModel MapClientResponseToRequest(
+			ApiPipelineStepStepRequirementClientResponseModel response)
+		{
+			var request = new ApiPipelineStepStepRequirementClientRequestModel();
+			request.SetProperties(
+				response.Details,
+				response.PipelineStepId,
+				response.RequirementMet);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0c329057a22f5d4e2eaadeb3ed236372</Hash>
+    <Hash>17239ecd97e88ee0dfda57a41a85b345</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

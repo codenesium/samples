@@ -225,4 +225,7 @@ export class CommentTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>0eb7318f03dafbc88833fa3241748c89</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -18,4 +18,7 @@ export default class TableMapper {
 
 /*<Codenesium>
     <Hash>cba499b0a0e71d38864d306cd103e840</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

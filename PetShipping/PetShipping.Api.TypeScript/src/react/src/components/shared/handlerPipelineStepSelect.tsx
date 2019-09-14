@@ -129,4 +129,7 @@ export class HandlerPipelineStepSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>348f8cee5cb274226697516330338581</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

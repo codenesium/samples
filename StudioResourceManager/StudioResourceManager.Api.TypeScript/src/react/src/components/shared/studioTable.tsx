@@ -209,4 +209,7 @@ export class StudioTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>9b90d161b927c6a9913203ebf5f09929</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace CADNS.Api.Services
 {
 	public partial interface IDALPersonTypeMapper
 	{
+		PersonType MapModelToEntity(
+			int id,
+			ApiPersonTypeServerRequestModel model);
+
+		ApiPersonTypeServerResponseModel MapEntityToModel(
+			PersonType item);
+
+		List<ApiPersonTypeServerResponseModel> MapEntityToModel(
+			List<PersonType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f721f4dfd711e20ef478a3685a00b113</Hash>
+    <Hash>7e8cfda628377546c0fb5d8dc9d2f246</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

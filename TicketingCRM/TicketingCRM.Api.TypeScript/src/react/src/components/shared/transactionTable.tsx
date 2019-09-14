@@ -202,4 +202,7 @@ export class TransactionTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>7d3708460a26e6d66d70d721fdb3f977</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

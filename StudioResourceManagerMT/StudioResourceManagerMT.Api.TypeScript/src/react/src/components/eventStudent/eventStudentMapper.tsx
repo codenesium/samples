@@ -55,4 +55,7 @@ export default class EventStudentMapper {
 
 /*<Codenesium>
     <Hash>37e07bb663f3476e2b62146fd3cb9bbb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

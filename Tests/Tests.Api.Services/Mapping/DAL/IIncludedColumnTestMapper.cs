@@ -7,9 +7,21 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IDALIncludedColumnTestMapper
 	{
+		IncludedColumnTest MapModelToEntity(
+			int id,
+			ApiIncludedColumnTestServerRequestModel model);
+
+		ApiIncludedColumnTestServerResponseModel MapEntityToModel(
+			IncludedColumnTest item);
+
+		List<ApiIncludedColumnTestServerResponseModel> MapEntityToModel(
+			List<IncludedColumnTest> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a85a9995bfe331c1b12b82ae251afae</Hash>
+    <Hash>c14c3dea60ad4e68027a22b7ce04fba7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

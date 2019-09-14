@@ -7,9 +7,25 @@ namespace TwitterNS.Api.DataAccess
 {
 	public partial interface ILocationRepository
 	{
+		Task<Location> Create(Location item);
+
+		Task Update(Location item);
+
+		Task Delete(int locationId);
+
+		Task<Location> Get(int locationId);
+
+		Task<List<Location>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Tweet>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<User>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ee92ad192415ae2d912719029ec84d4</Hash>
+    <Hash>d17e92232a31ca9e4ca4b239dd7c72f8</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

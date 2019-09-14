@@ -172,4 +172,7 @@ export class PipelineStepStatusTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>afa92ca8f3a80b1340facc84139d7bea</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

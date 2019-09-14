@@ -35,4 +35,7 @@ export default class OfficerCapabilitiesViewModel {
 
 /*<Codenesium>
     <Hash>2e2c8084639706d7e03d1b904bce79ff</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

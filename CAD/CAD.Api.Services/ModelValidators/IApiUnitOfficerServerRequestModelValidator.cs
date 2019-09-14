@@ -7,9 +7,17 @@ namespace CADNS.Api.Services
 {
 	public partial interface IApiUnitOfficerServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiUnitOfficerServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiUnitOfficerServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>de0b57dc0874343771032ee1aa11b45e</Hash>
+    <Hash>f822473465963fc7ebe5663ae4288ad2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

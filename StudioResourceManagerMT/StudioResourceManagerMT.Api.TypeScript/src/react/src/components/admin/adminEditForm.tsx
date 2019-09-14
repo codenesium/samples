@@ -274,4 +274,7 @@ export const WrappedAdminEditComponent = Form.create({ name: 'Admin Edit' })(
 
 /*<Codenesium>
     <Hash>0dfe4d760a31d3639f102566060c73c2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

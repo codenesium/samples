@@ -82,4 +82,7 @@ export default class TestAllFieldTypesNullableMapper {
 
 /*<Codenesium>
     <Hash>12453a336c10c55db0c7ef1e556b99a3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

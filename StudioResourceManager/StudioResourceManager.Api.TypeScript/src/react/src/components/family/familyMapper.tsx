@@ -36,4 +36,7 @@ export default class FamilyMapper {
 
 /*<Codenesium>
     <Hash>617ffefbb24158469e9e0ff565df8277</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

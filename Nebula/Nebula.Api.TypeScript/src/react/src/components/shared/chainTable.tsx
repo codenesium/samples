@@ -220,4 +220,7 @@ export class ChainTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>a54b4b44ae59a7e98da13b3778fb9d6d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

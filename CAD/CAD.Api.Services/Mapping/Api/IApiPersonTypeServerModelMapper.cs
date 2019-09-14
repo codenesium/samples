@@ -1,3 +1,4 @@
+using CADNS.Api.Client;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,23 @@ namespace CADNS.Api.Services
 {
 	public partial interface IApiPersonTypeServerModelMapper
 	{
+		ApiPersonTypeServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiPersonTypeServerRequestModel request);
+
+		ApiPersonTypeServerRequestModel MapServerResponseToRequest(
+			ApiPersonTypeServerResponseModel response);
+
+		ApiPersonTypeClientRequestModel MapServerResponseToClientRequest(
+			ApiPersonTypeServerResponseModel response);
+
+		JsonPatchDocument<ApiPersonTypeServerRequestModel> CreatePatch(ApiPersonTypeServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>08e0036b26b0409e082ca26f8e4f9501</Hash>
+    <Hash>74240e2aef07912d9ce3f391e1be86ac</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

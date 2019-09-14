@@ -175,4 +175,7 @@ export const WrappedFileTypeCreateComponent = Form.create({
 
 /*<Codenesium>
     <Hash>1e0cd7ca7a608547efc7f623ac223975</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -22,4 +22,7 @@ export default class SpeciesViewModel {
 
 /*<Codenesium>
     <Hash>f7518e0bb3b7d6c85ba2b93b6babfcf6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -244,4 +244,7 @@ export const WrappedRateEditComponent = Form.create({ name: 'Rate Edit' })(
 
 /*<Codenesium>
     <Hash>f9a3d119cd8d0b2529a1469fc4ff6352</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

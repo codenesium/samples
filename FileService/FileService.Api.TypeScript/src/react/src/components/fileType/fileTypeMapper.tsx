@@ -22,4 +22,7 @@ export default class FileTypeMapper {
 
 /*<Codenesium>
     <Hash>b1821774040a3c22256313968507df84</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

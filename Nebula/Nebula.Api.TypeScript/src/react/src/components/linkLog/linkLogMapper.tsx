@@ -47,4 +47,7 @@ export default class LinkLogMapper {
 
 /*<Codenesium>
     <Hash>e9706aa00ffcecc55df509461a2d6eb5</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

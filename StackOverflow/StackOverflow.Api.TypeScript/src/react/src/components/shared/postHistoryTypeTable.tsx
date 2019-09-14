@@ -167,4 +167,7 @@ export class PostHistoryTypeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>6e3c4d0f31c0f7b806fcf35bc7fc8282</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

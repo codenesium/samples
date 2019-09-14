@@ -7,9 +7,17 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IApiReplyServerRequestModelValidator
 	{
+		Task<ValidationResult> ValidateCreateAsync(ApiReplyServerRequestModel model);
+
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiReplyServerRequestModel model);
+
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c56ddb904ce748c17e16f88f9e85d60a</Hash>
+    <Hash>128dc237775ac435aeed16643de18ca6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

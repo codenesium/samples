@@ -1,3 +1,4 @@
+using CADNS.Api.Client;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,23 @@ namespace CADNS.Api.Services
 {
 	public partial interface IApiCallDispositionServerModelMapper
 	{
+		ApiCallDispositionServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiCallDispositionServerRequestModel request);
+
+		ApiCallDispositionServerRequestModel MapServerResponseToRequest(
+			ApiCallDispositionServerResponseModel response);
+
+		ApiCallDispositionClientRequestModel MapServerResponseToClientRequest(
+			ApiCallDispositionServerResponseModel response);
+
+		JsonPatchDocument<ApiCallDispositionServerRequestModel> CreatePatch(ApiCallDispositionServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>90947a682a6e834e03b14305ead0890f</Hash>
+    <Hash>a10e5f2b6e62c274f8cf54e794cf9044</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -127,4 +127,7 @@ export const WrappedTableDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>902b8e5897cd579086954d90aeb78f2d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

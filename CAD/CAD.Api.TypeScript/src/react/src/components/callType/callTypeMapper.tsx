@@ -22,4 +22,7 @@ export default class CallTypeMapper {
 
 /*<Codenesium>
     <Hash>3a0cff4f50278be3156a18bd17774d52</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

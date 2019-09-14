@@ -7,9 +7,23 @@ namespace TicketingCRMNS.Api.DataAccess
 {
 	public partial interface IAdminRepository
 	{
+		Task<Admin> Create(Admin item);
+
+		Task Update(Admin item);
+
+		Task Delete(int id);
+
+		Task<Admin> Get(int id);
+
+		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Venue>> VenuesByAdminId(int adminId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e48cde086ee2c6436fbfc8cda642f350</Hash>
+    <Hash>eeea0c55e596be496b4b6e54c0795259</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

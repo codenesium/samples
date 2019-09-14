@@ -7,9 +7,23 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public partial interface IPenRepository
 	{
+		Task<Pen> Create(Pen item);
+
+		Task Update(Pen item);
+
+		Task Delete(int id);
+
+		Task<Pen> Get(int id);
+
+		Task<List<Pen>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<List<Pet>> PetsByPenId(int penId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d479f7949ba5ae4770286bced1827157</Hash>
+    <Hash>75f63beedfa46168b64602217239f9b6</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

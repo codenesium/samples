@@ -167,4 +167,7 @@ export class UnitTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>10492c4f5e329bfb7b841f09d4af980d</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

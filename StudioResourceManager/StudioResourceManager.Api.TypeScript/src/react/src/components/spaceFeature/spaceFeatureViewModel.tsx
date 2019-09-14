@@ -22,4 +22,7 @@ export default class SpaceFeatureViewModel {
 
 /*<Codenesium>
     <Hash>0dda4a5dda629177ed8d2a9fab33429e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

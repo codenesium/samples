@@ -30,4 +30,7 @@ namespace PointOfSaleNS.Api.DataAccess
 
 /*<Codenesium>
     <Hash>4d4f3e016f1c412b4bdb927fe111638b</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

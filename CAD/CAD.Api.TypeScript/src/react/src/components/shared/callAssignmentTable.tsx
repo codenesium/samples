@@ -204,4 +204,7 @@ export class CallAssignmentTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>1cb5e009fc01931ce7e5b756d9cf1c45</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

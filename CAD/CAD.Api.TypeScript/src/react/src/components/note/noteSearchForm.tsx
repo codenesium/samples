@@ -320,4 +320,7 @@ export const WrappedNoteSearchComponent = Form.create({ name: 'Note Search' })(
 
 /*<Codenesium>
     <Hash>d6419e7d5ac995ccd624072020d99c12</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -35,4 +35,7 @@ export default class CallAssignmentViewModel {
 
 /*<Codenesium>
     <Hash>8ef5bf9ad0d659d215db00d66b0799c2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -123,4 +123,7 @@ export class SpaceFeatureSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>5b40b5cee837667ca5ba2e8b51d8fe18</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

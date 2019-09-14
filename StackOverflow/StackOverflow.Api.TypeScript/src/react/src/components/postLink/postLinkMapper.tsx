@@ -94,4 +94,7 @@ export default class PostLinkMapper {
 
 /*<Codenesium>
     <Hash>34f9f2761480fc95debeb180e66f04fe</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

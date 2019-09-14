@@ -196,4 +196,7 @@ export class BadgeTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>c4cda6a95dbfda29a684e3db894219f3</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

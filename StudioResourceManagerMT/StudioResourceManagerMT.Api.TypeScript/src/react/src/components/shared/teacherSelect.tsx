@@ -123,4 +123,7 @@ export class TeacherSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>89b3949e8b8086d5469a2efc83bb0b7c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

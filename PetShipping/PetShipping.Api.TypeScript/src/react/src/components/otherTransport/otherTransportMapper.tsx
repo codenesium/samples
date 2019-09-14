@@ -45,4 +45,7 @@ export default class OtherTransportMapper {
 
 /*<Codenesium>
     <Hash>36b669cfc97c5e92f2929d496fad6d3e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

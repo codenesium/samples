@@ -250,4 +250,7 @@ export const WrappedDeviceActionEditComponent = Form.create({
 
 /*<Codenesium>
     <Hash>ce2cc601eb4f4301d2b51d52d2241a59</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

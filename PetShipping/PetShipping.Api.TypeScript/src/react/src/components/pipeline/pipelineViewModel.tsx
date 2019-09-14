@@ -30,4 +30,7 @@ export default class PipelineViewModel {
 
 /*<Codenesium>
     <Hash>9444c2d86b45dc68366140aca6a6d310</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

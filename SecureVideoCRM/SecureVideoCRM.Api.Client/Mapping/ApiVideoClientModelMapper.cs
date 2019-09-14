@@ -1,14 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace SecureVideoCRMNS.Api.Client
 {
-	public partial class ApiVideoModelMapper : AbstractApiVideoModelMapper, IApiVideoModelMapper
+	public class ApiVideoModelMapper : IApiVideoModelMapper
 	{
-		public ApiVideoModelMapper()
-			: base()
+		public virtual ApiVideoClientResponseModel MapClientRequestToResponse(
+			int id,
+			ApiVideoClientRequestModel request)
 		{
+			var response = new ApiVideoClientResponseModel();
+			response.SetProperties(id,
+			                       request.Description,
+			                       request.Title,
+			                       request.Url);
+			return response;
+		}
+
+		public virtual ApiVideoClientRequestModel MapClientResponseToRequest(
+			ApiVideoClientResponseModel response)
+		{
+			var request = new ApiVideoClientRequestModel();
+			request.SetProperties(
+				response.Description,
+				response.Title,
+				response.Url);
+			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9b43221390fad0409a5f20bcd116b8ac</Hash>
+    <Hash>ec704616ca6d758712799b7049840daf</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

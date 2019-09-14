@@ -235,4 +235,7 @@ export const WrappedTestAllFieldTypesNullableDetailComponent = Form.create({
 
 /*<Codenesium>
     <Hash>f87c36769bade37f28e83954867ebf79</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

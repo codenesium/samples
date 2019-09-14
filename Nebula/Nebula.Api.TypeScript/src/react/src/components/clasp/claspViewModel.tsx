@@ -38,4 +38,7 @@ export default class ClaspViewModel {
 
 /*<Codenesium>
     <Hash>3d65df890d2a5fe585c38c9c2fc8deba</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

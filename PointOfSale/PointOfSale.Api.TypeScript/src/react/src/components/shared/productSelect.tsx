@@ -123,4 +123,7 @@ export class ProductSelectComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>861a97e21a8c566010c79e1dede6db71</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

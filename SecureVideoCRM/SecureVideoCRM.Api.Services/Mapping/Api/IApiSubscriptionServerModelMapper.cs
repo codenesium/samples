@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
+using SecureVideoCRMNS.Api.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,9 +8,23 @@ namespace SecureVideoCRMNS.Api.Services
 {
 	public partial interface IApiSubscriptionServerModelMapper
 	{
+		ApiSubscriptionServerResponseModel MapServerRequestToResponse(
+			int id,
+			ApiSubscriptionServerRequestModel request);
+
+		ApiSubscriptionServerRequestModel MapServerResponseToRequest(
+			ApiSubscriptionServerResponseModel response);
+
+		ApiSubscriptionClientRequestModel MapServerResponseToClientRequest(
+			ApiSubscriptionServerResponseModel response);
+
+		JsonPatchDocument<ApiSubscriptionServerRequestModel> CreatePatch(ApiSubscriptionServerRequestModel model);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d2f6fb106b77ff0d91ca7b72408c024</Hash>
+    <Hash>d89816da9beb6ee45e1eab51c976e39c</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

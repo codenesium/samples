@@ -45,4 +45,7 @@ export default class AdminViewModel {
 
 /*<Codenesium>
     <Hash>f33634b6267c6c4305aefad1e789bc5a</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

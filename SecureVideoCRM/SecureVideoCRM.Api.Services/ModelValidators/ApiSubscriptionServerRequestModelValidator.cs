@@ -1,16 +1,29 @@
+using Codenesium.DataConversionExtensions;
+using FluentValidation;
 using FluentValidation.Results;
 using SecureVideoCRMNS.Api.Contracts;
 using SecureVideoCRMNS.Api.DataAccess;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SecureVideoCRMNS.Api.Services
 {
-	public class ApiSubscriptionServerRequestModelValidator : AbstractApiSubscriptionServerRequestModelValidator, IApiSubscriptionServerRequestModelValidator
+	public class ApiSubscriptionServerRequestModelValidator : AbstractValidator<ApiSubscriptionServerRequestModel>, IApiSubscriptionServerRequestModelValidator
 	{
+		private int existingRecordId;
+
+		protected ISubscriptionRepository SubscriptionRepository { get; private set; }
+
 		public ApiSubscriptionServerRequestModelValidator(ISubscriptionRepository subscriptionRepository)
-			: base(subscriptionRepository)
 		{
+			this.SubscriptionRepository = subscriptionRepository;
+		}
+
+		public async Task<ValidationResult> ValidateAsync(ApiSubscriptionServerRequestModel model, int id)
+		{
+			this.existingRecordId = id;
+			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiSubscriptionServerRequestModel model)
@@ -31,9 +44,24 @@ namespace SecureVideoCRMNS.Api.Services
 		{
 			return await Task.FromResult<ValidationResult>(new ValidationResult());
 		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
+		public virtual void StripePlanNameRules()
+		{
+			this.RuleFor(x => x.StripePlanName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.StripePlanName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a6672c42d6c3caec4b6effb4beb3792</Hash>
+    <Hash>2e1bb5196f95b903a80d8388beeaec2e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

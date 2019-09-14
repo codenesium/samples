@@ -7,9 +7,21 @@ namespace PointOfSaleNS.Api.DataAccess
 {
 	public partial interface IProductRepository
 	{
+		Task<Product> Create(Product item);
+
+		Task Update(Product item);
+
+		Task Delete(int id);
+
+		Task<Product> Get(int id);
+
+		Task<List<Product>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ebd41a7b7ae85222ecd48e94b51465f8</Hash>
+    <Hash>6d8c72ef79d20f7fc7b096f312c3c868</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

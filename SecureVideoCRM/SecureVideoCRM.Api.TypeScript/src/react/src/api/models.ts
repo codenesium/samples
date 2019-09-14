@@ -147,4 +147,7 @@ export class SubscriptionClientResponseModel {
 
 /*<Codenesium>
     <Hash>0f753511828038bed1cb88e2362a72c7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

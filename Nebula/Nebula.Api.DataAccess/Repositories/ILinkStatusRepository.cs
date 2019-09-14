@@ -7,9 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public partial interface ILinkStatusRepository
 	{
+		Task<LinkStatus> Create(LinkStatus item);
+
+		Task Update(LinkStatus item);
+
+		Task Delete(int id);
+
+		Task<LinkStatus> Get(int id);
+
+		Task<List<LinkStatus>> All(int limit = int.MaxValue, int offset = 0, string query = "");
+
+		Task<LinkStatus> ByName(string name);
+
+		Task<List<Link>> LinksByLinkStatusId(int linkStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f26b26dfb72a8311db85840e787aac3</Hash>
+    <Hash>c834ab6262feb944ba133fc05bfdb7d7</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

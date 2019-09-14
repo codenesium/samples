@@ -267,4 +267,7 @@ export const WrappedUnitSearchComponent = Form.create({ name: 'Unit Search' })(
 
 /*<Codenesium>
     <Hash>34a01fa639801e1c75e3b13332dadfa2</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

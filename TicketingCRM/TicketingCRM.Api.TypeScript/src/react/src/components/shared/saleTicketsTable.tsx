@@ -206,4 +206,7 @@ export class SaleTicketsTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>e16e2f071077297719d15c001497119e</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

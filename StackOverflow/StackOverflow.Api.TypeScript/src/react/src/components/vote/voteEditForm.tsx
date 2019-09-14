@@ -261,4 +261,7 @@ export const WrappedVoteEditComponent = Form.create({ name: 'Vote Edit' })(
 
 /*<Codenesium>
     <Hash>7cccb5ddc2da05d92a683a5c46b97ee9</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

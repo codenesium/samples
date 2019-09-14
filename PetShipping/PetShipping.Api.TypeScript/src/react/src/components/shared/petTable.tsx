@@ -203,4 +203,7 @@ export class PetTableComponent extends React.Component<
 
 /*<Codenesium>
     <Hash>46c2b23fe5648d75666f297267a00802</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

@@ -7,9 +7,21 @@ namespace PointOfSaleNS.Api.Services
 {
 	public partial interface IDALSaleMapper
 	{
+		Sale MapModelToEntity(
+			int id,
+			ApiSaleServerRequestModel model);
+
+		ApiSaleServerResponseModel MapEntityToModel(
+			Sale item);
+
+		List<ApiSaleServerResponseModel> MapEntityToModel(
+			List<Sale> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>40a9ca0a0c35ff5c42aaef1cf2ce79a0</Hash>
+    <Hash>9f6ca98d312c55cfb0e3341818ce19eb</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/

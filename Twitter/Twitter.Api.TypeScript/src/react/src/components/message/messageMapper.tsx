@@ -43,4 +43,7 @@ export default class MessageMapper {
 
 /*<Codenesium>
     <Hash>f3233ad8ca3096331a513a5daafc7610</Hash>
+    <Hello>
+		This code was generated using the Codenesium platform. You can visit our site at https://www.codenesium.com. 
+	</Hello>
 </Codenesium>*/
