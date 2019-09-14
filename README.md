@@ -4,6 +4,8 @@ Generated sample .NET Core REST APIs using the Codenesium platform
 
 https://www.codenesium.com
 
+[![Build Status](https://dev.azure.com/codenesium0978/Samples/_apis/build/status/Samples-ASP.NET%20Core-CI?branchName=master)](https://dev.azure.com/codenesium0978/Samples/_build/latest?definitionId=1&branchName=master)
+
 #### StudioResourceManager
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1bd2ac54-b1ae-46e9-b487-25ce0c3565ef/deploy-status)](https://app.netlify.com/sites/studioresourcemanagercodenesium/deploys)
 CRM for a a music or dance studio.
@@ -43,7 +45,6 @@ http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feFileService
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3d0913ab-50b5-4925-bb9e-d48371bc4b62/deploy-status)](https://app.netlify.com/sites/espiotcodenesium/deploys)
 Simple IOT web service with devices and actions.
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feESPIOT
-
 
 #### Stack Overflow
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7cbf7d28-0e4e-45f8-9cf8-f01a2794aa52/deploy-status)](https://app.netlify.com/sites/stackoverflowcodenesium/deploys)
